@@ -1,0 +1,19 @@
+<% if @current_user.projects.empty? %>
+<div class="guidance">
+  <p>
+  You have no projects.
+  Let's <%= link_to "make a project", new_project_path %>.
+  </p>
+</div>
+<% else %>
+  <div id="projects">
+    <p>
+    <%= link_to "Make a new project", new_project_path %>
+    </p>
+    <ol>
+      <% @current_user.projects.each do |project| %>
+        <li><%= link_to h(project), project %></li>
+      <% end %>
+    </ol>
+  </div>
+<% end %>

@@ -1,0 +1,36 @@
+<% content_for :title, "#{@story} | #{@project} Stories" %>
+<% content_for :h1, h(@story) %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
+  <li><%= link_to h(@project), @project %></li>
+  <li>Stories</li>
+  <li><%= h @story %></li>
+<% end %>
+
+<%= simple_format h(@story.content) %>
+
+<div id="acceptance_criteria">
+  <h2>Acceptance Criteria</h2>
+  <% form_for [@project, @story, AcceptanceCriterion.new] do |f| %>
+    <p>
+    <%= f.label :criterion, 'New Criterion' %>
+    <%= f.text_field :criterion, :class => 'auto_focus' %>
+    <%= f.submit 'Add' %>
+    </p>
+  <% end %>
+
+  <div class="content">
+    <%= render :partial => 'acceptance_criteria/list' %>
+  </div>
+</div>
+
+<div class="guidance">
+  <h2>Finished?</h2>
+  <ul>
+    <li><%= link_to 'Add another story', 
+      new_project_story_path(@project) %></li>
+    <li><%= link_to 'Plan an iteration',
+      new_project_iteration_path(@project) %></li>
+    <li><%= link_to 'Prioritise stories', @project %></li>
+  </ul>
+</div>

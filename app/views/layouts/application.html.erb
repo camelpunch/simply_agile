@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head> 
+    <%= stylesheet_link_tag 'reset-fonts', 'layout', 'typography', 'colours',
+      :cache => true %>
+    <title><%= h yield(:title) %> | Simply Agile</title>
+  </head>
+
+  <body class="<%= body_classes.join(' ') %>" id="<%= 
+    "#{controller.controller_name}_#{controller.action_name}" %>">
+    <ol id="navigation">
+      <li><%= link_to_unless_current 'Home', root_path %></li>
+      <li><%= link_to_unless_current 'Projects', projects_path %></li>
+    </ol>
+    <% unless controller.controller_name == 'home' %>
+      <ol id="breadcrumbs">
+        <%= yield :breadcrumbs %>
+      </ol>
+    <% end %>
+    <div id="content">
+      <h1><%= yield(:h1) %></h1>
+      <%= render_flash %>
+      <%= yield %>
+    </div>
+    <%= javascript_include_tag('jquery-1.3.2.min.js', 
+                               'jquery.form.js', 
+                               'acceptance_criteria', 
+                               'application', 
+                               :cache => true) %>
+  </body>
+
+</html>

@@ -1,0 +1,15 @@
+<% content_for :title, 'New Project' %>
+<% content_for :h1, 'New Project' %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
+  <li>New</li>
+<% end %>
+<% form_for @project do |f| %>
+  <p>
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => 'auto_focus' %>
+  </p>
+  <p class="submit">
+  <%= f.submit 'Create Project' %>
+  </p>
+<% end %>

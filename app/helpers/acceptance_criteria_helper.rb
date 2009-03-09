@@ -1,0 +1,2 @@
+module AcceptanceCriteriaHelper
+end

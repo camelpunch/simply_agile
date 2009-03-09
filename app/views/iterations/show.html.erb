@@ -1,0 +1,21 @@
+<% content_for :title, "#{@iteration} | #{@project} Iterations" %>
+<% content_for :h1, h(@iteration) %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
+  <li><%= link_to h(@project), @project %></li>
+  <li>Iterations</li>
+  <li><%= h @iteration %></li>
+<% end %>
+
+<h2>Stories</h2>
+<% if @iteration.stories.empty? %>
+  <p>
+  This iteration does not have any stories.
+  </p>
+<% else %>
+  <ol>
+    <%= render :partial => 'stories/list_item', 
+      :collection => @iteration.stories %>
+  </ol>
+<% end %>
+

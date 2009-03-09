@@ -1,0 +1,18 @@
+<tr class="edit">
+<td colspan="2">
+<% form_for [@project, @story, @acceptance_criterion] do |f| %>
+  <p>
+  <%= 
+      f.text_field :criterion, 
+      :id => 'edit_acceptance_criterion_criterion',
+      :class => 'auto_focus' 
+  %>
+  <%= f.submit 'Update' %>
+  </p>
+<% end %>
+</td>
+<td class="delete">
+<%= button_to 'Delete', [@project, @story, @acceptance_criterion],
+  :method => :delete %>
+</td>
+</tr>

@@ -1,0 +1,46 @@
+<% content_for :title, "New iteration for #{@project}" %>
+<% content_for :h1, "New iteration for #{link_to(h(@project), @project)}" %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
+  <li><%= link_to h(@project), @project %></li>
+  <li>Iterations</li>
+  <li>New</li>
+<% end %>
+<% form_for [@project, @iteration] do |f| %>
+  <%= f.error_messages %>
+  <p>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  </p>
+  <p>
+  <%= f.label :duration, 'Duration (days)' %>
+  <%= f.text_field :duration, :class => 'auto_focus numeric', :size => 1 %>
+  </p>
+
+  <div id="stories">
+    <table id="stories_available">
+      <caption>Available stories</caption>
+      <% @project.stories.each do |story| %>
+      <tr id="story_<%= story.id %>">
+        <td>
+          <%= check_box_tag "stories[#{story.id}][include]" %>
+          <%= label_tag "stories_#{story.id}_include", "Include" %>
+        </td>
+        <td>
+          <span><%= h story.name %></span>
+          <div class="content"><%= simple_format story.content %></div>
+        </td>
+        <td>
+          <%= label_tag "stories_#{story.id}_estimate", "Estimate" %>
+          <%= text_field_tag "stories[#{story.id}][estimate]", {}, 
+            :class => 'numeric', :size => 1 %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <p class="submit">
+  <%= f.submit 'Create Iteration' %>
+  </p>
+<% end %>
