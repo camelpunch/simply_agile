@@ -9,5 +9,6 @@ class Stories < ObjectMother
   end
 
   define_story(:iteration_planning,
-               :name => 'Iteration Planning')
+               :name => 'Iteration Planning',
+               :content => 'asdf')
 end

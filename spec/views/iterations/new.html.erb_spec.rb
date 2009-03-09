@@ -2,13 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/iterations/new" do
   before(:each) do
-    @story = mock_model(Story, :name => 'asdf', :content => '')
-    assigns[:project] = mock_model(Project,
-                                   :stories => [@story])
-    assigns[:iteration] = mock_model(Iteration, 
-                                     :name => '',
-                                     :duration => '',
-                                     :new_record? => true)
+    @story = Stories.iteration_planning!
+    assigns[:project] = @story.project
+    assigns[:iteration] = @story.project.iterations.build
+
     render 'iterations/new'
   end
   
