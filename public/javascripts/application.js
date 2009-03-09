@@ -56,7 +56,7 @@ var StorySwapper = {
   init_trs: function() {
     // move trs to correct tables
     $('table tr').each( function() {
-      if ($(this).find('input[checked]').attr('checked')) {
+      if ($(this).find('input[checked]:checked')[0]) {
         var tr = $(this).remove();
         $('table#stories_iteration').append(tr);
       }
@@ -64,10 +64,15 @@ var StorySwapper = {
   },
 
   move_checkbox_tr: function(checkbox) {
-    var tr = $(checkbox).parent('td').parent('tr').remove();
+    var checked_before_removal = checkbox.attr('checked');
+    var tr = checkbox.parent('td').parent('tr').remove();
 
-    if ($(checkbox).attr('checked')) {
+    if (checked_before_removal) {
       $('table#stories_iteration').append(tr);
+
+      // workaround ie6 bug with checkbox values being reset after append
+      if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
+
     } else {
       $('table#stories_available').append(tr);
     }
