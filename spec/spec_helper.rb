@@ -43,5 +43,44 @@ Spec::Runner.configure do |config|
   #
   # == Notes
   # 
-  # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+  # For more information take a look at Spec::Example::Configuration and Spec::Runner
+  config.include ValidateXhtml
+
+  def login
+    @organisation = mock_model Organisation
+    @user = mock_model User, :organisation => @organisation
+    controller.stub!(:login_required).and_return(true)
+    controller.stub!(:current_user).and_return(@user)
+  end
+
+  def stub_projects!
+    @project = mock_model(Project, :organisation_id => @organisation.id)
+    @projects = mock('Collection')
+    @projects.stub!(:find).with(@project.id.to_s).and_return(@project)
+    @organisation.stub!(:projects).and_return(@projects)
+  end
+
+  describe "it belongs to a project", :shared => true do
+    it "should assign the project" do
+      controller.should_receive(:get_project)
+      do_call
+    end
+  end
+
+  describe "it's successful", :shared => true do
+    it "should respond with success" do
+      do_call
+      response.should be_success
+    end
+  end
+
+  describe "a standard view", :shared => true do
+    it "should be successful" do
+      response.should be_success
+    end
+
+    it "should be valid" do
+      response.should be_valid_xhtml   
+    end
+  end
 end
