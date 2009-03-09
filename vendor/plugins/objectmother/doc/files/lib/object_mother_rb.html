@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: object_mother.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>object_mother.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/object_mother.rb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sat Oct 04 16:31:04 +0100 2008</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../../classes/ObjectMother.html">ObjectMother</a></h1>
+<h2>What it is</h2>
+<p>
+<a href="../../classes/ObjectMother.html">ObjectMother</a> is a design
+pattern to help create objects to use in tests. It was inspired by a <a
+href="http://www.xpuniverse.com/2001/pdfs/Testing03.pdf">paper</a> by Peter
+Schuh and Stephanie Punke, and by an <a
+href="http://www.martinfowler.com/articles/mocksArentStubs.html">article</a>
+entitled <em>Mocks Aren&#8216;t Stubs</em> by Martin Fowler.
+</p>
+<h2>Why it is useful</h2>
+<p>
+<a href="../../classes/ObjectMother.html">ObjectMother</a> replaces
+fixtures and uses ruby code to generate objects rather than using YAML to
+specify attributes which are loaded into the database. I believe that this
+brings a number of advantages:
+</p>
+<ol>
+<li>Less typing is required to generate test data.
+
+</li>
+<li>It is easier to add or remove attributes to every object of a particular
+class.
+
+</li>
+<li>It is possible to decide at runtime how to define objects.
+
+</li>
+<li>The definitions of objects used for testing can be put closer to the test
+code.
+
+</li>
+<li>Validation is applied to the test objects.
+
+</li>
+</ol>
+<h2>How to use it</h2>
+<p>
+Install the plugin.
+</p>
+<p>
+Under <tt>spec</tt> (or <tt>test</tt>) create a directory named
+<tt>prototype</tt>. Under here, create classes which inherit from <a
+href="../../classes/ObjectMother.html">ObjectMother</a>.
+</p>
+<p>
+Use <tt>define_xxx :name</tt> to create named prototypes. Simply replace
+<tt>xxx</tt> with the name of the class to create and <tt>name</tt> with
+the name of the prototype. Then follow it up with hash arguments to be
+passed through to the class&#8217; create method. For example:
+</p>
+<pre>
+  define_access_role :admin, :name =&gt; 'admin', :admin =&gt; true
+</pre>
+<p>
+Use a class method called <tt>xxx_prototype</tt> to define the default
+attributes that get merged into all objects created for that class. Again,
+<tt>xxx</tt> is the class name. For example:
+</p>
+<pre>
+  def self.access_role_prototype
+    next_role_count = AccessRole.count + 1
+    {
+      :name =&gt; &quot;role_#{next_role_count}&quot;,
+      :admin =&gt; false
+    }
+  end
+</pre>
+<p>
+You then have access to these methods in your tests through two sets of
+methods. The first of these provide access to the named prototypes. If the
+above access roles had been configured in a class called
+<tt>AccessRoles</tt>, then in your tests you can say:
+</p>
+<pre>
+  AccessRoles.admin            # Calls AccessRole.create with the arguments
+  AccessRoles.admin!           # As above, but uses create! so that exceptions are raised
+  AccessRoles.recreate_admin   # Deletes any previous admin object and creates a new one
+</pre>
+<p>
+The second set of methods use <tt>xxx_prototype</tt> to create new objects.
+You can say:
+</p>
+<pre>
+  AccessRoles.create_access_role
+  AccessRoles.create_access_role!
+</pre>
+<h2>Overriding the prototypes</h2>
+<p>
+All of the methods that you use in your tests allow you to override the
+prototype used to create the object. For example, in your test you can
+call:
+</p>
+<pre>
+  AccessRoles.admin(:name =&gt; 'superuser')
+</pre>
+<p>
+This will override the <tt>name</tt> of the object created, but continue to
+use the other attributes that were defined for <tt>admin</tt>.
+</p>
+<p>
+The same can be used for the create methods:
+</p>
+<pre>
+  AccessRoles.create_access_role(:name =&gt; 'root', :admin =&gt; true)
+</pre>
+<p>
+You can even give a block to the method to override the actual creation.
+This block is passed the hash of arguments that would otherwise have been
+passed to create. For example:
+</p>
+<pre>
+  AccessRoles.create_access_role do |options|
+    options.delete[:admin] if AccessRole.find_by_admin(true)
+
+    role = AccessRole.create(options)
+    Users.find(:all).each do |user|
+      user.access_roles &lt;&lt; role
+    end
+
+    role
+  end
+</pre>
+<p>
+All methods can be passed blocks (including <tt>define_xxx</tt>) if your
+needs are complex. All object creation will merge the various options in
+the following order (highest precedence first)
+</p>
+<pre>
+ 1. Options passed in on use (AccessRoles.admin(:name =&gt; 'superuser')
+ 2. Options given in the named prototype (define_access_role :admin, ...)
+ 3. Options given in the prototype for that class (self.access_role_prototype ...)
+</pre>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

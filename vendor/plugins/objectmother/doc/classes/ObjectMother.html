@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ObjectMother</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ObjectMother</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/object_mother_rb.html">
+                lib/object_mother.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="ObjectMother.html">ObjectMother</a></h1>
+<h2>What it is</h2>
+<p>
+<a href="ObjectMother.html">ObjectMother</a> is a design pattern to help
+create objects to use in tests. It was inspired by a <a
+href="http://www.xpuniverse.com/2001/pdfs/Testing03.pdf">paper</a> by Peter
+Schuh and Stephanie Punke, and by an <a
+href="http://www.martinfowler.com/articles/mocksArentStubs.html">article</a>
+entitled <em>Mocks Aren&#8216;t Stubs</em> by Martin Fowler.
+</p>
+<h2>Why it is useful</h2>
+<p>
+<a href="ObjectMother.html">ObjectMother</a> replaces fixtures and uses
+ruby code to generate objects rather than using YAML to specify attributes
+which are loaded into the database. I believe that this brings a number of
+advantages:
+</p>
+<ol>
+<li>Less typing is required to generate test data.
+
+</li>
+<li>It is easier to add or remove attributes to every object of a particular
+class.
+
+</li>
+<li>It is possible to decide at runtime how to define objects.
+
+</li>
+<li>The definitions of objects used for testing can be put closer to the test
+code.
+
+</li>
+<li>Validation is applied to the test objects.
+
+</li>
+</ol>
+<h2>How to use it</h2>
+<p>
+Install the plugin.
+</p>
+<p>
+Under <tt>spec</tt> (or <tt>test</tt>) create a directory named
+<tt>prototype</tt>. Under here, create classes which inherit from <a
+href="ObjectMother.html">ObjectMother</a>.
+</p>
+<p>
+Use <tt>define_xxx :name</tt> to create named prototypes. Simply replace
+<tt>xxx</tt> with the name of the class to create and <tt>name</tt> with
+the name of the prototype. Then follow it up with hash arguments to be
+passed through to the class&#8217; create method. For example:
+</p>
+<pre>
+  define_access_role :admin, :name =&gt; 'admin', :admin =&gt; true
+</pre>
+<p>
+Use a class method called <tt>xxx_prototype</tt> to define the default
+attributes that get merged into all objects created for that class. Again,
+<tt>xxx</tt> is the class name. For example:
+</p>
+<pre>
+  def self.access_role_prototype
+    next_role_count = AccessRole.count + 1
+    {
+      :name =&gt; &quot;role_#{next_role_count}&quot;,
+      :admin =&gt; false
+    }
+  end
+</pre>
+<p>
+You then have access to these methods in your tests through two sets of
+methods. The first of these provide access to the named prototypes. If the
+above access roles had been configured in a class called
+<tt>AccessRoles</tt>, then in your tests you can say:
+</p>
+<pre>
+  AccessRoles.admin            # Calls AccessRole.create with the arguments
+  AccessRoles.admin!           # As above, but uses create! so that exceptions are raised
+  AccessRoles.recreate_admin   # Deletes any previous admin object and creates a new one
+</pre>
+<p>
+The second set of methods use <tt>xxx_prototype</tt> to create new objects.
+You can say:
+</p>
+<pre>
+  AccessRoles.create_access_role
+  AccessRoles.create_access_role!
+</pre>
+<h2>Overriding the prototypes</h2>
+<p>
+All of the methods that you use in your tests allow you to override the
+prototype used to create the object. For example, in your test you can
+call:
+</p>
+<pre>
+  AccessRoles.admin(:name =&gt; 'superuser')
+</pre>
+<p>
+This will override the <tt>name</tt> of the object created, but continue to
+use the other attributes that were defined for <tt>admin</tt>.
+</p>
+<p>
+The same can be used for the create methods:
+</p>
+<pre>
+  AccessRoles.create_access_role(:name =&gt; 'root', :admin =&gt; true)
+</pre>
+<p>
+You can even give a block to the method to override the actual creation.
+This block is passed the hash of arguments that would otherwise have been
+passed to create. For example:
+</p>
+<pre>
+  AccessRoles.create_access_role do |options|
+    options.delete[:admin] if AccessRole.find_by_admin(true)
+
+    role = AccessRole.create(options)
+    Users.find(:all).each do |user|
+      user.access_roles &lt;&lt; role
+    end
+
+    role
+  end
+</pre>
+<p>
+All methods can be passed blocks (including <tt>define_xxx</tt>) if your
+needs are complex. All object creation will merge the various options in
+the following order (highest precedence first)
+</p>
+<pre>
+ 1. Options passed in on use (AccessRoles.admin(:name =&gt; 'superuser')
+ 2. Options given in the named prototype (define_access_role :admin, ...)
+ 3. Options given in the prototype for that class (self.access_role_prototype ...)
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000008">cache</a>&nbsp;&nbsp;
+      <a href="#M000007">cache_fetch</a>&nbsp;&nbsp;
+      <a href="#M000006">cached_ids</a>&nbsp;&nbsp;
+      <a href="#M000014">classify</a>&nbsp;&nbsp;
+      <a href="#M000013">create_from_prototype</a>&nbsp;&nbsp;
+      <a href="#M000015">define_class_method</a>&nbsp;&nbsp;
+      <a href="#M000010">define_prototype</a>&nbsp;&nbsp;
+      <a href="#M000004">dir_exists</a>&nbsp;&nbsp;
+      <a href="#M000011">find_or_create</a>&nbsp;&nbsp;
+      <a href="#M000009">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000002">prototype_dir</a>&nbsp;&nbsp;
+      <a href="#M000001">prototype_dir=</a>&nbsp;&nbsp;
+      <a href="#M000012">recreate</a>&nbsp;&nbsp;
+      <a href="#M000005">require_prototypes</a>&nbsp;&nbsp;
+      <a href="#M000003">set_prototype_dir</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RSPEC_PROTOTYPE_DIR</td>
+          <td>=</td>
+          <td class="context-item-value">File.join(RAILS_ROOT, 'spec', 'object_mother')</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TEST_PROTOTYPE_DIR</td>
+          <td>=</td>
+          <td class="context-item-value">File.join(RAILS_ROOT, 'test', 'object_mother')</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000008.html');return false;">
+          <span class="method-name">cache</span><span class="method-args">(name, obj)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Stores the ID of a named prototype in the <a
+href="ObjectMother.html#M000008">cache</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000007.html');return false;">
+          <span class="method-name">cache_fetch</span><span class="method-args">(name, class_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Loads a named prototype based upon its cached ID.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000006.html');return false;">
+          <span class="method-name">cached_ids</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000014.html');return false;">
+          <span class="method-name">classify</span><span class="method-args">(word)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <hr size="10"></hr><p>
+Helper methods
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000013.html');return false;">
+          <span class="method-name">create_from_prototype</span><span class="method-args">(class_name, args = nil, raise_exceptions = false) {|merged_args| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This creates objects based on their prototype. It merges together any of
+the prototype definitions and sends them to create.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000015.html');return false;">
+          <span class="method-name">define_class_method</span><span class="method-args">(name, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Dynamically defines class methods. This is a little tricky. See: <a
+href="http:blog.jayfields.com/2007/10/ruby-defining-class-methods.html">blog.jayfields.com/2007/10/ruby-defining-class-methods.html</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000010.html');return false;">
+          <span class="method-name">define_prototype</span><span class="method-args">(klass, args) {|*block_args| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates methods matching a named prototypes. This allows you to use:
+</p>
+<pre>
+  define_user :john, :name =&gt; 'John'
+</pre>
+<p>
+to define a method called <tt>john</tt> that creates a new User object,
+passing in <tt>{ :name =&gt; &#8216;John&#8217; }</tt> to the create
+method.
+</p>
+<p>
+You can also specify a block which takes care of the creation of the
+object, e.g.
+</p>
+<pre>
+  define :john do
+    User.create(:name =&gt; 'John', :employee_number =&gt; User.count + 1)
+  end
+</pre>
+<p>
+A corresponding ! method is also created. This behaves in the same way
+except that it calls <tt>create!</tt> rather than <tt>create</tt> so that
+exceptions are raised.
+</p>
+<p>
+Finally, a method called <tt>recreate_john</tt> is created to ensure that
+any cached object is destroyed, and a new one created from the prototype.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000004.html');return false;">
+          <span class="method-name">dir_exists</span><span class="method-args">(dir)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the directory name if it exists.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000011.html');return false;">
+          <span class="method-name">find_or_create</span><span class="method-args">(name, class_name, args, raise_exceptions = false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This is the entry point for using named prototypes (i.e., those created
+with &#8216;define_xxx :name&#8217;). It first tries to load the object
+based on a cached id (if available). Otherwise it uses <a
+href="ObjectMother.html#M000013">create_from_prototype</a> to create a new
+object.
+</p>
+<p>
+All created named prototypes are added to the <a
+href="ObjectMother.html#M000008">cache</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000009.html');return false;">
+          <span class="method-name">method_missing</span><span class="method-args">(sym, *args, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <hr size="10"></hr><p>
+Method missing magic.
+</p>
+<p>
+This picks up define_xxx or create_xxx methods and routes them
+appropraitely.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000002.html');return false;">
+          <span class="method-name">prototype_dir</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000001.html');return false;">
+          <span class="method-name">prototype_dir=</span><span class="method-args">(dir)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000012.html');return false;">
+          <span class="method-name">recreate</span><span class="method-args">(name, class_name, args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This destroys and then recreates a named prototype. Use it when you want to
+bypass the <a href="ObjectMother.html#M000008">cache</a>.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000005.html');return false;">
+          <span class="method-name">require_prototypes</span><span class="method-args">(dir)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Requires any .rb files from a given directory.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="ObjectMother.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('ObjectMother.src/M000003.html');return false;">
+          <span class="method-name">set_prototype_dir</span><span class="method-args">(dir = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the prototype directory to a given value or some default.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
