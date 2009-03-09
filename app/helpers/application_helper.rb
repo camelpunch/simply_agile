@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def body_classes
+    @body_classes ||= [controller.controller_name]
+  end
+
   def render_flash
     return nil if flash.keys.empty?
     xml = Builder::XmlMarkup.new
