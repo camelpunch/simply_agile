@@ -1,0 +1,32 @@
+Assert Valid XHTML
+==================
+
+This is an offline replacement for the assert_valid_xhtml assertion from
+Codahale's responsible_markup plugin, at:
+
+http://blog.codahale.com/2006/03/05/responsiblemarkup-v01-unit-test-your-way-to-responsible-markup/
+
+See the blog post I wrote about this at:
+
+http://www.jandaweb.com/blog_posts/7
+
+In short, you need the libxml-ruby gem.
+
+I apologise if I broke any rules about distributing the DTDs.
+
+
+Example
+=======
+
+get :show
+assert_response :success
+assert_valid_xhtml
+
+
+Lots of love,
+
+Andrew Bruce
+www.jandaweb.com
+
+
+Copyright (c) 2008 Jandaweb Ltd, released under the MIT license

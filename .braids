@@ -1,0 +1,8 @@
+--- 
+vendor/plugins/assert_valid_xhtml: 
+  squashed: true
+  url: git@git.jandaweb.com:assert_valid_xhtml.git
+  type: git
+  revision: d70211593f25b947f166b0f6b103c182b802cca0
+  branch: master
+  remote: braid/vendor/plugins/assert-valid-xhtml
