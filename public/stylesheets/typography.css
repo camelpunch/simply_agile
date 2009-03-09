@@ -1,0 +1,6 @@
+h1 { margin-bottom:1em; font-weight:bold; font-size:182% }
+h2,caption { font-weight:bold; font-size:138.5% }
+p { margin:1em 0 1em 0 }
+table p { margin:0 }
+
+form input.numeric { text-align:right }

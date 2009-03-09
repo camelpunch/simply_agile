@@ -1,0 +1,26 @@
+#navigation { margin-bottom:15px }
+#breadcrumbs { overflow:hidden; margin-bottom:15px }
+#breadcrumbs li { float:left; margin-left:10px }
+#breadcrumbs li.first-child { margin-left:0 }
+#content { clear:left }
+
+/* iterations/new */
+#stories_iteration,
+#stories_available { float:left; width:50% }
+body.iterations #stories { width:700px; min-height:200px }
+body.iterations p.submit { clear:left }
+body.iterations table tr { vertical-align:top }
+/* end iterations/new */
+
+/* projects/show */
+#stories, #iterations { float:left }
+#iterations { margin-right:60px }
+/* end projects/show */
+
+/* stories/new */
+#acceptance_criteria { margin-bottom:15px }
+#acceptance_criteria table { width:35em }
+#acceptance_criteria table td.edit,
+#acceptance_criteria table td.delete { width:4em }
+#acceptance_criteria form { display:inline }
+/* end stories/new */
