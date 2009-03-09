@@ -10,7 +10,7 @@
   <h2>Iterations</h2>
   <p>
   <%= link_to("Plan an iteration", 
-              new_project_iteration_path(@project, new_iteration_params))
+              new_project_iteration_path(@project))
   %>
   </p>
   <% if @project.iterations.empty? %>
