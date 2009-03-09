@@ -23,7 +23,9 @@
       <% @project.stories.each do |story| %>
       <tr id="story_<%= story.id %>">
         <td>
-          <%= check_box_tag "stories[#{story.id}][include]" %>
+          <%= check_box_tag("stories[#{story.id}][include]", 
+                            '1', 
+                            @iteration.stories.include?(story)) %>
           <%= label_tag "stories_#{story.id}_include", "Include" %>
         </td>
         <td>
@@ -32,8 +34,10 @@
         </td>
         <td>
           <%= label_tag "stories_#{story.id}_estimate", "Estimate" %>
-          <%= text_field_tag "stories[#{story.id}][estimate]", {}, 
-            :class => 'numeric', :size => 1 %>
+          <%= text_field_tag("stories[#{story.id}][estimate]", 
+                             story.estimate, 
+                             :class => 'numeric', 
+                             :size => 1) %>
         </td>
       </tr>
       <% end %>

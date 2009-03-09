@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe AcceptanceCriterion do
   before(:each) do
+    AcceptanceCriterion.delete_all
     @valid_attributes = {
       :story_id => "1",
       :criterion => "value for name",

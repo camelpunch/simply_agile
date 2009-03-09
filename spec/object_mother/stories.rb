@@ -1,14 +1,19 @@
 require File.join(File.dirname(__FILE__), 'projects')
+require File.join(File.dirname(__FILE__), 'iterations')
 class Stories < ObjectMother
   truncate_story
 
   def self.story_prototype
     {
-      :project => Projects.simply_agile
+      :project => Projects.simply_agile,
+      :content => 'asdf',
     }
   end
 
-  define_story(:iteration_planning,
-               :name => 'Iteration Planning',
-               :content => 'asdf')
+  define_story(:iteration_planning, :name => 'Iteration Planning')
+  define_story(:acceptance_criteria, :name => 'Acceptance Criteria')
+  define_story(:iteration_planning_included, 
+               :name => 'Iteration Planning Included',
+               :estimate => 4,
+               :iteration => Iterations.erroneous_iteration)
 end
