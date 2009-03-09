@@ -76,7 +76,10 @@ describe SessionsController do
       end
 
       it "should provide a flash notice" do
-        flash[:notice].should_not be_blank
+        flash = mock('Flash', :now => {})
+        controller.stub!(:flash).and_return(flash)
+        do_post
+        flash.now[:notice].should_not be_blank
       end
     end
   end
