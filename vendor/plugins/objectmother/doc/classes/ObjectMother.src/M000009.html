@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>method_missing (ObjectMother)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/object_mother.rb, line 178</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span> (<span class="ruby-identifier">sym</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">matchdata</span> = <span class="ruby-regexp re">%r{^define_?(.*)}</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matchdata</span>
+        <span class="ruby-identifier">define_prototype</span>(<span class="ruby-identifier">matchdata</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+        <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">matchdata</span> = <span class="ruby-regexp re">%r{^create_([^!]+)(!?)}</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matchdata</span>
+        <span class="ruby-identifier">hashargs</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">||</span> {}
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">create_from_prototype</span>(<span class="ruby-identifier">matchdata</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">hashargs</span>, <span class="ruby-identifier">matchdata</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'!'</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">super</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
