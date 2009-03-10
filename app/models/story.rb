@@ -14,6 +14,11 @@ class Story < ActiveRecord::Base
     if iteration && project && (iteration.project_id != project_id)
       errors.add(:iteration_id, "does not belong to the story's project")
     end
+
+    # iteration id changed on a story
+    if iteration_id_changed? && !changes['iteration_id'][0].nil?
+      errors.add(:iteration_id, "cannot be changed")
+    end
   end
 
   def to_s

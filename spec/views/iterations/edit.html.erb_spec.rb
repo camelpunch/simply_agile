@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/iterations/new" do
+describe "/iterations/edit" do
   before :each do
     @story = mock_model(Story,
                         :name => '',
@@ -12,22 +12,21 @@ describe "/iterations/new" do
     @iteration = mock_model(Iteration, 
                             :duration => '',
                             :name => '',
-                            :stories => [],
-                            :new_record? => true)
+                            :stories => [])
   end
 
   describe "first visit" do
     before :each do
       assigns[:project] = @project
       assigns[:iteration] = @iteration
-      render 'iterations/new'
+      render 'iterations/edit'
     end
 
     it_should_behave_like "a standard view"
 
-    it "should have a form to create an iteration" do
+    it "should have a form to update the iteration" do
       response.should have_tag('form[action=?][method=?]', 
-                               project_iterations_path(@project),
+                               project_iteration_path(@project, @iteration),
                                'post')
     end
   end

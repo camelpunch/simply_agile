@@ -1,0 +1,36 @@
+<%= form.error_messages %>
+<p>
+<%= form.label :name %>
+<%= form.text_field :name %>
+</p>
+<p>
+<%= form.label :duration, 'Duration (days)' %>
+<%= form.text_field :duration, :class => 'numeric', :size => 1 %>
+</p>
+
+<div id="stories">
+  <table id="stories_available">
+    <caption>Available stories</caption>
+    <% @project.stories.each do |story| %>
+    <tr id="story_<%= story.id %>">
+      <td>
+        <%= check_box_tag("stories[#{story.id}][include]", 
+                          '1', 
+                          @iteration.stories.include?(story)) %>
+        <%= label_tag "stories_#{story.id}_include", "Include" %>
+      </td>
+      <td>
+        <span><%= h story.name %></span>
+        <div class="content"><%= simple_format story.content %></div>
+      </td>
+      <td>
+        <%= label_tag "stories_#{story.id}_estimate", "Estimate" %>
+        <%= text_field_tag("stories[#{story.id}][estimate]", 
+                           story.estimate, 
+                           :class => 'numeric', 
+                           :size => 1) %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

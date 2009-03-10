@@ -1,26 +1,13 @@
 class IterationsController < ApplicationController
   before_filter :get_project
-  before_filter :get_iteration, :only => [:show]
+  before_filter :get_iteration, :only => [:edit, :show, :update]
   before_filter :new_iteration, :only => [:new, :create]
 
   def create
-    Iteration.transaction do
-      @project.stories.each_with_index do |story, idx|
-        story_params = params[:stories][story.id.to_s]
-        @project.stories[idx].estimate = story_params[:estimate]
-        story_should_be_assigned = story_params[:include].to_i == 1
+    process_iteration_and_stories!
 
-        if story_should_be_assigned
-          @iteration.stories << story 
-        else
-          @project.stories[idx].save!
-        end
-      end
-
-      @iteration.save!
-      flash[:notice] = "Iteration successfully created"
-      redirect_to [@project, @iteration]
-    end
+    flash[:notice] = "Iteration successfully created"
+    redirect_to [@project, @iteration]
 
   rescue ActiveRecord::RecordInvalid
     render :template => 'iterations/new'
@@ -34,6 +21,16 @@ class IterationsController < ApplicationController
     end
   end
 
+  def update
+    process_iteration_and_stories!
+
+    flash[:notice] = "Iteration successfully updated"
+    redirect_to [@project, @iteration]
+
+  rescue ActiveRecord::RecordInvalid
+    render :template => 'iterations/edit'
+  end
+
   protected
 
   def get_iteration
@@ -42,6 +39,31 @@ class IterationsController < ApplicationController
 
   def new_iteration
     @iteration = @project.iterations.build(params[:iteration])
+  end
+
+  def process_iteration_and_stories!
+    Iteration.transaction do
+      @project.stories.each_with_index do |story, idx|
+        story_params = params[:stories][story.id.to_s]
+
+        @project.stories[idx].estimate = story_params[:estimate]
+
+        assignment_requested = story_params[:include].to_i == 1
+        already_assigned = @iteration.stories.include?(story)
+
+        if assignment_requested && !already_assigned
+          @iteration.stories << story
+        elsif !assignment_requested && already_assigned
+          @iteration.stories.delete(story)
+        end
+
+        if !assignment_requested
+          @project.stories[idx].save! # saves estimate
+        end
+      end
+
+      @iteration.save!
+    end
   end
 
 end
