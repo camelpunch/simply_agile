@@ -1,11 +1,25 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe "/iterations/new" do
+  before :each do
+    @story = mock_model(Story,
+                        :name => '',
+                        :content => '',
+                        :estimate => '',
+                        :project => @project)
+    @project = mock_model(Project,
+                          :stories => [@story])
+    @iteration = mock_model(Iteration, 
+                            :duration => '',
+                            :name => '',
+                            :stories => [],
+                            :new_record? => true)
+  end
+
   describe "first visit" do
     before :each do
-      @story = Stories.iteration_planning!
-      assigns[:project] = @story.project
-      assigns[:iteration] = @story.project.iterations.build
+      assigns[:project] = @project
+      assigns[:iteration] = @iteration
       render 'iterations/new'
     end
 
@@ -14,18 +28,14 @@ describe "/iterations/new" do
     it "should have a form to create an iteration" do
       response.should have_tag('form[action=?][method=?]', 
                                project_iterations_path(assigns[:project]),
-                             'post')
+                               'post')
     end
   end
 
   describe "on error" do
     before :each do
-      @story = Stories.iteration_planning_included!
-      @iteration = mock_model(Iteration, 
-                              :duration => '',
-                              :name => '', 
-                              :stories => [@story])
-      assigns[:project] = @story.project
+      @iteration.stub!(:stories).and_return([@story])
+      assigns[:project] = @project
       assigns[:iteration] = @iteration
       render 'iterations/new'
     end
