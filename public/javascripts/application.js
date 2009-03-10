@@ -4,7 +4,7 @@ $(document).ready(function() {
   // highlight first erroneous field / auto focus field
   var first_error_field = $('.field_with_errors')[0];
   if (first_error_field) first_error_field.focus();
-  else $('.auto_focus').select();
+  else $('.auto_focus').focus();
 
   // stories/show
   if ($('body#stories_show')) AcceptanceCriteria.init();
