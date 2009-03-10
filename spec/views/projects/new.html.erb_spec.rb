@@ -4,7 +4,8 @@ describe "/projects/new" do
 
   before :each do
     assigns[:project] = mock_model(Project, 
-                                   :name => '', 
+                                   :name => '',
+                                   :description => '',
                                    :new_record? => true)
     render 'projects/new'
   end
