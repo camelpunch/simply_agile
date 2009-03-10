@@ -9,6 +9,18 @@
 <%= h(@project.description) %>
 </p>
 
+<h2>Stories</h2>
+<ul>
+  <li>
+    <%= link_to "Stories which are still need to be worked on",
+                project_stories_path(@project) %>
+  </li>
+  <li>
+    <%= link_to "Stories which have previously been completed",
+                finished_project_stories_path(@project) %>
+  </li>
+</ul>
+
 <% unless @project.stories.empty? %>
 <div id="iterations">
   <h2>Iterations</h2>
@@ -31,24 +43,6 @@
   <% end %>
 </div>
 <% end %>
-
-<div id="stories">
-  <h2>Stories</h2>
-  <p>
-  <%= link_to("Write a story", new_project_story_path(@project)) %>
-  </p>
-  <% if @project.stories.empty? %>
-    <div class="guidance">
-      <p>
-      This project has no stories.
-      </p>
-    </div>
-  <% else %>
-    <ol>
-      <%= render @project.stories %>
-    </ol>
-  <% end %>
-</div>
 
 <p>
   <%= link_to "Edit", edit_project_path(@project) %>
