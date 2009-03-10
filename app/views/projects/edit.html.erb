@@ -5,12 +5,9 @@
   <li><%= link_to h(@project), @project %></li>
   <li>Edit</li>
 <% end %>
-<% form_for @project do |f| %>
-  <p>
-  <%= f.label :name %>
-  <%= f.text_field :name, :class => 'auto_focus' %>
-  </p>
+<% form_for @project do |form| %>
+  <%= render form %>
   <p class="submit">
-  <%= f.submit 'Update Project' %>
+    <%= form.submit 'Update Project' %>
   </p>
 <% end %>

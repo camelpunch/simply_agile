@@ -4,6 +4,7 @@ describe Project do
   before(:each) do
     @valid_attributes = {
       :name => "value for name",
+      :description => "description for project",
       :organisation_id => "1"
     }
   end

@@ -4,12 +4,9 @@
   <li class="first-child"><%= link_to 'Projects', projects_path %></li>
   <li>New</li>
 <% end %>
-<% form_for @project do |f| %>
-  <p>
-  <%= f.label :name %>
-  <%= f.text_field :name, :class => 'auto_focus' %>
-  </p>
+<% form_for @project do |form| %>
+  <%= render form %>
   <p class="submit">
-  <%= f.submit 'Create Project' %>
+  <%= form.submit 'Create Project' %>
   </p>
 <% end %>

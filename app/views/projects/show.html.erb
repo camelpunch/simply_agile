@@ -5,6 +5,10 @@
   <li><%= h @project %></li>
 <% end %>
 
+<p>
+<%= h(@project.description) %>
+</p>
+
 <% unless @project.stories.empty? %>
 <div id="iterations">
   <h2>Iterations</h2>
