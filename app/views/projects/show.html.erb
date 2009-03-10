@@ -45,8 +45,7 @@
     </div>
   <% else %>
     <ol>
-      <%= render(:partial => 'stories/list_item', 
-                 :collection => @project.stories) %>
+      <%= render @project.stories %>
     </ol>
   <% end %>
 </div>
