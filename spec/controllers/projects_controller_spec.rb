@@ -115,4 +115,72 @@ describe ProjectsController do
       do_call
     end
   end
+
+  describe "edit" do
+    def do_call
+      get :edit, :id => @project.id
+    end
+
+    before :each do
+      Project.stub!(:find).with(@project.id.to_s).and_return(@project)
+    end
+
+    it_should_behave_like "it's successful"
+
+    it "should assign the project" do
+      controller.should_receive(:get_project)
+      do_call
+    end
+  end
+
+  describe "update" do
+    def do_call
+      put :update, :id => @project.id, :project => @attributes
+    end
+
+    before :each do
+      @attributes = {'name' => 'some new name'}
+      controller.instance_variable_set('@project', @project)
+      @project.stub!(:update_attributes)
+    end
+
+    it "should assign the project" do
+      controller.should_receive(:get_project)
+      do_call
+    end
+
+    it "should attempt to save" do
+      @project.should_receive(:update_attributes).with(@attributes)
+      do_call
+    end
+
+    describe "success" do
+      before :each do
+        @project.stub!(:update_attributes).with(@attributes).
+          and_return(true)
+      end
+
+      it "should redirect to project page" do
+        do_call
+        response.should redirect_to(project_url(@project))
+      end
+
+      it "should provide a flash notice" do
+        do_call
+        flash[:notice].should_not be_blank
+      end
+    end
+
+    describe "failure" do
+      before :each do
+        @project.stub!(:update_attributes).with(@attributes).
+          and_return(false)
+      end
+
+      it "should re-render the new template" do
+        do_call
+        response.should render_template('projects/edit')
+      end
+    end
+  end
 end

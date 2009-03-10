@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_filter :new_project, :only => [:new, :create]
-  before_filter :get_project, :only => :show
+  before_filter :get_project, :only => [:show, :edit, :update]
 
   def create
     if @project.update_attributes(params[:project])
@@ -8,6 +8,15 @@ class ProjectsController < ApplicationController
       redirect_to @project
     else
       render :template => 'projects/new'
+    end
+  end
+
+  def update
+    if @project.update_attributes(params[:project])
+      flash[:notice] = "Project updated."
+      redirect_to @project
+    else
+      render :template => 'projects/edit'
     end
   end
 
