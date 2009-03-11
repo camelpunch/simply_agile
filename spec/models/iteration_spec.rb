@@ -113,4 +113,41 @@ describe Iteration do
       @iteration.burndown
     end
   end
+
+  describe "starting" do
+
+    describe "ready to start" do
+      before :each do
+        @iteration = Iterations.first_iteration
+      end
+
+      it "should set the start_date to today" do
+        @iteration.start
+        @iteration.reload
+        @iteration.start_date.should == Date.today
+      end
+
+      it "should return false to #active? if not started" do
+        @iteration.active?.should == false
+      end
+
+      it "should return true to #active? if started" do
+        @iteration.start
+        @iteration.active?.should == true
+      end
+    end
+    
+    describe "already started" do
+      before :each do
+        @iteration = Iterations.first_iteration
+        @iteration.update_attributes(:start_date => 2.days.ago.to_date)
+      end
+      
+      it "should not change the start date" do
+        @iteration.start
+        @iteration.reload
+        @iteration.start_date.should == 2.days.ago.to_date
+      end
+    end
+  end
 end

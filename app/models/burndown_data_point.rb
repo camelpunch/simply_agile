@@ -4,7 +4,7 @@ class BurndownDataPoint < ActiveRecord::Base
   named_scope :for_iteration, lambda { |iteration|
     {
       :conditions => { :iteration_id => iteration.id },
-      :order => 'date '
+      :order => 'date'
     }
   }
 end

@@ -26,6 +26,16 @@ class Iteration < ActiveRecord::Base
     end
   end
 
+  def start
+    unless active?
+      self.update_attributes(:start_date => Date.today)
+    end
+  end
+
+  def active?
+    ! self.start_date.nil?
+  end
+
   def burndown
     Burndown.new(self)
   end
