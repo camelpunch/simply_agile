@@ -1,10 +1,17 @@
 class Story < ActiveRecord::Base
+  attr_accessor :include
   belongs_to :iteration
   belongs_to :project
 
   has_many(:acceptance_criteria, 
            :order => 'criterion',
            :dependent => :destroy)
+
+  named_scope :assigned_or_available_for, lambda {|iteration|
+    {
+      :conditions => ['iteration_id = ? OR iteration_id IS NULL', iteration.id]
+    }
+  }
 
   validates_presence_of :name, :content, :project_id
 

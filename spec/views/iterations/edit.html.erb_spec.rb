@@ -8,11 +8,12 @@ describe "/iterations/edit" do
                         :estimate => '',
                         :project => @project)
     @project = mock_model(Project,
-                          :stories => [@story])
+                          :stories => @stories)
     @iteration = mock_model(Iteration, 
                             :duration => '',
                             :name => '',
                             :stories => [])
+    assigns[:stories] = [@story]
   end
 
   describe "first visit" do

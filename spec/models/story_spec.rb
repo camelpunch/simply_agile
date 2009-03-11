@@ -20,6 +20,42 @@ describe Story do
     end
   end
 
+  describe "assigned_or_available_for" do
+    before :each do
+      Story.delete_all
+      @iteration = Iteration.new
+      @available = Stories.create_story!(:name => 'available', 
+                                         :iteration_id => nil)
+      @unavailable = Stories.create_story!(:name => 'unavailable', 
+                                           :iteration_id => 234)
+      @stories = Story.assigned_or_available_for(@iteration)
+    end
+
+    describe "for new iteration" do
+      it "should include available stories" do
+        @stories.should include(@available)
+      end
+
+      it "should exclude unavailable stories" do
+        @stories.should_not include(@unavailable)
+      end
+    end
+
+    describe "for existing iteration" do
+      before :each do
+        @available_by_assignment = Story.create!(:project_id => 123,
+                                                 :content => 'asdf',
+                                                 :name => 'available by assignment')
+        @iteration = Iterations.create_iteration! :stories => [@available_by_assignment]
+        @stories = Story.assigned_or_available_for(@iteration)
+      end
+
+      it "should include an assigned story" do
+        @stories.should include(@available_by_assignment)
+      end
+    end
+  end
+
   describe "destroy" do
     it "should destroy dependent acceptance criteria" do
       Story.delete_all

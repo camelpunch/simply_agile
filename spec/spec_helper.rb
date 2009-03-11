@@ -83,4 +83,12 @@ Spec::Runner.configure do |config|
       response.should be_valid_xhtml   
     end
   end
+
+  describe "guidance", :shared => true do
+    it_should_behave_like "a standard view"
+
+    it "should provide guidance" do
+      assigns[:body_classes].should include('guidance')
+    end
+  end
 end

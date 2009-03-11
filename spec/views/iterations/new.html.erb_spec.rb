@@ -7,19 +7,19 @@ describe "/iterations/new" do
                         :content => '',
                         :estimate => '',
                         :project => @project)
-    @project = mock_model(Project,
-                          :stories => [@story])
+    @project = mock_model(Project)
     @iteration = mock_model(Iteration, 
                             :duration => '',
                             :name => '',
                             :stories => [],
                             :new_record? => true)
+    assigns[:project] = @project
+    assigns[:iteration] = @iteration
+    assigns[:stories] = [@story]
   end
 
   describe "first visit" do
     before :each do
-      assigns[:project] = @project
-      assigns[:iteration] = @iteration
       render 'iterations/new'
     end
 
@@ -30,13 +30,15 @@ describe "/iterations/new" do
                                project_iterations_path(@project),
                                'post')
     end
+
+    it "should display available stories" do
+      response.should have_tag('#stories_available')
+    end
   end
 
   describe "on error" do
     before :each do
       @iteration.stub!(:stories).and_return([@story])
-      assigns[:project] = @project
-      assigns[:iteration] = @iteration
       render 'iterations/new'
     end
 

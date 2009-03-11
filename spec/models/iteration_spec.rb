@@ -18,6 +18,48 @@ describe Iteration do
     iteration.update_attributes!(@valid_attributes)
   end
 
+  describe "save_with_planned_stories_attributes!" do
+    before :all do
+      @to_be_added = Stories.create_story!(:name => 'include me')
+      @to_be_removed = Stories.create_story!(:name => 'exclude me')
+      @iteration = Iterations.create_iteration!(:name => 'planning',
+                                                :stories => [@to_be_removed])
+      @iteration.duration = 6
+      @iteration.save_with_planned_stories_attributes!({
+        @to_be_added.id.to_s => { 'include' => '1', 'estimate' => '5' },
+        @to_be_removed.id.to_s => { 'include' => '0', 'estimate' => '4' },
+      })
+    end
+
+    it "should include" do
+      @iteration.reload.stories.should include(@to_be_added)
+    end
+
+    it "should exclude" do
+      @iteration.reload.stories.should_not include(@to_be_removed)
+    end
+
+    it "should set the estimate on an included story" do
+      @to_be_added.reload
+      @to_be_added.estimate.should == 5
+    end
+
+    it "should set the estimate on an included story" do
+      @to_be_removed.reload
+      @to_be_removed.estimate.should == 4
+    end
+
+    it "should save the iteration" do
+      @iteration.reload
+      @iteration.duration.should == 6
+    end
+
+    it "should retain the planned stories in memory" do
+      @iteration.planned_stories.should include(@to_be_added)
+      @iteration.planned_stories.should include(@to_be_removed)
+    end
+  end
+
   describe "default name" do
     it "should use a default name if none is assigned" do
       project = Project.create(:name => "woo")
