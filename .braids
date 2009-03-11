@@ -1,8 +1,8 @@
 --- 
 vendor/plugins/assert_valid_xhtml: 
   squashed: true
-  url: git@git.jandaweb.com:assert_valid_xhtml.git
   type: git
+  url: git@git.jandaweb.com:assert_valid_xhtml.git
   revision: 7c4e0cbfd5bfecd0ce8e077498b8322cef8d46bc
   branch: master
   remote: braid/vendor/plugins/assert-valid-xhtml
@@ -10,6 +10,6 @@ vendor/plugins/objectmother:
   squashed: true
   url: git://github.com/jcinnamond/objectmother.git
   type: git
-  revision: 8cf3c1ac2aff494f304a9d320635a8cfb3226510
+  revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
   branch: master
   remote: braid/vendor/plugins/objectmother
