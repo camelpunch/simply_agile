@@ -76,4 +76,41 @@ describe Iteration do
       @iteration.errors.on(:stories).should_not be_nil
     end
   end
+
+  describe "story points" do
+    before :each do
+      project = Projects.simply_agile
+      @iteration = Iterations.create_iteration(:project => project)
+
+      @stories = []
+      @estimate = 0
+      @stories << Stories.create_story!(:iteration => @iteration, :estimate => 5)
+      @estimate += 5
+      @stories << Stories.create_story!(:iteration => @iteration, :estimate => 8)
+      @estimate += 8
+      @stories << Stories.create_story!(:iteration => @iteration, :estimate => 2)
+      @estimate += 2
+      @stories << Stories.create_story!(:iteration => @iteration)
+    end
+
+    it "should respond to intial_estimate" do
+      @iteration.should respond_to(:initial_estimate)
+    end
+
+    it "should calculate story_points_remaining from stories" do
+      @iteration.stories.should_receive(:incomplete).and_return(@stories)
+      @iteration.story_points_remaining.should == @estimate
+    end
+  end
+
+  describe "burndown" do
+    before :each do
+      @iteration = Iteration.new
+    end
+
+    it "should create a new burndown object" do
+      Burndown.should_receive(:new).with(@iteration)
+      @iteration.burndown
+    end
+  end
 end

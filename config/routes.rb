@@ -6,5 +6,10 @@ ActionController::Routing::Routes.draw do |map|
       story.resources :acceptance_criteria
     end
   end
+
+  map.resources :iterations do |iteration|
+    iteration.resource :burndown
+  end
+
   map.root :controller => 'home', :action => 'show'
 end

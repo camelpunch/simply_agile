@@ -78,4 +78,12 @@ describe Story do
       @story.errors.on(:iteration_id).should_not be_nil
     end
   end
+
+  describe "incomplete" do
+    it "should respond to incomplete" do
+      Story.should respond_to(:incomplete)
+    end
+
+    it "should only return stories where status is not complete"
+  end
 end

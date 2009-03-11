@@ -14,8 +14,7 @@
   </p>
 <% else %>
   <ol>
-    <%= render :partial => 'stories/list_item', 
-      :collection => @iteration.stories %>
+    <%= render @iteration.stories %>
   </ol>
 <% end %>
 

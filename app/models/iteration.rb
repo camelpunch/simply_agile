@@ -19,4 +19,14 @@ class Iteration < ActiveRecord::Base
   def to_s
     name || 'New Iteration'
   end
+
+  def story_points_remaining
+    stories.incomplete.inject(0) do |sum, st|
+      sum + st.estimate.to_i
+    end
+  end
+
+  def burndown
+    Burndown.new(self)
+  end
 end

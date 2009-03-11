@@ -16,6 +16,8 @@ class Story < ActiveRecord::Base
     end
   end
 
+  named_scope :incomplete
+
   def to_s
     name || "New Story"
   end

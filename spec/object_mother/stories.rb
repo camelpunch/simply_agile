@@ -4,7 +4,9 @@ class Stories < ObjectMother
   truncate_story
 
   def self.story_prototype
+    count = Story.count
     {
+      :name => "Story #{count + 1}",
       :project => Projects.simply_agile,
       :content => 'asdf',
     }
