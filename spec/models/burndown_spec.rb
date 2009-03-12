@@ -19,6 +19,12 @@ describe Burndown do
       @iteration.stub!(:initial_estimate).and_return(300)
       @burndown.baseline_data.should == [300, 250, 200, 150, 100, 50, 0]
     end
+
+    it "should cope with a low story point -> day ratio" do
+      @iteration.stub!(:duration).and_return(9)
+      @iteration.stub!(:initial_estimate).and_return(4)
+      @burndown.baseline_data.should == [4, 3.5, 3, 2.5, 2, 1.5, 1, 0.5, 0]
+    end
   end
 
   describe "actual data" do

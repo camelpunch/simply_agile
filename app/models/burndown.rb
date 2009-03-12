@@ -28,7 +28,7 @@ class Burndown
   def baseline_data
     points = iteration.initial_estimate
     duration = iteration.duration - 1 # Don't need to work out the first day
-    points_per_day = points / duration
+    points_per_day = points.to_f / duration
 
     data = [points]
     (iteration.duration - 1).times do
