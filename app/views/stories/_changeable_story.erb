@@ -1,0 +1,37 @@
+<li>
+  <h3><%= link_to h(changeable_story), [changeable_story.project, changeable_story] %></h3>
+  <%= simple_format changeable_story.content %>
+  <% form_for [changeable_story.project, 
+               changeable_story.iteration, 
+               changeable_story] do |form| %>
+    <ol>
+      <li>
+      <%= form.radio_button(:status, 
+                            'pending', 
+                            :id => "story_status_pending_#{changeable_story.id}") %>
+      <%= form.label "status_pending_#{changeable_story.id}", 'Pending' %>
+      </li>
+      <li>
+      <%= form.radio_button(:status, 
+                            'in_progress',
+                            :id => "story_status_in_progress_#{changeable_story.id}") %>
+      <%= form.label "status_in_progress_#{changeable_story.id}", 'In Progress' %>
+      </li>
+      <li>
+      <%= form.radio_button(:status, 
+                            'testing',
+                            :id => "story_status_testing_#{changeable_story.id}") %>
+      <%= form.label "status_testing_#{changeable_story.id}", 'Testing' %>
+      </li>
+      <li>
+      <%= form.radio_button(:status, 
+                            'complete',
+                            :id => "story_status_complete_#{changeable_story.id}") %>
+      <%= form.label "status_complete_#{changeable_story.id}", 'Complete' %>
+      </li>
+    </ol>
+    <p class="submit">
+    <%= form.submit 'Update Status', :id => nil %>
+    </p>
+  <% end %>
+</li>

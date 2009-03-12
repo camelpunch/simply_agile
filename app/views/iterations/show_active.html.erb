@@ -6,7 +6,7 @@
 <% end %>
 
 <div>
-  <%= image_tag(iteration_burndown_path(@iteration)) %>
+  <%= image_tag(iteration_burndown_path(@iteration), :alt => 'Burndown Chart') %>
 </div>
 
 <p id="time_remaining">
@@ -14,12 +14,10 @@
   <%= @iteration.end_date.to_s(:default) %>
 </p>
 
-<h2>Stories</h2>
-<p>
-  Still need to put in the multiple columns, but this is part of the
-  "Story Status" story.
-</p>
-
-<ul>
-  <%= render @iteration.stories %>
-</ul>
+<div class="section">
+  <h2>Stories</h2>
+  <ol>
+    <%= render :partial => 'stories/changeable_story',
+               :collection => @iteration.stories %>
+  </ol>
+</div>
