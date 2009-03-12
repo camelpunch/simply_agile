@@ -1,4 +1,4 @@
-<li>
+<li id="story_<%= changeable_story.id %>">
   <h3><%= link_to h(changeable_story), [changeable_story.project, changeable_story] %></h3>
   <%= simple_format changeable_story.content %>
   <% form_for [changeable_story.project, 
