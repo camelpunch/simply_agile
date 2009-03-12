@@ -31,9 +31,11 @@
                   :id => 'contextual_new_story') %>
       <div id="content">
         <h1><%= yield(:h1) %></h1>
+        <% unless yield(:actions).blank? %>
         <ul id="actions">
           <%= yield :actions %>
         </ul>
+        <% end %>
         <%= render_flash %>
         <%= yield %>
       </div>
