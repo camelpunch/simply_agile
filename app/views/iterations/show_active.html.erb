@@ -1,10 +1,8 @@
 <% content_for :title, "#{@iteration}" %>
 <% content_for :h1, h(@iteration) %>
 <% content_for :breadcrumbs do %>
-  <li>Projects</li>
-  <li><%= h @project %></li>
-  <li>Iterations</li>
-  <li><%= h @iteration %></li>
+  <li class="first_child project"><%= link_to h(@iteration.project), @iteration.project %></li>
+  <li class="iteration"><%= h @iteration %></li>
 <% end %>
 
 <div>
