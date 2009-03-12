@@ -5,7 +5,7 @@
 </p>
 <p>
 <%= form.label :duration, 'Duration (days)' %>
-<%= form.text_field :duration, :class => 'numeric', :size => 1 %>
+<%= form.text_field :duration, :class => 'numeric', :size => 2 %>
 </p>
 
 <div id="stories">
@@ -28,7 +28,7 @@
         <%= text_field_tag("stories[#{story.id}][estimate]", 
                            story.estimate, 
                            :class => 'numeric', 
-                           :size => 1) %>
+                           :size => 2) %>
       </td>
     </tr>
     <% end %>
