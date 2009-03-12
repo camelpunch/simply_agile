@@ -1,0 +1,26 @@
+Jandacap
+========
+
+Common capistrano recipes for jandaweb projects.
+
+
+Example
+=======
+
+config/deploy.rb need only specify the application name:
+
+	set :application, "app name"
+
+Then create config/deploy/development.rb and add:
+
+	set :deploy_to, "/rails/APP_NAME.dev.jandaweb.com"
+
+	set :domain, "dev.jandaweb.com"
+	server domain, :app, :web
+	role :db, domain, :primary => true
+
+Obviously replacing APP_NAME. Do something similar for 
+config/deploy/production.rb, setting the deploy_to and domain appropriately.
+
+
+Copyright (c) 2009 Jandaweb Ltd.

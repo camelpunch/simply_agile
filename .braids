@@ -13,3 +13,10 @@ vendor/plugins/objectmother:
   revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
   branch: master
   remote: braid/vendor/plugins/objectmother
+vendor/plugins/jandacap: 
+  squashed: true
+  url: git@git.jandaweb.com:jandacap.git
+  type: git
+  revision: 166d295f668c2e2eb2088229a0205c29fc194588
+  branch: master
+  remote: braid/vendor/plugins/jandacap
