@@ -9,6 +9,7 @@ describe "/stories/show" do
                                    :name => '')
     assigns[:story] = mock_model(Story,
                                  :acceptance_criteria => [],
+                                 :estimate? => nil,
                                  :content => '')
 
     render 'stories/show'

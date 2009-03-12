@@ -10,7 +10,7 @@ $(document).ready(function() {
   if ($('body#stories_show')) AcceptanceCriteria.init();
 
   // iterations/new
-  if ($('body#iterations_new')) {
+  if ($('table#stories_available')[0]) {
     // start swapper
     StorySwapper.init();
     

@@ -20,8 +20,45 @@ describe Story do
     end
   end
 
+  describe "assigned_or_available_for" do
+    before :each do
+      Story.delete_all
+      @iteration = Iteration.new
+      @available = Stories.create_story!(:name => 'available', 
+                                         :iteration_id => nil)
+      @unavailable = Stories.create_story!(:name => 'unavailable', 
+                                           :iteration_id => 234)
+      @stories = Story.assigned_or_available_for(@iteration)
+    end
+
+    describe "for new iteration" do
+      it "should include available stories" do
+        @stories.should include(@available)
+      end
+
+      it "should exclude unavailable stories" do
+        @stories.should_not include(@unavailable)
+      end
+    end
+
+    describe "for existing iteration" do
+      before :each do
+        @available_by_assignment = Story.create!(:project_id => 123,
+                                                 :content => 'asdf',
+                                                 :name => 'available by assignment')
+        @iteration = Iterations.create_iteration! :stories => [@available_by_assignment]
+        @stories = Story.assigned_or_available_for(@iteration)
+      end
+
+      it "should include an assigned story" do
+        @stories.should include(@available_by_assignment)
+      end
+    end
+  end
+
   describe "destroy" do
     it "should destroy dependent acceptance criteria" do
+      Story.delete_all
       story = Story.create! @valid_attributes
       criterion = story.acceptance_criteria.create! :criterion => 'bob'
       story.destroy
@@ -76,6 +113,15 @@ describe Story do
                                                      :project_id => 431314))
       @story.valid?
       @story.errors.on(:iteration_id).should_not be_nil
+    end
+
+    describe "iteration assignment" do
+      it "should not be allowed if the story is already in an iteration" do
+        existing = Story.create! @valid_attributes.merge(:iteration_id => 234)
+        existing.iteration_id = 543
+        existing.valid?
+        existing.errors.on(:iteration_id).should_not be_nil
+      end
     end
   end
 end
