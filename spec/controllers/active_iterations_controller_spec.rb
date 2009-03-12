@@ -34,7 +34,8 @@ describe ActiveIterationsController do
     end
 
     before :each do
-      @iteration = mock_model(Iteration)
+      @project = mock_model(Project)
+      @iteration = mock_model(Iteration, :project => @project)
       @iteration.stub!(:start)
       controller.stub!(:get_iteration)
       controller.instance_variable_set("@iteration", @iteration)
@@ -52,7 +53,7 @@ describe ActiveIterationsController do
 
     it "should redirect to Iterations#show" do
       do_call
-      response.should redirect_to(iteration_path(@iteration))
+      response.should redirect_to(project_iteration_path(@project, @iteration))
     end
   end
 end

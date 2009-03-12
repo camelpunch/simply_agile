@@ -11,15 +11,17 @@ describe Organisation do
     Organisation.create!(@valid_attributes)
   end
 
-  describe "projects" do
-    it "should have the writer" do
-      Organisation.new.should respond_to(:projects=)
+  describe "associations" do
+    it "should have many projects" do
+      Organisation.should have_many(:projects)
     end
-  end
 
-  describe "users" do
-    it "should have the writer" do
-      Organisation.new.should respond_to(:users=)
+    it "should have many iterations" do
+      Organisation.should have_many(:iterations)
+    end
+
+    it "should have many users" do
+      Organisation.should have_many(:users)
     end
   end
 end

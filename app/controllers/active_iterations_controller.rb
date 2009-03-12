@@ -4,7 +4,7 @@ class ActiveIterationsController < ApplicationController
 
   def create
     @iteration.start
-    redirect_to @iteration
+    redirect_to [@iteration.project, @iteration]
   end
 
   protected

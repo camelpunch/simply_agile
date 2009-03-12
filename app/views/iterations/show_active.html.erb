@@ -1,0 +1,27 @@
+<% content_for :title, "#{@iteration}" %>
+<% content_for :h1, h(@iteration) %>
+<% content_for :breadcrumbs do %>
+  <li>Projects</li>
+  <li><%= h @project %></li>
+  <li>Iterations</li>
+  <li><%= h @iteration %></li>
+<% end %>
+
+<div>
+  <%= image_tag(iteration_burndown_path(@iteration)) %>
+</div>
+
+<p id="time_remaining">
+  This iteration ends in <%= @iteration.days_remaining %> days on
+  <%= @iteration.end_date.to_s(:default) %>
+</p>
+
+<h2>Stories</h2>
+<p>
+  Still need to put in the multiple columns, but this is part of the
+  "Story Status" story.
+</p>
+
+<ul>
+  <%= render @iteration.stories %>
+</ul>

@@ -6,7 +6,7 @@ class Burndown
   end
 
   def to_png
-    gruff = Gruff::Line.new(800)
+    gruff = Gruff::Line.new(600)
 
     gruff.theme = {
       :colors => %w(grey darkorange),

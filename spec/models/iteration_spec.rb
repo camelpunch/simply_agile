@@ -115,38 +115,49 @@ describe Iteration do
   end
 
   describe "starting" do
+    before :each do
+      @iteration = Iterations.first_iteration
+    end
 
-    describe "ready to start" do
-      before :each do
-        @iteration = Iterations.first_iteration
-      end
+    it "should set the start_date to today" do
+      @iteration.start
+      @iteration.reload
+      @iteration.start_date.should == Date.today
+    end
 
-      it "should set the start_date to today" do
-        @iteration.start
-        @iteration.reload
-        @iteration.start_date.should == Date.today
-      end
+    it "should set the initial estimate" do
+      @iteration.start
+      @iteration.reload
+      @iteration.initial_estimate.should == @iteration.story_points_remaining
+    end
 
-      it "should return false to #active? if not started" do
-        @iteration.active?.should == false
-      end
+    it "should return false to #active? if not started" do
+      @iteration.active?.should == false
+    end
 
-      it "should return true to #active? if started" do
-        @iteration.start
-        @iteration.active?.should == true
-      end
+    it "should return true to #active? if started" do
+      @iteration.start
+      @iteration.active?.should == true
     end
     
     describe "already started" do
       before :each do
-        @iteration = Iterations.first_iteration
-        @iteration.update_attributes(:start_date => 2.days.ago.to_date)
+        @start_date = 2.days.ago.to_date
+        @iteration.update_attributes(:start_date => @start_date)
       end
       
       it "should not change the start date" do
         @iteration.start
         @iteration.reload
-        @iteration.start_date.should == 2.days.ago.to_date
+        @iteration.start_date.should == @start_date
+      end
+
+      it "should return the end date" do
+        @iteration.end_date.should == @start_date + @iteration.duration
+      end
+
+      it "should return the number of days remaining" do
+        @iteration.days_remaining.should == 5 # duration is 7, started 2 days ago
       end
     end
   end

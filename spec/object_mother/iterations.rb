@@ -11,6 +11,17 @@ class Iterations < ObjectMother
     )
   end
 
+  def self.active_iteration
+    Iteration.create!(
+      :name => 'Active Iteration',
+      :duration => 7,
+      :project => Projects.simply_agile,
+      :start_date => Date.yesterday,
+      :initial_estimate => 4,
+      :stories => [Stories.iteration_planning_included]
+    )
+  end
+
   define_iteration(:erroneous_iteration,
     :name => 'Erroneous Iteration',
     :project => Projects.simply_agile)

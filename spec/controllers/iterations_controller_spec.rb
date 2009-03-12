@@ -198,7 +198,9 @@ describe IterationsController do
     end
 
     before :each do
+      @iteration.stub!(:active?)
       controller.stub!(:get_iteration)
+      controller.instance_variable_set("@iteration", @iteration)
     end
 
     it_should_behave_like "it belongs to a project"
@@ -207,6 +209,18 @@ describe IterationsController do
     it "should assign the iteration" do
       controller.should_receive(:get_iteration)
       do_call
+    end
+
+    it "should render the show template if the iteration is not active" do
+      @iteration.stub!(:active?).and_return(false)
+      do_call
+      response.should render_template('iterations/show')
+    end
+
+    it "should render the show_active template if iteration is active" do
+      @iteration.stub!(:active?).and_return(true)
+      do_call
+      response.should render_template('iterations/show_active')
     end
   end
 end

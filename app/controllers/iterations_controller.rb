@@ -34,6 +34,12 @@ class IterationsController < ApplicationController
     end
   end
 
+  def show
+    if @iteration.active?
+      render :template => 'iterations/show_active'
+    end
+  end
+
   protected
 
   def get_iteration
