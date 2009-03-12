@@ -22,3 +22,5 @@ form input.numeric { text-align:right }
 #footer { font-size:77% }
 
 .section h2 { font-size:146.5% }
+
+body#iterations_show ol#headings li { text-align:center }

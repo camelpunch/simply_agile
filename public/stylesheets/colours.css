@@ -26,8 +26,19 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .section, .section h2 { border:2px solid #e4e5f3 }
 .section h2 { background:#fff }
 
+.draggables,
+.ui-droppable,
+#headings li { border-color:#e4e5f3 }
 .ui-draggable { background:url(/images/story_card.png) no-repeat }
-.ui-droppable { background:#fff; border-left:1px solid #e4e5f3 }
+.ui-droppable { background:#fff }
 .ui-draggable-dragging { opacity:0.5 }
-.ui-state-highlight { background:#e4e5f3 }
+
+.ui-state-highlight.pending,
+#headings .pending { background:#ddd }
+.ui-state-highlight.in_progress,
+#headings .in_progress { background:#3dc0fd }
+.ui-state-highlight.testing,
+#headings .testing { background:#fde03d }
+.ui-state-highlight.complete,
+#headings .complete { background:#3dfd4f }
 

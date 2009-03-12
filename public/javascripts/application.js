@@ -19,7 +19,10 @@ $(document).ready(function() {
   }
 
   // iterations/show when active
+  var draggable_left_offset = 33;
   if ($('body#iterations_show .section form.edit_story')[0]) {
+
+    DraggableStories.label_columns();
 
     // make draggable container for each form
     $('#stories_list form').each( function() {
@@ -30,18 +33,23 @@ $(document).ready(function() {
     $('input[name="story[status]"]').each( function() {
       var form = $(this).parents('form');
       var container = form.find('.draggables');
-      var value = $(this).val();
+      var status = $(this).val();
 
-      form.append('<div id="droppable_' + this.id + '"></div>');
+      container.append('<div class="'+status+'" id="droppable_' + this.id + '"></div>');
 
       var droppable = $('#droppable_' + this.id)
         .droppable({ 
           drop: function(ev, ui) { 
             var id_parts = this.id.split('_');
             var story_id = id_parts[id_parts.length - 1];
-            $('li#story_'+story_id+' ol input').val([value]); // checks the radio button
-            form.find('.ui-droppable').removeClass('ui-state-highlight');
+
+            // check the radio button
+            $('li#story_'+story_id+' ol input').val([status]);
+
+            // change class of elements
+            container.find('.ui-droppable').removeClass('ui-state-highlight');
             $(this).addClass('ui-state-highlight');
+            $(ui.draggable).css('left', $(this).position().left + draggable_left_offset);
           }
         });
 
@@ -51,17 +59,37 @@ $(document).ready(function() {
         droppable_position = droppable.position();
         droppable.addClass('ui-state-highlight');
 
-        form.append('<div id="draggable_' + this.id + '"></div>');
+        container.append('<div id="draggable_' + this.id + '"></div>');
 
         $('#draggable_' + this.id)
           .draggable({ axis: 'x' })
           .css('position', 'absolute')
           .css('top', droppable_position.top)
-          .css('left', droppable_position.left);
+          .css('left', droppable_position.left + draggable_left_offset);
       }
     });
   }
 });
+
+var DraggableStories = {
+
+  // make headings based on first set of labels
+  label_columns: function() {
+    var html = '<ol id="headings">';
+
+    $($('form.edit_story')[0]).find('label').each( function() {
+      var label = $(this).html();
+      var label_for = $(this).attr('for');
+      var class_name = $('#'+label_for).val();
+
+      html += '<li class="'+class_name+'">'+label+'</li>';
+    });
+    html += '</ol>';
+
+    $('#stories_list').before(html);
+  }
+
+}
 
 // add header to AJAX requests to play nice with Rails' content negotiation
 jQuery.ajaxSetup({ 

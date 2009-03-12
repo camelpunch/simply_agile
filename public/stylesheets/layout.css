@@ -54,12 +54,20 @@ body.iterations table tr { vertical-align:top }
 /* end stories/new */
 
 /* iterations/show active */
-/* remove after debugging
 body#iterations_show.javascript #stories_list input,
-body#iterations_show.javascript #stories_list label { display:none }
-*/
-body#iterations_show ol#stories_list li { clear:left; display:block }
-.ui-draggable { margin-top:25px; margin-left:45px;
-                width:85px; height:45px }
-.ui-droppable { width:175px; height:100px; float:left }
+body#iterations_show.javascript #stories_list label,
+body#iterations_show.javascript #stories_list p.submit{ display:none }
+
+body#iterations_show .story_content { width:280px; float:left }
+
+body#iterations_show ol#headings li { position:relative; left:280px }
+body#iterations_show ol#headings li,
+.ui-droppable { width:151px; float:left; border-right-width:1px; border-right-style:solid }
+
+body#iterations_show ol#stories_list li { position:relative; clear:left; display:block }
+
+.draggables { position:absolute; top:0; left:280px; overflow:auto; width:608px }
+.ui-draggable { width:85px; height:45px; margin-top:25px }
+.ui-droppable { height:100px } 
+                
 /* end iteration/show active */
