@@ -1,9 +1,8 @@
 <% content_for :title, "#{@project} Stories" %>
 <% content_for :h1, h("#{@project} Stories") %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
-  <li><%= link_to h(@project), @project %></li>
-  <li>Stories</li>
+  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="story">Stories</li>
 <% end %>
 
 <% unless @project.stories.empty? %>

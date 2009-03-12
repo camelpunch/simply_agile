@@ -1,8 +1,7 @@
 <% content_for :title, "#{@project} | Projects" %>
 <% content_for :h1, h(@project) %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
-  <li><%= h @project %></li>
+  <li class="first-child project"><%= h @project %></li>
 <% end %>
 
 <p>

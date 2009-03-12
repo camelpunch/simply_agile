@@ -1,12 +1,9 @@
 <% content_for :title, @acceptance_criterion %>
 <% content_for :h1, h(@acceptance_criterion) %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
-  <li><%= link_to h(@project), @project %></li>
-  <li>Stories</li>
-  <li><%= link_to h(@story), [@project, @story] %></li>
-  <li>Acceptance Criteria</li>
-  <li><%= h @acceptance_criterion %></li>
+  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="story"><%= link_to h(@story), [@project, @story] %></li>
+  <li class="acceptance_criterion"><%= h @acceptance_criterion %></li>
   <li>Edit</li>
 <% end %>
 

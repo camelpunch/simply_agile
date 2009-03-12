@@ -1,10 +1,8 @@
 <% content_for :title, "New Story for #{@project}" %>
 <% content_for :h1, h("New Story for #{@project}") %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
-  <li><%= link_to h(@project), @project %></li>
-  <li>Stories</li>
-  <li>New</li>
+  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="story">New Story</li>
 <% end %>
 <% form_for [@project, @story] do |f| %>
   <%= f.error_messages %>
@@ -14,7 +12,7 @@
   </p>
   <p>
   <%= f.label :content, 'The story' %>
-  <%= f.text_area :content %>
+  <%= f.text_area :content, :rows => 5 %>
   </p>
   <p class="submit">
   <%= f.submit 'Create Story' %>
