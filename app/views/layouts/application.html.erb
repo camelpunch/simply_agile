@@ -26,11 +26,14 @@
         </ol>
       <% end %>
       </div>
+      <%= link_to('New Story', 
+                  new_project_story_path(@project), 
+                  :id => 'contextual_new_story') %>
       <div id="content">
         <h1><%= yield(:h1) %></h1>
-        <%= link_to('New Story', 
-                    new_project_story_path(@project), 
-                    :id => 'contextual_new_story') %>
+        <ul id="actions">
+          <%= yield :actions %>
+        </ul>
         <%= render_flash %>
         <%= yield %>
       </div>

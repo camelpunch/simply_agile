@@ -1,25 +1,30 @@
 <% content_for :title, "#{@project} | Projects" %>
 <% content_for :h1, h(@project) %>
+<% content_for :actions do %>
+<li><%= link_to "Edit", edit_project_path(@project) %></li>
+<% end %>
 <% content_for :breadcrumbs do %>
   <li class="first-child project"><%= h @project %></li>
 <% end %>
 
 <%= simple_format h(@project.description) %>
 
-<h2>Stories</h2>
-<ul>
-  <li>
+<div id="stories" class="section">
+  <h2>Stories</h2>
+  <ul>
+    <li>
     <%= link_to "Stories that still need to be worked on",
-                project_stories_path(@project) %>
-  </li>
-  <li>
+      project_stories_path(@project) %>
+    </li>
+    <li>
     <%= link_to "Stories that have been completed",
-                finished_project_stories_path(@project) %>
-  </li>
-</ul>
+      finished_project_stories_path(@project) %>
+    </li>
+  </ul>
+</div>
 
 <% unless @project.stories.empty? %>
-<div id="iterations">
+<div id="iterations" class="section">
   <h2>Iterations</h2>
   <p>
   <%= link_to("Plan an iteration", 
@@ -41,6 +46,3 @@
 </div>
 <% end %>
 
-<p>
-  <%= link_to "Edit", edit_project_path(@project) %>
-</p>

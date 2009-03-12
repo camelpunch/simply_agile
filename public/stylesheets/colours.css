@@ -21,3 +21,8 @@ body.stories li#nav_projects a { background:#5f5; color:#fff }
 
 h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 
+#actions a { color:#444; display:block; background:url(/images/button_background.png) no-repeat }
+
+.section, .section h2 { border:2px solid #e4e5f3 }
+.section h2 { background:#fff }
+

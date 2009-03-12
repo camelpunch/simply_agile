@@ -1,10 +1,8 @@
 <% content_for :title, "New iteration for #{@project}" %>
-<% content_for :h1, "No available stories for #{link_to(h(@project), @project)}" %>
+<% content_for :h1, "No available stories for #{h(@project)}" %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
-  <li><%= link_to h(@project), @project %></li>
-  <li>Iterations</li>
-  <li>New</li>
+  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="iteration">New Iteration</li>
 <% end %>
 <% body_classes << 'guidance' %>
 
@@ -13,5 +11,5 @@ There are no available stories for this project, so you can't plan an iteration.
 </p>
 <p>
 You might want to 
-<%= link_to 'create a story for this project', '#new_story' %>.
+<%= link_to 'create a story for this project', new_project_story_path(@project) %>.
 </p>

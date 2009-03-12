@@ -16,4 +16,9 @@ form input.numeric { text-align:right }
 
 #breadcrumbs { font-weight:bold; line-height:3em }
 
+#actions a { line-height:32px; text-align:center; text-decoration:none;
+             font-weight:bold }
+
 #footer { font-size:77% }
+
+.section h2 { font-size:146.5% }

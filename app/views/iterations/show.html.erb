@@ -1,14 +1,14 @@
 <% content_for :title, "#{@iteration} | #{@project} Iterations" %>
 <% content_for :h1, h(@iteration) %>
+<% content_for :actions do %>
+  <li><%= link_to 'Edit', edit_project_iteration_path(@project, @iteration) %></li>
+<% end %>
 <% content_for :breadcrumbs do %>
   <li class="first-child project"><%= link_to h(@project), @project %></li>
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
 
-<p>
-<%= link_to 'Edit', edit_project_iteration_path(@project, @iteration) %>
-</p>
-
+<div class="section">
 <h2>Stories</h2>
 <% if @iteration.stories.empty? %>
   <p>
@@ -20,4 +20,4 @@
       :collection => @iteration.stories %>
   </ol>
 <% end %>
-
+</div>
