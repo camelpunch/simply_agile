@@ -9,5 +9,11 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   map.resources :users
+
+  map.resources :iterations do |iteration|
+    iteration.resource :burndown
+    iteration.resource :active_iterations
+  end
+
   map.root :controller => 'home', :action => 'show'
 end

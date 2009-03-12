@@ -3,28 +3,31 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe IterationsController do
   def mock_story
     mock_model(Story, 
-               :estimate= => nil, 
-               :save! => true, 
-               :iteration= => nil, 
-               :attributes= => nil,
-               :update_attributes! => nil)
+      :estimate= => nil,
+      :save! => true,
+      :iteration= => nil,
+      :attributes= => nil,
+      :update_attributes! => nil)
   end
 
   before :each do
     login
     stub_projects!
 
-    @iteration = mock_model(Iteration, 
-                            :stories => [],
-                            :save_with_planned_stories_attributes! => nil,
-                            :attributes= => nil)
+    @iteration = mock_model(
+      Iteration,
+      :stories => [],
+      :save_with_planned_stories_attributes! => nil,
+      :attributes= => nil,
+      :active? => false
+    )
     @new_iteration = mock_model(Iteration, 
-                                :stories => [],
-                                :save_with_planned_stories_attributes! => nil)
+      :stories => [],
+      :save_with_planned_stories_attributes! => nil)
 
     @iterations = mock('Collection',
-                       :find => @iteration,
-                       :build => @new_iteration)
+      :find => @iteration,
+      :build => @new_iteration)
 
     @project.stub!(:iterations).and_return(@iterations)
     @project.stub!(:stories).and_return([mock_model(Story)])
@@ -147,7 +150,7 @@ describe IterationsController do
       }
       @project.stub!(:stories).
         and_return(mock('Collection',
-                        :find => [@story_1, @story_2]))
+          :find => [@story_1, @story_2]))
       controller.instance_variable_set('@project', @project)
       controller.instance_variable_set('@iteration', @new_iteration)
       @new_iteration.stub!(:save!)
@@ -174,7 +177,7 @@ describe IterationsController do
       it "should redirect to iterations/show" do
         do_call
         response.should redirect_to(project_iteration_url(@project, 
-                                                          @new_iteration))
+            @new_iteration))
       end
     end
 
@@ -218,13 +221,36 @@ describe IterationsController do
       get :show, :id => @iteration.id, :project_id => @project.id
     end
 
+    before :each do
+      @iteration.stub!(:active?)
+      controller.stub!(:get_iteration)
+      controller.instance_variable_set("@iteration", @iteration)
+    end
+
     it_should_behave_like "an existing iteration action"
     it_should_behave_like "it's successful"
+
+    it "should render the show template if the iteration is not active" do
+      @iteration.stub!(:active?).and_return(false)
+      do_call
+      response.should render_template('iterations/show')
+    end
+
+    it "should render the show_active template if iteration is active" do
+      @iteration.stub!(:active?).and_return(true)
+      do_call
+      response.should render_template('iterations/show_active')
+    end
   end
 
   describe "edit" do
     def do_call
       get :edit, :id => @iteration.id, :project_id => @project.id
+    end
+
+    before :each do
+      controller.stub!(:get_iteration)
+      controller.instance_variable_set("@iteration", @iteration)
     end
 
     it "should assign stories" do
@@ -281,7 +307,7 @@ describe IterationsController do
       it "should redirect to iterations/show" do
         do_call
         response.should redirect_to(project_iteration_url(@project, 
-                                                          @iteration))
+            @iteration))
       end
     end
 

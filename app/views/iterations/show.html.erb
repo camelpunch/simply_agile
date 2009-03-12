@@ -16,8 +16,11 @@
   </p>
 <% else %>
   <ol>
-    <%= render :partial => 'stories/list_item', 
-      :collection => @iteration.stories %>
+    <%= render @iteration.stories %>
   </ol>
 <% end %>
 </div>
+
+<p>
+  <%= button_to "Start", iteration_active_iterations_path(@iteration) %>
+</p>

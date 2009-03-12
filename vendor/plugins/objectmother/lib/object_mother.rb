@@ -334,11 +334,7 @@ class ObjectMother
 
     def classify (word)
       word.gsub(/(^|_)(\w)/) do |s|
-        if s == '_'
-          ''
-        else
-          s.upcase
-        end
+        s.delete("_").upcase
       end
     end
 

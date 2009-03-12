@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'spec'
 require 'spec/rails'
+require File.join(File.dirname(__FILE__), 'matchers', 'association_matchers')
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
@@ -45,6 +46,7 @@ Spec::Runner.configure do |config|
   # 
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
   config.include ValidateXhtml
+  config.include AssociationMatchers
 
   def login
     @organisation = mock_model Organisation
