@@ -3,23 +3,17 @@
     This story has no acceptance criteria.
   </p>
 <% else %>
-  <table>
-    <% @story.acceptance_criteria.each do |criterion| %>
-      <tr class="display">
-        <td class="complete">
-          <% form_for [@project, @story, criterion] do |f| -%>
-            <%= hidden_field_tag "acceptance_criterion[complete]", ! criterion.complete? %>
-            <%= f.submit(criterion.complete? ? "Uncomplete" : "Complete") %>
-          <% end -%>
+  <div id="uncompleted">
+    <table>
+      <%= render(:partial => 'acceptance_criteria/criterion',
+        :collection => @story.acceptance_criteria.uncompleted) %>
+    </table>
+  </div>
 
-        </td>
-        <td><%= h criterion %></td>
-        <td class="edit"><%= link_to 'Edit',
-            edit_project_story_acceptance_criterion_url(@project, @story, criterion)
-        %></td>
-        <td class="delete"><%= button_to 'Delete', [@project, @story, criterion],
-          :method => :delete %></td>
-      </tr>
-    <% end %>
-  </table>
+  <div id="completed">
+    <table>
+      <%= render(:partial => 'acceptance_criteria/criterion',
+        :collection => @story.acceptance_criteria.completed) %>
+    </table>
+  </div>
 <% end %>
