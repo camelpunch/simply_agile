@@ -7,4 +7,16 @@ class AcceptanceCriterion < ActiveRecord::Base
   def to_s
     criterion || "New Acceptance Criterion"
   end
+
+  def complete?
+    ! fulfilled_at.nil?
+  end
+
+  def complete=(value)
+    if value.kind_of?(TrueClass) || value == "true"
+      self.fulfilled_at ||= Time.now
+    else
+      self.fulfilled_at = nil
+    end
+  end
 end

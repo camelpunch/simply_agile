@@ -40,4 +40,39 @@ describe AcceptanceCriterion do
       @acceptance_criterion.errors.on(:story_id).should_not be_nil
     end
   end
+
+  describe "completion" do
+    before :each do
+      @acceptance_criterion = AcceptanceCriterion.new
+    end
+
+    it "should be complete if fulfilled_at is set" do
+      @acceptance_criterion.fulfilled_at = Time.now
+      @acceptance_criterion.complete?.should be_true
+    end
+
+    it "should not be complete if fulfilled_at is nil" do
+      @acceptance_criterion.complete?.should be_false
+    end
+
+    it "should set fulfilled_at if complete is set to true" do
+      time = Time.now
+      Time.stub!(:now).and_return(time)
+      @acceptance_criterion.complete = "true"
+      @acceptance_criterion.fulfilled_at.should == time
+    end
+
+    it "should not overwrite fulfilled_at if complete is set to true" do
+      time = Time.now
+      @acceptance_criterion.fulfilled_at = time
+      @acceptance_criterion.complete = "true"
+      @acceptance_criterion.fulfilled_at.should == time
+    end
+
+    it "should not unset fulfilled_at if complete is set to false" do
+      @acceptance_criterion.fulfilled_at = Time.now
+      @acceptance_criterion.complete = "false"
+      @acceptance_criterion.fulfilled_at.should be_nil
+    end
+  end
 end
