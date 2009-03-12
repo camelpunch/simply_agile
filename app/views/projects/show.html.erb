@@ -5,18 +5,16 @@
   <li><%= h @project %></li>
 <% end %>
 
-<p>
-<%= h(@project.description) %>
-</p>
+<%= simple_format h(@project.description) %>
 
 <h2>Stories</h2>
 <ul>
   <li>
-    <%= link_to "Stories which are still need to be worked on",
+    <%= link_to "Stories that still need to be worked on",
                 project_stories_path(@project) %>
   </li>
   <li>
-    <%= link_to "Stories which have previously been completed",
+    <%= link_to "Stories that have been completed",
                 finished_project_stories_path(@project) %>
   </li>
 </ul>
