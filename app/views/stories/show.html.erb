@@ -7,6 +7,12 @@
 
 <%= simple_format h(@story.content) %>
 
+<% if @story.estimate? %>
+  <p>
+  This story is estimated at <%= h @story.estimate %>.
+  </p>
+<% end %>
+
 <div id="acceptance_criteria">
   <h2>Acceptance Criteria</h2>
   <% form_for [@project, @story, AcceptanceCriterion.new] do |f| %>

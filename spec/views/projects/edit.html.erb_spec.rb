@@ -6,7 +6,8 @@ describe "/projects/edit" do
     @project = mock_model(Project, 
                           :stories => [],
                           :iterations => [],
-                          :name => '')
+                          :name => '',
+                          :description => '')
     assigns[:project] = @project
 
     render 'projects/edit'

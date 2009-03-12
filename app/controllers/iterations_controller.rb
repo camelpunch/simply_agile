@@ -1,43 +1,46 @@
 class IterationsController < ApplicationController
   before_filter :get_project
-  before_filter :get_iteration, :only => [:show]
+  before_filter :get_iteration, :only => [:edit, :show, :update]
   before_filter :new_iteration, :only => [:new, :create]
+  before_filter :get_stories, :only => [:edit, :new]
 
   def create
-    Iteration.transaction do
-      @project.stories.each_with_index do |story, idx|
-        story_params = params[:stories][story.id.to_s]
-        @project.stories[idx].estimate = story_params[:estimate]
-        story_should_be_assigned = story_params[:include].to_i == 1
+    @iteration.save_with_planned_stories_attributes! params[:stories]
 
-        if story_should_be_assigned
-          @iteration.stories << story 
-        else
-          @project.stories[idx].save!
-        end
-      end
+    flash[:notice] = "Iteration successfully created"
+    redirect_to [@project, @iteration]
 
-      @iteration.save!
-      flash[:notice] = "Iteration successfully created"
-      redirect_to [@project, @iteration]
-    end
-
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid => e
+    @stories = e.record.planned_stories
     render :template => 'iterations/new'
   end
 
   def new
-    if @project.stories.empty?
-      flash[:notice] = "This project has no stories. Make a story here before
-      planning an iteration."
-      redirect_to new_project_story_url(@project)
+    if @stories.empty?
+      render :template => 'iterations/new_guidance'
     end
+  end
+
+  def update
+    @iteration.attributes = params[:iteration]
+    @iteration.save_with_planned_stories_attributes! params[:stories]
+
+    flash[:notice] = "Iteration successfully updated"
+    redirect_to [@project, @iteration]
+
+  rescue ActiveRecord::RecordInvalid => e
+    @stories = e.record.planned_stories
+    render :template => 'iterations/edit'
   end
 
   protected
 
   def get_iteration
     @iteration = @project.iterations.find(params[:id])
+  end
+
+  def get_stories
+    @stories = @project.stories.assigned_or_available_for(@iteration)
   end
 
   def new_iteration

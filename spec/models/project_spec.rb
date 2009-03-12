@@ -13,6 +13,25 @@ describe Project do
     Project.create!(@valid_attributes)
   end
 
+  describe "available_stories" do
+    before :all do
+      @project = Projects.create_project! 
+      @story_with = Stories.create_story!(:name => 'bob', 
+                                          :iteration_id => 123,
+                                          :project => @project)
+      @story_without = Stories.create_story!(:name => 'bill',
+                                             :project => @project)
+    end
+
+    it "should not include stories with iteration ids" do
+      @project.available_stories.should_not include(@story_with)
+    end
+
+    it "should include stories without iteration ids" do
+      @project.available_stories.should include(@story_without)
+    end
+  end
+
   describe "protection" do
     it "should protect organisation_id from being mass-assigned" do
       project = Project.new(:name => 'asdf',

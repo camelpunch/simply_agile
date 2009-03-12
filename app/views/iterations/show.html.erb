@@ -5,6 +5,10 @@
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
 
+<p>
+<%= link_to 'Edit', edit_project_iteration_path(@project, @iteration) %>
+</p>
+
 <h2>Stories</h2>
 <% if @iteration.stories.empty? %>
   <p>

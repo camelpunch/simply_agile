@@ -1,44 +1,42 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/iterations/new" do
+describe "/iterations/edit" do
   before :each do
     @story = mock_model(Story,
                         :name => '',
                         :content => '',
                         :estimate => '',
                         :project => @project)
-    @project = mock_model(Project)
+    @project = mock_model(Project,
+                          :stories => @stories)
     @iteration = mock_model(Iteration, 
                             :duration => '',
                             :name => '',
-                            :stories => [],
-                            :new_record? => true)
-    assigns[:project] = @project
-    assigns[:iteration] = @iteration
+                            :stories => [])
     assigns[:stories] = [@story]
   end
 
   describe "first visit" do
     before :each do
-      render 'iterations/new'
+      assigns[:project] = @project
+      assigns[:iteration] = @iteration
+      render 'iterations/edit'
     end
 
     it_should_behave_like "a standard view"
 
-    it "should have a form to create an iteration" do
+    it "should have a form to update the iteration" do
       response.should have_tag('form[action=?][method=?]', 
-                               project_iterations_path(@project),
+                               project_iteration_path(@project, @iteration),
                                'post')
-    end
-
-    it "should display available stories" do
-      response.should have_tag('#stories_available')
     end
   end
 
   describe "on error" do
     before :each do
       @iteration.stub!(:stories).and_return([@story])
+      assigns[:project] = @project
+      assigns[:iteration] = @iteration
       render 'iterations/new'
     end
 

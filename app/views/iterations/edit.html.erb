@@ -1,0 +1,16 @@
+<% content_for :title, "Editing iteration #{@iteration}" %>
+<% content_for :h1, 
+  "Editing iteration #{link_to(h(@iteration), [@project, @iteration])}" %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child"><%= link_to 'Projects', projects_path %></li>
+  <li><%= link_to h(@project), @project %></li>
+  <li>Iterations</li>
+  <li><%= link_to h(@iteration), [@project, @iteration] %></li>
+  <li>Edit</li>
+<% end %>
+<% form_for [@project, @iteration] do |form| %>
+  <%= render form %>
+  <p class="submit">
+  <%= form.submit 'Update Iteration' %>
+  </p>
+<% end %>
