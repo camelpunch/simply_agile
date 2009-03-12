@@ -26,8 +26,8 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .section, .section h2 { border:2px solid #e4e5f3 }
 .section h2 { background:#fff }
 
-.ui-draggable { background:#000; width:100px; height:100px }
-.ui-droppable { background:#f00; width:200px; height:200px }
-.ui-draggable-dragging { background:#00f }
-.ui-state-highlight { background:#f99 }
+.ui-draggable { background:url(/images/story_card.png) no-repeat }
+.ui-droppable { background:#fff; border-left:1px solid #e4e5f3 }
+.ui-draggable-dragging { opacity:0.5 }
+.ui-state-highlight { background:#e4e5f3 }
 

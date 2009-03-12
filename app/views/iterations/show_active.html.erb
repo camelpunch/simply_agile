@@ -6,7 +6,10 @@
 <% end %>
 
 <div>
-  <%= image_tag(iteration_burndown_path(@iteration), :alt => 'Burndown Chart') %>
+  <%= image_tag(iteration_burndown_path(@iteration), 
+                :alt => 'Burndown Chart',
+                :width => 600,
+                :height => 450) %>
 </div>
 
 <p id="time_remaining">
@@ -16,7 +19,7 @@
 
 <div class="section">
   <h2>Stories</h2>
-  <ol>
+  <ol id="stories_list">
     <%= render :partial => 'stories/changeable_story',
                :collection => @iteration.stories %>
   </ol>

@@ -21,12 +21,18 @@ $(document).ready(function() {
   // iterations/show when active
   if ($('body#iterations_show .section form.edit_story')[0]) {
 
+    // make draggable container for each form
+    $('#stories_list form').each( function() {
+      $(this).append('<div class="draggables"></div>');
+    });
+
     // make droppables for each input box
     $('input[name="story[status]"]').each( function() {
-      $(this).parents('form')
-        .append('<div id="droppable_' + this.id + '">' + this.id + '</div>');
-
+      var form = $(this).parents('form');
+      var container = form.find('.draggables');
       var value = $(this).val();
+
+      form.append('<div id="droppable_' + this.id + '"></div>');
 
       var droppable = $('#droppable_' + this.id)
         .droppable({ 
@@ -34,7 +40,7 @@ $(document).ready(function() {
             var id_parts = this.id.split('_');
             var story_id = id_parts[id_parts.length - 1];
             $('li#story_'+story_id+' ol input').val([value]); // checks the radio button
-            $('.ui-droppable').removeClass('ui-state-highlight');
+            form.find('.ui-droppable').removeClass('ui-state-highlight');
             $(this).addClass('ui-state-highlight');
           }
         });
@@ -45,10 +51,10 @@ $(document).ready(function() {
         droppable_position = droppable.position();
         droppable.addClass('ui-state-highlight');
 
-        $('form').append('<div id="draggable_' + this.id + '"></div>');
+        form.append('<div id="draggable_' + this.id + '"></div>');
 
         $('#draggable_' + this.id)
-          .draggable()
+          .draggable({ axis: 'x' })
           .css('position', 'absolute')
           .css('top', droppable_position.top)
           .css('left', droppable_position.left);
