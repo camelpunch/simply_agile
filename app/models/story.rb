@@ -11,7 +11,10 @@ class Story < ActiveRecord::Base
 
   named_scope :assigned_or_available_for, lambda {|iteration|
     {
-      :conditions => ['iteration_id = ? OR iteration_id IS NULL', iteration.id]
+      :conditions => [
+        'status = ? AND (iteration_id = ? OR iteration_id IS NULL)', 
+        'pending', iteration.id
+      ]
     }
   }
 

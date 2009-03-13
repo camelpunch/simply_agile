@@ -45,6 +45,9 @@ describe Story do
       @iteration = Iteration.new
       @available = Stories.create_story!(:name => 'available', 
                                          :iteration_id => nil)
+      @non_pending = Stories.create_story!(:name => 'non pending', 
+                                           :iteration_id => nil,
+                                           :status => 'in_progress')
       @unavailable = Stories.create_story!(:name => 'unavailable', 
                                            :iteration_id => 234)
       @stories = Story.assigned_or_available_for(@iteration)
@@ -57,6 +60,10 @@ describe Story do
 
       it "should exclude unavailable stories" do
         @stories.should_not include(@unavailable)
+      end
+
+      it "should exclude non-pending" do
+        @stories.should_not include(@non_pending)
       end
     end
 
@@ -71,6 +78,10 @@ describe Story do
 
       it "should include an assigned story" do
         @stories.should include(@available_by_assignment)
+      end
+
+      it "should exclude non-pending" do
+        @stories.should_not include(@non_pending)
       end
     end
   end
