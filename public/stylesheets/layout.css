@@ -62,15 +62,14 @@ body#iterations_show.javascript .story_content { width:280px; float:left }
 
 body#iterations_show.javascript ol#stories_list li { height:100px; position:relative; 
                                                      clear:left; display:block; margin-top:10px }
+body#iterations_show.javascript ol#stories_list li ol li { height:auto; display:inline }
 
 body#iterations_show ol#headings { overflow:hidden }
 body#iterations_show ol#headings li { position:relative; left:280px }
 body#iterations_show ol#headings li,
 .ui-droppable { width:151px; float:left; border-right-width:1px; border-right-style:solid }
 
-
 .draggables { position:absolute; top:0; left:280px; overflow:auto; width:608px }
 .ui-draggable { width:85px; height:45px; margin-top:25px }
 .ui-droppable { height:100px } 
-                
 /* end iteration/show active */
