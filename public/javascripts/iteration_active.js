@@ -42,8 +42,11 @@ var DraggableStories = {
           var next_element = $(ev.originalTarget.nextElementSibling);
 
           if(previous_element.hasClass('complete') || next_element.hasClass('complete')) {
+            var location_parts = location.href.split('/')
+            var iteration_id = location_parts[location_parts.length - 1]
             $('#burndown').attr('src',
-                                '/iterations/5/burndown?' + new Date().getTime());
+                                '/iterations/' + iteration_id +
+                                '/burndown?' + new Date().getTime());
           }
         }
       });
