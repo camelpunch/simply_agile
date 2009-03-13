@@ -29,7 +29,19 @@ var DraggableStories = {
           $('li#story_'+story_id+' ol input').val([status]);
 
           // send the request
-          form.ajaxSubmit();
+          form.ajaxSubmit({
+            success: function() {
+              if (DraggableStories.previous_status == 'complete' || status == 'complete') {
+                var location_parts = location.href.split('/');
+                var iteration_id = location_parts[location_parts.length - 1];
+                $('#burndown').attr('src',
+                                    '/iterations/' + iteration_id +
+                                    '/burndown?' + new Date().getTime());
+              }
+
+              DraggableStories.previous_status = status;
+            }
+          });
           
           // change class of elements
           container.find('.ui-droppable').removeClass('ui-state-highlight');
@@ -37,16 +49,6 @@ var DraggableStories = {
           $(ui.draggable)
           .css('left', 
                $(this).position().left + DraggableStories.draggable_left_offset);
-
-          if (DraggableStories.previous_status == 'complete' || status == 'complete') {
-            var location_parts = location.href.split('/');
-            var iteration_id = location_parts[location_parts.length - 1];
-            $('#burndown').attr('src',
-                                '/iterations/' + iteration_id +
-                                '/burndown?' + new Date().getTime());
-          }
-
-          DraggableStories.previous_status = status;
         }
       });
 
