@@ -185,6 +185,12 @@ describe Story do
         @story.should_not_receive(:status=).with(Story::Status::IN_PROGRESS)
         @story.update_status_from_acceptance_criteria
       end
+
+      it "should not change status if uncompleted acceptance_criteria remain" do
+        @story.stub!(:status).and_return(Story::Status::IN_PROGRESS)
+        @story.should_not_receive(:status=).with(Story::Status::TESTING)
+        @story.update_status_from_acceptance_criteria
+      end
     end
   end
 
