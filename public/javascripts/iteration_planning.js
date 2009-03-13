@@ -6,6 +6,27 @@ var StorySwapper = {
     StorySwapper.convert_checkboxes();
   },
 
+  // add the tr to the specified table, maintaining the original order
+  append_tr: function(tr, table) {
+    var trs = table.find('tr');
+
+    var source_index = StorySwapper.story_order.indexOf(tr.attr('id'));
+    console.log(source_index);
+
+    var inserted = false;
+    trs.each( function() {
+      var above = source_index <= StorySwapper.story_order.indexOf(this.id);
+
+      if (above) {
+        $(this).before(tr);
+        inserted = true;
+        return true;
+      }
+    });
+
+    if (!inserted) table.append(tr);
+  },
+
   convert_checkboxes: function() {
     $('input[type="checkbox"]').each( function() {
       var label = $('label[for="'+this.id+'"]');
@@ -33,7 +54,13 @@ var StorySwapper = {
   },
 
   init_trs: function() {
-    // move trs to correct tables
+    // store initial order
+    StorySwapper.story_order = $.map($('table tr'), function(element, i) {
+      return element.id
+    });
+
+    // move trs to correct tables - order is maintained without doing anything
+    // at this stage
     $('table tr').each( function() {
       if ($(this).find('input[checked]:checked')[0]) {
         var tr = $(this).remove();
@@ -47,13 +74,13 @@ var StorySwapper = {
     var tr = checkbox.parent('td').parent('tr').remove();
 
     if (checked_before_removal) {
-      $('table#stories_iteration').append(tr);
+      StorySwapper.append_tr(tr, $('table#stories_iteration'));
 
       // workaround ie6 bug with checkbox values being reset after append
       if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
 
     } else {
-      $('table#stories_available').append(tr);
+      StorySwapper.append_tr(tr, $('table#stories_available'));
     }
 
     StoryToggler.bind_anchors(tr);
