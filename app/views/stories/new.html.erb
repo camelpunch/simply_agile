@@ -4,17 +4,7 @@
   <li class="first-child project"><%= link_to h(@project), @project %></li>
   <li class="story">New Story</li>
 <% end %>
-<% form_for [@project, @story] do |f| %>
-  <%= f.error_messages %>
-  <p>
-  <%= f.label :name %>
-  <%= f.text_field :name, :class => 'auto_focus' %>
-  </p>
-  <p>
-  <%= f.label :content, 'The story' %>
-  <%= f.text_area :content, :rows => 5 %>
-  </p>
-  <p class="submit">
-  <%= f.submit 'Create Story' %>
-  </p>
+<% form_for [@project, @story] do |form| %>
+  <%= form.error_messages %>
+  <%= render form %>
 <% end %>

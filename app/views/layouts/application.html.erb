@@ -27,7 +27,7 @@
       <% end %>
       </div>
       <%= link_to('New Story', 
-                  new_project_story_path(@project), 
+                  @project ? new_project_story_path(@project) : new_story_path, 
                   :id => 'contextual_new_story') %>
       <div id="content">
         <h1><%= yield(:h1) %></h1>

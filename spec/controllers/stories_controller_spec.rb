@@ -19,18 +19,33 @@ describe StoriesController do
     end
 
     describe "new_story" do
-      before :each do
-        controller.stub!(:params).and_return(:project_id => @project.id)
+      describe "with project" do
+        before :each do
+          controller.stub!(:params).and_return(:project_id => @project.id)
+        end
+
+        it "should set the project" do
+          @stories.should_receive(:build)
+          controller.send(:new_story)
+        end
+
+        it "should set the instance variable" do
+          controller.send(:new_story)
+          controller.instance_variable_get("@story").should == @new_story
+        end
       end
 
-      it "should set the project" do
-        @stories.should_receive(:build)
-        controller.send(:new_story)
-      end
+      describe "without project" do
+        before :each do
+          controller.instance_variable_set('@project', nil)
+        end
 
-      it "should set the instance variable" do
-        controller.send(:new_story)
-        controller.instance_variable_get("@story").should == @new_story
+        it "should set the instance variable" do
+          new_story_without_project = Story.new
+          Story.stub!(:new).and_return(new_story_without_project)
+          controller.send(:new_story)
+          controller.instance_variable_get('@story').should == new_story_without_project
+        end
       end
     end
 
@@ -167,6 +182,17 @@ describe StoriesController do
     it "should set a default story" do
       @new_story.should_receive(:content=)
       do_call
+    end
+
+    describe "without project" do
+      before :each do
+        controller.instance_variable_set('@project', nil)
+      end
+
+      it "should render the new_without_project template" do
+        do_call
+        response.should render_template('stories/new_without_project')
+      end
     end
   end
 

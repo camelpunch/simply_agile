@@ -24,6 +24,10 @@ As a
 I want 
 So that 
 STORY
+
+    unless @project
+      render :template => 'stories/new_without_project'
+    end
   end
 
   def update
@@ -55,7 +59,11 @@ STORY
   end
 
   def new_story
-    @story = @project.stories.build(params[:story])
+    if @project
+      @story = @project.stories.build(params[:story])
+    else
+      @story = Story.new
+    end
   end
 
 end
