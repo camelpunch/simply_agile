@@ -37,6 +37,14 @@ var DraggableStories = {
           $(ui.draggable)
           .css('left', 
                $(this).position().left + DraggableStories.draggable_left_offset);
+
+          var previous_element = $(ev.originalTarget.previousElementSibling);
+          var next_element = $(ev.originalTarget.nextElementSibling);
+
+          if(previous_element.hasClass('complete') || next_element.hasClass('complete')) {
+            $('#burndown').attr('src',
+                                '/iterations/5/burndown?' + new Date().getTime());
+          }
         }
       });
 
