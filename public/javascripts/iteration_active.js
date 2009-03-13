@@ -38,16 +38,15 @@ var DraggableStories = {
           .css('left', 
                $(this).position().left + DraggableStories.draggable_left_offset);
 
-          var previous_element = $(ev.originalTarget.previousElementSibling);
-          var next_element = $(ev.originalTarget.nextElementSibling);
-
-          if(previous_element.hasClass('complete') || next_element.hasClass('complete')) {
-            var location_parts = location.href.split('/')
-            var iteration_id = location_parts[location_parts.length - 1]
+          if (DraggableStories.previous_status == 'complete' || status == 'complete') {
+            var location_parts = location.href.split('/');
+            var iteration_id = location_parts[location_parts.length - 1];
             $('#burndown').attr('src',
                                 '/iterations/' + iteration_id +
                                 '/burndown?' + new Date().getTime());
           }
+
+          DraggableStories.previous_status = status;
         }
       });
 
