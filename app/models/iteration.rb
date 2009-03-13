@@ -5,7 +5,10 @@ class Iteration < ActiveRecord::Base
   attr_protected :project_id
   belongs_to :project
   has_many :stories
+  has_many :burndown_data_points
   validates_presence_of :name, :duration, :project_id
+
+  named_scope :active, :conditions => 'start_date IS NOT NULL'
 
   def validate
     errors.add(:stories, "must be assigned") if stories.empty?
@@ -74,5 +77,24 @@ class Iteration < ActiveRecord::Base
 
   def burndown
     Burndown.new(self)
+  end
+
+  def update_burndown_data_points
+    return if ! active? || end_date <=  Date.today
+    data_point = burndown_data_points.find_by_date(Date.today)
+    if data_point
+      data_point.update_attributes(:story_points => story_points_remaining)
+    else
+      burndown_data_points.create(
+        :date => Date.today,
+        :story_points => story_points_remaining
+      )
+    end
+  end
+
+  def self.update_burndown_data_points_for_all_active
+    active.each do |iteration|
+      iteration.update_burndown_data_points
+    end
   end
 end
