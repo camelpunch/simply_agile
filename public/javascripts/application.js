@@ -51,12 +51,12 @@ var DraggableStories = {
           var id_parts = id.split('_');
           var story_id = id_parts[id_parts.length - 1];
 
-          // send the request
-          form.ajaxSubmit();
-          
           // check the radio button
           $('li#story_'+story_id+' ol input').val([status]);
 
+          // send the request
+          form.ajaxSubmit();
+          
           // change class of elements
           container.find('.ui-droppable').removeClass('ui-state-highlight');
           $(this).addClass('ui-state-highlight');

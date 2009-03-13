@@ -21,13 +21,13 @@
 /* end breadcrumbs */
 
 /* content */
-#content { position:relative; clear:left; margin:18px 0 0 30px }
-#actions { position:absolute; right:0; top:0; width:216px }
+#content { position:relative; clear:left; margin:18px 30px 0 30px }
+#actions { position:absolute; right:0; top:0; width:163px }
 #actions li { width:107px; display:block; margin:0 auto }
 #actions a { width:107px; height:32px }
 
 .section { position:relative; padding:40px 36px 22px 36px; 
-           margin:60px 30px 60px 0 }
+           margin:60px 0 }
 .section h2 { position:absolute; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 .section>h2 { left:-13px }
