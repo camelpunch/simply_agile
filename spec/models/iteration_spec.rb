@@ -155,6 +155,91 @@ describe Iteration do
     end
   end
 
+  describe "creating new burndown data points" do
+    before :each do
+      @iteration = Iterations.active_iteration
+    end
+
+    it "should have many burndown data points" do
+      Iteration.should have_many(:burndown_data_points)
+    end
+
+    it "should not create data points if the iteration is not active" do
+      @iteration.update_attributes(:start_date => nil)
+      @iteration.update_burndown_data_points
+      @iteration.burndown_data_points.should be_empty
+    end
+
+    it "should not create data points if the interation has less than one day to go" do
+      @iteration.update_attributes(
+        :start_date => Date.today - @iteration.duration
+      )
+      @iteration.update_burndown_data_points
+      @iteration.burndown_data_points.should be_empty
+    end
+
+    it "should update today's data point if one exists" do
+      @data_point = BurndownDataPoint.create!(
+        :iteration => @iteration,
+        :story_points => 10,
+        :date => Date.today
+      )
+      @iteration.update_burndown_data_points
+      @data_point.reload
+      @data_point.story_points.should == @iteration.story_points_remaining
+    end
+
+    it "should create a new data point for today if none exists" do
+      @iteration.update_burndown_data_points
+      @data_point = BurndownDataPoint.find(
+        :first,
+        :conditions => {
+          :date => Date.today,
+          :iteration_id => @iteration.id,
+          :story_points => @iteration.story_points_remaining
+        }
+      )
+      @data_point.should_not be_nil
+    end
+  end
+  
+  describe "named finder for active" do
+    before :each do
+      Iteration.destroy_all
+      @active = Iterations.active_iteration
+      @inactive = Iterations.first_iteration
+    end
+    
+    it "should only return active iterations" do
+      Iteration.active.should == [@active]
+    end
+  end
+
+  describe "updating all burndown data points" do
+    before :each do
+      @it1 = mock_model(Iteration)
+      @it2 = mock_model(Iteration)
+      Iteration.stub!(:active).and_return([@it1, @it2])
+      @it3 = mock_model(Iteration)
+      @it4 = mock_model(Iteration)
+
+      @it1.stub!(:update_burndown_data_points)
+      @it2.stub!(:update_burndown_data_points)
+    end
+
+    it "should call update_burndown_data_points on all active iterations" do
+      @it1.should_receive(:update_burndown_data_points)
+      @it2.should_receive(:update_burndown_data_points)
+      Iteration.update_burndown_data_points_for_all_active
+    end
+
+    it "should not call update_burndown_data_points on inactive iterations" do
+      @it3.should_not_receive(:update_burndown_data_points)
+      @it4.should_not_receive(:update_burndown_data_points)
+      Iteration.update_burndown_data_points_for_all_active
+    end
+  end
+
   describe "starting" do
     before :each do
       @iteration = Iterations.first_iteration
