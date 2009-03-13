@@ -34,13 +34,14 @@ $(document).ready(function() {
       var form = $(this).parents('form');
       var container = form.find('.draggables');
       var status = $(this).val();
+      var id = this.id;
 
       container.append('<div class="'+status+'" id="droppable_' + this.id + '"></div>');
 
-      var droppable = $('#droppable_' + this.id)
+      var droppable = $('#droppable_' + id)
         .droppable({ 
           drop: function(ev, ui) { 
-            var id_parts = this.id.split('_');
+            var id_parts = id.split('_');
             var story_id = id_parts[id_parts.length - 1];
 
             // check the radio button
@@ -62,7 +63,13 @@ $(document).ready(function() {
         container.append('<div id="draggable_' + this.id + '"></div>');
 
         $('#draggable_' + this.id)
-          .draggable({ axis: 'x' })
+          .draggable({ 
+            revert: 'invalid',
+            opacity: 0.5,
+            axis: 'x', 
+            containment: 'parent',
+            cursor: 'pointer'
+          })
           .css('position', 'absolute')
           .css('top', droppable_position.top)
           .css('left', droppable_position.left + draggable_left_offset);

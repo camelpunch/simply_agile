@@ -29,9 +29,8 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .draggables,
 .ui-droppable,
 #headings li { border-color:#e4e5f3 }
-.ui-draggable { background:url(/images/story_card.png) no-repeat }
+.ui-draggable { background:url(/images/story_card.png) no-repeat; cursor:pointer }
 .ui-droppable { background:#fff }
-.ui-draggable-dragging { opacity:0.5 }
 
 .ui-state-highlight.pending,
 #headings .pending { background:#ddd }
