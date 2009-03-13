@@ -10,17 +10,18 @@ var StorySwapper = {
   append_tr: function(tr, table) {
     var trs = table.find('tr');
 
-    var source_index = StorySwapper.story_order.indexOf(tr.attr('id'));
-    console.log(source_index);
+    var source_index = $.inArray(tr.attr('id'), StorySwapper.story_order);
 
     var inserted = false;
     trs.each( function() {
-      var above = source_index <= StorySwapper.story_order.indexOf(this.id);
+      destination_index = $.inArray(this.id, StorySwapper.story_order);
+
+      var above = source_index <= destination_index;
 
       if (above) {
         $(this).before(tr);
         inserted = true;
-        return true;
+        return false; // break
       }
     });
 
