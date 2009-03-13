@@ -12,5 +12,5 @@
       edit_project_story_acceptance_criterion_url(@project, @story, criterion)
   %></td>
   <td class="delete"><%= button_to 'Delete', [@project, @story, criterion],
-    :method => :delete %></td>
+    :method => :delete, :class => "delete" %></td>
 </tr>

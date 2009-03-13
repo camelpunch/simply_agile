@@ -5,7 +5,7 @@ var AcceptanceCriteria = {
   },
 
   form_init: function() {
-    $('#acceptance_criteria form').ajaxForm({
+    $('#acceptance_criteria .delete form, #acceptance_criteria form.add').ajaxForm({
       target: '#acceptance_criteria .content',
       resetForm: true,
       error: function(xhr) { alert(xhr.responseText) },

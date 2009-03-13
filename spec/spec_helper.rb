@@ -94,3 +94,9 @@ Spec::Runner.configure do |config|
     end
   end
 end
+
+class ActiveRecord::Base
+  def <=>(other)
+    self.id <=> other.id
+  end
+end

@@ -70,7 +70,8 @@ describe AcceptanceCriterion do
         5.times do |count|
           ac = AcceptanceCriterion.create!(
             :story => @story,
-            :criterion => "Not complete #{count}"
+            :criterion => "Not complete #{count}",
+            :fulfilled_at => nil
           )
           @uncompleted_acceptance_criteria << ac
         end
@@ -82,8 +83,8 @@ describe AcceptanceCriterion do
       end
 
       it "should return all incomplete acceptance criteria" do
-        AcceptanceCriterion.uncompleted.should ==
-          @uncompleted_acceptance_criteria
+        AcceptanceCriterion.uncompleted.sort.should ==
+          @uncompleted_acceptance_criteria.sort
       end
     end
 
