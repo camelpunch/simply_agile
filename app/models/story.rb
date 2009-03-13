@@ -28,7 +28,7 @@ class Story < ActiveRecord::Base
     end
   end
 
-  named_scope :incomplete
+  named_scope :incomplete, :conditions => ['status != ?', 'complete']
 
   def to_s
     name || "New Story"

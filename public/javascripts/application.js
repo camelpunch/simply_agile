@@ -17,98 +17,85 @@ $(document).ready(function() {
     // start toggles
     StoryToggler.init();
   }
-});
 
-var StorySwapper = {
-  init: function() {
-    // create an iteration stories table
-    $('table#stories_available').before('<table id="stories_iteration"><caption>Iteration stories</caption></table>');
-    StorySwapper.init_trs();
-    StorySwapper.convert_checkboxes();
-  },
+  // iterations/show when active
+  var draggable_left_offset = 33;
+  if ($('body#iterations_show .section form.edit_story')[0]) {
 
-  convert_checkboxes: function() {
-    $('input[type="checkbox"]').each( function() {
-      var label = $('label[for="'+this.id+'"]');
+    DraggableStories.label_columns();
 
-      // hide checkboxes
-      $(this).hide();
-      label.hide();
-
-      // make links that toggle the checkboxes
-      $(this).before('<a class="move" href="#'+this.id+'">Move</a>');
+    // make draggable container for each form
+    $('#stories_list form').each( function() {
+      $(this).append('<div class="draggables"></div>');
     });
 
-    StorySwapper.bind_anchors();
-  },
+    // make droppables for each input box
+    $('input[name="story[status]"]').each( function() {
+      var form = $(this).parents('form');
+      var container = form.find('.draggables');
+      var status = $(this).val();
+      var id = this.id;
 
-  bind_anchors: function() {
-    $('a.move').click( function() {
-      var id = this.href.split('#')[1];
-      var input = $('input#'+id);
-      input.click();
-      StorySwapper.move_checkbox_tr(input);
-      StorySwapper.bind_anchors();
-      return false;
-    });
-  },
+      container.append('<div class="'+status+'" id="droppable_' + this.id + '"></div>');
 
-  init_trs: function() {
-    // move trs to correct tables
-    $('table tr').each( function() {
-      if ($(this).find('input[checked]:checked')[0]) {
-        var tr = $(this).remove();
-        $('table#stories_iteration').append(tr);
+      var droppable = $('#droppable_' + id)
+        .droppable({ 
+          drop: function(ev, ui) { 
+            var id_parts = id.split('_');
+            var story_id = id_parts[id_parts.length - 1];
+
+            // check the radio button
+            $('li#story_'+story_id+' ol input').val([status]);
+
+            // change class of elements
+            container.find('.ui-droppable').removeClass('ui-state-highlight');
+            $(this).addClass('ui-state-highlight');
+            $(ui.draggable).css('left', $(this).position().left + draggable_left_offset);
+          }
+        });
+
+      // initialisation
+      if ($(this).attr('checked')) {
+        // make a draggable
+        droppable_position = droppable.position();
+        droppable.addClass('ui-state-highlight');
+
+        container.append('<div id="draggable_' + this.id + '"></div>');
+
+        $('#draggable_' + this.id)
+          .draggable({ 
+            revert: 'invalid',
+            opacity: 0.5,
+            axis: 'x', 
+            containment: 'parent',
+            cursor: 'pointer'
+          })
+          .css('position', 'absolute')
+          .css('top', droppable_position.top)
+          .css('left', droppable_position.left + draggable_left_offset);
       }
     });
-  },
-
-  move_checkbox_tr: function(checkbox) {
-    var checked_before_removal = checkbox.attr('checked');
-    var tr = checkbox.parent('td').parent('tr').remove();
-
-    if (checked_before_removal) {
-      $('table#stories_iteration').append(tr);
-
-      // workaround ie6 bug with checkbox values being reset after append
-      if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
-
-    } else {
-      $('table#stories_available').append(tr);
-    }
-
-    StoryToggler.bind_anchors(tr);
   }
-}
+});
 
-var StoryToggler = {
-  init: function() {
-    // collapse all story content
-    $('.content').hide();
+var DraggableStories = {
 
-    // insert expand links
-    $('table tr').each( function() {
-      $(this).find('span')
-      .after(' <a class="expand" href="#'+this.id+'">Peek</a>');
+  // make headings based on first set of labels
+  label_columns: function() {
+    var html = '<ol id="headings">';
+
+    $($('form.edit_story')[0]).find('label').each( function() {
+      var label = $(this).html();
+      var label_for = $(this).attr('for');
+      var class_name = $('#'+label_for).val();
+
+      html += '<li class="'+class_name+'">'+label+'</li>';
     });
+    html += '</ol>';
 
-    StoryToggler.bind_anchors();
-  },
-
-  // expand functionality for story content
-  bind_anchors: function(base) {
-    if (base) {
-      base.find('a.expand').click(StoryToggler.toggle_content);
-    } else {
-      $('a.expand').click(StoryToggler.toggle_content);
-    }
-  },
-
-  toggle_content: function() {
-    var id = this.href.split('#')[1];
-    $('#'+id+' .content').toggle();
-    return false;
+    $('#stories_list').before(html);
   }
+
 }
 
 // add header to AJAX requests to play nice with Rails' content negotiation

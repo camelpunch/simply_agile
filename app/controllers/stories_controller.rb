@@ -20,10 +20,24 @@ So that
 STORY
   end
 
+  def update
+    if params[:iteration_id]
+      get_story_from_iteration
+      @story.update_attributes! params[:story]
+      redirect_to project_iteration_url(@project, params[:iteration_id])
+    end
+  end
+
   protected
 
   def get_story
     @story = @project.stories.find(params[:id])
+  end
+
+  def get_story_from_iteration
+    @story = @project.stories.
+      find(params[:id], 
+           :conditions => ['iteration_id = ?', params[:iteration_id]])
   end
 
   def new_story

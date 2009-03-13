@@ -6,6 +6,7 @@ describe StoriesController do
     login
     stub_projects!
 
+    @iteration = mock_model Iteration
     @story = mock_model Story
     @new_story = mock_model Story, :content= => ''
     @stories = mock('Collection', :build => @new_story, :find => @story)
@@ -51,6 +52,28 @@ describe StoriesController do
         controller.instance_variable_get("@story").should == @story
       end
     end
+
+    describe "get_story_from_iteration" do
+      before :each do
+        controller.stub!(:params).and_return(
+          :project_id => @project.id,
+          :iteration_id => @iteration.id,
+          :id => @story.id
+        )
+        controller.instance_variable_set('@project', @project)
+      end
+
+      it "should get the story from the iteration" do
+        @stories.should_receive(:find).
+          with(@story.id, :conditions => ['iteration_id = ?', @iteration.id])
+        controller.send(:get_story_from_iteration)
+      end
+
+      it "should set the instance variable" do
+        controller.send(:get_story_from_iteration)
+        controller.instance_variable_get("@story").should == @story
+      end
+    end
   end
 
   describe "it operates on a new story", :shared => true do
@@ -63,6 +86,13 @@ describe StoriesController do
   describe "it operates on an existing story", :shared => true do
     it "should call get_story" do
       controller.should_receive(:get_story)
+      do_call
+    end
+  end
+
+  describe "it operates on an existing story from an iteration", :shared => true do
+    it "should call get_story_from_iteration" do
+      controller.should_receive(:get_story_from_iteration)
       do_call
     end
   end
@@ -170,5 +200,38 @@ describe StoriesController do
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it operates on an existing story"
     it_should_behave_like "it's successful"
+  end
+
+  describe "update" do
+    describe "with iteration id" do
+      def do_call
+        put(:update, 
+            :id => @story.id, 
+            :project_id => @project.id,
+            :iteration_id => @iteration.id,
+            :story => @story_attributes)
+      end
+
+      before :each do
+        controller.stub!(:get_story)
+        controller.instance_variable_set('@project', @project)
+        controller.instance_variable_set('@story', @story)
+        @story.stub!(:update_attributes!)
+        @story_attributes = { 'status' => 'testing' }
+      end
+
+      it_should_behave_like "it belongs to a project"
+      it_should_behave_like "it operates on an existing story from an iteration"
+
+      it "should redirect to iterations/show" do
+        do_call
+        response.should redirect_to(project_iteration_url(@project, @iteration))
+      end
+
+      it "should attempt to save and raise if it breaks" do
+        @story.should_receive(:update_attributes!).with(@story_attributes)
+        do_call
+      end
+    end
   end
 end
