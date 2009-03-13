@@ -3,6 +3,12 @@ class StoriesController < ApplicationController
   before_filter :get_story, :only => [:show]
   before_filter :new_story, :only => [:new, :create]
 
+  def backlog
+    if @project.stories.backlog.empty?
+      render :template => 'stories/backlog_guidance'
+    end
+  end
+
   def create
     if @story.save
       flash[:notice] = "Story successfully created"

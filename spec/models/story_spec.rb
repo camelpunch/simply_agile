@@ -14,6 +14,19 @@ describe Story do
     Story.create!(@valid_attributes)
   end
 
+  describe "default scope" do
+    before :each do
+      Story.delete_all
+      @priority_2_z = Stories.create_story! :priority => 2, :name => 'zed'
+      @priority_2_a = Stories.create_story! :priority => 2, :name => 'ay'
+      @priority_1 = Stories.create_story! :priority => 1
+    end
+
+    it "should order by priority then name" do
+      Story.all.should == [@priority_1, @priority_2_a, @priority_2_z]
+    end
+  end
+
   describe "status" do
     it "should have a default value of 'pending'" do
       Story.new.status.should == 'pending'
@@ -31,7 +44,10 @@ describe Story do
       Story.delete_all
       @iteration = Iteration.new
       @available = Stories.create_story!(:name => 'available', 
-        :iteration_id => nil)
+                                         :iteration_id => nil)
+      @non_pending = Stories.create_story!(:name => 'non pending', 
+                                           :iteration_id => nil,
+                                           :status => 'in_progress')
       @unavailable = Stories.create_story!(:name => 'unavailable', 
         :iteration_id => 234)
       @stories = Story.assigned_or_available_for(@iteration)
@@ -44,6 +60,10 @@ describe Story do
 
       it "should exclude unavailable stories" do
         @stories.should_not include(@unavailable)
+      end
+
+      it "should exclude non-pending" do
+        @stories.should_not include(@non_pending)
       end
     end
 
@@ -59,6 +79,33 @@ describe Story do
       it "should include an assigned story" do
         @stories.should include(@available_by_assignment)
       end
+
+      it "should exclude non-pending" do
+        @stories.should_not include(@non_pending)
+      end
+    end
+  end
+
+  describe "backlog" do
+    before :all do
+      @finished = Stories.create_story!(:status => 'in_progress')
+      @testing = Stories.create_story!(:status => 'testing')
+      @pending = Stories.create_story!(:status => 'pending')
+      @pending_in_iteration = Stories.create_story!(:status => 'pending',
+                                                    :iteration_id => 1)
+    end
+
+    it "should include pending outside of iteration" do
+      Story.backlog.should include(@pending)
+    end
+
+    it "should not include pending inside iteration" do
+      Story.backlog.should_not include(@pending_in_iteration)
+    end
+
+    it "should not include other statuses" do
+      Story.backlog.should_not include(@testing)
+      Story.backlog.should_not include(@finished)
     end
   end
 

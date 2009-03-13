@@ -11,4 +11,10 @@ class Project < ActiveRecord::Base
   def to_s
     name || "New Project"
   end
+
+  def priorities=(priorities)
+    priorities.each_pair do |id, priority|
+      stories.update(id, :priority => priority)
+    end
+  end
 end

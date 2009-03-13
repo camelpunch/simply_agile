@@ -53,6 +53,12 @@ body.iterations table tr { vertical-align:top }
 #acceptance_criteria form { display:inline }
 /* end stories/new */
 
+/* stories/backlog */
+body#stories_backlog.javascript #content p.submit,
+body#stories_backlog.javascript #content label,
+body#stories_backlog.javascript #content input { display:none }
+/* end stories/backlog */
+
 /* iterations/show active */
 body#iterations_show.javascript #stories_list input,
 body#iterations_show.javascript #stories_list label,
