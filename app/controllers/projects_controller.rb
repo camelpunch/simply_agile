@@ -13,8 +13,16 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update_attributes(params[:project])
-      flash[:notice] = "Project updated."
-      redirect_to @project
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Project updated."
+          redirect_to @project
+        end
+
+        format.js do
+          head :ok
+        end
+      end
     else
       render :template => 'projects/edit'
     end

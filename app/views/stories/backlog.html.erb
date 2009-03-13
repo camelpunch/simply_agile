@@ -1,0 +1,28 @@
+<% content_for :title, "#{@project} Backlog" %>
+<% content_for :h1, h("#{@project} Backlog") %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="story">Backlog</li>
+<% end %>
+
+<% form_for @project do |f| %>
+<ol id="backlog">
+  <% @project.stories.backlog.each do |story| %>
+    <li id="story_<%= story.id %>">
+    <h2><%= link_to h(story), [@project, story] %></h2>
+    <%= simple_format h(story.content) %>
+      <p>
+      <%= label_tag "priorities_#{story.id}", 'Priority' %>
+      <%= text_field_tag("project[priorities[#{story.id}]]", 
+                         story.priority,
+                         :id => "priorities_#{story.id}",
+                         :class => 'numeric',
+                         :size => 2) %>
+      </p>
+    <% end %>
+    </li>
+</ol>
+<p class="submit">
+<%= f.submit 'Save Priorities' %>
+</p>
+<% end %>

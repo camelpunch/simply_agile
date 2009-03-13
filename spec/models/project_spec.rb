@@ -32,6 +32,24 @@ describe Project do
     end
   end
 
+  describe "priorities=" do
+    before :each do
+      @project = Projects.create_project! :name => 'some project'
+      @priority_1_to_2 = Stories.create_story! :priority => 1, :project => @project
+      @priority_3_to_1 = Stories.create_story! :priority => 3, :project => @project
+    end
+
+    it "should reprioritise all of the stories" do
+      @project.priorities = { 
+        @priority_1_to_2.id.to_s => '2',
+        @priority_3_to_1.id.to_s => '1',
+      }
+
+      @priority_1_to_2.reload.priority.should == 2
+      @priority_3_to_1.reload.priority.should == 1
+    end
+  end
+
   describe "protection" do
     it "should protect organisation_id from being mass-assigned" do
       project = Project.new(:name => 'asdf',

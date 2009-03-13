@@ -1,0 +1,14 @@
+<% content_for :title, "#{@project} Backlog" %>
+<% content_for :h1, h("#{@project} Backlog") %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="story">Backlog</li>
+<% end %>
+
+<div class="guidance">
+  <h2>Empty backlog</h2>
+  <p>
+  You don't have a backlog! You might want to write a
+  <%= link_to 'new story', new_project_story_path(@project) %>.
+  </p>
+</div>
