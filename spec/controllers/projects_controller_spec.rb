@@ -134,8 +134,8 @@ describe ProjectsController do
   end
 
   describe "update" do
-    def do_call
-      put :update, :id => @project.id, :project => @attributes
+    def do_call(params = {})
+      put :update, {:id => @project.id, :project => @attributes}.merge(params)
     end
 
     before :each do
@@ -160,14 +160,23 @@ describe ProjectsController do
           and_return(true)
       end
 
-      it "should redirect to project page" do
-        do_call
-        response.should redirect_to(project_url(@project))
+      describe "html" do
+        it "should redirect to project page" do
+          do_call
+          response.should redirect_to(project_url(@project))
+        end
+
+        it "should provide a flash notice" do
+          do_call
+          flash[:notice].should_not be_blank
+        end
       end
 
-      it "should provide a flash notice" do
-        do_call
-        flash[:notice].should_not be_blank
+      describe "js" do
+        it "should be successful" do
+          do_call(:format => 'js')
+          response.should be_success
+        end
       end
     end
 

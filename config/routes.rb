@@ -6,7 +6,11 @@ ActionController::Routing::Routes.draw do |map|
     project.resources :iterations do |iteration|
       iteration.resources :stories
     end
-    project.resources(:stories, :collection => { :finished => :get }) do |story|
+    project.resources(:stories, 
+                      :collection => { 
+                        :backlog => :get,
+                        :finished => :get 
+                      }) do |story|
       story.resources :acceptance_criteria
     end
   end

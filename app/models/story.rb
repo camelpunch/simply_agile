@@ -7,11 +7,16 @@ class Story < ActiveRecord::Base
            :order => 'criterion',
            :dependent => :destroy)
 
+  default_scope :order => 'priority, name'
+
   named_scope :assigned_or_available_for, lambda {|iteration|
     {
       :conditions => ['iteration_id = ? OR iteration_id IS NULL', iteration.id]
     }
   }
+
+  named_scope :backlog, 
+    :conditions => ['status = ? AND iteration_id IS NULL', 'pending']
 
   validates_presence_of :name, :content, :project_id
 

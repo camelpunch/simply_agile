@@ -97,6 +97,45 @@ describe StoriesController do
     end
   end
 
+  describe "backlog" do
+    def do_call
+      get :backlog, :project_id => @project.id
+    end
+
+    before :each do
+      controller.stub!(:get_project)
+      controller.instance_variable_set("@project", @project)
+      @stories.stub!(:backlog).and_return(mock('Collection', :empty? => false))
+    end
+
+    it_should_behave_like "it belongs to a project"
+    it_should_behave_like "it's successful"
+
+    describe "with backlog" do
+      before :each do
+        @stories.stub!(:backlog).
+          and_return(mock('Collection', :empty? => false))
+      end
+
+      it "should render backlog template" do
+        do_call
+        response.should render_template('stories/backlog')
+      end
+    end
+
+    describe "with no backlog" do
+      before :each do
+        @stories.stub!(:backlog).
+          and_return(mock('Collection', :empty? => true))
+      end
+
+      it "should render backlog_guidance template" do
+        do_call
+        response.should render_template('stories/backlog_guidance')
+      end
+    end
+  end
+
   describe "index" do
     def do_call
       get :index, :project_id => @project.id
