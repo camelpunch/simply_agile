@@ -14,6 +14,12 @@ describe Story do
     Story.create!(@valid_attributes)
   end
 
+  describe "status" do
+    it "should have a default value of 'pending'" do
+      Story.new.status.should == 'pending'
+    end
+  end
+
   describe "acceptance_criteria" do
     it "should have the writer" do
       Story.new.should respond_to(:acceptance_criteria=)
@@ -126,10 +132,21 @@ describe Story do
   end
 
   describe "incomplete" do
+    before :all do
+      @testing = Stories.create_story :status => 'testing'
+      @complete = Stories.create_story :status => 'complete'
+    end
+
     it "should respond to incomplete" do
       Story.should respond_to(:incomplete)
     end
 
-    it "should only return stories where status is not complete"
+    it "should return stories whose status is not complete" do
+      Story.incomplete.should include(@testing)
+    end
+
+    it "should not return stories whose status is complete" do
+      Story.incomplete.should_not include(@complete)
+    end
   end
 end

@@ -6,8 +6,7 @@ describe Iteration do
     @valid_attributes = {
       :name => "value for name",
       :duration => "1",
-      :started_on => Date.today,
-      :finished_on => Date.today,
+      :start_date => Date.today,
       :stories => [@story],
     }
   end

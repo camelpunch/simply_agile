@@ -3,7 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :iterations
   map.resources :organisations
   map.resources :projects do |project|
-    project.resources :iterations
+    project.resources :iterations do |iteration|
+      iteration.resources :stories
+    end
     project.resources(:stories, :collection => { :finished => :get }) do |story|
       story.resources :acceptance_criteria
     end

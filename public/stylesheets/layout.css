@@ -1,5 +1,5 @@
 /* basic layout */
-#container { margin:3px 0 0 0; min-width:820px; position:relative }
+#container { margin:3px 0 0 0; min-width:985px; position:relative }
 #contextual_new_story { position:absolute; width:158px; height:80px;
                         right:30px; top:14px }
 #footer { clear:both; padding:30px 0 }
@@ -21,13 +21,13 @@
 /* end breadcrumbs */
 
 /* content */
-#content { position:relative; clear:left; margin:18px 0 0 30px }
-#actions { position:absolute; right:0; top:0; width:216px }
+#content { position:relative; clear:left; margin:18px 30px 0 30px }
+#actions { position:absolute; right:0; top:0; width:163px }
 #actions li { width:107px; display:block; margin:0 auto }
 #actions a { width:107px; height:32px }
 
 .section { position:relative; padding:40px 36px 22px 36px; 
-           margin:60px 30px 60px 0 }
+           margin:60px 0 }
 .section h2 { position:absolute; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 .section>h2 { left:-13px }
@@ -52,3 +52,24 @@ body.iterations table tr { vertical-align:top }
 #acceptance_criteria table td.delete { width:4em }
 #acceptance_criteria form { display:inline }
 /* end stories/new */
+
+/* iterations/show active */
+body#iterations_show.javascript #stories_list input,
+body#iterations_show.javascript #stories_list label,
+body#iterations_show.javascript #stories_list p.submit{ display:none }
+
+body#iterations_show.javascript .story_content { width:240px; float:left }
+
+body#iterations_show.javascript ol#stories_list li { height:100px; position:relative; 
+                                                     clear:left; display:block; margin-top:10px }
+body#iterations_show.javascript ol#stories_list li ol li { height:auto; display:inline }
+
+body#iterations_show ol#headings { overflow:hidden }
+body#iterations_show ol#headings li { position:relative; left:240px }
+body#iterations_show ol#headings li,
+.ui-droppable { width:151px; float:left; border-right-width:1px; border-right-style:solid }
+
+.draggables { position:absolute; top:0; left:240px; overflow:auto; width:608px }
+.ui-draggable { width:85px; height:45px; margin-top:25px }
+.ui-droppable { height:100px } 
+/* end iteration/show active */
