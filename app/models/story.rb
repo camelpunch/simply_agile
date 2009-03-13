@@ -33,4 +33,13 @@ class Story < ActiveRecord::Base
   def to_s
     name || "New Story"
   end
+
+  def update_status_from_acceptance_criteria
+    if acceptance_criteria.uncompleted.empty? &&
+        status == 'Pending' || status == 'In Progress'
+      self.update_attributes(:status => 'In Test')
+    elsif status == "In Test" || status == "Complete"
+      self.update_attributes(:status => 'In Progress')
+    end
+  end
 end

@@ -25,9 +25,9 @@ describe Story do
       Story.delete_all
       @iteration = Iteration.new
       @available = Stories.create_story!(:name => 'available', 
-                                         :iteration_id => nil)
+        :iteration_id => nil)
       @unavailable = Stories.create_story!(:name => 'unavailable', 
-                                           :iteration_id => 234)
+        :iteration_id => 234)
       @stories = Story.assigned_or_available_for(@iteration)
     end
 
@@ -44,8 +44,8 @@ describe Story do
     describe "for existing iteration" do
       before :each do
         @available_by_assignment = Story.create!(:project_id => 123,
-                                                 :content => 'asdf',
-                                                 :name => 'available by assignment')
+          :content => 'asdf',
+          :name => 'available by assignment')
         @iteration = Iterations.create_iteration! :stories => [@available_by_assignment]
         @stories = Story.assigned_or_available_for(@iteration)
       end
@@ -110,7 +110,7 @@ describe Story do
     it "should require that an assigned iteration belongs to its project" do
       @story.stub!(:project).and_return(mock_model(Project))
       @story.stub!(:iteration).and_return(mock_model(Iteration,
-                                                     :project_id => 431314))
+          :project_id => 431314))
       @story.valid?
       @story.errors.on(:iteration_id).should_not be_nil
     end
@@ -121,6 +121,65 @@ describe Story do
         existing.iteration_id = 543
         existing.valid?
         existing.errors.on(:iteration_id).should_not be_nil
+      end
+    end
+  end
+
+  describe "update_status_from_acceptance_criteria" do
+    before :each do
+      @acs = mock('Acceptance Criteria')
+      @story = Story.new
+      @story.stub!(:acceptance_criteria).and_return(@acs)
+    end
+
+    describe "where all accepance criteria are completed" do
+      before :each do
+        @acs.stub!(:uncompleted).and_return([])
+      end
+
+      it "should change status from 'In Progress' to 'In Test'" do
+        @story.stub!(:status).and_return("In Progress")
+        @story.should_receive(:status=).with('In Test')
+        @story.update_status_from_acceptance_criteria
+      end
+
+      it "should change status from 'Pending' to 'In Test'" do
+        @story.stub!(:status).and_return("Pending")
+        @story.should_receive(:status=).with('In Test')
+        @story.update_status_from_acceptance_criteria
+      end
+
+      it "should not change status from 'Complete' to 'In Test'" do
+        @story.stub!(:status).and_return("Complete")
+        @story.should_not_receive(:status=).with('In Test')
+        @story.update_status_from_acceptance_criteria
+      end
+    end
+
+    describe "where not all accepance criteria are completed" do
+      before :each do
+        ac = mock_model(AcceptanceCriterion)
+        @acs.stub!(:uncompleted).and_return([ac])
+      end
+
+      it "should change status from 'In Test' to 'In Progress'" do
+        @story.stub!(:status).and_return("In Test")
+        @story.should_receive(:status=).with('In Progress')
+        @story.update_status_from_acceptance_criteria
+      end
+
+      it "should change status from 'Complete' to 'In Progress'" do
+        @story.stub!(:status).and_return("Complete")
+        @story.should_receive(:status=).with('In Progress')
+        @story.update_status_from_acceptance_criteria
+      end
+
+      it "should not change status to 'In Progress' from 'Pending'" do
+        ac = mock_model(AcceptanceCriterion)
+        @acs.stub!(:uncompleted).and_return([ac])
+        @story.stub!(:status).and_return("Pending")
+        @story.should_not_receive(:status=).with('In Progress')
+        @story.update_status_from_acceptance_criteria
       end
     end
   end
