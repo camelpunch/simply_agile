@@ -24,7 +24,15 @@ STORY
     if params[:iteration_id]
       get_story_from_iteration
       @story.update_attributes! params[:story]
-      redirect_to project_iteration_url(@project, params[:iteration_id])
+      respond_to do |format|
+        format.html do
+          redirect_to project_iteration_url(@project, params[:iteration_id])
+        end
+
+        format.js do
+          head :ok
+        end
+      end
     end
   end
 

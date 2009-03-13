@@ -204,12 +204,12 @@ describe StoriesController do
 
   describe "update" do
     describe "with iteration id" do
-      def do_call
+      def do_call(params = {})
         put(:update, 
-            :id => @story.id, 
+            {:id => @story.id, 
             :project_id => @project.id,
             :iteration_id => @iteration.id,
-            :story => @story_attributes)
+            :story => @story_attributes}.merge(params))
       end
 
       before :each do
@@ -223,14 +223,23 @@ describe StoriesController do
       it_should_behave_like "it belongs to a project"
       it_should_behave_like "it operates on an existing story from an iteration"
 
-      it "should redirect to iterations/show" do
-        do_call
-        response.should redirect_to(project_iteration_url(@project, @iteration))
-      end
-
       it "should attempt to save and raise if it breaks" do
         @story.should_receive(:update_attributes!).with(@story_attributes)
         do_call
+      end
+
+      describe "html" do
+        it "should redirect to iterations/show" do
+          do_call
+          response.should redirect_to(project_iteration_url(@project, @iteration))
+        end
+      end
+
+      describe "js" do
+        it "should be successful" do
+          do_call(:format => 'js')
+          response.should be_success
+        end
       end
     end
   end
