@@ -143,21 +143,21 @@ describe Story do
         @acs.stub!(:uncompleted).and_return([])
       end
 
-      it "should change status from 'In Progress' to 'In Test'" do
-        @story.stub!(:status).and_return("In Progress")
-        @story.should_receive(:status=).with('In Test')
+      it "should change status from in progress to testing" do
+        @story.stub!(:status).and_return(Story::Status::IN_PROGRESS)
+        @story.should_receive(:status=).with(Story::Status::TESTING)
         @story.update_status_from_acceptance_criteria
       end
 
-      it "should change status from 'Pending' to 'In Test'" do
-        @story.stub!(:status).and_return("Pending")
-        @story.should_receive(:status=).with('In Test')
+      it "should change status from pending to testing" do
+        @story.stub!(:status).and_return(Story::Status::PENDING)
+        @story.should_receive(:status=).with(Story::Status::TESTING)
         @story.update_status_from_acceptance_criteria
       end
 
-      it "should not change status from 'Complete' to 'In Test'" do
-        @story.stub!(:status).and_return("Complete")
-        @story.should_not_receive(:status=).with('In Test')
+      it "should not change status from complete to testing" do
+        @story.stub!(:status).and_return(Story::Status::COMPLETE)
+        @story.should_not_receive(:status=).with(Story::Status::TESTING)
         @story.update_status_from_acceptance_criteria
       end
     end
@@ -168,23 +168,21 @@ describe Story do
         @acs.stub!(:uncompleted).and_return([ac])
       end
 
-      it "should change status from 'In Test' to 'In Progress'" do
-        @story.stub!(:status).and_return("In Test")
-        @story.should_receive(:status=).with('In Progress')
+      it "should change status from testing to in progress" do
+        @story.stub!(:status).and_return(Story::Status::TESTING)
+        @story.should_receive(:status=).with(Story::Status::IN_PROGRESS)
         @story.update_status_from_acceptance_criteria
       end
 
-      it "should change status from 'Complete' to 'In Progress'" do
-        @story.stub!(:status).and_return("Complete")
-        @story.should_receive(:status=).with('In Progress')
+      it "should change status from complete to in progress" do
+        @story.stub!(:status).and_return(Story::Status::COMPLETE)
+        @story.should_receive(:status=).with(Story::Status::IN_PROGRESS)
         @story.update_status_from_acceptance_criteria
       end
 
-      it "should not change status to 'In Progress' from 'Pending'" do
-        ac = mock_model(AcceptanceCriterion)
-        @acs.stub!(:uncompleted).and_return([ac])
-        @story.stub!(:status).and_return("Pending")
-        @story.should_not_receive(:status=).with('In Progress')
+      it "should not change status from pending to in progress" do
+        @story.stub!(:status).and_return(Story::Status::PENDING)
+        @story.should_not_receive(:status=).with(Story::Status::IN_PROGRESS)
         @story.update_status_from_acceptance_criteria
       end
     end
