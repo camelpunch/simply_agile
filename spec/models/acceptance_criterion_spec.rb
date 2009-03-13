@@ -41,9 +41,51 @@ describe AcceptanceCriterion do
     end
   end
 
+  it "should belong to a story" do
+    AcceptanceCriterion.should belong_to(:story)
+  end
+
   describe "completion" do
     before :each do
       @acceptance_criterion = AcceptanceCriterion.new
+    end
+
+    describe "named finders" do
+      before :each do
+        AcceptanceCriterion.delete_all
+
+        @story = Stories.acceptance_criteria
+        @completed_acceptance_criteria = []
+        @uncompleted_acceptance_criteria = []
+
+        5.times do |count|
+          ac = AcceptanceCriterion.create!(
+            :story => @story,
+            :criterion => "Complete #{count}",
+            :fulfilled_at => Time.now
+          )
+          @completed_acceptance_criteria << ac
+        end
+
+        5.times do |count|
+          ac = AcceptanceCriterion.create!(
+            :story => @story,
+            :criterion => "Not complete #{count}",
+            :fulfilled_at => nil
+          )
+          @uncompleted_acceptance_criteria << ac
+        end
+      end
+
+      it "should return all complete acceptance criteria" do
+        AcceptanceCriterion.completed.should ==
+          @completed_acceptance_criteria
+      end
+
+      it "should return all incomplete acceptance criteria" do
+        AcceptanceCriterion.uncompleted.sort.should ==
+          @uncompleted_acceptance_criteria.sort
+      end
     end
 
     it "should be complete if fulfilled_at is set" do

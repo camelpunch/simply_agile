@@ -41,3 +41,6 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .ui-state-highlight.complete,
 #headings .complete { background:#3dfd4f }
 
+#acceptance_criteria #completed { color: #aaa }
+
+

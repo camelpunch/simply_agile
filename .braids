@@ -13,6 +13,13 @@ vendor/plugins/objectmother:
   revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
   branch: master
   remote: braid/vendor/plugins/objectmother
+vendor/plugins/no-peeping-toms: 
+  squashed: true
+  url: http://github.com/pat-maddox/no-peeping-toms.git
+  type: git
+  revision: 7b7939c02ef42980afb69400fc898c59efceab18
+  branch: master
+  remote: braid/vendor/plugins/no-peeping-toms
 vendor/plugins/jandacap: 
   squashed: true
   url: git@git.jandaweb.com:jandacap.git

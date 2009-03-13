@@ -9,17 +9,17 @@
 
 <% if @story.estimate? %>
   <p>
-  This story is estimated at <%= h @story.estimate %>.
+    This story is estimated at <%= h @story.estimate %>.
   </p>
 <% end %>
 
 <div id="acceptance_criteria">
   <h2>Acceptance Criteria</h2>
-  <% form_for [@project, @story, AcceptanceCriterion.new] do |f| %>
+  <% form_for [@project, @story, AcceptanceCriterion.new], :html => { :class => "add" } do |f| %>
     <p>
-    <%= f.label :criterion, 'New Criterion' %>
-    <%= f.text_field :criterion, :class => 'auto_focus' %>
-    <%= f.submit 'Add' %>
+      <%= f.label :criterion, 'New Criterion' %>
+      <%= f.text_field :criterion, :class => 'auto_focus' %>
+      <%= f.submit 'Add' %>
     </p>
   <% end %>
 
@@ -31,7 +31,7 @@
 <div class="guidance">
   <h2>Finished?</h2>
   <ul>
-    <li><%= link_to 'Add another story', 
+    <li><%= link_to 'Add another story',
       new_project_story_path(@project) %></li>
     <li><%= link_to 'Plan an iteration',
       new_project_iteration_path(@project) %></li>

@@ -12,7 +12,23 @@ class AcceptanceCriteriaController < ApplicationController
              :status => :unprocessable_entity)
     end
   end
-  alias :update :create
+
+  def update
+    story_status = @story.status
+
+    if @acceptance_criterion.update_attributes(params[:acceptance_criterion])
+      @story.reload
+      if story_status != @story.status
+        new_status = ActiveSupport::Inflector.titleize(@story.status)
+        flash[:notice] = "Story status has changed to '#{new_status}'"
+      end
+      redirect_to project_story_url(@story.project, @story)
+      # render(:partial => 'acceptance_criteria/list')
+    else
+      render(:text => @acceptance_criterion.errors.full_messages.join("\n"),
+             :status => :unprocessable_entity)
+    end
+  end
 
   def destroy
     @story.acceptance_criteria.destroy(params[:id])
