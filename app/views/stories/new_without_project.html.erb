@@ -1,0 +1,14 @@
+<% content_for :title, "New Story" %>
+<% content_for :h1, "New Story" %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child story">New Story</li>
+<% end %>
+<% form_for @story do |form| %>
+  <%= form.error_messages %>
+  <p>
+  <%= label_tag :project_id %>
+  <%= select_tag(:project_id, 
+                 options_from_collection_for_select(@current_user.projects, :id, :to_s)) %>
+  </p>
+  <%= render form %>
+<% end %>

@@ -19,18 +19,33 @@ describe StoriesController do
     end
 
     describe "new_story" do
-      before :each do
-        controller.stub!(:params).and_return(:project_id => @project.id)
+      describe "with project" do
+        before :each do
+          controller.stub!(:params).and_return(:project_id => @project.id)
+        end
+
+        it "should set the project" do
+          @stories.should_receive(:build)
+          controller.send(:new_story)
+        end
+
+        it "should set the instance variable" do
+          controller.send(:new_story)
+          controller.instance_variable_get("@story").should == @new_story
+        end
       end
 
-      it "should set the project" do
-        @stories.should_receive(:build)
-        controller.send(:new_story)
-      end
+      describe "without project" do
+        before :each do
+          controller.instance_variable_set('@project', nil)
+        end
 
-      it "should set the instance variable" do
-        controller.send(:new_story)
-        controller.instance_variable_get("@story").should == @new_story
+        it "should set the instance variable" do
+          new_story_without_project = Story.new
+          Story.stub!(:new).and_return(new_story_without_project)
+          controller.send(:new_story)
+          controller.instance_variable_get('@story').should == new_story_without_project
+        end
       end
     end
 
@@ -168,6 +183,17 @@ describe StoriesController do
       @new_story.should_receive(:content=)
       do_call
     end
+
+    describe "without project" do
+      before :each do
+        controller.instance_variable_set('@project', nil)
+      end
+
+      it "should render the new_without_project template" do
+        do_call
+        response.should render_template('stories/new_without_project')
+      end
+    end
   end
 
   describe "create" do
@@ -241,7 +267,102 @@ describe StoriesController do
     it_should_behave_like "it's successful"
   end
 
+  describe "edit" do
+    def do_call
+      get :edit, :id => @story.id, :project_id => @project.id
+    end
+
+    before :each do
+      controller.stub!(:get_story)
+      controller.instance_variable_set('@project', @project)
+      controller.instance_variable_set('@story', @story)
+      @story.stub!(:iteration_id).and_return(@iteration.id)
+      @story.stub!(:iteration_id?).and_return(false)
+    end
+
+    it_should_behave_like "it belongs to a project"
+    it_should_behave_like "it operates on an existing story"
+
+    describe "when iteration set on story" do
+      before :each do
+        @story.stub!(:iteration_id?).and_return(true)
+      end
+
+      it "should redirect to the iteration route" do
+        do_call
+        response.should redirect_to(edit_project_iteration_story_url(@project, @iteration, @story))
+      end
+    end
+
+    describe "with iteration id params" do
+      def do_call
+        get :edit, :id => @story.id,
+          :project_id => @project.id,
+          :iteration_id => @iteration.id
+      end
+
+      it_should_behave_like "it operates on an existing story from an iteration"
+    end
+  end
+
   describe "update" do
+
+    before :each do
+      @story.stub!(:update_attributes!)
+      @story.errors.stub!(:full_messages).and_return([''])
+    end
+
+    describe "it attempts to update", :shared => true do
+      it "should attempt to save" do
+        @story.should_receive(:update_attributes!).with(@story_attributes)
+        do_call
+      end
+    end
+
+    describe "it has the standard story failure mode", :shared => true do
+      before :each do
+        @story.stub!(:update_attributes!).and_raise(ActiveRecord::RecordInvalid.new(@story))
+      end
+
+      it "should re-render the edit page" do
+        do_call
+        response.should render_template('stories/edit')
+      end
+    end
+
+    describe "without iteration id" do
+      def do_call
+        put(:update, 
+            {:id => @story.id, 
+            :project_id => @project.id,
+            :story => @story_attributes})
+      end
+
+      before :each do
+        controller.stub!(:get_story)
+        controller.instance_variable_set('@project', @project)
+        controller.instance_variable_set('@story', @story)
+        @story_attributes = { 'name' => 'some new name' }
+      end
+
+      it_should_behave_like "it belongs to a project"
+      it_should_behave_like "it operates on an existing story"
+      it_should_behave_like "it attempts to update"
+
+      describe "success" do
+        before :each do
+          @story.stub!(:update_attributes!).and_return(true)
+        end
+
+        it "should redirect to project story url" do
+          do_call
+          response.should redirect_to(project_story_url(@project, @story))
+        end
+      end
+
+      it_should_behave_like "it has the standard story failure mode"
+    end
+
     describe "with iteration id" do
       def do_call(params = {})
         put(:update, 
@@ -255,30 +376,64 @@ describe StoriesController do
         controller.stub!(:get_story)
         controller.instance_variable_set('@project', @project)
         controller.instance_variable_set('@story', @story)
-        @story.stub!(:update_attributes!)
-        @story_attributes = { 'status' => 'testing' }
       end
 
-      it_should_behave_like "it belongs to a project"
-      it_should_behave_like "it operates on an existing story from an iteration"
-
-      it "should attempt to save and raise if it breaks" do
-        @story.should_receive(:update_attributes!).with(@story_attributes)
-        do_call
-      end
-
-      describe "html" do
-        it "should redirect to iterations/show" do
-          do_call
-          response.should redirect_to(project_iteration_url(@project, @iteration))
+      describe "status update" do
+        before :each do
+          @story_attributes = { 'status' => 'testing' }
         end
+
+        it_should_behave_like "it attempts to update"
+        it_should_behave_like "it operates on an existing story from an iteration"
+
+        describe "success" do
+          before :each do
+            @story.stub!(:update_attributes!).and_return(true)
+          end
+
+          describe "html" do
+            it "should redirect to project iteration url" do
+              do_call :story => {'status' => 'testing'}
+              response.should redirect_to(project_iteration_url(@project,
+                                                                @iteration))
+            end
+          end
+
+          describe "js" do
+            it "should be successful" do
+              do_call(:format => 'js')
+              response.should be_success
+            end
+          end
+        end
+
+        it_should_behave_like "it has the standard story failure mode"
       end
 
-      describe "js" do
-        it "should be successful" do
-          do_call(:format => 'js')
-          response.should be_success
+      describe "non-status update" do
+        before :each do
+          @story_attributes = { 'name' => 'some story name' }
         end
+
+        it_should_behave_like "it operates on an existing story from an iteration"
+        it_should_behave_like "it attempts to update"
+
+        describe "success" do
+          before :each do
+            @story.stub!(:update_attributes!).and_return(true)
+          end
+
+          describe "html" do
+            it "should redirect to project iteration story page" do
+              do_call
+              response.should redirect_to(project_iteration_story_url(@project,
+                                                                      @iteration,
+                                                                      @story))
+            end
+          end
+        end
+
+        it_should_behave_like "it has the standard story failure mode"
       end
     end
   end

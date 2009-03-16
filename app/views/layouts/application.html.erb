@@ -13,10 +13,10 @@
     <div id="container">
       <div id="navigation">
         <ol>
-          <li id="nav_home"><%= link_to_unless_current 'Home', root_path %></li>
-          <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path %></li>
-          <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path %></li>
-          <li id="nav_sharing"><%= link_to_unless_current 'Sharing', organisation_path(@current_user.organisation) %></li>
+          <li id="nav_home"><%= link_to_unless_current 'Home', root_path, :accesskey => 'h' %></li>
+          <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path, :accesskey => 'p' %></li>
+          <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path, :accesskey => 'i' %></li>
+          <li id="nav_sharing"><%= link_to_unless_current 'Sharing', organisation_path(@current_user.organisation), :accesskey => 's' %></li>
         </ol>
       </div>
       <div id="breadcrumbs">
@@ -27,7 +27,8 @@
       <% end %>
       </div>
       <%= link_to('New Story', 
-                  new_project_story_path(@project), 
+                  @project ? new_project_story_path(@project) : new_story_path, 
+                  :accesskey => 'n',
                   :id => 'contextual_new_story') %>
       <div id="content">
         <h1><%= yield(:h1) %></h1>

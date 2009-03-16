@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resources :iterations
   map.resources :organisations
+  map.resources :stories, :except => :index
   map.resources :projects do |project|
     project.resources :iterations do |iteration|
       iteration.resources :stories

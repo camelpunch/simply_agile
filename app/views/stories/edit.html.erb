@@ -1,0 +1,13 @@
+<% content_for :title, "Editing #{@story}" %>
+<% content_for :h1, h("Editing #{@story}") %>
+<% content_for :breadcrumbs do %>
+  <%= story_breadcrumbs @story %>
+  <li class="story">Editing <%= h @story %></li>
+<% end %>
+<% form_for [@project, @story.iteration, @story] do |form| %>
+  <%= form.error_messages %>
+  <%= render form %>
+  <p class="submit">
+  <%= form.submit 'Update Story' %>
+  </p>
+<% end %>

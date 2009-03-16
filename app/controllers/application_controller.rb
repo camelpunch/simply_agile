@@ -19,7 +19,9 @@ class ApplicationController < ActionController::Base
   end
 
   def get_project
-    @project = current_user.organisation.projects.find(params[:project_id])
+    if params[:project_id]
+      @project = current_user.organisation.projects.find(params[:project_id])
+    end
   end
 
   def login_required
