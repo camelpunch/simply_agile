@@ -13,6 +13,13 @@ vendor/plugins/objectmother:
   revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
   branch: master
   remote: braid/vendor/plugins/objectmother
+vendor/plugins/validates_email_format_of: 
+  squashed: true
+  url: http://github.com/alexdunae/validates_email_format_of.git
+  type: git
+  revision: 57baad6e4a87eea20505e8b18628390559afbf3d
+  branch: master
+  remote: braid/vendor/plugins/validates-email-format-of
 vendor/plugins/no-peeping-toms: 
   squashed: true
   url: http://github.com/pat-maddox/no-peeping-toms.git
