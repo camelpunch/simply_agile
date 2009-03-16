@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessor :password
+  attr_accessor :organisation_name
   belongs_to :organisation
   has_many :projects, :through => :organisation
 
