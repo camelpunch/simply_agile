@@ -189,9 +189,22 @@ describe StoriesController do
         controller.instance_variable_set('@project', nil)
       end
 
-      it "should render the new_without_project template" do
-        do_call
-        response.should render_template('stories/new_without_project')
+      describe "when there are projects" do
+        it "should render the new_without_project template" do
+          do_call
+          response.should render_template('stories/new_without_project')
+        end
+      end
+
+      describe "when there are no projects" do
+        before :each do
+          @projects.stub!(:empty?).and_return(true)
+        end
+
+        it "should render the new_guidance template" do
+          do_call
+          response.should render_template('stories/new_guidance')
+        end
       end
     end
   end

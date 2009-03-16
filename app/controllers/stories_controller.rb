@@ -40,7 +40,11 @@ So that
 STORY
 
     unless @project
-      render :template => 'stories/new_without_project'
+      if current_user.organisation.projects.empty?
+        render :template => 'stories/new_guidance'
+      else
+        render :template => 'stories/new_without_project'
+      end
     end
   end
 
