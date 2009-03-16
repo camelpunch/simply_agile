@@ -14,6 +14,8 @@ describe "/stories/edit" do
                                  :estimate? => nil,
                                  :content => '')
 
+    assigns[:current_user] = mock_model(User, :projects => [assigns[:project]])
+
     @iteration = mock_model Iteration
   end
 

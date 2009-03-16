@@ -5,10 +5,9 @@
 <% end %>
 <% form_for @story do |form| %>
   <%= form.error_messages %>
-  <p>
-  <%= label_tag :project_id %>
-  <%= select_tag(:project_id, 
-                 options_from_collection_for_select(@current_user.projects, :id, :to_s)) %>
-  </p>
+  <%= render :partial => 'stories/project_select' %>
   <%= render form %>
+  <p class="submit">
+  <%= form.submit 'Create Story' %>
+  </p>
 <% end %>

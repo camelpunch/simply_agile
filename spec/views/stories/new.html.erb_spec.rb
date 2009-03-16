@@ -9,13 +9,16 @@ describe "/stories/new" do
                         :new_record? => true)
     assigns[:project] = @project
     assigns[:story] = @story
+
+    assigns[:current_user] = mock_model(User, :projects => [@project])
+
     render 'stories/new'
   end
   
+  it_should_behave_like "a standard view"
+
   it "should have a form for creating a story" do
-    response.should have_tag('form[action=?][method=?]',
-                             project_stories_path(@project),
-                             'post')
+    response.should have_tag('form[action=?][method=?]', stories_path, 'post')
   end
-  
+
 end

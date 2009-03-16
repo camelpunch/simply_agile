@@ -4,8 +4,9 @@
   <li class="first-child project"><%= link_to h(@project), @project %></li>
   <li class="story">New Story</li>
 <% end %>
-<% form_for [@project, @story] do |form| %>
+<% form_for @story do |form| %>
   <%= form.error_messages %>
+  <%= render :partial => 'stories/project_select' %>
   <%= render form %>
   <p class="submit">
   <%= form.submit 'Create Story' %>

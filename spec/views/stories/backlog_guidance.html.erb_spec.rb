@@ -12,9 +12,5 @@ describe "/stories/backlog_guidance" do
     render 'stories/backlog_guidance'
   end
 
-  it_should_behave_like "a standard view"
-
-  it "should have guidance" do
-    response.should have_tag('.guidance')
-  end
+  it_should_behave_like "guidance"
 end
