@@ -41,21 +41,31 @@ describe User do
     end
   end
 
-  describe "organisation" do
-    it "should have the writer" do
-      User.new.should respond_to(:organisation=)
+  describe "associations" do
+    it "should belong to an organisation" do
+      User.should belong_to(:organisation)
+    end
+
+    it "should have many projects" do
+      User.should have_many(:projects)
+    end
+  end
+
+  describe "creation" do
+    it "should create a new organisation for the user" do
+      Users.create_user!(:organisation_name => 'New Organisation')
+      Organisation.find_by_name('New Organisation').should_not be_nil
+    end
+
+    it "should encrypt the password" do
+      user = Users.create_user!(:password => 'some password')
+      user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
     end
   end
 
   describe "password=" do
     it "should have the writer" do
       User.new.should respond_to(:password=)
-    end
-  end
-
-  describe "projects" do
-    it "should have the writer" do
-      User.new.should respond_to(:projects=)
     end
   end
 
@@ -66,7 +76,7 @@ describe User do
     end
 
     it "should require an organisation id" do
-      @user.errors.on(:organisation_id).should_not be_nil 
+      @user.errors.on(:organisation).should_not be_nil 
     end
   end
 end
