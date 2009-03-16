@@ -1,7 +1,10 @@
 <% content_for :title, "#{@story} | #{@project} Stories" %>
 <% content_for :h1, h(@story) %>
+<% content_for :actions do %>
+<li><%= link_to 'Edit', [:edit, @project, @iteration, @story] %></li>
+<% end %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <%= story_breadcrumbs @story %>
   <li class="story"><%= h @story %></li>
 <% end %>
 
@@ -28,13 +31,13 @@
   </div>
 </div>
 
+<% unless @story.iteration_id? %>
 <div class="guidance">
   <h2>Finished?</h2>
   <ul>
-    <li><%= link_to 'Add another story',
-      new_project_story_path(@project) %></li>
-    <li><%= link_to 'Plan an iteration',
-      new_project_iteration_path(@project) %></li>
+    <li><%= link_to 'Add another story', [:new, @project, :story] %></li>
+    <li><%= link_to 'Plan an iteration', [:new, @project, :iteration] %></li>
     <li><%= link_to 'Prioritise stories', backlog_project_stories_path(@project) %></li>
   </ul>
 </div>
+<% end %>

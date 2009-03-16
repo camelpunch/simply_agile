@@ -6,10 +6,12 @@ describe "/stories/show" do
     assigns[:project] = mock_model(Project, 
                                    :stories => [],
                                    :iterations => [],
+                                   :iteration_id? => false,
                                    :name => '')
     assigns[:story] = mock_model(Story,
                                  :acceptance_criteria => [],
                                  :estimate? => nil,
+                                 :iteration_id? => false,
                                  :content => '')
 
     render 'stories/show'

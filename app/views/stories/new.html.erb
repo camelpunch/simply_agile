@@ -7,4 +7,7 @@
 <% form_for [@project, @story] do |form| %>
   <%= form.error_messages %>
   <%= render form %>
+  <p class="submit">
+  <%= form.submit 'Create Story' %>
+  </p>
 <% end %>
