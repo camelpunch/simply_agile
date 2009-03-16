@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_url
     else
-      render  :template => 'new'
+      render :action => 'new'
     end
   end
 

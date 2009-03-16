@@ -1,28 +1,30 @@
 <% content_for :title, "Create an account" %>
 <% content_for :h1, "Create an account" %>
-<% form_for @user do |f| %>
+
+<% form_for @user do |form| %>
   <div>
+    <%= form.error_messages %>
     <p>
-      <%= f.label :email_address %>
-      <%= f.text_field :email_address, :class => 'auto_focus' %>
+      <%= form.label :email_address %>
+      <%= form.text_field :email_address, :class => 'auto_focus' %>
     </p>
     <p class="description">
       The email address is used to log in to the system. We will only use this
       address to send important account information.
       <strong>We will never send unsolicated emails to your email address
       or pass it on to third parties.</strong> 
-      We take your privacy seriously &mdash;
-      see our <%= link_to "privacy policy" %> for more details.
+      We take your privacy seriously. See our <%= link_to "privacy policy" %>
+      for more details.
     </p>
   </div>
   <p>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
   </p>
   <div>
     <p>
-      <%= f.label :organisation_name %>
-      <%= f.password_field :organisation_name %>
+      <%= form.label :organisation_name %>
+      <%= form.password_field :organisation_name %>
     </p>
     <p class="description">
       Stories, projects and iterations are automatically shared with other
@@ -31,6 +33,6 @@
     </p>
   </div>
   <p class="submit">
-    <%= f.submit 'Create account' %>
+    <%= form.submit 'Create account' %>
   </p>
 <% end %>

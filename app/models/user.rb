@@ -4,7 +4,13 @@ class User < ActiveRecord::Base
   belongs_to :organisation
   has_many :projects, :through => :organisation
 
-  validates_associated :organisation, :if => lambda {  :organisation_name.blank? }
+  validates_email_format_of :email_address
+  validates_uniqueness_of :email_address
+  validates_presence_of :organisation_id,
+    :if => lambda { |user| user.organisation_name.nil? }
+  validates_presence_of :organisation_name,
+    :if => lambda { |user| user.organisation.nil? }
+  validates_presence_of :password, :on => :create
 
   def before_create
     self.organisation ||= Organisation.create!(:name => organisation_name)

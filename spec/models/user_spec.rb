@@ -2,17 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe User do
   before(:each) do
-    @valid_attributes = {
-      :email_address => "value for email_address",
-      :encrypted_password => "value for encrypted_password",
-      :organisation_id => "1"
-    }
-
     @user = User.new
   end
 
   it "should create a new instance given valid attributes" do
-    User.create!(@valid_attributes)
+    Users.create_user!
   end
 
   describe "find_by_email_address_and_password" do
@@ -71,12 +65,73 @@ describe User do
 
   describe "validations" do
     before :each do
-      @user = User.new
-      @user.valid?
+      User.delete_all
+      @user = User.new(Users.user_prototype)
+    end
+    
+    describe "email address" do
+      before :each do
+        @user.email_address = nil
+      end
+
+      it "should require an email address" do
+        @user.valid?
+        @user.errors.invalid?(:email_address).should be_true
+      end
+
+      it "should not allow invalid email addresses" do
+        @user.email_address = "this is not an email address"
+        @user.valid?
+        @user.errors.invalid?(:email_address).should be_true
+      end
+
+      it "should allow valid email addresses" do
+        @user.email_address = "user@jandaweb.com"
+        @user.valid?
+        @user.errors.invalid?(:email_address).should be_false
+      end
+
+      it "should not allow duplicate email addresses" do
+        email_address = "user@jandaweb.com"
+        Users.create_user!(:email_address => email_address)
+        @user.email_address = email_address
+        @user.valid?
+        @user.errors.invalid?(:email_address).should be_true
+      end
     end
 
-    it "should require an organisation id" do
-      @user.errors.on(:organisation).should_not be_nil 
+    describe "organisation" do
+      before :each do
+        @user.organisation_name = nil
+        @user.organisation = nil
+      end
+
+      it "should require an organisation" do
+        @user.valid?
+        @user.errors.invalid?(:organisation_id).should be_true
+      end
+
+      it "should not require an organisation if organisation name is given" do
+        @user.organisation_name = 'some name'
+        @user.valid?
+        @user.errors.invalid?(:organisation_id).should be_false
+      end
+
+      it "should add an error to organisation name if both name and organisation are blank" do
+        @user.valid?
+        @user.errors.on(:organisation_name).should_not be_nil
+      end
+    end
+
+    describe "password" do
+      before :each do
+        @user.password = nil
+      end
+      
+      it "should require a password on create" do
+        @user.valid?
+        @user.errors.invalid?(:password).should be_true
+      end
     end
   end
 end

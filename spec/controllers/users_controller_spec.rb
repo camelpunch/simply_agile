@@ -79,6 +79,10 @@ describe UsersController do
     end
 
     describe "invalid user details" do
+      before(:each) do
+        @user.stub!(:save).and_return(false)
+      end
+
       it "should display the new template" do
         do_call
         response.should render_template('users/new')

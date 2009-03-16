@@ -3,7 +3,7 @@ class Users < ObjectMother
     user_count = User.count
     organisation_count = Organisation.count
     {
-      :email_address => "user#{user_count}@jandaweb.com",
+      :email_address => "user#{user_count + 1}@jandaweb.com",
       :password => 'password',
       :organisation_name => "Organisation #{organisation_count}"
     }
