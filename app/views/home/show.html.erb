@@ -1,3 +1,21 @@
 <% content_for :title, "Simply Agile Home" %>
 <% content_for :h1, "Simply Agile Home" %>
-<%= render :partial => 'projects/list' %>
+<% if ! @active_iterations.empty? -%>
+  <ul>
+    <% @active_iterations.each do |iteration| -%>
+      <li class="active_iteration">
+        <%= link_to(content_tag(:h3, h(iteration.name)),
+          project_iteration_path(iteration.project, iteration)) %>
+        <%= link_to(
+          image_tag(iteration_burndown_path(iteration, :width => 300),
+            :width => 300, :height => 225,
+            :alt => "Burndown chart for #{h iteration.name}"
+          ),
+          project_iteration_path(iteration.project, iteration)
+        ) %>
+      </li>
+    <% end -%>
+  </ul>
+<% else -%>
+  <%= render :partial => 'projects/list' %>
+<% end -%>

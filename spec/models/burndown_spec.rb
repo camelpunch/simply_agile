@@ -8,8 +8,18 @@ describe Burndown do
 
   describe "new" do
     it "should store the iteration" do
-      burndown = Burndown.new(@iteration)
+      burndown = Burndown.new(@iteration, {})
       burndown.instance_variable_get("@iteration").should == @iteration
+    end
+
+    it "should store the width" do
+      burndown = Burndown.new(@iteration, :width => 300)
+      burndown.width.should == 300
+    end
+
+    it "should default the width to 600" do
+      burndown = Burndown.new(@iteration, {})
+      burndown.width.should == 600
     end
   end
 
@@ -75,6 +85,12 @@ describe Burndown do
 
     it "should create a new Gruff::Line object" do
       Gruff::Line.should_receive(:new)
+      @burndown.to_png
+    end
+
+    it "should pass the width to gruff" do
+      @burndown.width = "300"
+      Gruff::Line.should_receive(:new).with(300)
       @burndown.to_png
     end
 

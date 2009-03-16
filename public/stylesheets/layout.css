@@ -37,6 +37,10 @@
 form p label { display:block }
 /* end forms */
 
+/* home/show */
+.active_iteration { float: left; width: 50%; }
+/* end home/show */
+
 /* iterations/new */
 #stories_iteration,
 #stories_available { float:left; width:50% }

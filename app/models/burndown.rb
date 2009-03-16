@@ -1,12 +1,16 @@
 class Burndown
   attr_accessor :iteration
+  attr_accessor :width
+
+  DEFAULT_WIDTH = 600
   
-  def initialize(iteration)
+  def initialize(iteration, options = {})
     self.iteration = iteration
+    self.width = options[:width] || DEFAULT_WIDTH
   end
 
   def to_png
-    gruff = Gruff::Line.new(600)
+    gruff = Gruff::Line.new(width.to_i)
 
     gruff.theme = {
       :colors => %w(grey darkorange),

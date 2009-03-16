@@ -19,6 +19,6 @@ class BurndownsController < ApplicationController
   end
 
   def get_burndown
-    @burndown = @iteration.burndown
+    @burndown = @iteration.burndown(params[:width])
   end
 end

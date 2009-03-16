@@ -75,8 +75,10 @@ class Iteration < ActiveRecord::Base
     ! self.start_date.nil?
   end
 
-  def burndown
-    Burndown.new(self)
+  def burndown(width = nil)
+    options = {}
+    options[:width] = width unless width.nil?
+    Burndown.new(self, options)
   end
 
   def update_burndown_data_points

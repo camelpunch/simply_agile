@@ -37,6 +37,7 @@ describe BurndownsController do
     describe "get_burndown" do
       before :each do
         @iteration.stub!(:burndown)
+        controller.stub!(:params).and_return({})
       end
       
       it "should get the burndown from the iteration" do
@@ -47,6 +48,12 @@ describe BurndownsController do
       it "should set the instance variable" do
         controller.send(:get_burndown)
         controller.instance_variable_get("@burndown").should == @burndown
+      end
+
+      it "should set the burndown width" do
+        controller.stub!(:params).and_return({ :width => 300 })
+        @iteration.should_receive(:burndown).with(300)
+        controller.send(:get_burndown)
       end
     end
   end

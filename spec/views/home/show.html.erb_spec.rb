@@ -4,6 +4,9 @@ describe "/home/show" do
   before :each do
     @user = mock_model User, :organisation => 'asdf'
     assigns[:current_user] = @user
+
+    @active_iterations = []
+    assigns[:active_iterations] = @active_iterations
   end
 
   describe "with projects" do
@@ -13,10 +16,6 @@ describe "/home/show" do
     end
 
     it_should_behave_like "a standard view"
-
-    it "should provide a link to projects/new" do
-      response.should have_tag('a[href=?]', new_project_path)
-    end
   end
 
   describe "with no projects" do

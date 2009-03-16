@@ -150,8 +150,13 @@ describe Iteration do
     end
 
     it "should create a new burndown object" do
-      Burndown.should_receive(:new).with(@iteration)
+      Burndown.should_receive(:new).with(@iteration, {})
       @iteration.burndown
+    end
+
+    it "should pass the width to the burndown object" do
+      Burndown.should_receive(:new).with(@iteration, :width => 300)
+      @iteration.burndown(300)
     end
   end
 
