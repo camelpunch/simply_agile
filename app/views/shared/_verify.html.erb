@@ -1,13 +1,15 @@
 <div id="verify">
-  <p class="first-child">
+  <div>
+    <p>
     Please check your email for account verification details.
     <%= link_to "Enter verification token", new_user_verification_path(@current_user) %>
     manually if preferred.
-  </p>
-  <% if @current_user.verify_by - Date.today < 4 -%>
-    <p>
+    </p>
+    <% if @current_user.verify_by - Date.today < 4 -%>
+      <p>
       If you do not verify your email address by
       <%= @current_user.verify_by.to_s(:default) %>, your account will be disabled.
     <% end -%>
-  </p>
+    </p>
+  </div>
 </div>
