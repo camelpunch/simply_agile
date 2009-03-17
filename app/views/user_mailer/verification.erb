@@ -4,7 +4,7 @@ In order to continue using your new account we need you to confirm that
 this email address really does belong to you. In order to do that, please
 visit the following url:
 
-<%= user_verification_url(@user, :token => @user.verification_token) %>
+<%= verification_url(@user, :token => @user.verification_token) %>
 
 or enter the code <%=  @user.verification_token %> when prompted by the website.
 

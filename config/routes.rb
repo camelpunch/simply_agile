@@ -18,6 +18,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users do |user|
     user.resource :verification
   end
+  map.verification '/users/:user_id/verification/',
+    :controller => 'verifications', :action => 'create'
 
   map.resources :iterations do |iteration|
     iteration.resource :burndown

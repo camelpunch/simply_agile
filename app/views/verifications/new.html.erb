@@ -1,0 +1,17 @@
+<% content_for :title, "Verify your account" %>
+<% content_for :h1, "Verify your account" %>
+
+<% form_tag :action => :create do -%>
+  <div>
+    <p>
+      <%= label_tag :token %>
+      <%= text_field_tag :token, params[:token], :size => 6 %>
+    </p>
+    <p class="description">
+      Your 6 character verification token was emailed to you when you signed up.
+    </p>
+  </div>
+  <p class="submit">
+    <%= submit_tag 'Verify Account' %>
+  </p>
+<% end -%>
