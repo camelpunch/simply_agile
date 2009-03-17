@@ -1,7 +1,7 @@
 body { color:#333 }
 #container { background:28px 7px url(/images/simply_agile.png) no-repeat }
 
-#verify p { color:#000; background:#f55 }
+#verify div { color:#000; background:#f55; opacity:0.9 }
 
 /* navigation */
 #navigation a { background:#fff; color:#333; outline:none }

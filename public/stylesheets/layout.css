@@ -5,8 +5,8 @@
 #footer { clear:both; padding:30px 0 }
 
 #verify { position:absolute; top:0; width:100% }
-#verify p { margin:0 auto; width:60%; padding:0 0 7px 0 }
-#verify p.first-child { padding:5px 0 0 0 }
+#verify div { margin:0 auto; width:52em; padding:5px 0 }
+#verify p { margin:0 }#verify p { margin:0 }#verify p { margin:0 }
 /* end basic layout */
 
 /* navigation */
