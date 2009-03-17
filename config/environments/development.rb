@@ -15,3 +15,5 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+ActionMailer::Base.default_url_options[:host] = "simply-agile.dev.jandaweb.com"

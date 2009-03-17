@@ -14,7 +14,10 @@ ActionController::Routing::Routes.draw do |map|
       story.resources :acceptance_criteria
     end
   end
-  map.resources :users
+
+  map.resources :users do |user|
+    user.resource :verification
+  end
 
   map.resources :iterations do |iteration|
     iteration.resource :burndown

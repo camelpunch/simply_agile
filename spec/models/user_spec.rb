@@ -134,4 +134,25 @@ describe User do
       end
     end
   end
+
+  describe "verification" do
+    before :each do
+      @user = Users.create_user!
+    end
+
+    it "should not be verified by default" do
+      @user.verified.should be_false
+    end
+
+    describe "verification token" do
+      it "should be generated when a user is created" do
+        @user.verification_token.should_not be_nil
+      end
+    
+      it "should not generate the same token" do
+        new_user = Users.create_user!
+        @user.verification_token.should_not == new_user.verification_token
+      end
+    end
+  end
 end
