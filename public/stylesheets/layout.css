@@ -61,7 +61,8 @@ body.javascript #stories_available { /*ie6*/ margin-left:1% }
 body.javascript div>#stories_iteration { margin-right:11% }
 body.javascript div>#stories_available { margin-left:11% }
 
-body.javascript #stories span.estimate { position:absolute; top:15px; right:28px }
+body.javascript #stories span.estimate { position:absolute; top:15px; right:0;
+                                         width:110px }
 
 body.javascript #stories .include input,
 body.javascript #stories .include label { display:none }

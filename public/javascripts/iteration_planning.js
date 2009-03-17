@@ -2,15 +2,16 @@ var StorySwapper = {
   init: function() {
     // create an iteration stories div
     $('#stories_available')
-      .before('<div id="stories_iteration_container"><div class="section" id="stories_iteration"><span class="estimate">Estimate</span><h2>Iteration stories</h2><ol></ol></div></div>');
+      .before('<div id="stories_iteration_container"><div class="section" id="stories_iteration"><span class="estimate">Points (<span class="numeric">0</span>)</span><h2>Iteration stories</h2><ol></ol></div></div>');
 
     // wrap the available div
     var available_div = $('#stories_available').remove();
-    $('#stories_iteration_container').after('<div id="stories_available_container"><div class="section" id="stories_available"><span class="estimate">Estimate</span>'+available_div.html()+'</div></div>');
+    $('#stories_iteration_container').after('<div id="stories_available_container"><div class="section" id="stories_available"><span class="estimate">Points (<span class="numeric">0</span>)</span>'+available_div.html()+'</div></div>');
 
     StorySwapper.init_stories();
     StorySwapper.convert_checkboxes();
-    StorySwapper.show_hide_estimate_headings();
+    StorySwapper.bind_estimates();
+    StorySwapper.update_estimates();
   },
 
   // add the story to the specified ol, maintaining the original order
@@ -85,16 +86,25 @@ var StorySwapper = {
     // workaround ie6 bug with checkbox values being reset after append
     if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
 
-    StorySwapper.show_hide_estimate_headings();
-
+    StorySwapper.update_estimates();
+    StorySwapper.bind_estimates();
     StoryToggler.bind_anchors(story);
   },
 
-  show_hide_estimate_headings: function() {
+  bind_estimates: function() {
+    $('div.estimate input').keyup(StorySwapper.update_estimates);
+  },
+
+  update_estimates: function() {
     $('#stories_iteration,#stories_available').each( function() {
       if ($(this).find('li.story').length == 0) {
         $(this).find('span.estimate').hide();
       } else {
+        var points = 0;
+        $(this).find('div.estimate input').each( function() {
+          points += parseInt($(this).val());
+        });
+        $(this).find('span.estimate span.numeric').html(points);
         $(this).find('span.estimate').show();
       }
     });
