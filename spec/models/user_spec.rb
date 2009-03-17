@@ -55,6 +55,12 @@ describe User do
       user = Users.create_user!(:password => 'some password')
       user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
     end
+
+    it "should not try to encrypt the password when adding to an existing organisation" do
+      organisation = Organisations.create_organisation!
+      user = Users.create_user!(:organisation => organisation, :password => nil)
+      user.encrypted_password.should be_nil
+    end
   end
 
   describe "password=" do
@@ -129,8 +135,26 @@ describe User do
       end
       
       it "should require a password on create" do
+        @user.organisation = nil
         @user.valid?
         @user.errors.invalid?(:password).should be_true
+      end
+
+      it "should not require a password if the user is being added to an organisation" do
+        @user.organisation = Organisations.create_organisation!
+        @user.valid?
+        @user.errors.invalid?(:password).should be_false
+      end
+    end
+
+    describe "adding to an organisation" do
+      it "should be true if organsiation is set" do
+        @user.organisation = Organisations.create_organisation!
+        @user.adding_to_organisation?.should be_true
+      end
+
+      it "should be false otherwise" do
+        @user.adding_to_organisation?.should be_false
       end
     end
   end
