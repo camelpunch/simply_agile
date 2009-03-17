@@ -26,6 +26,7 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 #actions a { color:#444; display:block; background:url(/images/button_background.png) no-repeat }
 
 .section, .section h2 { border:2px solid #e4e5f3 }
+.section .errorExplanation h2 { border: none }
 .section h2 { background:#fff }
 
 /* iterations/new */
@@ -52,4 +53,4 @@ body.iterations .display .content { background:#fff }
 /* end iterations/show when active */
 
 #headings .complete { background:#3dfd4f }
-#acceptance_criteria #completed { color: #aaa }
+#acceptance_criteria #completed, .aside { color: #aaa }

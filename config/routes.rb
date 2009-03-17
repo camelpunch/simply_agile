@@ -1,7 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resources :iterations
-  map.resource :organisation
+
+  map.resource :organisation do |organisation|
+    organisation.resources :members, :controller => 'organisation_members'
+  end
+
   map.resources :stories, :except => :index
   map.resources :projects do |project|
     project.resources :iterations do |iteration|

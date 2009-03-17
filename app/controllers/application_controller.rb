@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.valid.find_by_id(session[:user_id])
   end
 
+  def get_organisation
+    @organisation = current_user.organisation
+  end
+
   def get_project
     if params[:project_id]
       @project = current_user.organisation.projects.find(params[:project_id])

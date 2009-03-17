@@ -1,12 +1,10 @@
 class OrganisationsController < ApplicationController
   before_filter :get_organisation
-
-  def show
-  end
+  before_filter :new_user
 
   protected
 
-  def get_organisation
-    @organisation = current_user.organisation
+  def new_user
+    @user = User.new
   end
 end

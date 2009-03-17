@@ -6,9 +6,9 @@ describe ApplicationController do
     @user = mock_model User
     @referer = 'some/referer'
     @request = mock('Request', 
-                    :protocol => '', 
-                    :host_with_port => '',
-                    :referer => @referer)
+      :protocol => '',
+      :host_with_port => '',
+      :referer => @referer)
     controller.stub!(:request).and_return(@request)
   end
 
@@ -83,6 +83,22 @@ describe ApplicationController do
       controller.stub!(:params).and_return({})
       @user.should_not_receive(:organisation)
       controller.send(:get_project)
+    end
+  end
+
+  describe "get_organisation" do
+    before :each do
+      login
+    end
+    
+    it "should get the organisation the current user" do
+      @user.should_receive(:organisation)
+      controller.send(:get_organisation)
+    end
+
+    it "should assign the instance variable" do
+      controller.send(:get_organisation)
+      controller.instance_variable_get("@organisation").should == @organisation
     end
   end
 

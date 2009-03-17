@@ -5,15 +5,12 @@ describe OrganisationsController do
     login
   end
 
-  describe "setting the organisation" do
-    it "should get the organisation the current user" do
-      @user.should_receive(:organisation)
-      controller.send(:get_organisation)
-    end
-
-    it "should assign the instance variable" do
-      controller.send(:get_organisation)
-      controller.instance_variable_get("@organisation").should == @organisation
+  describe "creating a new user" do
+    it "should assign a new user as an instance variable" do
+      @user = User.new
+      User.should_receive(:new).and_return(@user)
+      controller.send(:new_user)
+      controller.instance_variable_get("@user").should == @user
     end
   end
   
@@ -27,6 +24,11 @@ describe OrganisationsController do
 
     it "should assign the organisation" do
       controller.should_receive(:get_organisation)
+      do_call
+    end
+
+    it "should assign a new user" do
+      controller.should_receive(:new_user)
       do_call
     end
   end
