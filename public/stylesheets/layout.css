@@ -96,6 +96,7 @@ body#stories_backlog.javascript #content input { display:none }
 /* end stories/backlog */
 
 /* iterations/show active */
+body#iterations_show h1 { margin-bottom:0 }
 body#iterations_show.javascript #stories .guidance { position:absolute; width:99%;
                                                      top:0 }
 body#iterations_show.javascript #stories_list input,
