@@ -50,7 +50,7 @@ Spec::Runner.configure do |config|
 
   def login
     @organisation = mock_model Organisation
-    @user = mock_model User, :organisation => @organisation
+    @user = mock_model User, :organisation => @organisation, :verified => true
     controller.stub!(:login_required).and_return(true)
     controller.stub!(:current_user).and_return(@user)
   end

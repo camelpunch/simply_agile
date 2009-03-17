@@ -144,6 +144,10 @@ describe User do
       @user.verified.should be_false
     end
 
+    it "should set verify_by on a new user" do
+      @user.verify_by.should == Date.today + 7
+    end
+    
     describe "verification token" do
       it "should be generated when a user is created" do
         @user.verification_token.should_not be_nil

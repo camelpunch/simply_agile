@@ -2,14 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-  <head> 
+  <head>
     <%= stylesheet_link_tag 'reset-fonts', 'layout', 'typography', 'colours',
       :cache => true %>
     <title><%= h yield(:title) %> | Simply Agile</title>
   </head>
 
-  <body class="<%= body_classes.join(' ') %>" id="<%= 
-    "#{controller.controller_name}_#{controller.action_name}" %>">
+  <body class="<%= body_classes.join(' ') %>" id="<%=
+        "#{controller.controller_name}_#{controller.action_name}" %>">
     <div id="container">
       <div id="navigation">
         <ol>
@@ -20,39 +20,42 @@
         </ol>
       </div>
       <div id="breadcrumbs">
-      <% unless controller.controller_name == 'home' %>
-        <ol>
-          <%= yield :breadcrumbs %>
-        </ol>
-      <% end %>
+        <% unless controller.controller_name == 'home' %>
+          <ol>
+            <%= yield :breadcrumbs %>
+          </ol>
+        <% end %>
       </div>
-      <%= link_to('New Story', 
-                  new_project_story_path(@project), 
-                  :id => 'contextual_new_story') %>
+      <%= link_to('New Story',
+        new_project_story_path(@project),
+        :id => 'contextual_new_story') %>
       <div id="content">
         <h1><%= yield(:h1) %></h1>
         <% unless yield(:actions).blank? %>
-        <ul id="actions">
-          <%= yield :actions %>
-        </ul>
+          <ul id="actions">
+            <%= yield :actions %>
+          </ul>
         <% end %>
+        <% unless @current_user.verified? -%>
+          <%= render :partial => 'shared/verify' %>
+        <% end -%>
         <%= render_flash %>
         <%= yield %>
       </div>
       <div id="footer">
         <p>
-        Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
+          Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
         </p>
       </div>
     </div>
-    <%= javascript_include_tag('jquery-1.3.2.min', 
-                               'jquery-ui-1.7.custom.min',
-                               'jquery.form', 
-                               'acceptance_criteria', 
-                               'iteration_planning',
-                               'iteration_active',
-                               'application', 
-                               :cache => true) %>
+    <%= javascript_include_tag('jquery-1.3.2.min',
+      'jquery-ui-1.7.custom.min',
+      'jquery.form',
+      'acceptance_criteria',
+      'iteration_planning',
+      'iteration_active',
+      'application',
+      :cache => true) %>
   </body>
 
 </html>
