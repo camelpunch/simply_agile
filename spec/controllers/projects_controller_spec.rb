@@ -106,6 +106,9 @@ describe ProjectsController do
 
     before :each do
       Project.stub!(:find).with(@project.id.to_s).and_return(@project)
+      @project.stub!(:stories).and_return([@story])
+      controller.stub!(:get_project)
+      controller.instance_variable_set('@project', @project)
     end
 
     it_should_behave_like "it's successful"
@@ -113,6 +116,17 @@ describe ProjectsController do
     it "should assign the project" do
       controller.should_receive(:get_project)
       do_call
+    end
+
+    describe "with no stories" do
+      before :each do
+        @project.stub!(:stories).and_return([])
+      end
+
+      it "should render the guidance template" do
+        do_call
+        response.should render_template('projects/show_guidance')
+      end
     end
   end
 
