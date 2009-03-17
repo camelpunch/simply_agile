@@ -84,6 +84,15 @@ var StorySwapper = {
     // workaround ie6 bug with checkbox values being reset after append
     if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
 
+    // show / hide estimate column heading
+    $('#stories_iteration,#stories_available').each( function() {
+      if ($(this).find('li.story').length == 0) {
+        $(this).find('span.estimate').hide();
+      } else {
+        $(this).find('span.estimate').show();
+      }
+    });
+
     StoryToggler.bind_anchors(story);
   }
 }
