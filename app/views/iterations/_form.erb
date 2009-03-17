@@ -9,28 +9,40 @@
 </p>
 
 <div id="stories">
-  <table id="stories_available">
-    <caption>Available stories</caption>
+  <div class="section" id="stories_available">
+    <h2>Backlog</h2>
+    <ol>
     <% @stories.each do |story| %>
-    <tr id="story_<%= story.id %>">
-      <td>
-        <%= check_box_tag("stories[#{story.id}][include]", 
-                          '1', 
-                          @iteration.stories.include?(story)) %>
-        <%= label_tag "stories_#{story.id}_include", "Include" %>
-      </td>
-      <td>
-        <span><%= h story.name %></span>
+    <li class="story" id="story_<%= story.id %>">
+      <div class="display">
+        <h3><%= h story.name %></h3>
         <div class="content"><%= simple_format story.content %></div>
-      </td>
-      <td>
+
+        <% unless story.acceptance_criteria.empty? %>
+          <ul class="acceptance_criteria">
+            <% story.acceptance_criteria.each do |criterion| %>
+              <li><%= h criterion %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+
+      <div class="estimate">
         <%= label_tag "stories_#{story.id}_estimate", "Estimate" %>
         <%= text_field_tag("stories[#{story.id}][estimate]", 
                            story.estimate, 
                            :class => 'numeric', 
                            :size => 2) %>
-      </td>
-    </tr>
+      </div>
+
+      <div class="include">
+        <%= check_box_tag("stories[#{story.id}][include]", 
+                          '1', 
+                          @iteration.stories.include?(story)) %>
+        <%= label_tag "stories_#{story.id}_include", "Include" %>
+      </div>
+    </li>
     <% end %>
-  </table>
+    </ol>
+  </div>
 </div>

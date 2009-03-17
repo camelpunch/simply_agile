@@ -6,6 +6,7 @@ describe "/iterations/new" do
                         :name => '',
                         :content => '',
                         :estimate => '',
+                        :acceptance_criteria => [],
                         :project => @project)
     @project = mock_model(Project)
     @iteration = mock_model(Iteration, 
