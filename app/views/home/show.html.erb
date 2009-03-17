@@ -4,8 +4,10 @@
   <ul>
     <% @active_iterations.each do |iteration| -%>
       <li class="active_iteration">
-        <%= link_to(content_tag(:h3, h(iteration.name)),
+        <h3>
+        <%= link_to(h(iteration.name),
           project_iteration_path(iteration.project, iteration)) %>
+        </h3>
         <%= link_to(
           image_tag(iteration_burndown_path(iteration, :width => 300),
             :width => 300, :height => 225,
