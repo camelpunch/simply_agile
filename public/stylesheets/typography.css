@@ -12,7 +12,8 @@ form input.numeric { text-align:right }
 
 #navigation { font-weight:bold; font-size:131%; text-align:center }
 #navigation a { text-decoration:none }
-#navigation a:hover { text-decoration:underline }
+#navigation a:hover,
+#navigation a:focus { text-decoration:underline }
 
 #breadcrumbs { font-weight:bold; line-height:3em }
 
@@ -22,5 +23,10 @@ form input.numeric { text-align:right }
 #footer { font-size:77% }
 
 .section h2 { font-size:146.5% }
+
+/* iterations/new */
+body.iterations .include a { text-indent:-20000px; outline:none; text-underline:none }
+body.iterations .display h3 { font-weight:bold }
+/* end iterations/new */
 
 body#iterations_show ol#headings li { text-align:center }

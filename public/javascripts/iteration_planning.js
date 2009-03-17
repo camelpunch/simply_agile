@@ -1,41 +1,42 @@
 var StorySwapper = {
   init: function() {
-    // create an iteration stories table
-    $('table#stories_available').before('<table id="stories_iteration"><caption>Iteration stories</caption></table>');
-    StorySwapper.init_trs();
+    // create an iteration stories div
+    $('#stories_available')
+      .before('<div id="stories_iteration_container"><div class="section" id="stories_iteration"><span class="estimate">Estimate</span><h2>Iteration stories</h2><ol></ol></div></div>');
+
+    // wrap the available div
+    var available_div = $('#stories_available').remove();
+    $('#stories_iteration_container').after('<div id="stories_available_container"><div class="section" id="stories_available"><span class="estimate">Estimate</span>'+available_div.html()+'</div></div>');
+
+    StorySwapper.init_stories();
     StorySwapper.convert_checkboxes();
   },
 
-  // add the tr to the specified table, maintaining the original order
-  append_tr: function(tr, table) {
-    var trs = table.find('tr');
+  // add the story to the specified ol, maintaining the original order
+  append_story: function(story, ol) {
+    var stories = ol.find('li.story');
 
-    var source_index = $.inArray(tr.attr('id'), StorySwapper.story_order);
+    var source_index = $.inArray(story.attr('id'), StorySwapper.story_order);
 
     var inserted = false;
-    trs.each( function() {
+
+    stories.each( function() {
       destination_index = $.inArray(this.id, StorySwapper.story_order);
 
       var above = source_index <= destination_index;
 
       if (above) {
-        $(this).before(tr);
+        $(this).before(story);
         inserted = true;
         return false; // break
       }
     });
 
-    if (!inserted) table.append(tr);
+    if (!inserted) ol.append(story);
   },
 
   convert_checkboxes: function() {
     $('input[type="checkbox"]').each( function() {
-      var label = $('label[for="'+this.id+'"]');
-
-      // hide checkboxes
-      $(this).hide();
-      label.hide();
-
       // make links that toggle the checkboxes
       $(this).before('<a class="move" href="#'+this.id+'">Move</a>');
     });
@@ -48,43 +49,42 @@ var StorySwapper = {
       var id = this.href.split('#')[1];
       var input = $('input#'+id);
       input.click();
-      StorySwapper.move_checkbox_tr(input);
+      StorySwapper.move_checkbox_story(input);
       StorySwapper.bind_anchors();
       return false;
     });
   },
 
-  init_trs: function() {
+  init_stories: function() {
     // store initial order
-    StorySwapper.story_order = $.map($('table tr'), function(element, i) {
+    StorySwapper.story_order = $.map($('ol li.story'), function(element, i) {
       return element.id
     });
 
-    // move trs to correct tables - order is maintained without doing anything
+    // move stories to correct ols - order is maintained without doing anything
     // at this stage
-    $('table tr').each( function() {
+    $('ol li.story').each( function() {
       if ($(this).find('input[checked]:checked')[0]) {
-        var tr = $(this).remove();
-        $('table#stories_iteration').append(tr);
+        var story = $(this).remove();
+        $('#stories_iteration ol').append(story);
       }
     });
   },
 
-  move_checkbox_tr: function(checkbox) {
+  move_checkbox_story: function(checkbox) {
     var checked_before_removal = checkbox.attr('checked');
-    var tr = checkbox.parent('td').parent('tr').remove();
+    var story = checkbox.parents('li.story').remove();
 
-    if (checked_before_removal) {
-      StorySwapper.append_tr(tr, $('table#stories_iteration'));
+    var append_to = checked_before_removal 
+      ? $('#stories_iteration ol') 
+      : $('#stories_available ol');
 
-      // workaround ie6 bug with checkbox values being reset after append
-      if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
+    StorySwapper.append_story(story, append_to);
 
-    } else {
-      StorySwapper.append_tr(tr, $('table#stories_available'));
-    }
+    // workaround ie6 bug with checkbox values being reset after append
+    if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
 
-    StoryToggler.bind_anchors(tr);
+    StoryToggler.bind_anchors(story);
   }
 }
 
@@ -94,9 +94,9 @@ var StoryToggler = {
     $('.content').hide();
 
     // insert expand links
-    $('table tr').each( function() {
-      $(this).find('span')
-      .after(' <a class="expand" href="#'+this.id+'">Peek</a>');
+    $('ol li.story').each( function() {
+      $(this).find('.content')
+      .before('<a class="expand" href="#'+this.id+'">Show Story</a>');
     });
 
     StoryToggler.bind_anchors();
@@ -114,6 +114,11 @@ var StoryToggler = {
   toggle_content: function() {
     var id = this.href.split('#')[1];
     $('#'+id+' .content').toggle();
+    if ($(this).html() == 'Show Story') {
+      $(this).html('Hide Story');
+    } else {
+      $(this).html('Show Story');
+    }
     return false;
   }
 }

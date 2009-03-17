@@ -10,7 +10,7 @@ $(document).ready(function() {
   if ($('body#stories_show')) AcceptanceCriteria.init();
 
   // iterations/new
-  if ($('table#stories_available')[0]) {
+  if ($('#stories_available')[0]) {
     // start swapper
     StorySwapper.init();
     
@@ -22,30 +22,10 @@ $(document).ready(function() {
   if ($('body#iterations_show .section form.edit_story')[0]) {
     DraggableStories.init();
   }
-
+  
   // backlog
-  if ($('#backlog')) {
-    // guidance
-    $('#backlog')
-      .before('<p class="guidance">Drag stories to change priority.</p>');
-
-    // enable sorting
-    $('#backlog').sortable({
-      axis: 'y',
-      stop: function(event, ui) {
-        var ids = $(this).sortable('toArray');
-        $(ids).each( function(i) {
-          var priority = i + 1;
-          var field = $('#' + this + ' input[type="text"]');
-
-          // set new field value
-          $(field).val(priority);
-        });
-
-        // submit form
-        $('form.edit_project').ajaxSubmit();
-      }
-    });
+  if ($('#backlog')[0]) {
+    BacklogPrioritisation.init();
   }
 });
 
