@@ -10,6 +10,7 @@ var StorySwapper = {
 
     StorySwapper.init_stories();
     StorySwapper.convert_checkboxes();
+    StorySwapper.show_hide_estimate_headings();
   },
 
   // add the story to the specified ol, maintaining the original order
@@ -84,7 +85,12 @@ var StorySwapper = {
     // workaround ie6 bug with checkbox values being reset after append
     if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
 
-    // show / hide estimate column heading
+    StorySwapper.show_hide_estimate_headings();
+
+    StoryToggler.bind_anchors(story);
+  },
+
+  show_hide_estimate_headings: function() {
     $('#stories_iteration,#stories_available').each( function() {
       if ($(this).find('li.story').length == 0) {
         $(this).find('span.estimate').hide();
@@ -93,7 +99,6 @@ var StorySwapper = {
       }
     });
 
-    StoryToggler.bind_anchors(story);
   }
 }
 
