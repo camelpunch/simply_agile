@@ -1,0 +1,11 @@
+<% content_for :title, "New Story" %>
+<% content_for :h1, "New Story" %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child story">New Story</li>
+<% end %>
+<% body_classes << 'guidance' %>
+
+<p>
+You don't have any projects. You should <%= link_to 'create a project',
+  new_project_path %> before writing a story.
+</p>

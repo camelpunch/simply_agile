@@ -1,8 +1,7 @@
-<% content_for :title, "New Story for #{@project}" %>
-<% content_for :h1, h("New Story for #{@project}") %>
+<% content_for :title, "New Story" %>
+<% content_for :h1, "New Story" %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child project"><%= link_to h(@project), @project %></li>
-  <li class="story">New Story</li>
+  <li class="first-child story">New Story</li>
 <% end %>
 <% form_for @story do |form| %>
   <%= form.error_messages %>

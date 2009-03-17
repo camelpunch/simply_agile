@@ -78,6 +78,12 @@ describe ApplicationController do
       controller.send(:get_project)
       controller.instance_variable_get("@project").should == @project
     end
+
+    it "should not find if there's no params[:project_id]" do
+      controller.stub!(:params).and_return({})
+      @user.should_not_receive(:organisation)
+      controller.send(:get_project)
+    end
   end
 
   describe "login_required" do

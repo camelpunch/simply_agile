@@ -57,7 +57,7 @@ Spec::Runner.configure do |config|
 
   def stub_projects!
     @project = mock_model(Project, :organisation_id => @organisation.id)
-    @projects = mock('Collection')
+    @projects = mock('Collection', :empty? => false)
     @projects.stub!(:find).with(@project.id.to_s).and_return(@project)
     @organisation.stub!(:projects).and_return(@projects)
   end

@@ -1,24 +1,21 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/stories/new" do
+describe "/stories/new_without_project" do
   before(:each) do
-    @project = mock_model Project
     @story = mock_model(Story, 
+                        :project_id => nil,
                         :name => '',
                         :content => '',
                         :new_record? => true)
-    assigns[:project] = @project
+    assigns[:current_user] = mock_model(User, :projects => [])
     assigns[:story] = @story
-
-    assigns[:current_user] = mock_model(User, :projects => [@project])
-
-    render 'stories/new'
+    render 'stories/new_without_project'
   end
   
-  it_should_behave_like "a standard view"
-
   it "should have a form for creating a story" do
-    response.should have_tag('form[action=?][method=?]', stories_path, 'post')
+    response.should have_tag('form[action=?][method=?]',
+                             stories_path,
+                             'post')
   end
-
+  
 end
