@@ -40,7 +40,7 @@
         <%= render_flash %>
         <%= yield %>
       </div>
-      <% unless @current_user.verified? -%>
+      <% if ! @current_user.verified? && @current_user.created_at < 1.day.ago -%>
         <%= render :partial => 'shared/verify' %>
       <% end -%>
       <div id="footer">
