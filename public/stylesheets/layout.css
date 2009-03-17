@@ -115,10 +115,14 @@ body#iterations_show #headings { overflow:hidden }
 body#iterations_show #headings ol { width:100% }
 body#iterations_show #headings li { height:2em; line-height:2em }
 body#iterations_show #headings li,
-.ui-droppable { width:24%; float:left; border-width:1px; border-style:solid }
+.ui-droppable { float:left; border-width:1px; border-style:solid }
+
+body#iterations_show #headings li,
+.ui-droppable,
+.ui-draggable { width:24.5% }
 
 .draggables { overflow:auto }
-.ui-draggable { overflow:auto; height:100%; width:24%; border-width:1px; border-style:solid }
+.ui-draggable { overflow:auto; height:100%; border-width:1px; border-style:solid }
 .ui-draggable h3{ padding:5px }
 .ui-draggable p{ padding:0 5px; margin:4px 0 0 0 }
 /* end iteration/show active */
