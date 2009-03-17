@@ -10,7 +10,7 @@ form input.numeric { text-align:right }
 #container { text-align:center } /* largely for ie6 centring but reused */
 #content { text-align:left }
 
-#verify { font-size:77%; font-weight:bold }
+#verify { font-size:93%; font-weight:bold }
 
 #navigation { font-weight:bold; font-size:131%; text-align:center }
 #navigation a { text-decoration:none }

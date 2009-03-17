@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   named_scope :valid, 
     :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
 
-  DAYS_UNITL_UNVERIFIED = 7
+  DAYS_UNTIL_UNVERIFIED = 7
   VERIFICATION_TOKEN_LENGTH = 6
 
   def before_create
@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
     self.encrypted_password ||= hash_password(password)
     self.verified ||= false
     self.verification_token ||= generate_verification_token
-    self.verify_by ||= Date.today + DAYS_UNITL_UNVERIFIED
+    self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
   end
 
   def self.find_by_email_address_and_password(email_address, password)
