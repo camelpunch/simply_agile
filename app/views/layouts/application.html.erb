@@ -37,12 +37,12 @@
             <%= yield :actions %>
           </ul>
         <% end %>
-        <% unless @current_user.verified? -%>
-          <%= render :partial => 'shared/verify' %>
-        <% end -%>
         <%= render_flash %>
         <%= yield %>
       </div>
+      <% unless @current_user.verified? -%>
+        <%= render :partial => 'shared/verify' %>
+      <% end -%>
       <div id="footer">
         <p>
           Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
