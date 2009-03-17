@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
     :if => lambda { |user| user.organisation.nil? }
   validates_presence_of :password, :on => :create
 
+  named_scope :valid, 
+    :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
+
   DAYS_UNITL_UNVERIFIED = 7
   VERIFICATION_TOKEN_LENGTH = 6
 
@@ -26,6 +29,10 @@ class User < ActiveRecord::Base
   def self.find_by_email_address_and_password(email_address, password)
     find_by_email_address_and_encrypted_password(email_address,
       hash_password(password))
+  end
+
+  def verify
+    self.update_attributes(:verify_by => nil, :verified => true)
   end
 
   protected

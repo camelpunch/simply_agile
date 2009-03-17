@@ -15,19 +15,21 @@ describe ApplicationController do
   describe "current_user" do
     before :each do
       @incorrect_id = 314123
-      User.stub!(:find_by_id).with(@user.id).and_return(@user)
-      User.stub!(:find_by_id).with(nil).and_return(nil)
-      User.stub!(:find_by_id).with(@incorrect_id).and_return(nil)
+      @valid_users = mock('Collection')
+      @valid_users.stub!(:find_by_id).with(@user.id).and_return(@user)
+      @valid_users.stub!(:find_by_id).with(nil).and_return(nil)
+      @valid_users.stub!(:find_by_id).with(@incorrect_id).and_return(nil)
+      User.stub!(:valid).and_return(@valid_users)
     end
 
     it "should assign the user" do
-      User.stub!(:find_by_id).and_return(@user)
+      @valid_users.stub!(:find_by_id).and_return(@user)
       controller.send(:current_user)
       controller.instance_variable_get('@current_user').should == @user
     end
 
     it "should memoize" do
-      User.stub!(:find_by_id).and_return(@user)
+      @valid_users.stub!(:find_by_id).and_return(@user)
       controller.send(:current_user)
       User.should_not_receive(:find_by_id)
       controller.send(:current_user)

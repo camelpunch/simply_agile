@@ -135,6 +135,25 @@ describe User do
     end
   end
 
+  describe "valid" do
+    it "should not return users with verify_by in the past" do
+      unverified_user = Users.create_user!(:verify_by => 1.day.ago)
+      User.valid.should_not include(unverified_user)
+    end
+
+    it "should return users with verify_by in the future" do
+      user_with_time_left = Users.create_user!(:verify_by => 1.day.from_now)
+      User.valid.should include(user_with_time_left)
+
+    end
+
+    it "should return users with verify_by set to nil" do
+      verified_user = Users.create_user!
+      verified_user.update_attributes(:verify_by => nil)
+      User.valid.should include(verified_user)
+    end
+  end
+
   describe "verification" do
     before :each do
       @user = Users.create_user!
@@ -146,6 +165,21 @@ describe User do
 
     it "should set verify_by on a new user" do
       @user.verify_by.should == Date.today + 7
+    end
+
+    describe "verify" do
+      before :each do
+        @user.verify
+        @user.reload
+      end
+
+      it "should set verified to true" do
+        @user.verified?.should be_true
+      end
+
+      it "should clear the verify_by date" do
+        @user.verify_by.should be_nil
+      end
     end
     
     describe "verification token" do
