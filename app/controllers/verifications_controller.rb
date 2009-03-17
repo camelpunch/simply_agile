@@ -9,12 +9,12 @@ class VerificationsController < ApplicationController
 
   def create
     if @user.verification_token == params[:token]
-      @user.update_attributes(:verified => true)
+      @user.verify
       session[:user_id] = @user.id
       flash[:notice] = "Your account has now been verified."
       redirect_to root_url
     else
-      flash[:notice] = "Your account has now been verified."
+      flash[:notice] = "The verification token has not been recognised."
       render :action => 'new'
     end
   end

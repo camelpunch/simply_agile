@@ -17,9 +17,9 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :users do |user|
-    user.resource :verification
+    user.resource :verification, :only => [:new]
   end
-  map.verification '/users/:user_id/verification/',
+  map.verification '/users/:user_id/verification',
     :controller => 'verifications', :action => 'create'
 
   map.resources :iterations do |iteration|

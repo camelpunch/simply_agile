@@ -1,9 +1,18 @@
-<p class="verify">
-  Your email address has not been validated yet. Please check your email for
-  verification details.
+<div id="verify">
+  <p class="first-child">
+    Your email address has not been validated yet. Please check your email for
+    verification details.
+  </p>
+  <p>
+    You can enter your
+    <%= link_to "verification token", new_user_verification_path(@current_user) %>
+    manually if you prefer.
+  </p>
   <% if @current_user.verify_by - Date.today < 4 -%>
-  If you do not verify your email address by
-  <%= @current_user.verify_by.to_s(:default) %> then your account will be
-  disabled.
-  <% end -%>
-</p>
+    <p>
+      If you do not verify your email address by
+      <%= @current_user.verify_by.to_s(:default) %> then your account will be
+      disabled.
+    <% end -%>
+  </p>
+</div>

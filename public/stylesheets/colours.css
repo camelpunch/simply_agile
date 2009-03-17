@@ -1,6 +1,8 @@
 body { color:#333 }
 #container { background:28px 7px url(/images/simply_agile.png) no-repeat }
 
+#verify p { color:#000; background:#f55 }
+
 /* navigation */
 #navigation a { background:#fff; color:#333; outline:none }
 #navigation li,
@@ -26,6 +28,14 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .section, .section h2 { border:2px solid #e4e5f3 }
 .section h2 { background:#fff }
 
+/* iterations/new */
+body.iterations .include a{ background-repeat:no-repeat }
+body.iterations #stories_available .include a { background-image:url(/images/arrow_large_left_highlighted.png) }
+body.iterations #stories_iteration .include a { background-image:url(/images/arrow_large_right_highlighted.png) }
+body.iterations .display .content { background:#fff }
+/* end iterations/new */
+
+/* iterations/show when active */
 .draggables,
 .ui-droppable,
 #headings li { border-color:#e4e5f3 }
@@ -39,8 +49,7 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .ui-state-highlight.testing,
 #headings .testing { background:#fde03d }
 .ui-state-highlight.complete,
+/* end iterations/show when active */
+
 #headings .complete { background:#3dfd4f }
-
 #acceptance_criteria #completed { color: #aaa }
-
-

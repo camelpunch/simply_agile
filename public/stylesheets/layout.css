@@ -1,9 +1,12 @@
 /* basic layout */
-#container { margin:3px 0 0 0; min-width:985px; position:relative }
+#container { margin:3px 0 0 0; position:relative }
 #contextual_new_story { position:absolute; width:158px; height:80px;
                         right:30px; top:14px }
 #footer { clear:both; padding:30px 0 }
 
+#verify { position:absolute; top:0; width:100% }
+#verify p { margin:0 auto; width:60%; padding:0 0 7px 0 }
+#verify p.first-child { padding:5px 0 0 0 }
 /* end basic layout */
 
 /* navigation */
@@ -42,11 +45,40 @@ form p label { display:block }
 /* end home/show */
 
 /* iterations/new */
-#stories_iteration,
-#stories_available { float:left; width:50% }
-body.iterations #stories { width:700px; min-height:200px }
+body.iterations #stories { clear:both;
+                           /*ie6*/ height:200px }
+body.iterations form>#stories { min-height:200px; height:auto }
+body.javascript #stories_iteration_container { float:left }
+body.javascript #stories_available_container { float:right}
+body.javascript #stories_available_container,
+body.javascript #stories_iteration_container { /*ie6*/ width:47% }
+body.javascript div>#stories_available_container,
+body.javascript div>#stories_iteration_container { width:49% }
+body.javascript #stories_iteration,
+body.javascript #stories_available { width:70% }
+body.javascript #stories_iteration { /*ie6*/ margin-right:6% }
+body.javascript #stories_available { /*ie6*/ margin-left:1% }
+body.javascript div>#stories_iteration { margin-right:11% }
+body.javascript div>#stories_available { margin-left:11% }
+
+body.javascript #stories span.estimate { position:absolute; top:15px; right:28px }
+
+body.javascript #stories .include input,
+body.javascript #stories .include label { display:none }
+
+body.javascript #stories ol li.story { clear:left;
+                                       /*ie6*/ height:50px }
+body.javascript #stories ol>li.story { position:relative; min-height:50px; height:auto }
+body.javascript .include a { display:block; width:60px; height:42px }
+body.javascript .include>a { position:absolute; top:0 }
+body.javascript #stories_available .include>a { left:-79px }
+body.javascript #stories_iteration .include>a { right:-79px }
+
+body.javascript #stories .display { float:left }
+body.javascript #stories .estimate { float:right }
+body.javascript #stories .estimate label { display:none }
+
 body.iterations p.submit { clear:left }
-body.iterations table tr { vertical-align:top }
 /* end iterations/new */
 
 /* stories/new */
@@ -68,7 +100,7 @@ body#iterations_show.javascript #stories_list input,
 body#iterations_show.javascript #stories_list label,
 body#iterations_show.javascript #stories_list p.submit{ display:none }
 
-body#iterations_show.javascript .story_content { width:240px; float:left }
+body#iterations_show.javascript #stories .content { overflow:hidden }
 
 body#iterations_show.javascript ol#stories_list li { height:100px; position:relative; 
                                                      clear:left; display:block; margin-top:10px }
