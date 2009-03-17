@@ -1,0 +1,21 @@
+<% content_for :title, "#{@project} | Projects" %>
+<% content_for :h1, h(@project) %>
+
+<div class="section">
+  <h2>Organisation Members</h2>
+
+  <ul>
+    <% @organisation.users.each do |user| -%>
+      <li>
+        <%= user.email_address %>
+        <% unless user == @current_user -%>
+          <%= button_to "Remove from organisation" %>
+        <% end -%>
+      </li>
+    <% end -%>
+  </ul>
+
+  <p>
+    <%= link_to 'Add somebody to this organisation' %>
+  </p>
+</div>
