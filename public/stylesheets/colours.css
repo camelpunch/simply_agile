@@ -20,6 +20,7 @@ body.stories li#nav_projects a,
                         outline:none;
                         text-indent:-2000000px; text-decoration:none }
 #contextual_new_story:hover,
+#contextual_new_story:focus,
 #stories_new #contextual_new_story { background-image:url(/images/new_story_highlight.png) }
 
 #breadcrumbs { color:#333 }
