@@ -43,29 +43,117 @@ describe User do
     it "should have many projects" do
       User.should have_many(:projects)
     end
+
+    it "should belong to an organisation sponsor" do
+      User.should have_many(:organisation_sponsors)
+    end
   end
 
   describe "creation" do
-    it "should create a new organisation for the user" do
-      Users.create_user!(:organisation_name => 'New Organisation')
-      Organisation.find_by_name('New Organisation').should_not be_nil
+    describe "for a new organisation" do
+      before(:each) do
+        @user = User.new(Users.user_prototype)
+        @user.stub!(:adding_to_organisation?).and_return(false)
+      end
+
+      it "should create a new organisation for the user" do
+        @user.organisation_name = 'New Organisation'
+        @user.save
+        Organisation.find_by_name('New Organisation').should_not be_nil
+      end
+
+      it "should encrypt the password" do
+        @user.password = 'some password'
+        @user.save
+        @user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
+      end
+
+      it "should set authorized to true" do
+        @user.save
+        @user.authorised?.should be_true
+      end
     end
 
-    it "should encrypt the password" do
-      user = Users.create_user!(:password => 'some password')
-      user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
-    end
+    describe "for an existing organisation" do
+      before :each do
+        @user = User.new(Users.user_prototype)
+        @sponsor = Users.create_user!
+        @user.sponsor = @sponsor
+      end
 
-    it "should not try to encrypt the password when adding to an existing organisation" do
-      organisation = Organisations.create_organisation!
-      user = Users.create_user!(:organisation => organisation, :password => nil)
-      user.encrypted_password.should be_nil
+      it "should not try to encrypt the password" do
+        @user.save
+        @user.encrypted_password.should be_nil
+      end
+
+      it "should set authorized to true" do
+        @user.save
+        @user.authorised?.should be_false
+      end
+      
+      describe "organisation sponsor" do
+        before :each do
+          @sponsor = Users.create_user!
+          @organisation = Organisations.create_organisation!
+
+          @user = User.new(
+            :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
+          )
+          @user.organisation = @organisation
+          @user.sponsor = @sponsor
+
+          @user.save!
+          @organisation_sponsor = @user.organisation_sponsors.first
+        end
+
+        it "should create an organisation sponsor" do
+          @organisation_sponsor.should_not be_nil
+        end
+
+        it "should set the sponsor" do
+          @organisation_sponsor.sponsor.should == @sponsor
+        end
+
+        it "should set the organisation" do
+          @organisation_sponsor.organisation.should == @organisation
+        end
+      end
     end
   end
 
   describe "password=" do
     it "should have the writer" do
       User.new.should respond_to(:password=)
+    end
+  end
+
+  describe "sponsor=" do
+    it "should have the writer" do
+      User.new.should respond_to(:sponsor=)
+    end
+  end
+
+  describe "signup" do
+    before :each do
+      @user = User.new(Users.user_prototype)
+      @sponsor = Users.create_user!
+    end
+
+    it "should be false if sponsor attribute is set" do
+      @user.sponsor = @sponsor
+      @user.signup?.should be_false
+    end
+
+    it "should be false if an organisation sponsor exists" do
+      @user.organisation_sponsors.build(
+        :sponsor_id => @sponsor.id,
+        :organisation => @sponsor.organisation
+      )
+      @user.signup?.should be_false
+    end
+
+    it "should be true otherwise" do
+      @user.signup?.should be_true
     end
   end
 
@@ -113,6 +201,7 @@ describe User do
       end
 
       it "should require an organisation" do
+        @user.stub!(:signup?).and_return(false)
         @user.valid?
         @user.errors.invalid?(:organisation_id).should be_true
       end
@@ -141,20 +230,9 @@ describe User do
       end
 
       it "should not require a password if the user is being added to an organisation" do
-        @user.organisation = Organisations.create_organisation!
+        @user.stub!(:signup?).and_return(false)
         @user.valid?
         @user.errors.invalid?(:password).should be_false
-      end
-    end
-
-    describe "adding to an organisation" do
-      it "should be true if organsiation is set" do
-        @user.organisation = Organisations.create_organisation!
-        @user.adding_to_organisation?.should be_true
-      end
-
-      it "should be false otherwise" do
-        @user.adding_to_organisation?.should be_false
       end
     end
   end

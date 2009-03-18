@@ -1,5 +1,9 @@
 class UserObserver < ActiveRecord::Observer
   def after_create(user)
-    UserMailer.deliver_verification(user)
+    if user.signup?
+      UserMailer.deliver_verification(user)
+    else
+      UserMailer.deliver_authorisation(user)
+    end
   end
 end

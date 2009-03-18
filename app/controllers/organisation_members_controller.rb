@@ -13,6 +13,9 @@ class OrganisationMembersController < ApplicationController
   protected
 
   def new_user
-    @user = User.new(:organisation => @organisation)
+    @user = User.new(
+      :organisation => @organisation,
+      :sponsor => @current_user
+    )
   end
 end

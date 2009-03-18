@@ -7,8 +7,12 @@ describe OrganisationMembersController do
   end
 
   describe "new user" do
-    it "should call User.new with the organisation" do
-      User.should_receive(:new).with(:organisation => @organisation)
+    it "should call User.new with the organisation and sponsor" do
+      controller.instance_variable_set("@current_user", @user)
+      User.should_receive(:new).with(
+        :organisation => @organisation,
+        :sponsor => @user
+      )
       controller.send(:new_user)
     end
 
@@ -25,8 +29,8 @@ describe OrganisationMembersController do
     end
 
     before :each do
-      @user = User.new
-      controller.instance_variable_set("@user", @user)
+      @new_user = User.new
+      controller.instance_variable_set("@user", @new_user)
       controller.stub!(:new_user)
 
       @user_params = { "email_address" => 'user@jandaweb.com' }
@@ -43,13 +47,13 @@ describe OrganisationMembersController do
     end
 
     it "should assign the user attributes" do
-      @user.should_receive(:attributes=).with(@user_params)
+      @new_user.should_receive(:attributes=).with(@user_params)
       do_call
     end
 
     describe "success" do
       before :each do
-        @user.stub!(:save).and_return(true)
+        @new_user.stub!(:save).and_return(true)
       end
 
       it "should redirect to the organisation page" do
@@ -60,7 +64,7 @@ describe OrganisationMembersController do
 
     describe "failure" do
       before :each do
-        @user.stub!(:save).and_return(false)
+        @new_user.stub!(:save).and_return(false)
       end
 
       it "should render the organisation page" do
