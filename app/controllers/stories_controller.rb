@@ -1,6 +1,7 @@
 class StoriesController < ApplicationController
   before_filter :get_project
-  before_filter :get_story, :only => [:show]
+  before_filter :get_iteration, :only => [:new, :create]
+  before_filter :get_story, :only => [:show, :estimate]
   before_filter :new_story, :only => [:new, :create]
 
   def backlog
@@ -11,10 +12,24 @@ class StoriesController < ApplicationController
 
   def create
     if @story.save
-      flash[:notice] = "Story successfully created"
-      redirect_to [@project, @story]
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Story successfully created"
+          redirect_to [@project, @story]
+        end
+
+        format.js do
+          head :created, :location => project_story_url(@project, @story)
+        end
+      end
+
+    elsif @story.iteration_id?
+      @iteration = @story.iteration
+      render(:status => :unprocessable_entity,
+             :template => 'stories/new_with_iteration')
     else
-      render :template => 'stories/new'
+      render(:status => :unprocessable_entity,
+             :template => 'stories/new_with_project')
     end
   end
 
@@ -32,6 +47,10 @@ class StoriesController < ApplicationController
     end
   end
 
+  def estimate
+    render :partial => 'stories/estimate', :object => @story 
+  end
+
   def new
     @story.content = <<STORY
 As a 
@@ -39,12 +58,14 @@ I want
 So that 
 STORY
 
-    unless @project
-      if current_user.organisation.projects.empty?
-        render :template => 'stories/new_guidance'
-      else
-        render :template => 'stories/new_without_project'
-      end
+    if @iteration
+      render :template => 'stories/new_with_iteration'
+    elsif @project
+      render :template => 'stories/new_with_project'
+    elsif current_user.organisation.projects.empty?
+      render :template => 'stories/new_guidance'
+    else
+      render :template => 'stories/new_without_project'
     end
   end
 
@@ -82,6 +103,12 @@ STORY
 
   protected
 
+  def get_iteration
+    if params[:iteration_id] && @project
+      @iteration = @project.iterations.find(params[:iteration_id])
+    end
+  end
+
   def get_story
     @story = @project.stories.find(params[:id])
   end
@@ -93,7 +120,9 @@ STORY
   end
 
   def new_story
-    if @project
+    if @iteration
+      @story = @iteration.stories.build(params[:story])
+    elsif @project
       @story = @project.stories.build(params[:story])
     else
       @story = Story.new

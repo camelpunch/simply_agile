@@ -71,6 +71,10 @@ class Iteration < ActiveRecord::Base
     end_date - Date.today
   end
 
+  def pending?
+    !active?
+  end
+
   def active?
     ! self.start_date.nil?
   end

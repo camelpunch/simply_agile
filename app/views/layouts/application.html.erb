@@ -28,10 +28,11 @@
           <% end %>
         </div>
         <%= link_to('New Story', 
-                    @project ? new_project_story_path(@project) : new_story_path, 
+                    contextual_new_story_path,
                     :accesskey => 'n',
                     :id => 'contextual_new_story') %>
       </div>
+
       <div id="content">
         <h1><%= yield(:h1) %></h1>
         <% unless yield(:actions).blank? %>

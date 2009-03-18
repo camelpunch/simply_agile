@@ -262,6 +262,15 @@ describe Iteration do
       @iteration.initial_estimate.should == @iteration.story_points_remaining
     end
 
+    it "should be pending if not started" do
+      @iteration.should be_pending
+    end
+
+    it "should not be pending if started" do
+      @iteration.start
+      @iteration.should_not be_pending
+    end
+
     it "should return false to #active? if not started" do
       @iteration.active?.should == false
     end

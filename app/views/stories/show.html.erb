@@ -30,14 +30,3 @@
     <%= render :partial => 'acceptance_criteria/list' %>
   </div>
 </div>
-
-<% unless @story.iteration_id? %>
-<div class="guidance">
-  <h2>Finished?</h2>
-  <ul>
-    <li><%= link_to 'Add another story', [:new, @project, :story] %></li>
-    <li><%= link_to 'Plan an iteration', [:new, @project, :iteration] %></li>
-    <li><%= link_to 'Prioritise stories', backlog_project_stories_path(@project) %></li>
-  </ul>
-</div>
-<% end %>

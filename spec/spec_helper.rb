@@ -69,6 +69,13 @@ Spec::Runner.configure do |config|
     end
   end
 
+  describe "it belongs to an iteration", :shared => true do
+    it "should assign the iteration" do
+      controller.should_receive(:get_iteration)
+      do_call
+    end
+  end
+
   describe "it's successful", :shared => true do
     it "should respond with success" do
       do_call

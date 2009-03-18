@@ -34,6 +34,12 @@ body.stories li#nav_projects a,
 .section, .section h2 { border:2px solid #e4e5f3 }
 .section h2 { background:#fff }
 
+/* javascript request */
+body.javascript #request { background:#fff; border:2px solid #ff7f2a }
+body.javascript #request a#close_request { color:#fff }
+body.javascript #request h2#request_header { background:#ff7f2a }
+/* end javascript request */
+
 /* iterations/new */
 body.iterations .include a{ background-repeat:no-repeat }
 body.iterations #stories_available .include a { background-image:url(/images/arrow_large_left_highlighted.png) }
