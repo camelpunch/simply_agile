@@ -212,6 +212,12 @@ describe User do
         @user.errors.invalid?(:organisation_id).should be_false
       end
 
+      it "should not require an organisation name if organisation is given" do
+        @user.organisation = Organisations.create_organisation!
+        @user.valid?
+        @user.errors.invalid?(:organisation_name).should be_false
+      end
+
       it "should add an error to organisation name if both name and organisation are blank" do
         @user.valid?
         @user.errors.on(:organisation_name).should_not be_nil

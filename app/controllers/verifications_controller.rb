@@ -8,6 +8,7 @@ class VerificationsController < ApplicationController
   end
 
   def create
+    debugger if $debug
     if @user.verification_token == params[:token]
       @user.verify
       session[:user_id] = @user.id

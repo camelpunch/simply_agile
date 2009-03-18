@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
   validates_presence_of :organisation_id, :unless => :signup?
-  validates_presence_of :organisation_name, :if => :signup?
+  validates_presence_of :organisation_name, 
+    :if => lambda { |user| user.signup? && user.organisation.nil? }
   validates_presence_of :password, :on => :create, :if => :signup?
 
   named_scope :valid, 
@@ -47,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def verify
-    self.update_attributes(:verify_by => nil, :verified => true)
+    self.update_attributes!(:verify_by => nil, :verified => true)
   end
 
   def signup?
