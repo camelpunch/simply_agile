@@ -105,7 +105,10 @@ Request.prototype = {
   createCloseLink: function() {
     var request = this;
     $('#request').prepend('<a id="close_request" href="#close" accesskey="c">Close</a>');
-    $('a#close_request').click( function() { request.close() });
+    $('a#close_request').click( function() { 
+      request.close(); 
+      return false;
+    });
   }
 }
 
