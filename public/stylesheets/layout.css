@@ -61,10 +61,11 @@ form p.checkbox label { display:inline }
 .active_iteration { float: left; width: 50%; }
 /* end home/show */
 
-/* iterations/new */
+/* iterations */
 body.iterations #stories { clear:both;
                            /*ie6*/ height:200px }
-body.iterations form>#stories { min-height:200px; height:auto }
+body.iterations form>#stories,
+body.iterations div>#stories { min-height:200px; height:auto }
 body.javascript #stories_iteration_container { float:left }
 body.javascript #stories_available_container { float:right }
 body.javascript #stories_available_container,
@@ -96,7 +97,7 @@ body.javascript #stories .estimate { float:right }
 body.javascript #stories .estimate label { display:none }
 
 body.iterations p.submit { clear:both }
-/* end iterations/new */
+/* end iterations */
 
 /* stories/show */
 #acceptance_criteria { margin-bottom:15px }
