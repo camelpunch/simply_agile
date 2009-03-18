@@ -1,5 +1,5 @@
 body { color:#333 }
-#container { background:28px 2px url(/images/simply_agile.png) no-repeat }
+#header { background:#fff 28px 2px url(/images/simply_agile.png) no-repeat }
 
 #verify div { color:#000; background:#f55; opacity:0.9 }
 

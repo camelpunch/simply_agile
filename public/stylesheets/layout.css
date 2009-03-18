@@ -1,5 +1,6 @@
 /* basic layout */
-#container { margin:3px 0 0 0; position:relative }
+#container { margin:0 0 0 0; position:relative }
+#header { position:fixed; top:0; width:100%; z-index:10; padding-bottom:5px }
 #contextual_new_story { position:absolute; width:118px; height:99px;
                         right:30px; top:2px }
 #footer { clear:both; padding:30px 0 }
@@ -11,7 +12,7 @@
 
 /* navigation */
 #navigation { height:67px; position:relative; width:24.05em }
-#container>#navigation { margin:0 auto }
+#header>#navigation { margin:0 auto }
 #navigation ol { position:absolute; left:0; bottom:0; height:2.5em }
 #navigation li { float:left; height:2.5em; line-height:2.5em; width:6em }
 #navigation li a { display:block; width:6em }
@@ -24,7 +25,7 @@
 /* end breadcrumbs */
 
 /* content */
-#content { position:relative; clear:left; margin:18px 30px 0 30px }
+#content { position:relative; padding-top:120px; margin:18px 30px 0 30px }
 #actions { position:absolute; right:0; top:0; width:124px }
 #actions li { width:104px; display:block; margin:0 auto }
 #actions a { width:104px; height:29px }
