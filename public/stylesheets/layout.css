@@ -20,8 +20,8 @@
 
 /* javascript request */
 body.javascript #request_container { position:fixed; top:140px; height:100%; width:100%; z-index:11 }
-body.javascript #request { margin:0 auto; width:40%; height:60%; overflow:auto;
-                           position:relative }
+body.javascript #request { margin:0 auto; width:40%; height:60%;
+                           min-height:340px; overflow:auto; position:relative }
 body.javascript #request #request_body { padding:5px 15px 0 15px }
 body.javascript #request h2#request_header { padding:5px 15px }
 body.javascript #request a#close_request { position:absolute; top:5px; right:8px }
