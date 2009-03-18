@@ -16,6 +16,9 @@ $(document).ready(function() {
     
     // start toggles
     StoryToggler.init();
+
+    // AJAXy story adding
+    new NewStoryAdder();
   }
 
   // iterations/show when active
@@ -28,6 +31,10 @@ $(document).ready(function() {
     BacklogPrioritisation.init();
   }
 });
+
+function Request(html) {
+  $('body').append('<div id="request">'+html+'</div>');
+}
 
 // add header to AJAX requests to play nice with Rails' content negotiation
 jQuery.ajaxSetup({ 

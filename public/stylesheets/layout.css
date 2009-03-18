@@ -41,6 +41,10 @@ form p label { display:block }
 form p.checkbox label { display:inline }
 /* end forms */
 
+/* javascript request */
+body.javascript #request { position:absolute; top:0; right:0 }
+/* end javascript request */
+
 /* home/show */
 .active_iteration { float: left; width: 50%; }
 /* end home/show */

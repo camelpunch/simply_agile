@@ -1,3 +1,16 @@
+function NewStoryAdder() {
+  $('a#contextual_new_story').click( function() {
+    $.ajax({
+      url: this.href,
+      success: function(data, status) {
+        new Request(data);
+      }
+    });
+
+    return false;
+  });
+}
+
 var StorySwapper = {
   init: function() {
     // create an iteration stories div

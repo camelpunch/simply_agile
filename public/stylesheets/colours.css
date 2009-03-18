@@ -28,6 +28,10 @@ h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 .section, .section h2 { border:2px solid #e4e5f3 }
 .section h2 { background:#fff }
 
+/* javascript request */
+body.javascript #request { background:#fff }
+/* end javascript request */
+
 /* iterations/new */
 body.iterations .include a{ background-repeat:no-repeat }
 body.iterations #stories_available .include a { background-image:url(/images/arrow_large_left_highlighted.png) }
