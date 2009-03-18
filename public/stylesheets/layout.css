@@ -38,6 +38,7 @@
 
 /* forms */
 form p label { display:block }
+form p.checkbox label { display:inline }
 /* end forms */
 
 /* home/show */

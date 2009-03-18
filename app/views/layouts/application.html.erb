@@ -27,7 +27,7 @@
         <% end %>
       </div>
       <%= link_to('New Story', 
-                  @project ? new_project_story_path(@project) : new_story_path, 
+                  contextual_new_story_path,
                   :accesskey => 'n',
                   :id => 'contextual_new_story') %>
       <div id="content">

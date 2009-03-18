@@ -1,4 +1,13 @@
 module ApplicationHelper
+  def contextual_new_story_path
+    if @iteration && !@iteration.new_record? && @iteration.pending?
+      [:new, @project, @iteration, :story]
+    elsif @project
+      [:new, @project, :story]
+    else
+      new_story_path
+    end
+  end
 
   def body_classes
     @body_classes ||= [controller.controller_name]
