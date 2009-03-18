@@ -1,4 +1,4 @@
-h1 { margin-bottom:1em; font-size:300% }
+h1 { margin-bottom:1em; font-size:250% }
 h1 a { text-decoration:none }
 h2,caption { font-weight:bold; font-size:138.5% }
 p { margin:1em 0 1em 0 }
@@ -12,14 +12,14 @@ form input.numeric { text-align:right }
 
 #verify { font-size:93%; font-weight:bold }
 
-#navigation { font-weight:bold; font-size:131%; text-align:center }
+#navigation { font-weight:bold; font-size:123.1%; text-align:center }
 #navigation a { text-decoration:none }
 #navigation a:hover,
 #navigation a:focus { text-decoration:underline }
 
 #breadcrumbs { font-weight:bold; line-height:3em }
 
-#actions a { line-height:32px; text-align:center; text-decoration:none;
+#actions a { line-height:29px; text-align:center; text-decoration:none;
              font-weight:bold }
 
 #footer { font-size:77% }
