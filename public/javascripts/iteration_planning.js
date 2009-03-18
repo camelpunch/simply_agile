@@ -131,13 +131,17 @@ var StorySwapper = {
   },
 
   update_estimates: function() {
+    var points;
+    var integer;
+
     $('#stories_iteration,#stories_available').each( function() {
       if ($(this).find('li.story').length == 0) {
         $(this).find('span.estimate').hide();
       } else {
-        var points = 0;
+        points = 0;
         $(this).find('div.estimate input').each( function() {
-          points += parseInt($(this).val());
+          integer = parseInt($(this).val());
+          if (integer) points += integer;
         });
         $(this).find('span.estimate span.numeric').html(points);
         $(this).find('span.estimate').show();
