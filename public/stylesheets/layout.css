@@ -62,7 +62,7 @@ form p.checkbox label { display:inline }
 /* iterations/new */
 body.iterations #stories { clear:both;
                            /*ie6*/ height:200px }
-body.iterations div>#stories { min-height:200px; height:auto }
+body.iterations form>#stories { min-height:200px; height:auto }
 body.javascript #stories_iteration_container { float:left }
 body.javascript #stories_available_container { float:right }
 body.javascript #stories_available_container,
