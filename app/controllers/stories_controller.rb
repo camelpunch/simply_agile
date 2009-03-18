@@ -1,7 +1,7 @@
 class StoriesController < ApplicationController
   before_filter :get_project
   before_filter :get_iteration, :only => [:new, :create]
-  before_filter :get_story, :only => [:show]
+  before_filter :get_story, :only => [:show, :estimate]
   before_filter :new_story, :only => [:new, :create]
 
   def backlog
@@ -45,6 +45,10 @@ class StoriesController < ApplicationController
                                                      @story)
       end
     end
+  end
+
+  def estimate
+    render :partial => 'stories/estimate', :object => @story 
   end
 
   def new

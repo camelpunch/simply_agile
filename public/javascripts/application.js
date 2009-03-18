@@ -32,57 +32,80 @@ $(document).ready(function() {
   }
 });
 
-function Request(url) {
-  $.ajax({ url: url, success: this.draw });
+function Request(options) {
+  this.url = options.url;
+
+  var request = this;
+
+  $.ajax({ 
+    url: this.url, 
+    success: function(html) { request.draw(html) }
+  });
+
+  if (options.beforeClose) {
+    this.beforeClose = options.beforeClose;
+  }
 }
 
 Request.prototype = {
-  bind_forms: function() {
+  autoFocus: function() {
+    $('#request .auto_focus').focus(); 
+  },
+
+  bindForms: function() {
+    var request = this;
+
     // special cases
     if ($('input#acceptance_criterion_criterion')[0]) {
       AcceptanceCriteria.init();
+
     } else {
       // generic form binding
       $('#request form').ajaxForm({
-        error: this.handle_form_error,
-        success: this.handle_form_success,
-        complete: this.handle_form_completion
+        error: function(xhr, status) { request.handleFormError(xhr, status) },
+        success: function(data, status) { request.handleFormSuccess(data, status) },
+        complete: function(xhr, status) { request.handleFormCompletion(xhr, status) }
       });
     }
   },
 
   draw: function(html) {
     $('body').prepend('<div id="request_container"><div id="request">'+html+'</div></div>');
-    Request.prototype.create_close_link();
-    Request.prototype.bind_forms();
+    this.createCloseLink();
+    this.bindForms();
+    this.autoFocus();
   },
 
-  handle_form_error: function(xhr, status) {
+  handleFormError: function(xhr, status) {
     $('#request').html(xhr.responseText);
-    Request.prototype.bind_forms();
-    Request.prototype.create_close_link();
+    this.bindForms();
+    this.createCloseLink();
+    this.autoFocus();
   },
 
-  handle_form_success: function(data, status) {
-    Request.prototype.close();
+  handleFormSuccess: function(data, status) {
+    this.close();
   },
 
-  handle_form_completion: function(xhr, status) {
+  handleFormCompletion: function(xhr, status) {
     if (xhr.status == 201) {
       var loc = xhr.getResponseHeader('Location');
-      Request.prototype.close();
-      new Request(loc);
+      this.close();
+      new Request({ url: loc,
+                    beforeClose: this.beforeClose });
     }
   },
 
   close: function() {
+    this.beforeClose();
     $('#request_container').remove();
     return false;
   },
 
-  create_close_link: function() {
-    $('#request').prepend('<a id="close_request" href="#close">Close</a>');
-    $('a#close_request').click(Request.prototype.close);
+  createCloseLink: function() {
+    var request = this;
+    $('#request').prepend('<a id="close_request" href="#close" accesskey="c">Close</a>');
+    $('a#close_request').click( function() { request.close() });
   }
 }
 

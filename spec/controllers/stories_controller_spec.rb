@@ -384,6 +384,25 @@ describe StoriesController do
     it_should_behave_like "it's successful"
   end
 
+  describe "estimate" do
+    def do_call
+      get :estimate, :id => @story.id, :project_id => @project.id
+    end
+
+    before :each do
+      controller.stub!(:get_story)
+    end
+
+    it_should_behave_like "it belongs to a project"
+    it_should_behave_like "it operates on an existing story"
+    it_should_behave_like "it's successful"
+
+    it "should render the estimate template" do
+      do_call
+      response.should render_template('stories/estimate')
+    end
+  end
+
   describe "edit" do
     def do_call
       get :edit, :id => @story.id, :project_id => @project.id

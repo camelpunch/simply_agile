@@ -36,6 +36,8 @@ body.stories li#nav_projects a,
 
 /* javascript request */
 body.javascript #request { background:#fff; border:2px solid #ff7f2a }
+body.javascript #request a#close_request { color:#fff }
+body.javascript #request h2#request_header { background:#ff7f2a }
 /* end javascript request */
 
 /* iterations/new */
