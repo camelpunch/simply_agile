@@ -1,6 +1,6 @@
 /* basic layout */
 #container { margin:0 0 0 0; position:relative }
-#header { position:fixed; top:0; width:100%; z-index:10; padding-bottom:5px }
+#header { position:fixed; top:0; left:0; width:100%; z-index:10; padding-bottom:5px }
 #contextual_new_story { position:absolute; width:118px; height:99px;
                         right:30px; top:2px }
 #footer { clear:both; padding:30px 0 }
@@ -17,6 +17,13 @@
 #navigation li { float:left; height:2.5em; line-height:2.5em; width:6em }
 #navigation li a { display:block; width:6em }
 /* end navigation */
+
+/* javascript request */
+body.javascript #request_container { position:fixed; top:140px; height:100%; width:100%; z-index:11 }
+body.javascript #request { margin:0 auto; width:40%; height:60%; overflow:auto;
+                           padding:15px; position:relative }
+body.javascript #request a#close_request { position:absolute; top:0; right:0 }
+/* end javascript request */
 
 /* breadcrumbs */
 #breadcrumbs { height:3em; padding-left:30px }
@@ -41,10 +48,6 @@
 form p label { display:block }
 form p.checkbox label { display:inline }
 /* end forms */
-
-/* javascript request */
-body.javascript #request { position:absolute; top:0; right:0 }
-/* end javascript request */
 
 /* home/show */
 .active_iteration { float: left; width: 50%; }

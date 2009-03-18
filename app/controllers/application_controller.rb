@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
       end
 
       format.js do
-        layout = nil
+        layout = 'request'
       end
     end
 

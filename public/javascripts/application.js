@@ -32,8 +32,58 @@ $(document).ready(function() {
   }
 });
 
-function Request(html) {
-  $('body').append('<div id="request">'+html+'</div>');
+function Request(url) {
+  $.ajax({ url: url, success: this.draw });
+}
+
+Request.prototype = {
+  bind_forms: function() {
+    // special cases
+    if ($('input#acceptance_criterion_criterion')[0]) {
+      AcceptanceCriteria.init();
+    } else {
+      // generic form binding
+      $('#request form').ajaxForm({
+        error: this.handle_form_error,
+        success: this.handle_form_success,
+        complete: this.handle_form_completion
+      });
+    }
+  },
+
+  draw: function(html) {
+    $('body').prepend('<div id="request_container"><div id="request">'+html+'</div></div>');
+    Request.prototype.create_close_link();
+    Request.prototype.bind_forms();
+  },
+
+  handle_form_error: function(xhr, status) {
+    $('#request').html(xhr.responseText);
+    Request.prototype.bind_forms();
+    Request.prototype.create_close_link();
+  },
+
+  handle_form_success: function(data, status) {
+    Request.prototype.close();
+  },
+
+  handle_form_completion: function(xhr, status) {
+    if (xhr.status == 201) {
+      var loc = xhr.getResponseHeader('Location');
+      Request.prototype.close();
+      new Request(loc);
+    }
+  },
+
+  close: function() {
+    $('#request_container').remove();
+    return false;
+  },
+
+  create_close_link: function() {
+    $('#request').prepend('<a id="close_request" href="#close">Close</a>');
+    $('a#close_request').click(Request.prototype.close);
+  }
 }
 
 // add header to AJAX requests to play nice with Rails' content negotiation

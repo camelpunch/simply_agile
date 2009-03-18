@@ -274,9 +274,10 @@ describe StoriesController do
   end
 
   describe "create" do
-    def do_call
-      post :create, :project_id => @project.id,
-        :story => @attributes
+    def do_call(params = {})
+      post(:create, 
+           {:project_id => @project.id, :story => @attributes}.
+           merge(params))
     end
 
     before :each do
@@ -307,20 +308,39 @@ describe StoriesController do
         @new_story.stub!(:save).and_return(true)
       end
 
-      it "should redirect to show" do
-        do_call
-        response.should redirect_to(project_story_url(@project, @new_story))
+      describe "html" do
+        it "should redirect to show" do
+          do_call
+          response.should redirect_to(project_story_url(@project, @new_story))
+        end
+
+        it "should provide a flash notice" do
+          do_call
+          flash[:notice].should_not be_blank
+        end
       end
 
-      it "should provide a flash notice" do
-        do_call
-        flash[:notice].should_not be_blank
+      describe "js" do
+        it "should render created code" do
+          do_call :format => 'js'
+          response.code.should == '201'
+        end
+
+        it "should provide the location" do
+          do_call :format => 'js'
+          response.location.should == project_story_url(@project, @new_story)
+        end
       end
     end
 
     describe "failure" do
       before :each do
         @new_story.stub!(:save).and_return(false)
+      end
+
+      it "should call render with the 422 status code" do
+        controller.should_receive(:render).with(hash_including(:status => :unprocessable_entity))
+        do_call
       end
 
       describe "with no iteration" do

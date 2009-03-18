@@ -1,12 +1,6 @@
 function NewStoryAdder() {
   $('a#contextual_new_story').click( function() {
-    $.ajax({
-      url: this.href,
-      success: function(data, status) {
-        new Request(data);
-      }
-    });
-
+    new Request(this.href); 
     return false;
   });
 }

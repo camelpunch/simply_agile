@@ -12,13 +12,24 @@ class StoriesController < ApplicationController
 
   def create
     if @story.save
-      flash[:notice] = "Story successfully created"
-      redirect_to [@project, @story]
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Story successfully created"
+          redirect_to [@project, @story]
+        end
+
+        format.js do
+          head :created, :location => project_story_url(@project, @story)
+        end
+      end
+
     elsif @story.iteration_id?
       @iteration = @story.iteration
-      render :template => 'stories/new_with_iteration'
+      render(:status => :unprocessable_entity,
+             :template => 'stories/new_with_iteration')
     else
-      render :template => 'stories/new_with_project'
+      render(:status => :unprocessable_entity,
+             :template => 'stories/new_with_project')
     end
   end
 
