@@ -68,27 +68,31 @@ describe User do
         @user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
       end
 
-      it "should set authorized to true" do
+      it "should set acknowledged to true" do
         @user.save
-        @user.authorised?.should be_true
+        @user.acknowledged?.should be_true
       end
     end
 
     describe "for an existing organisation" do
       before :each do
-        @user = User.new(Users.user_prototype)
         @sponsor = Users.create_user!
-        @user.sponsor = @sponsor
+        @user = User.new(
+          Users.user_prototype.merge(
+            :sponsor => @sponsor,
+            :organisation => @sponsor.organisation
+          )
+        )
       end
 
       it "should not try to encrypt the password" do
-        @user.save
+        @user.save!
         @user.encrypted_password.should be_nil
       end
 
-      it "should set authorized to true" do
-        @user.save
-        @user.authorised?.should be_false
+      it "should set acknowledged to false" do
+        @user.save!
+        @user.acknowledged?.should be_false
       end
       
       describe "organisation sponsor" do

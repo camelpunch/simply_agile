@@ -5,11 +5,11 @@ describe ApplicationController do
   before :each do
     @user = mock_model User
     @referer = 'some/referer'
-    @request = mock('Request', 
-      :protocol => '',
-      :host_with_port => '',
-      :referer => @referer)
-    controller.stub!(:request).and_return(@request)
+#    @request = mock('Request',
+#      :protocol => '',
+#      :host_with_port => '',
+#      :referer => @referer)
+#    controller.stub!(:request).and_return(@request)
   end
 
   describe "current_user" do

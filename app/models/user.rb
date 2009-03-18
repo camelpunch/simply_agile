@@ -26,7 +26,6 @@ class User < ActiveRecord::Base
       self.verified ||= false
       self.verification_token ||= generate_verification_token
       self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
-      self.authorised = true
     end
     
     self.organisation ||= Organisation.create!(:name => organisation_name)
@@ -53,6 +52,10 @@ class User < ActiveRecord::Base
 
   def signup?
     sponsor.nil? && organisation_sponsors.empty?
+  end
+
+  def acknowledged?
+    organisation_sponsors.empty?
   end
 
   protected

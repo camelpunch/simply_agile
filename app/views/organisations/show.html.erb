@@ -9,8 +9,12 @@
       <tr>
         <td>
           <%= user.email_address %>
+        </td>
+        <td>
           <% if user == @current_user -%>
-            <span class="aside">(it's you)</span>
+            <span class="aside">(you)</span>
+          <% elsif ! user.acknowledged? -%>
+            <span class="aside">Account is not yet acknowledged</span>
           <% end -%>
         </td>
         <td>
