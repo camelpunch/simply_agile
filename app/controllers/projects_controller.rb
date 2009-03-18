@@ -11,6 +11,12 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show
+    if @project.stories.empty?
+      render :template => 'projects/show_guidance'
+    end
+  end
+
   def update
     if @project.update_attributes(params[:project])
       respond_to do |format|

@@ -48,7 +48,7 @@ form p.checkbox label { display:inline }
 /* iterations/new */
 body.iterations #stories { clear:both;
                            /*ie6*/ height:200px }
-body.iterations form>#stories { min-height:200px; height:auto }
+body.iterations div>#stories { min-height:200px; height:auto }
 body.javascript #stories_iteration_container { float:left }
 body.javascript #stories_available_container { float:right}
 body.javascript #stories_available_container,
@@ -97,6 +97,7 @@ body#stories_backlog.javascript #content input { display:none }
 /* end stories/backlog */
 
 /* iterations/show active */
+body#iterations_show h1 { margin-bottom:0 }
 body#iterations_show.javascript #stories .guidance { position:absolute; width:99%;
                                                      top:0 }
 body#iterations_show.javascript #stories_list input,

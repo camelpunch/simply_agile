@@ -5,11 +5,6 @@ describe ApplicationController do
   before :each do
     @user = mock_model User
     @referer = 'some/referer'
-    @request = mock('Request', 
-                    :protocol => '', 
-                    :host_with_port => '',
-                    :referer => @referer)
-    controller.stub!(:request).and_return(@request)
   end
 
   describe "current_user" do
@@ -109,6 +104,7 @@ describe ApplicationController do
       end
 
       it "should set the session[:redirect_to] to the referer" do
+        @request.stub!(:referer).and_return(@referer)
         controller.send(:login_required)
         session[:redirect_to].should == @referer
       end
