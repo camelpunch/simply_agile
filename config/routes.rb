@@ -8,6 +8,9 @@ ActionController::Routing::Routes.draw do |map|
       iteration.resources :stories
     end
     project.resources(:stories, 
+                      :member => {
+                        :estimate => :get
+                      },
                       :collection => { 
                         :backlog => :get,
                         :finished => :get 

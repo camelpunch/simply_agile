@@ -1,7 +1,8 @@
 /* basic layout */
-#container { margin:3px 0 0 0; position:relative }
-#contextual_new_story { position:absolute; width:158px; height:80px;
-                        right:30px; top:14px }
+#container { margin:0 0 0 0; position:relative }
+#header { position:fixed; top:0; left:0; width:100%; z-index:10; padding-bottom:5px }
+#contextual_new_story { position:absolute; width:118px; height:99px;
+                        right:30px; top:2px }
 #footer { clear:both; padding:30px 0 }
 
 #verify { position:absolute; top:0; width:100% }
@@ -10,12 +11,25 @@
 /* end basic layout */
 
 /* navigation */
-#navigation { height:98px; position:relative; width:24.05em }
-#container>#navigation { margin:0 auto }
-#navigation ol { position:absolute; left:0; bottom:0; height:2.3em }
-#navigation li { float:left; height:2.3em; line-height:2.3em; width:6em }
+#navigation { height:67px; position:relative; width:24.05em }
+#header>#navigation { margin:0 auto }
+#navigation ol { position:absolute; left:0; bottom:0; height:2.5em }
+#navigation li { float:left; height:2.5em; line-height:2.5em; width:6em }
 #navigation li a { display:block; width:6em }
 /* end navigation */
+
+/* javascript request */
+body.javascript #request_container { position:fixed; top:140px; height:100%; width:100%; z-index:11 }
+body.javascript #request { margin:0 auto; width:40%; height:60%; overflow:auto;
+                           position:relative }
+body.javascript #request #request_body { padding:5px 15px 0 15px }
+body.javascript #request h2#request_header { padding:5px 15px }
+body.javascript #request a#close_request { position:absolute; top:5px; right:8px }
+
+body.javascript #request .edit_acceptance_criterion,
+body.javascript #request .edit a,
+body.javascript #request .delete form { display:none }
+/* end javascript request */
 
 /* breadcrumbs */
 #breadcrumbs { height:3em; padding-left:30px }
@@ -24,10 +38,12 @@
 /* end breadcrumbs */
 
 /* content */
-#content { position:relative; clear:left; margin:18px 30px 0 30px }
-#actions { position:absolute; right:0; top:0; width:163px }
-#actions li { width:107px; display:block; margin:0 auto }
-#actions a { width:107px; height:32px }
+#content { position:relative; margin:18px 30px 0 30px;
+           /*ie6*/ top:0 }
+div>#content { top:100px }
+#actions { position:absolute; right:0; top:0; width:124px }
+#actions li { width:104px; display:block; margin:0 auto }
+#actions a { width:104px; height:29px }
 
 .section { position:relative; padding:40px 36px 22px 36px; 
            margin:60px 0 }
@@ -38,18 +54,20 @@
 
 /* forms */
 form p label { display:block }
+form p.checkbox label { display:inline }
 /* end forms */
 
 /* home/show */
 .active_iteration { float: left; width: 50%; }
 /* end home/show */
 
-/* iterations/new */
+/* iterations */
 body.iterations #stories { clear:both;
                            /*ie6*/ height:200px }
+body.iterations form>#stories,
 body.iterations div>#stories { min-height:200px; height:auto }
 body.javascript #stories_iteration_container { float:left }
-body.javascript #stories_available_container { float:right}
+body.javascript #stories_available_container { float:right }
 body.javascript #stories_available_container,
 body.javascript #stories_iteration_container { /*ie6*/ width:47% }
 body.javascript div>#stories_available_container,
@@ -79,16 +97,15 @@ body.javascript #stories .display { float:left }
 body.javascript #stories .estimate { float:right }
 body.javascript #stories .estimate label { display:none }
 
-body.iterations p.submit { clear:left }
-/* end iterations/new */
+body.iterations p.submit { clear:both }
+/* end iterations */
 
-/* stories/new */
+/* stories/show */
 #acceptance_criteria { margin-bottom:15px }
-#acceptance_criteria table { width:35em }
 #acceptance_criteria table td.edit,
 #acceptance_criteria table td.delete { width:4em }
 #acceptance_criteria form { display:inline }
-/* end stories/new */
+/* end stories/show */
 
 /* stories/backlog */
 body#stories_backlog.javascript #content p.submit,

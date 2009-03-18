@@ -1,32 +1,44 @@
 body { color:#333 }
-#container { background:28px 7px url(/images/simply_agile.png) no-repeat }
+#header { background:#fff 28px 2px url(/images/simply_agile.png) no-repeat }
 
 #verify div { color:#000; background:#f55; opacity:0.9 }
 
 /* navigation */
 #navigation a { background:#fff; color:#333; outline:none }
+
+/* livery colours */
 #navigation li,
 body.iterations li#nav_iterations a,
 body.projects li#nav_projects a,
-body.stories li#nav_projects a { background:#5f5; color:#fff }
+body.stories li#nav_projects a,
+#breadcrumbs{ background:#ff7f2a; color:#fff }
+/* end livery colours */
+
 /* end navigation */
 
 #contextual_new_story { background:url(/images/new_story.png) no-repeat;
                         outline:none;
                         text-indent:-2000000px; text-decoration:none }
+#contextual_new_story:hover,
+#contextual_new_story:focus,
+#stories_new #contextual_new_story { background-image:url(/images/new_story_highlight.png) }
 
-#breadcrumbs { background:#5f5; color:#333 }
-#breadcrumbs li { background:left center url(/images/arrow_small_right_green_background.png) no-repeat }
+#breadcrumbs { color:#333 }
+#breadcrumbs li { background:left center url(/images/arrow_small_right_orange_background.png) no-repeat }
 #breadcrumbs li.first-child { background:none }
 #breadcrumbs li a { color:#333 }
 #footer, #footer a { color:#666 }
-
-h1 { background:0 1em url(/images/underline_green.png) repeat-x }
 
 #actions a { color:#444; display:block; background:url(/images/button_background.png) no-repeat }
 
 .section, .section h2 { border:2px solid #e4e5f3 }
 .section h2 { background:#fff }
+
+/* javascript request */
+body.javascript #request { background:#fff; border:2px solid #ff7f2a }
+body.javascript #request a#close_request { color:#fff }
+body.javascript #request h2#request_header { background:#ff7f2a }
+/* end javascript request */
 
 /* iterations/new */
 body.iterations .include a{ background-repeat:no-repeat }

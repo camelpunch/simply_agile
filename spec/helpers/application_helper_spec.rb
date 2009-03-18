@@ -28,4 +28,47 @@ describe ApplicationHelper do
     end
   end
 
+  describe "contextual_new_story_path" do
+    before :each do
+      @new_iteration = mock_model(Iteration, 
+                                  :pending? => true,
+                                  :new_record? => true)
+      @pending_iteration = mock_model Iteration, :pending? => true
+      @non_pending_iteration = mock_model Iteration, :pending? => false
+      @project = mock_model Project
+      @story = mock_model Story
+    end
+
+    it "should not use an iteration with new_record?" do
+      helper.instance_variable_set('@iteration', @new_iteration)
+      helper.instance_variable_set('@project', @project)
+      helper.contextual_new_story_path.should == [:new, @project, :story]
+    end
+
+    it "should use a pending iteration" do
+      helper.instance_variable_set('@iteration', @pending_iteration)
+      helper.instance_variable_set('@project', @project)
+      helper.contextual_new_story_path.should == [:new, @project, @pending_iteration, :story]
+    end
+
+    it "should not use a non-pending iteration" do
+      helper.instance_variable_set('@iteration', @non_pending_iteration)
+      helper.instance_variable_set('@project', @project)
+      helper.contextual_new_story_path.should == [:new, @project, :story]
+    end
+
+    it "should use a project" do
+      helper.instance_variable_set('@iteration', nil)
+      helper.instance_variable_set('@project', @project)
+      helper.contextual_new_story_path.should == [:new, @project, :story]
+    end
+
+    it "should notice no project" do
+      helper.instance_variable_set('@project', nil)
+      helper.instance_variable_set('@iteration', nil)
+      helper.should_receive(:new_story_path)
+      helper.contextual_new_story_path
+    end
+  end
+
 end

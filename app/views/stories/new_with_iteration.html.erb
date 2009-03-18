@@ -1,0 +1,19 @@
+<% content_for :title, "New Story" %>
+<% content_for :h1, "New Story" %>
+<% content_for :breadcrumbs do %>
+  <li class="first-child project"><%= link_to h(@iteration.project), @iteration.project %></li>
+  <li class="iteration"><%= link_to h(@iteration), [@project, @iteration] %></li>
+  <li class="story">New Story</li>
+<% end %>
+<% form_for @story do |form| %>
+  <%= form.error_messages %>
+  <%= render :partial => 'stories/project_select' %>
+  <p class="checkbox">
+  <%= form.check_box :iteration_id, {}, @iteration.id, nil %>
+  <%= form.label :iteration_id, "Add to the '#{h(@iteration)}' iteration" %>
+  </p>
+  <%= render form %>
+  <p class="submit">
+  <%= form.submit 'Create Story' %>
+  </p>
+<% end %>
