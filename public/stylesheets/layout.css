@@ -1,6 +1,6 @@
 /* basic layout */
 #container { margin:0 0 0 0; position:relative }
-#header { position:fixed; top:0; width:100%; z-index:10; padding-bottom:5px }
+#header { position:fixed; top:0; left:0; width:100%; z-index:10; padding-bottom:5px }
 #contextual_new_story { position:absolute; width:118px; height:99px;
                         right:30px; top:2px }
 #footer { clear:both; padding:30px 0 }
@@ -25,7 +25,9 @@
 /* end breadcrumbs */
 
 /* content */
-#content { position:relative; padding-top:100px; margin:18px 30px 0 30px }
+#content { position:relative; margin:18px 30px 0 30px;
+           /*ie6*/ top:0 }
+div>#content { top:100px }
 #actions { position:absolute; right:0; top:0; width:124px }
 #actions li { width:104px; display:block; margin:0 auto }
 #actions a { width:104px; height:29px }
