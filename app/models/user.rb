@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
     :if => lambda { |user| user.signup? && user.organisation.nil? }
   validates_presence_of :password, :on => :create, :if => :signup?
 
+  default_scope :order => 'email_address'
+
   named_scope :valid, 
     :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
 

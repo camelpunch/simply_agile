@@ -19,7 +19,9 @@
         </td>
         <td>
           <% unless user == @current_user -%>
-            <%= button_to "Remove from organisation" %>
+            <%= button_to "Remove from organisation",
+              organisation_member_path(user.id),
+              :method => :delete %>
           <% end -%>
         </td>
       </tr>

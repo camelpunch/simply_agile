@@ -23,6 +23,27 @@ describe OrganisationMembersController do
     end
   end
 
+  describe "get user" do
+    before :each do
+      @users = mock('Users')
+      @organisation.stub!(:users).and_return(@users)
+    end
+
+    it "should call find on the organisation's users" do
+      user_id = "123"
+      controller.stub!(:params).and_return(:id => user_id)
+
+      @users.should_receive(:find).with(user_id)
+      controller.send(:get_user)
+    end
+
+    it "should assign the instance variable" do
+      @users.stub!(:find).and_return(@user)
+      controller.send(:get_user)
+      controller.instance_variable_get("@user").should == @user
+    end
+  end
+
   describe "create" do
     def do_call
       post :create, :user => @user_params
@@ -71,6 +92,33 @@ describe OrganisationMembersController do
         do_call
         response.should render_template("organisations/show")
       end
+    end
+  end
+
+  describe "destroy" do
+    def do_call
+      delete :destroy, :id => @new_user.id
+    end
+
+    before :each do
+      @new_user = Users.create_user!
+      controller.instance_variable_set("@user", @new_user)
+      controller.stub!(:get_user)
+    end
+
+    it "should assign the user" do
+      controller.should_receive(:get_user)
+      do_call
+    end
+
+    it "should call destroy on the user" do
+      @new_user.should_receive(:destroy)
+      do_call
+    end
+
+    it "should redirect to the organisation page" do
+      do_call
+      response.should redirect_to(organisation_url)
     end
   end
 end
