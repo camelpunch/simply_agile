@@ -1,7 +1,7 @@
 <li id="story_<%= changeable_story.id %>">
+  <div class="content">
 <h3><%= link_to h(changeable_story), 
   [changeable_story.project, changeable_story.iteration, changeable_story] %></h3>
-  <div class="story_content">
   <%= simple_format changeable_story.content %>
   </div>
 

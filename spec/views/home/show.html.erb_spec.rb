@@ -30,4 +30,16 @@ describe "/home/show" do
       response.should have_tag('a[href=?]', new_project_path)
     end
   end
+
+  describe "with active iterations" do
+    before :each do
+      @active_iteration = mock_model(Iteration,
+                                     :name => '',
+                                     :project => '')
+      assigns[:active_iterations] = [@active_iteration]
+      render 'home/show'
+    end
+
+    it_should_behave_like "a standard view"
+  end
 end

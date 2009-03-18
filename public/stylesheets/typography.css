@@ -31,4 +31,5 @@ body.iterations .include a { text-indent:-20000px; outline:none; text-underline:
 body.iterations .display h3 { font-weight:bold }
 /* end iterations/new */
 
-body#iterations_show ol#headings li { text-align:center }
+body#iterations_show.javascript #stories .guidance,
+body#iterations_show.javascript #headings ol li { text-align:center }

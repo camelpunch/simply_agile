@@ -1,19 +1,31 @@
 var DraggableStories = {
 
-  draggable_left_offset: 33,
-
   init: function() {
+    // add some guidance
+    $('#stories_list').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
+
     DraggableStories.label_columns();
     DraggableStories.create_container();
     
     // make droppables for each input box
     $('input[name="story[status]"]').each(DraggableStories.create_droppables);
+
+    // handle resize event
+    $(window).resize( function() {
+      // remove all JSy elements
+      $('.draggables').remove();
+
+      // re-initialise
+      DraggableStories.create_container();
+      $('input[name="story[status]"]').each(DraggableStories.create_droppables);
+    });
   },
 
   // should be bound to a single radio button
   create_droppables: function() {
     var form = $(this).parents('form');
     var container = form.find('.draggables');
+    var content = $(this).parents('li').find('.content');
     var status = $(this).val();
     var id = this.id;
 
@@ -44,11 +56,11 @@ var DraggableStories = {
           });
           
           // change class of elements
-          container.find('.ui-droppable').removeClass('ui-state-highlight');
-          $(this).addClass('ui-state-highlight');
-          $(ui.draggable)
-          .css('left', 
-               $(this).position().left + DraggableStories.draggable_left_offset);
+          var draggable = container.find('.ui-draggable');
+          DraggableStories.set_draggable_status(draggable, status);
+
+          // custom snapping
+          $(ui.draggable).css('left', $(this).position().left);
         }
       });
 
@@ -57,20 +69,20 @@ var DraggableStories = {
       droppable_position = droppable.position();
       droppable.addClass('ui-state-highlight');
 
-      container.append('<div id="draggable_' + this.id + '"></div>');
+      container.append('<div id="draggable_' + this.id + '"><div>'+content.html()+'</div></div>');
 
-      $('#draggable_' + this.id)
-        .draggable({ 
+      var draggable = $('#draggable_' + this.id);
+      draggable.draggable({ 
           revert: 'invalid',
-          opacity: 0.5,
           axis: 'x', 
           containment: 'parent',
           cursor: 'pointer'
         })
         .css('position', 'absolute')
         .css('top', droppable_position.top)
-        .css('left', 
-             droppable_position.left + DraggableStories.draggable_left_offset);
+        .css('left', droppable_position.left);
+
+      DraggableStories.set_draggable_status(draggable, status);
     }
   },
 
@@ -83,7 +95,7 @@ var DraggableStories = {
 
   // make headings based on first set of labels
   label_columns: function() {
-    var html = '<ol id="headings">';
+    var html = '<div id="headings"><ol>';
 
     $($('form.edit_story')[0]).find('label').each( function() {
       var label = $(this).html();
@@ -92,8 +104,16 @@ var DraggableStories = {
 
       html += '<li class="'+class_name+'">'+label+'</li>';
     });
-    html += '</ol>';
+    html += '</ol></div>';
 
     $('#stories_list').before(html);
+  },
+
+  set_draggable_status: function(draggable, status) {
+    draggable.removeClass('pending');
+    draggable.removeClass('in_progress');
+    draggable.removeClass('testing');
+    draggable.removeClass('complete');
+    draggable.addClass(status);
   }
 }
