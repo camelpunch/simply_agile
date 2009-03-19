@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
   protected
 
   def password_required?
-    (! new_record?) || signup?
+    encrypted_password.blank? && ((! new_record?) || signup?)
   end
 
   def self.hash_password(plaintext)

@@ -276,7 +276,7 @@ describe User do
         @user.password = nil
       end
       
-      it "should require a password on create" do
+      it "should require a password on signup" do
         @user.organisation = nil
         @user.valid?
         @user.errors.invalid?(:password).should be_true
@@ -288,8 +288,15 @@ describe User do
         @user.errors.invalid?(:password).should be_false
       end
 
+      it "should not require a password if the encrypted password is set" do
+        @user.encrypted_password = 'hashed password'
+        @user.valid?
+        @user.errors.invalid?(:password).should be_false
+      end
+
       it "should require a password on update if acknowledgement_token is set" do
         @user = Users.create_user!(:acknowledgement_token => 'abcdef')
+        @user.encrypted_password = ''
         @user.password = ''
         @user.valid?
         @user.errors.invalid?(:password).should be_true
