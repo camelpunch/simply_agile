@@ -8,14 +8,14 @@ var StorySwapper = {
     var available_div = $('#stories_available').remove();
     $('#stories_iteration_container').after('<div id="stories_available_container"><div class="section" id="stories_available"><span class="estimate">Story Points (<span class="numeric">0</span>)</span>'+available_div.html()+'</div></div>');
 
-    StorySwapper.init_stories();
-    StorySwapper.convert_checkboxes();
-    StorySwapper.bind_estimates();
-    StorySwapper.update_estimates();
+    StorySwapper.initStories();
+    StorySwapper.convertCheckBoxes();
+    StorySwapper.bindEstimates();
+    StorySwapper.updateEstimates();
   },
 
   // add the story to the specified ol, maintaining the original order
-  append_story: function(story, ol) {
+  appendStory: function(story, ol) {
     var stories = ol.find('li.story');
 
     var source_index = $.inArray(story.attr('id'), StorySwapper.story_order);
@@ -37,27 +37,27 @@ var StorySwapper = {
     if (!inserted) ol.append(story);
   },
 
-  convert_checkboxes: function() {
+  convertCheckBoxes: function() {
     $('input[type="checkbox"]').each( function() {
       // make links that toggle the checkboxes
       $(this).before('<a class="move" href="#'+this.id+'">Move</a>');
     });
 
-    StorySwapper.bind_anchors();
+    StorySwapper.bindAnchors();
   },
 
-  bind_anchors: function() {
+  bindAnchors: function() {
     $('a.move').click( function() {
       var id = this.href.split('#')[1];
       var input = $('input#'+id);
       input.click();
-      StorySwapper.move_checkbox_story(input);
-      StorySwapper.bind_anchors();
+      StorySwapper.moveCheckBoxStory(input);
+      StorySwapper.bindAnchors();
       return false;
     });
   },
 
-  init_stories: function() {
+  initStories: function() {
     // store initial order
     StorySwapper.story_order = $.map($('ol li.story'), function(element, i) {
       return element.id
@@ -73,7 +73,7 @@ var StorySwapper = {
     });
   },
 
-  move_checkbox_story: function(checkbox) {
+  moveCheckBoxStory: function(checkbox) {
     var checked_before_removal = checkbox.attr('checked');
     var story = checkbox.parents('li.story').remove();
 
@@ -81,21 +81,21 @@ var StorySwapper = {
       ? $('#stories_iteration ol') 
       : $('#stories_available ol');
 
-    StorySwapper.append_story(story, append_to);
+    StorySwapper.appendStory(story, append_to);
 
     // workaround ie6 bug with checkbox values being reset after append
     if (checked_before_removal != checkbox.attr('checked')) checkbox.click();
 
-    StorySwapper.update_estimates();
-    StorySwapper.bind_estimates();
-    StoryToggler.bind_anchors(story);
+    StorySwapper.updateEstimates();
+    StorySwapper.bindEstimates();
+    StoryToggler.bindAnchors(story);
   },
 
-  bind_estimates: function() {
-    $('div.estimate input').keyup(StorySwapper.update_estimates);
+  bindEstimates: function() {
+    $('div.estimate input').keyup(StorySwapper.updateEstimates);
   },
 
-  update_estimates: function() {
+  updateEstimates: function() {
     var points;
     var integer;
 
@@ -118,28 +118,25 @@ var StorySwapper = {
 
 var StoryToggler = {
   init: function() {
-    // collapse all story content
-    $('.content').hide();
-
     // insert expand links
     $('ol li.story').each( function() {
       $(this).find('.content')
       .before('<a class="expand" href="#'+this.id+'">Show Story</a>');
     });
 
-    StoryToggler.bind_anchors();
+    StoryToggler.bindAnchors();
   },
 
   // expand functionality for story content
-  bind_anchors: function(base) {
+  bindAnchors: function(base) {
     if (base) {
-      base.find('a.expand').click(StoryToggler.toggle_content);
+      base.find('a.expand').click(StoryToggler.toggleContent);
     } else {
-      $('a.expand').click(StoryToggler.toggle_content);
+      $('a.expand').click(StoryToggler.toggleContent);
     }
   },
 
-  toggle_content: function() {
+  toggleContent: function() {
     var id = this.href.split('#')[1];
     $('#'+id+' .content').toggle();
     if ($(this).html() == 'Show Story') {

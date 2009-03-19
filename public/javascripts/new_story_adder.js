@@ -21,10 +21,10 @@ function NewStoryAdder() {
               $('#stories_available>ol').prepend(html)
 
               // re-initialise the page
-              StorySwapper.init_stories();
+              StorySwapper.initStories();
               $('a.move').remove();
-              StorySwapper.convert_checkboxes();
-              StorySwapper.update_estimates();
+              StorySwapper.convertCheckBoxes();
+              StorySwapper.updateEstimates();
 
               $('a.expand').remove();
               StoryToggler.init();
