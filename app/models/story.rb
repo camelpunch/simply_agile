@@ -51,9 +51,10 @@ class Story < ActiveRecord::Base
   end
 
   def update_status_from_acceptance_criteria
-    if acceptance_criteria.uncompleted.empty? &&
-        (status == Status::PENDING || status == Status::IN_PROGRESS)
-      self.update_attributes(:status => Status::TESTING)
+    if acceptance_criteria.uncompleted.empty?
+      if (status == Status::PENDING || status == Status::IN_PROGRESS)
+        self.update_attributes(:status => Status::TESTING)
+      end
     elsif status == Status::TESTING || status == Status::COMPLETE
       self.update_attributes(:status => Status::IN_PROGRESS)
     end
