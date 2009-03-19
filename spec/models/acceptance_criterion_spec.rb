@@ -88,13 +88,21 @@ describe AcceptanceCriterion do
       end
     end
 
+    it "should have complete reader that reflects complete?" do
+      @acceptance_criterion.fulfilled_at = Time.now
+      @acceptance_criterion.complete.should be_true
+
+      @acceptance_criterion.fulfilled_at = nil
+      @acceptance_criterion.complete.should be_false
+    end
+
     it "should be complete if fulfilled_at is set" do
       @acceptance_criterion.fulfilled_at = Time.now
-      @acceptance_criterion.complete?.should be_true
+      @acceptance_criterion.should be_complete
     end
 
     it "should not be complete if fulfilled_at is nil" do
-      @acceptance_criterion.complete?.should be_false
+      @acceptance_criterion.should_not be_complete
     end
 
     it "should set fulfilled_at if complete is set to true" do

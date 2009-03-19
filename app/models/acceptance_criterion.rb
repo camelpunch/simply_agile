@@ -16,6 +16,7 @@ class AcceptanceCriterion < ActiveRecord::Base
   def complete?
     ! fulfilled_at.nil?
   end
+  alias :complete :complete?
 
   def complete=(value)
     if value.kind_of?(TrueClass) || value == "true"
