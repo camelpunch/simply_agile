@@ -1,7 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resources :iterations
-  map.resources :organisations
+
+  map.resource :organisation do |organisation|
+    organisation.resources :members, :controller => 'organisation_members'
+  end
+
   map.resources :stories, :except => :index
   map.resources :projects do |project|
     project.resources :iterations do |iteration|
@@ -20,10 +24,11 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :users do |user|
-    user.resource :verification, :only => [:new]
+    user.resource :verification, :controller => 'user_verifications', :only => [:new]
+    user.resource :acknowledgement, :controller => 'user_acknowledgements'
   end
   map.verification '/users/:user_id/verification',
-    :controller => 'verifications', :action => 'create'
+    :controller => 'user_verifications', :action => 'create'
 
   map.resources :iterations do |iteration|
     iteration.resource :burndown

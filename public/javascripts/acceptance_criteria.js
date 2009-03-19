@@ -43,14 +43,21 @@ var AcceptanceCriteria = {
   },
 
   createCheckBoxes: function() {
-    var hidden, checked;
+    var id, hidden, checked, name;
 
     $('input[name=acceptance_criterion[complete]]').each( function() {
+      id = $(this).attr('id');
+      $(this).parents('p').addClass('checkbox');
+      name = $(this).parents('tr').find('.name').html();
+
       // checked status needs to be opposite of hidden field value
       checked = $(this).val() == 'true' ? '' : ' checked="checked"';
 
       // add the checkbox with correct checked status
-      $(this).before('<input type="checkbox" value="true" name="acceptance_criterion[complete]"'+checked+' />');
+      $(this).before(
+        '<input id="'+id+'" type="checkbox" value="true" name="acceptance_criterion[complete]"'+checked+' />'+
+        '<label for="'+id+'">'+name+'</label>'
+      );
 
       // remove hidden field
       $(this).remove();

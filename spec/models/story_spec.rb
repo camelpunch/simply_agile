@@ -207,6 +207,12 @@ describe Story do
         @story.should_not_receive(:status=).with(Story::Status::TESTING)
         @story.update_status_from_acceptance_criteria
       end
+
+      it "should not change status to in progress when updating other attributes" do
+        @story.stub!(:status).and_return(Story::Status::COMPLETE)
+        @story.should_not_receive(:status=).with(Story::Status::IN_PROGRESS)
+        @story.update_status_from_acceptance_criteria
+      end
     end
 
     describe "where not all accepance criteria are completed" do

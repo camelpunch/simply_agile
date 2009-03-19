@@ -1,4 +1,4 @@
-class VerificationsController < ApplicationController
+class UserVerificationsController < ApplicationController
   skip_before_filter :login_required
   before_filter :get_user
 
@@ -8,8 +8,7 @@ class VerificationsController < ApplicationController
   end
 
   def create
-    if @user.verification_token == params[:token]
-      @user.verify
+    if @user.verify(params)
       session[:user_id] = @user.id
       flash[:notice] = "Your account has now been verified."
       redirect_to root_url

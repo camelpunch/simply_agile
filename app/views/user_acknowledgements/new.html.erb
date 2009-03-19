@@ -1,0 +1,29 @@
+<% content_for :title, "Acknowledge your account" %>
+<% content_for :h1, "Acknowledge your account" %>
+
+<% form_tag :action => :create do -%>
+  <%= error_messages_for :user %>
+  <div>
+    <p>
+      <%= label_tag :token %>
+      <%= text_field_tag :token, params[:token], :size => 6, :maxlength => 6 %>
+    </p>
+    <% if request.request_method == :post || params[:token].blank? -%>
+      <p class="description">
+        Your 6 character token was emailed to you when somebody added you.
+      </p>
+    <% end -%>
+  </div>
+  <div>
+    <p>
+      <%= label_tag :password %>
+      <%= password_field_tag :password %>
+    </p>
+    <p class="description">
+      Choose a password to access your account.
+    </p>
+  </div>
+  <p class="submit">
+    <%= submit_tag 'Create Account' %>
+  </p>
+<% end -%>

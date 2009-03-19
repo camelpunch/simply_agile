@@ -35,6 +35,10 @@ class ApplicationController < ActionController::Base
     layout
   end
 
+  def get_organisation
+    @organisation = current_user.organisation
+  end
+
   def get_project
     if params[:project_id]
       @project = current_user.organisation.projects.find(params[:project_id])

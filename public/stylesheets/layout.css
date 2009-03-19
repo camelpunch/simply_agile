@@ -52,11 +52,13 @@ div>#content { top:100px }
 .section h2 { position:absolute; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 .section>h2 { left:-13px }
+.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
+    top:0; left: 0 }
 /* end content */
 
 /* forms */
 form p label { display:block }
-form p.checkbox label { display:inline }
+form p.checkbox label { display:inline; padding-left:5px }
 /* end forms */
 
 /* home/show */
@@ -105,8 +107,13 @@ body.iterations p.submit { clear:both }
 
 /* stories/show */
 #acceptance_criteria { margin-bottom:15px }
+#acceptance_criteria table { table-layout:fixed }
+#acceptance_criteria table td { padding:0 5px }
 #acceptance_criteria table td.edit,
 #acceptance_criteria table td.delete { width:4em }
+#acceptance_criteria p.checkbox input { display:block; float:left }
+#acceptance_criteria p.checkbox label { display:block; float:left; width:16em }
+body#stories_show.javascript #acceptance_criteria table td.name { display:none }
 body.javascript #acceptance_criteria table .submit_complete { display:none }
 #acceptance_criteria form { display:inline }
 /* end stories/show */

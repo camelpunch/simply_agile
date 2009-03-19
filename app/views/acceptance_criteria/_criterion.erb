@@ -3,13 +3,12 @@
     <% form_for [@project, @story, criterion] do |f| -%>
       <p>
       <%= hidden_field_tag "acceptance_criterion[complete]",
-        ! criterion.complete?, :id => nil %>
+        ! criterion.complete?, :id => "complete_#{criterion.id}" %>
       <%= f.submit criterion.complete? ? "Uncomplete" : "Complete", :id => nil, :class => 'submit_complete' %>
       </p>
     <% end -%>
-
   </td>
-  <td><%= h criterion %></td>
+  <td class="name"><%= h criterion %></td>
   <td class="edit"><%= link_to 'Edit',
       edit_project_story_acceptance_criterion_url(@project, @story, criterion)
   %></td>

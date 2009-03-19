@@ -32,6 +32,7 @@ body.stories li#nav_projects a,
 #actions a { color:#444; display:block; background:url(/images/button_background.png) no-repeat }
 
 .section, .section h2 { border:2px solid #e4e5f3 }
+.section .errorExplanation h2 { border: none }
 .section h2 { background:#fff }
 
 /* javascript request */
@@ -74,4 +75,9 @@ body.iterations .display .content { background:#fff }
 
 /* end iterations/show when active */
 
+<<<<<<< HEAD:public/stylesheets/colours.css
+#headings .complete { background:#3dfd4f }
+#acceptance_criteria #completed, .aside { color: #aaa }
+=======
 #acceptance_criteria #completed { color: #aaa }
+>>>>>>> master:public/stylesheets/colours.css
