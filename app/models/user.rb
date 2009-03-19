@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
   validates_presence_of :organisation_id, :unless => :signup?
-  validates_presence_of :organisation_name, 
+  validates_presence_of :organisation_name, :on => :create,
     :if => lambda { |user| user.signup? && user.organisation.nil? }
-  validates_presence_of :password, :on => :create, :if => :signup?
+  validates_presence_of :password, :if => :password_required?
 
   default_scope :order => 'email_address'
 
@@ -20,23 +20,29 @@ class User < ActiveRecord::Base
     :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
 
   DAYS_UNTIL_UNVERIFIED = 7
-  VERIFICATION_TOKEN_LENGTH = 6
+  TOKEN_LENGTH = 6
 
   def before_create
     if signup?
-      self.encrypted_password ||= hash_password(password)
       self.verified ||= false
-      self.verification_token ||= generate_verification_token
+      self.verification_token ||= generate_token
       self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
+    else
+      self.acknowledgement_token ||= generate_token
     end
     
     self.organisation ||= Organisation.create!(:name => organisation_name)
   end
 
+  def before_save
+    unless password.nil? || (new_record? && ! signup?)
+      self.encrypted_password ||= hash_password(password)
+    end
+  end
+
   def after_create
-    debugger if $debug
     unless signup?
-      self.organisation_sponsors.create(
+      self.organisation_sponsors.create!(
         :organisation => organisation,
         :sponsor_id => sponsor.id
       )
@@ -60,7 +66,22 @@ class User < ActiveRecord::Base
     organisation_sponsors.empty?
   end
 
+  def acknowledge(options)
+    return false unless options[:token] == acknowledgement_token
+
+    return false unless self.update_attributes(
+      :acknowledgement_token => nil,
+      :password => options[:password]
+    )
+    
+    self.organisation_sponsors.first.destroy
+  end
+
   protected
+
+  def password_required?
+    (! new_record?) || signup?
+  end
 
   def self.hash_password(plaintext)
     Digest::SHA1.hexdigest(plaintext)
@@ -70,10 +91,10 @@ class User < ActiveRecord::Base
     self.class.hash_password(plaintext)
   end
 
-  def generate_verification_token
+  def generate_token
     chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ23456789'
     token = ''
-    VERIFICATION_TOKEN_LENGTH.times { token << chars[rand(chars.length)] }
+    TOKEN_LENGTH.times { token << chars[rand(chars.length)] }
     token
   end
 end

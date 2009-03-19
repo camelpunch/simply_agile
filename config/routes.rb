@@ -22,6 +22,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users do |user|
     user.resource :verification, :only => [:new]
+    user.resource :acknowledgement, :controller => 'user_acknowledgements'
   end
   map.verification '/users/:user_id/verification',
     :controller => 'verifications', :action => 'create'

@@ -53,7 +53,6 @@ describe User do
     describe "for a new organisation" do
       before(:each) do
         @user = User.new(Users.user_prototype)
-        @user.stub!(:adding_to_organisation?).and_return(false)
       end
 
       it "should create a new organisation for the user" do
@@ -71,6 +70,19 @@ describe User do
       it "should set acknowledged to true" do
         @user.save
         @user.acknowledged?.should be_true
+      end
+
+      describe "verification token" do
+        it "should be generated when a user is created" do
+          @user.save
+          @user.verification_token.should_not be_nil
+        end
+
+        it "should not generate the same token" do
+          @user.save
+          new_user = Users.create_user!
+          @user.verification_token.should_not == new_user.verification_token
+        end
       end
     end
 
@@ -122,6 +134,37 @@ describe User do
           @organisation_sponsor.organisation.should == @organisation
         end
       end
+
+      describe "acknowledgement token" do
+        before :each do
+          @sponsor = Users.create_user!
+          @organisation = Organisations.create_organisation!
+
+          @user = User.new(
+            :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
+          )
+          @user.organisation = @organisation
+          @user.sponsor = @sponsor
+
+          @user.save!
+        end
+
+        it "should be generated when a user is created" do
+          @user.save
+          @user.acknowledgement_token.should_not be_nil
+        end
+
+        it "should not generate the same token" do
+          @user.save
+          new_user = Users.create_user!(
+            :sponsor => @sponsor,
+            :organisation => @organisation
+          )
+          @user.acknowledgement_token.should_not ==
+            new_user.acknowledgement_token
+        end
+      end
+
     end
   end
 
@@ -244,6 +287,13 @@ describe User do
         @user.valid?
         @user.errors.invalid?(:password).should be_false
       end
+
+      it "should require a password on update if acknowledgement_token is set" do
+        @user = Users.create_user!(:acknowledgement_token => 'abcdef')
+        @user.password = ''
+        @user.valid?
+        @user.errors.invalid?(:password).should be_true
+      end
     end
   end
 
@@ -293,15 +343,94 @@ describe User do
         @user.verify_by.should be_nil
       end
     end
-    
-    describe "verification token" do
-      it "should be generated when a user is created" do
-        @user.verification_token.should_not be_nil
+  end
+
+  describe "acknowledge" do
+    before :each do
+      @sponsor = Users.create_user!
+      @user = Users.create_user!(
+        :sponsor => @sponsor,
+        :organisation => @sponsor.organisation
+      )
+    end
+
+    describe "with valid token and password" do
+      before :each do
+        @password = 'some new password'
+        @response = @user.acknowledge(
+          :token => @user.acknowledgement_token,
+          :password => @password
+        )
+        @user.reload
       end
-    
-      it "should not generate the same token" do
-        new_user = Users.create_user!
-        @user.verification_token.should_not == new_user.verification_token
+
+      it "should set acknowledgement_token to nil" do
+        @user.acknowledgement_token.should be_nil
+      end
+
+      it "should delete the organisation sponsor" do
+        @user.organisation_sponsors.should be_empty
+      end
+
+      it "should update the password" do
+        @user.encrypted_password.should == Digest::SHA1.hexdigest(@password)
+      end
+
+      it "should return true" do
+        @response.should be_true
+      end
+    end
+
+    describe "with invalid token" do
+      before :each do
+        @password = 'some new password'
+        @response = @user.acknowledge(
+          :token => 'wjiefoafew',
+          :password => @password
+        )
+        @user.reload
+      end
+
+      it "should not set acknowledgement_token to nil" do
+        @user.acknowledgement_token.should_not be_nil
+      end
+
+      it "should not delete the organisation sponsor" do
+        @user.organisation_sponsors.should_not be_empty
+      end
+
+      it "should not update the password" do
+        @user.encrypted_password.should be_nil
+      end
+
+      it "should return false" do
+        @response.should be_false
+      end
+    end
+
+    describe "with no password" do
+      before :each do
+        @response = @user.acknowledge(
+          :token => @user.acknowledgement_token,
+          :password => ''
+        )
+        @user.reload
+      end
+
+      it "should not set acknowledgement_token to nil" do
+        @user.acknowledgement_token.should_not be_nil
+      end
+
+      it "should not delete the organisation sponsor" do
+        @user.organisation_sponsors.should_not be_empty
+      end
+
+      it "should update the password" do
+        @user.encrypted_password.should be_nil
+      end
+
+      it "should return false" do
+        @response.should be_false
       end
     end
   end
