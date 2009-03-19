@@ -52,11 +52,9 @@ class StoriesController < ApplicationController
   end
 
   def new
-    @story.content = <<STORY
-As a 
+    @story.content = "As a 
 I want 
-So that 
-STORY
+So that "
 
     if @iteration
       render :template => 'stories/new_with_iteration'
