@@ -20,14 +20,14 @@ describe UserMailer do
     end
   end
 
-  describe "authorisation" do
+  describe "acknowledgement" do
     before :each do
       @sponsor = Users.create_user!
       @user = Users.create_user!(
         :sponsor => @sponsor,
         :organisation => @sponsor.organisation
       )
-      @mail = UserMailer.create_authorisation(@user)
+      @mail = UserMailer.create_acknowledgement(@user)
     end
 
     it "should set the subject" do

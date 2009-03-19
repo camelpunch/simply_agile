@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
     body       :user => user
   end
 
-  def authorisation(user)
+  def acknowledgement(user)
     subject    "You have been added to #{user.organisation.name}"
     recipients user.email_address
     from       '"SimplyAgile" <noreply@jandaweb.com>'

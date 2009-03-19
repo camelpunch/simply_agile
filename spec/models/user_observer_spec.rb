@@ -15,7 +15,7 @@ describe UserObserver do
 
     it "should not send an authorisation email" do
       User.with_observers(:user_observer) do
-        UserMailer.should_not_receive(:deliver_authorisation)
+        UserMailer.should_not_receive(:deliver_acknowledgement)
         @user.save
       end
     end
@@ -43,7 +43,7 @@ describe UserObserver do
 
     it "should send an authorisation email" do
       User.with_observers(:user_observer) do
-        UserMailer.should_receive(:deliver_authorisation).with(@user)
+        UserMailer.should_receive(:deliver_acknowledgement).with(@user)
         @user.save
       end
     end

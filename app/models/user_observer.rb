@@ -3,7 +3,7 @@ class UserObserver < ActiveRecord::Observer
     if user.signup?
       UserMailer.deliver_verification(user)
     else
-      UserMailer.deliver_authorisation(user)
+      UserMailer.deliver_acknowledgement(user)
     end
   end
 end
