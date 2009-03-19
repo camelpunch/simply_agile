@@ -20,7 +20,7 @@ function NewStoryAdder() {
               StorySwapper.init_stories();
               $('a.move').remove();
               StorySwapper.convert_checkboxes();
-              StorySwapper.show_hide_estimate_headings();
+              StorySwapper.update_estimates();
 
               $('a.expand').remove();
               StoryToggler.init();
