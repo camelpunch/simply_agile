@@ -73,7 +73,7 @@ body.javascript #stories_iteration_container { /*ie6*/ width:47% }
 body.javascript div>#stories_available_container,
 body.javascript div>#stories_iteration_container { width:49% }
 body.javascript #stories_iteration,
-body.javascript #stories_available { width:70% }
+body.javascript #stories_available { width:70%; height:auto }
 body.javascript #stories_iteration { /*ie6*/ margin-right:6% }
 body.javascript #stories_available { /*ie6*/ margin-left:1% }
 body.javascript div>#stories_iteration { margin-right:11% }
@@ -84,6 +84,7 @@ body.javascript #stories span.estimate { position:absolute; top:15px; right:28px
 body.javascript #stories .include input,
 body.javascript #stories .include label { display:none }
 
+body.javascript #stories ol li.story .display_and_estimate { overflow:hidden }
 body.javascript #stories ol li.story { clear:left;
                                        /*ie6*/ height:50px }
 body.javascript #stories ol>li.story { position:relative; min-height:50px; height:auto }
@@ -107,6 +108,7 @@ body.iterations p.submit { clear:both }
 /* end stories/show */
 
 /* stories/backlog */
+body#stories_backlog #content { padding-bottom:100px }
 body#stories_backlog.javascript #content p.submit,
 body#stories_backlog.javascript #content label,
 body#stories_backlog.javascript #content input { display:none }
