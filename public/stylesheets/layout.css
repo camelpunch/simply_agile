@@ -51,6 +51,8 @@ div>#content { top:100px }
 .section h2 { position:absolute; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 .section>h2 { left:-13px }
+.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
+    top:0; left: 0 }
 /* end content */
 
 /* forms */

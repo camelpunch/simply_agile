@@ -1,0 +1,45 @@
+<% content_for :title, "Sharing" %>
+<% content_for :h1, h(@organisation.name) %>
+
+<div class="section">
+  <h2>Organisation Members</h2>
+
+  <table>
+    <% @organisation.users.each do |user| -%>
+      <tr>
+        <td>
+          <%= user.email_address %>
+        </td>
+        <td>
+          <% if user == @current_user -%>
+            <span class="aside">(you)</span>
+          <% elsif ! user.acknowledged? -%>
+            <span class="aside">Account is not yet acknowledged</span>
+          <% end -%>
+        </td>
+        <td>
+          <% unless user == @current_user -%>
+            <%= button_to "Remove from organisation",
+              organisation_member_path(user.id),
+              :method => :delete %>
+          <% end -%>
+        </td>
+      </tr>
+    <% end -%>
+  </table>
+
+  <h3>Add somebody to this organisation</h3>
+  <% form_for @user, :url => organisation_members_path do |form| -%>
+    <div>
+      <%= form.error_messages %>
+    </div>
+
+    <p>
+      <%= form.label :email_address %>
+      <%= form.text_field :email_address %>
+    </p>
+    <p class="submit">
+      <%= form.submit "Add user" %>
+    </p>
+  <% end -%>
+</div>

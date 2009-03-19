@@ -25,10 +25,10 @@ describe VerificationsController do
         response.should redirect_to(root_url)
       end
 
-      it "should set verified to true" do
+      it "should verify the user" do
         do_call
         @user.reload
-        @user.verified.should be_true
+        @user.verified?.should be_true
       end
 
       it "should log the user in" do
