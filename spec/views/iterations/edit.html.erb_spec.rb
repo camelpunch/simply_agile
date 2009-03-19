@@ -7,6 +7,7 @@ describe "/iterations/edit" do
                         :content => '',
                         :estimate => '',
                         :acceptance_criteria => [],
+                        :iteration_id? => false,
                         :project => @project)
     @project = mock_model(Project,
                           :stories => @stories)
