@@ -15,6 +15,9 @@
   This iteration does not have any stories.
   </p>
 <% else %>
+  <p class="estimate total">
+  Total Story Points: <%= @iteration.stories.sum(:estimate) %>
+  </p>
   <ol>
     <%= render @iteration.stories %>
   </ol>
