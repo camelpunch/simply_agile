@@ -1,10 +1,10 @@
 var AcceptanceCriteria = {
   init: function() {
-    AcceptanceCriteria.form_init();
-    AcceptanceCriteria.anchor_init();
+    AcceptanceCriteria.formInit()();
+    AcceptanceCriteria.anchorInit();
   },
 
-  form_init: function() {
+  formInit(): function() {
     $('#acceptance_criteria .delete form, #acceptance_criteria form.add').ajaxForm({
       target: '#acceptance_criteria .content',
       resetForm: true,
@@ -16,7 +16,7 @@ var AcceptanceCriteria = {
     });
   },
 
-  anchor_init: function() {
+  anchorInit: function() {
     $('#acceptance_criteria tr').each( function() {
       var tr = this;
       $(tr).find('a').click( function() {
@@ -36,7 +36,7 @@ var AcceptanceCriteria = {
             // hide display version
             $(tr).hide();
 
-            AcceptanceCriteria.form_init();
+            AcceptanceCriteria.formInit()();
           }
         });
 
