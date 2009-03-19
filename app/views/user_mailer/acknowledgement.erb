@@ -1,7 +1,12 @@
 Welcome to Simply Agile.
 
-You have been added to the organisation <%= @user.organisation.name %> by
-<%= @sponsor.email_address %>.
+You have been added to the organisation '<%= @user.organisation.name %>' by
+<%= @sponsor.email_address %>. To acknowledge this and to start using
+Simply Agile please visit the following url and finish
+setting up your account:
+
+<%= new_user_acknowledgement_url(@user, :token => @user.acknowledgement_token) %>
+
 
 To find out more about Simple Agile visit http://besimplyagile.com/
 
