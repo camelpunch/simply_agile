@@ -1,10 +1,10 @@
 var AcceptanceCriteria = {
   init: function() {
-    AcceptanceCriteria.formInit()();
+    AcceptanceCriteria.formInit();
     AcceptanceCriteria.anchorInit();
   },
 
-  formInit(): function() {
+  formInit: function() {
     $('#acceptance_criteria .delete form, #acceptance_criteria form.add').ajaxForm({
       target: '#acceptance_criteria .content',
       resetForm: true,
@@ -36,7 +36,7 @@ var AcceptanceCriteria = {
             // hide display version
             $(tr).hide();
 
-            AcceptanceCriteria.formInit()();
+            AcceptanceCriteria.formInit();
           }
         });
 

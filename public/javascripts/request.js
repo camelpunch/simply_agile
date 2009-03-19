@@ -8,9 +8,8 @@ function Request(options) {
     success: function(html) { request.draw(html) }
   });
 
-  if (options.beforeClose) {
-    this.beforeClose = options.beforeClose;
-  }
+  if (options.beforeClose) this.beforeClose = options.beforeClose;
+  if (options.final) this.final = options.final;
 }
 
 Request.prototype = {
@@ -58,7 +57,8 @@ Request.prototype = {
       var loc = xhr.getResponseHeader('Location');
       this.close();
       new Request({ url: loc,
-                    beforeClose: this.beforeClose });
+                    beforeClose: this.beforeClose,
+                    final: this.final });
     }
   },
 
@@ -71,7 +71,12 @@ Request.prototype = {
   createCloseLink: function() {
     var request = this;
     $('#request').prepend('<a id="close_request" href="#close" accesskey="c">Close</a>');
-    $('a#close_request').click( function() { 
+
+    if (this.final && $(this.final)[0]) {
+      $('#request_body').append('<button type="button" id="done_request">Done</button>');
+    }
+
+    $('a#close_request,button#done_request').click( function() { 
       request.close(); 
       return false;
     });
