@@ -7,21 +7,21 @@ var AcceptanceCriteria = {
   },
 
   bindCheckBoxes: function() {
-    var form, checked, serialized;
+    var form, checked;
 
     $('input[type=checkbox][name=acceptance_criterion[complete]]').change( function() {
       checked = $(this).attr('checked');
       form = $(this).parents('form');
 
-      if (checked) {
-        form.ajaxSubmit({
-          success: function(data, status) { 
-            new Flash({notice: data})
-          }
-        });
-      } else {
-        console.log('not checked');
+      if (!checked) {
+        $(this).before('<input type="hidden" value="false" name="acceptance_criterion[complete]" />');
       }
+
+      form.ajaxSubmit({
+        success: function(data, status) { 
+          new Flash({notice: data})
+        }
+      });
     });
   },
 

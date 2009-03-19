@@ -9,10 +9,16 @@ Flash.prototype = {
     actions = $('#actions');
     insert_after = actions[0] ? actions : $('h1');
 
-    insert_after.after('<div class="flash"></div>')
+    // remove previous messages
+    this.remove();
 
-    if (this.messages.notice) {
+    insert_after.after('<div class="flash"></div>')
+    if (this.messages.notice && $.trim(this.messages.notice) != '') {
       $('.flash').append('<div class="notice"><h2>Notice</h2><p>'+this.messages.notice+'</p></div>');
     }
+  },
+
+  remove: function() {
+    $('.flash').remove();
   }
 }
