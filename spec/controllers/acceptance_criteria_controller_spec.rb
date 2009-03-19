@@ -247,7 +247,10 @@ describe AcceptanceCriteriaController do
 
     describe "setting a flash notice if the story status changes" do
       before :each do
-        @story = Stories.create_story!(:status => Story::Status::IN_PROGRESS)
+        @story = Stories.create_story!(
+          :status => Story::Status::IN_PROGRESS
+        )
+        Iterations.create_iteration!(:stories => [@story])
         @acceptance_criterion = @story.acceptance_criteria.create!(
           :criterion => 'Some criterion'
         )

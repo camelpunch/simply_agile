@@ -182,6 +182,7 @@ describe Story do
     before :each do
       @acs = mock('Acceptance Criteria')
       @story = Story.new
+      @story.iteration = Iteration.new
       @story.stub!(:acceptance_criteria).and_return(@acs)
     end
 
@@ -242,6 +243,13 @@ describe Story do
       it "should not change status if uncompleted acceptance_criteria remain" do
         @story.stub!(:status).and_return(Story::Status::IN_PROGRESS)
         @story.should_not_receive(:status=).with(Story::Status::TESTING)
+        @story.update_status_from_acceptance_criteria
+      end
+
+      it "should not change the status if the story is not in an iteration" do
+        @story.iteration = nil
+        @story.stub!(:status).and_return(Story::Status::TESTING)
+        @story.should_not_receive(:status=).with(Story::Status::IN_PROGRESS)
         @story.update_status_from_acceptance_criteria
       end
     end
