@@ -39,6 +39,7 @@ body.javascript #request .delete form { display:none }
 
 /* content */
 #content { position:relative; margin:18px 30px 0 30px;
+           padding-bottom:100px; overflow:hidden;
            /*ie6*/ top:0 }
 div>#content { top:100px }
 #actions { position:absolute; right:0; top:0; width:124px }
@@ -109,7 +110,6 @@ body.iterations p.submit { clear:both }
 /* end stories/show */
 
 /* stories/backlog */
-body#stories_backlog #content { padding-bottom:100px }
 body#stories_backlog.javascript #content p.submit,
 body#stories_backlog.javascript #content label,
 body#stories_backlog.javascript #content input { display:none }
