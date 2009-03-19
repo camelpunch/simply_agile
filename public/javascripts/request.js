@@ -22,7 +22,7 @@ Request.prototype = {
 
     // special cases - make modular when we have > 1
     if ($('input#acceptance_criterion_criterion')[0]) {
-      AcceptanceCriteria.init();
+      AcceptanceCriteria.formInit();
 
     } else {
       // generic form binding
