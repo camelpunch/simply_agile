@@ -1,17 +1,21 @@
 var AcceptanceCriteria = {
   init: function() {
     AcceptanceCriteria.formInit();
+    AcceptanceCriteria.createMissingTables();
     AcceptanceCriteria.createCheckBoxes();
     AcceptanceCriteria.bindCheckBoxes();
     AcceptanceCriteria.anchorInit();
   },
 
-  bindCheckBoxes: function() {
-    var form, checked;
+  bindCheckBoxes: function(base) {
+    var form, checked, checked_before_removal, tr;
 
-    $('input[type=checkbox][name=acceptance_criterion[complete]]').change( function() {
+    if (!base) base = $('body');
+
+    $(base).find('input[type=checkbox][name=acceptance_criterion[complete]]').change( function() {
       checked = $(this).attr('checked');
       form = $(this).parents('form');
+      criterion = $(this).parents('tr');
 
       if (!checked) {
         $(this).before('<input type="hidden" value="false" name="acceptance_criterion[complete]" />');
@@ -20,6 +24,19 @@ var AcceptanceCriteria = {
       form.ajaxSubmit({
         success: function(data, status) { 
           new Flash({notice: data})
+          checked_before_removal = checked;
+
+          criterion.remove();
+
+          if (checked) {
+            $('#completed table').append(criterion);
+          } else {
+            $('#uncompleted table').append(criterion);
+          }
+
+          AcceptanceCriteria.bindCheckBoxes(criterion);
+          AcceptanceCriteria.formInit(criterion);
+          AcceptanceCriteria.anchorInit(criterion);
         }
       });
     });
@@ -40,8 +57,14 @@ var AcceptanceCriteria = {
     });
   },
 
-  formInit: function() {
-    $('#acceptance_criteria .delete form, #acceptance_criteria form.add').ajaxForm({
+  createMissingTables: function() {
+    if (!$('#completed table')[0]) $('#completed').prepend('<table></table>');
+    if (!$('#uncompleted table')[0]) $('#uncompleted').prepend('<table></table>');
+  },
+
+  formInit: function(base) {
+    if (!base) base = $('#acceptance_criteria');
+    $(base).find('.delete form, form.add').ajaxForm({
       target: '#acceptance_criteria .content',
       resetForm: true,
       error: function(xhr) { alert(xhr.responseText) },
@@ -52,8 +75,9 @@ var AcceptanceCriteria = {
     });
   },
 
-  anchorInit: function() {
-    $('#acceptance_criteria tr').each( function() {
+  anchorInit: function(base) {
+    if (!base) base = $('#acceptance_criteria tr');
+    $(base).each( function() {
       var tr = this;
       $(tr).find('a').click( function() {
         $.ajax({

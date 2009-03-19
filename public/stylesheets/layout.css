@@ -107,6 +107,7 @@ body.iterations p.submit { clear:both }
 #acceptance_criteria { margin-bottom:15px }
 #acceptance_criteria table td.edit,
 #acceptance_criteria table td.delete { width:4em }
+body.javascript #acceptance_criteria table .submit_complete { display:none }
 #acceptance_criteria form { display:inline }
 /* end stories/show */
 

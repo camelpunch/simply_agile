@@ -4,7 +4,7 @@
       <p>
       <%= hidden_field_tag "acceptance_criterion[complete]",
         ! criterion.complete?, :id => nil %>
-      <%= f.submit criterion.complete? ? "Uncomplete" : "Complete", :id => nil %>
+      <%= f.submit criterion.complete? ? "Uncomplete" : "Complete", :id => nil, :class => 'submit_complete' %>
       </p>
     <% end -%>
 
