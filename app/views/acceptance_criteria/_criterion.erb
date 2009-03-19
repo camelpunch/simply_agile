@@ -1,9 +1,11 @@
 <tr class="display">
   <td class="complete">
     <% form_for [@project, @story, criterion] do |f| -%>
+      <p>
       <%= hidden_field_tag "acceptance_criterion[complete]",
-        ! criterion.complete? %>
-      <%= f.submit criterion.complete? ? "Uncomplete" : "Complete" %>
+        ! criterion.complete?, :id => nil %>
+      <%= f.submit criterion.complete? ? "Uncomplete" : "Complete", :id => nil %>
+      </p>
     <% end -%>
 
   </td>

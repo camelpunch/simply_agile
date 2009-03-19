@@ -4,16 +4,20 @@
   </p>
 <% else %>
   <div id="uncompleted">
+    <% unless @story.acceptance_criteria.uncompleted.empty? %>
     <table>
       <%= render(:partial => 'acceptance_criteria/criterion',
         :collection => @story.acceptance_criteria.uncompleted) %>
     </table>
+    <% end %>
   </div>
 
   <div id="completed">
+    <% unless @story.acceptance_criteria.completed.empty? %>
     <table>
       <%= render(:partial => 'acceptance_criteria/criterion',
         :collection => @story.acceptance_criteria.completed) %>
     </table>
+    <% end %>
   </div>
 <% end %>
