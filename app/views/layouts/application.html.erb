@@ -21,7 +21,8 @@
           </ol>
         </div>
         <div id="breadcrumbs">
-          <% unless controller.controller_name == 'home' %>
+          <% breadcrumbs = yield(:breadcrumbs) %>
+          <% unless breadcrumbs.blank? %>
             <ol>
               <%= yield :breadcrumbs %>
             </ol>
