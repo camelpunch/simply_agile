@@ -4,11 +4,11 @@ var DraggableStories = {
     // add some guidance
     $('#stories_list').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
 
-    DraggableStories.label_columns();
-    DraggableStories.create_container();
+    DraggableStories.labelColumns();
+    DraggableStories.createContainer();
     
     // make droppables for each input box
-    $('input[name="story[status]"]').each(DraggableStories.create_droppables);
+    $('input[name="story[status]"]').each(DraggableStories.createDroppables);
 
     // handle resize event
     $(window).resize( function() {
@@ -16,13 +16,13 @@ var DraggableStories = {
       $('.draggables').remove();
 
       // re-initialise
-      DraggableStories.create_container();
-      $('input[name="story[status]"]').each(DraggableStories.create_droppables);
+      DraggableStories.createContainer();
+      $('input[name="story[status]"]').each(DraggableStories.createDroppables);
     });
   },
 
   // should be bound to a single radio button
-  create_droppables: function() {
+  createDroppables: function() {
     var form = $(this).parents('form');
     var container = form.find('.draggables');
     var content = $(this).parents('li').find('.content');
@@ -57,7 +57,7 @@ var DraggableStories = {
           
           // change class of elements
           var draggable = container.find('.ui-draggable');
-          DraggableStories.set_draggable_status(draggable, status);
+          DraggableStories.setDraggableStatus(draggable, status);
 
           // custom snapping
           $(ui.draggable).css('left', $(this).position().left);
@@ -82,11 +82,11 @@ var DraggableStories = {
         .css('top', droppable_position.top)
         .css('left', droppable_position.left);
 
-      DraggableStories.set_draggable_status(draggable, status);
+      DraggableStories.setDraggableStatus(draggable, status);
     }
   },
 
-  create_container: function() {
+  createContainer: function() {
     // make draggable container for each form
     $('#stories_list form').each( function() {
       $(this).append('<div class="draggables"></div>');
@@ -94,7 +94,7 @@ var DraggableStories = {
   },
 
   // make headings based on first set of labels
-  label_columns: function() {
+  labelColumns: function() {
     var html = '<div id="headings"><ol>';
 
     $($('form.edit_story')[0]).find('label').each( function() {
@@ -109,7 +109,7 @@ var DraggableStories = {
     $('#stories_list').before(html);
   },
 
-  set_draggable_status: function(draggable, status) {
+  setDraggableStatus: function(draggable, status) {
     draggable.removeClass('pending');
     draggable.removeClass('in_progress');
     draggable.removeClass('testing');
