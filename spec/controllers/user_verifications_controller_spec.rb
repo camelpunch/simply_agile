@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe VerificationsController do
+describe UserVerificationsController do
   before :each do
     @user = Users.create_user!
   end
@@ -40,7 +40,7 @@ describe VerificationsController do
     describe "if the token does not match" do
       it "should display the new page" do
         do_call(:token => '12345')
-        response.should render_template('verifications/new')
+        response.should render_template('user_verifications/new')
       end
 
       it "should not set verified to true" do

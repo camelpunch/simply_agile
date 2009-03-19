@@ -24,11 +24,11 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :users do |user|
-    user.resource :verification, :only => [:new]
+    user.resource :verification, :controller => 'user_verifications', :only => [:new]
     user.resource :acknowledgement, :controller => 'user_acknowledgements'
   end
   map.verification '/users/:user_id/verification',
-    :controller => 'verifications', :action => 'create'
+    :controller => 'user_verifications', :action => 'create'
 
   map.resources :iterations do |iteration|
     iteration.resource :burndown

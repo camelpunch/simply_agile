@@ -54,8 +54,10 @@ class User < ActiveRecord::Base
       hash_password(password))
   end
 
-  def verify
+  def verify(options)
+    return false unless options[:token] == verification_token
     self.update_attributes!(:verify_by => nil, :verified => true)
+    true
   end
 
   def signup?

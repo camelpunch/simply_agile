@@ -337,17 +337,42 @@ describe User do
     end
 
     describe "verify" do
-      before :each do
-        @user.verify
-        @user.reload
+      describe "with the correct token" do
+        before :each do
+          @response = @user.verify(:token => @user.verification_token)
+          @user.reload
+        end
+
+        it "should return true" do
+          @response.should be_true
+        end
+
+        it "should verify the user" do
+          @user.should be_verified
+        end
+
+        it "should clear the verify_by date" do
+          @user.verify_by.should be_nil
+        end
       end
 
-      it "should set verified to true" do
-        @user.verified?.should be_true
-      end
+      describe "with an incorrect token" do
+        before :each do
+          @response = @user.verify(:token => 'wrong token')
+          @user.reload
+        end
 
-      it "should clear the verify_by date" do
-        @user.verify_by.should be_nil
+        it "should return false" do
+          @response.should be_false
+        end
+
+        it "should not verify the user" do
+          @user.should_not be_verified
+        end
+
+        it "should not clear the verify_by date" do
+          @user.verify_by.should_not be_nil
+        end
       end
     end
   end
