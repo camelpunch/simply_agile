@@ -22,8 +22,17 @@ class AcceptanceCriteriaController < ApplicationController
         new_status = ActiveSupport::Inflector.titleize(@story.status)
         flash[:notice] = "Story status has changed to '#{new_status}'"
       end
-      redirect_to project_story_url(@story.project, @story)
-      # render(:partial => 'acceptance_criteria/list')
+
+      respond_to do |format|
+        format.html do
+          redirect_to project_story_url(@story.project, @story)
+        end
+
+        format.js do
+          render :text => flash[:notice]
+        end
+      end
+
     else
       render(:text => @acceptance_criterion.errors.full_messages.join("\n"),
              :status => :unprocessable_entity)

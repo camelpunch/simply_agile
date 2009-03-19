@@ -1,7 +1,43 @@
 var AcceptanceCriteria = {
   init: function() {
     AcceptanceCriteria.formInit();
+    AcceptanceCriteria.createCheckBoxes();
+    AcceptanceCriteria.bindCheckBoxes();
     AcceptanceCriteria.anchorInit();
+  },
+
+  bindCheckBoxes: function() {
+    var form, checked, serialized;
+
+    $('input[type=checkbox][name=acceptance_criterion[complete]]').change( function() {
+      checked = $(this).attr('checked');
+      form = $(this).parents('form');
+
+      if (checked) {
+        form.ajaxSubmit({
+          success: function(data, status) { 
+            new Flash({notice: data})
+          }
+        });
+      } else {
+        console.log('not checked');
+      }
+    });
+  },
+
+  createCheckBoxes: function() {
+    var hidden, checked;
+
+    $('input[name=acceptance_criterion[complete]]').each( function() {
+      // checked status needs to be opposite of hidden field value
+      checked = $(this).val() == 'true' ? '' : ' checked="checked"';
+
+      // add the checkbox with correct checked status
+      $(this).before('<input type="checkbox" value="true" name="acceptance_criterion[complete]"'+checked+' />');
+
+      // remove hidden field
+      $(this).remove();
+    });
   },
 
   formInit: function() {
@@ -10,7 +46,7 @@ var AcceptanceCriteria = {
       resetForm: true,
       error: function(xhr) { alert(xhr.responseText) },
       success: function() {
-        $('input#acceptance_criterion_criterion').select();
+        $('input#acceptance_criterion_criterion').focus();
         AcceptanceCriteria.init();
       }
     });
@@ -31,7 +67,7 @@ var AcceptanceCriteria = {
             $(tr).before(html);
 
             // select element
-            $('input#edit_acceptance_criterion_criterion').select();
+            $('input#edit_acceptance_criterion_criterion').focus();
 
             // hide display version
             $(tr).hide();

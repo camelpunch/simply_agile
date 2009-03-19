@@ -208,11 +208,11 @@ describe AcceptanceCriteriaController do
   end
 
   describe "update" do
-    def do_call
+    def do_call(params = {})
       put :update,
-        :id => @criterion.id,
+        {:id => @criterion.id,
         :project_id => @project.id, :story_id => @story.id,
-        :acceptance_criterion => @attributes
+        :acceptance_criterion => @attributes}.merge(params)
     end
 
     before :each do
@@ -224,6 +224,26 @@ describe AcceptanceCriteriaController do
 
     it_should_behave_like "it operates on an existing criterion" 
 #    it_should_behave_like "it saves a criterion"
+    
+    describe "js" do
+      describe "success" do
+        before :each do
+          @attributes = {:complete => 'true'}
+          @acceptance_criterion.stub!(:update_attributes).and_return(true)
+        end
+
+        it "should return success code" do
+          do_call :format => 'js'
+          response.should be_success
+        end
+
+        it "should set the text to the flash notice" do
+          controller.stub!(:flash).and_return(:notice => 'stuffses')
+          do_call :format => 'js'
+          response.body.should include('stuffses')
+        end
+      end
+    end
 
     describe "setting a flash notice if the story status changes" do
       before :each do
