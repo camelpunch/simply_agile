@@ -25,7 +25,7 @@
   <div class="include">
     <%= check_box_tag("stories[#{estimate.id}][include]", 
                       '1', 
-                      estimate.iteration_id?) %>
+                      estimate.iteration_id? || (@iteration && @iteration.stories.include?(estimate))) %>
     <%= label_tag "stories_#{estimate.id}_include", "Include" %>
   </div>
 </li>
