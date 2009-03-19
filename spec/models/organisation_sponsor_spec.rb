@@ -25,33 +25,12 @@ describe OrganisationSponsor do
       @organisation_sponsor.errors.invalid?(:user_id).should be_true
     end
 
-    it "should require a valid user"
-#    do
-#      @organisation_sponsor.user_id = 9999999
-#      @organisation_sponsor.valid?
-#      @organisation_sponsor.errors.invalid?(:user_id).should be_true
-#    end
-
     it "should require a sponsor id" do
       @organisation_sponsor.errors.invalid?(:user_id).should be_true
     end
 
-    it "should require a valid sponsor"
-#    do
-#      @organisation_sponsor.sponsor_id = 9999999
-#      @organisation_sponsor.valid?
-#      @organisation_sponsor.errors.invalid?(:sponsor).should be_true
-#    end
-
     it "should require an organisation id" do
       @organisation_sponsor.errors.invalid?(:user_id).should be_true
     end
-
-    it "should require a valid organisation"
-#    do
-#      @organisation_sponsor.organisation_id = 9999999
-#      @organisation_sponsor.valid?
-#      @organisation_sponsor.errors.invalid?(:organisation).should be_true
-#    end
   end
 end
