@@ -3,8 +3,12 @@ function NewStoryAdder() {
     new Request({
       url: this.href,
 
-      // draw button when selector found
-      final: 'input#acceptance_criterion_criterion', 
+      final: {
+        selector: 'input#acceptance_criterion_criterion', 
+        afterOpen: function() {
+          $('#acceptance_criteria').after('<p class="guidance">You can edit acceptance criteria after you\'ve finished planning the iteration.</p>');
+        }
+      },
 
       beforeClose: function() {
         // the following attempts to recognise a story/show url

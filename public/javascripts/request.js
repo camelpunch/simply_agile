@@ -72,8 +72,9 @@ Request.prototype = {
     var request = this;
     $('#request').prepend('<a id="close_request" href="#close" accesskey="c">Close</a>');
 
-    if (this.final && $(this.final)[0]) {
+    if (this.final && $(this.final.selector)[0]) {
       $('#request_body').append('<button type="button" id="done_request">Done</button>');
+      if (this.final.afterOpen) this.final.afterOpen();
     }
 
     $('a#close_request,button#done_request').click( function() { 
