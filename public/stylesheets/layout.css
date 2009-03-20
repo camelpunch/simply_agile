@@ -157,3 +157,11 @@ body#iterations_show #headings li,
 .ui-draggable h3{ padding:5px }
 .ui-draggable p{ padding:0 5px; margin:4px 0 0 0 }
 /* end iteration/show active */
+
+/* sessions/new */
+#existing_users { float: left; width: 55%; }
+#new_users { float: right; width: 25%; }
+#new_users a { font-size: 150% }
+/* end sessions/new */
+
+#beta_warning { padding: 0.5em; margin-bottom: 1em; }
