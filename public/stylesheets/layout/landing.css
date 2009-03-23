@@ -3,7 +3,7 @@
 #content { width:950px; margin:15px auto }
 #beta_warning,
 #new_existing,
-#privacy_policies_show #content { text-align:left }
+body.non_session #content { text-align:left }
 #beta_warning { width:56%; float:left }
 #new_existing { width:40%; float:right }
 .flash,
