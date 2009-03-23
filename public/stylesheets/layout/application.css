@@ -47,7 +47,7 @@ body.javascript #request #backlog_link { display:none }
 #actions a { width:104px; height:29px }
 
 div.section { position:relative; padding:40px 36px 22px 36px; 
-           margin:60px 0 }
+              margin:60px 0 }
 div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 div.section>h2 { left:-13px }
@@ -71,6 +71,7 @@ form p.checkbox label { display:inline; padding-left:5px }
 body#projects_show #backlog { width:56%; float:left }
 body#projects_show #iterations { width:40%; float:right; position:relative }
 body#projects_show #iterations div.section { padding:0 }
+body#projects_show #iterations div.section .guidance { padding:30px 0 0 15px }
 body#projects_show #iterations .active,
 body#projects_show #iterations .planned { position:relative; overflow:hidden;
                                           padding-bottom:15px }

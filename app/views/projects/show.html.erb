@@ -15,7 +15,9 @@
     :class => 'section' %>
   <div class="section">
     <h2>Backlog</h2>
+    <ol>
     <%= render @project.stories.backlog.all(:limit => 10) %>
+    </ol>
   </div>
 </div>
 
