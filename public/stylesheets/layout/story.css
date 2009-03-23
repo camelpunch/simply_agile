@@ -1,3 +1,5 @@
+ol.stories li.story { margin-bottom:15px }
+
 .draggables .story{ overflow:auto }
 .story{ height:100%; border-width:1px; border-style:solid }
 .story ol{ margin:4px 0 0 0 }

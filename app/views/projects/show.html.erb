@@ -20,7 +20,7 @@
       This project has no backlog.
       </p>
     <% else %>
-    <ol>
+    <ol class="stories">
     <%= render @project.stories.backlog.all(:limit => 10) %>
     </ol>
     <% end %>

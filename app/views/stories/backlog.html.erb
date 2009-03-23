@@ -6,7 +6,7 @@
 <% end %>
 
 <% form_for @project do |f| %>
-<ol id="backlog">
+<ol class="stories">
   <%= render @project.stories.backlog %>
 </ol>
 <p class="submit">
