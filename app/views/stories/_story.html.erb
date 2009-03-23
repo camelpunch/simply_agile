@@ -1,7 +1,20 @@
-<li>
-  <h3><%= link_to h(story), [story.project, story] %></h3>
+<li id="story_<%= story.id %>">
+  <%= link_to h(story), [story.project, story] %>
+
   <% if story.estimate? %>
   <p class="estimate">Story Points: <%= story.estimate %></p>
   <% end %>
-  <%= simple_format story.content %>
+
+  <%= story_format story.content %>
+
+  <% if controller.action_name == 'backlog' %>
+    <p>
+    <%= label_tag "priorities_#{story.id}", 'Priority' %>
+    <%= text_field_tag("project[priorities[#{story.id}]]", 
+                       story.priority,
+                       :id => "priorities_#{story.id}",
+                       :class => 'numeric',
+                       :size => 2) %>
+    </p>
+  <% end %>
 </li>

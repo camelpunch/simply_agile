@@ -4,9 +4,14 @@ describe "/stories/backlog" do
 
   before :each do
     assigns[:current_user] = mock_model User, :organisation => 'asdf'
-    @story = mock_model(Story, :content => '', :priority => 1)
     @stories = []
     @project = mock_model(Project, :stories => @stories)
+    @story = mock_model(Story, 
+                        :estimate? => true,
+                        :estimate => 2,
+                        :project => @project,
+                        :content => '', 
+                        :priority => 1)
     assigns[:project] = @project
   end
 

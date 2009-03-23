@@ -7,20 +7,7 @@
 
 <% form_for @project do |f| %>
 <ol id="backlog">
-  <% @project.stories.backlog.each do |story| %>
-    <li id="story_<%= story.id %>">
-    <h2><%= link_to h(story), [@project, story] %></h2>
-    <%= simple_format h(story.content) %>
-      <p>
-      <%= label_tag "priorities_#{story.id}", 'Priority' %>
-      <%= text_field_tag("project[priorities[#{story.id}]]", 
-                         story.priority,
-                         :id => "priorities_#{story.id}",
-                         :class => 'numeric',
-                         :size => 2) %>
-      </p>
-    <% end %>
-    </li>
+  <%= render @project.stories.backlog %>
 </ol>
 <p class="submit">
 <%= f.submit 'Save Priorities' %>
