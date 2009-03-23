@@ -20,6 +20,11 @@
       <div id="content">
         <div id="beta_warning">
           <h1>Welcome to Simply Agile beta</h1>
+          <% if controller.controller_name != 'sessions' %>
+            <p id="home_link">
+            <%= link_to 'Back to home page', root_path %>
+            </p>
+          <% end %>
           <p>
           You are welcome to try this system out, but please be aware that this is
           a pre-release version. It may contain bugs, some functionality may be
