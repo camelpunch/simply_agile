@@ -24,6 +24,7 @@ class Iterations < ObjectMother
       :duration => 7,
       :project => Projects.simply_agile,
       :start_date => Date.yesterday,
+      :end_date => 6.days.from_now.to_date,
       :initial_estimate => 4,
       :stories => [Stories.iteration_planning_included]
     )
@@ -32,10 +33,11 @@ class Iterations < ObjectMother
   # update this when we have a definition for a finished iteration
   def self.finished_iteration
     Iteration.create!(
-      :name => 'Active Iteration',
+      :name => 'Finished Iteration',
       :duration => 7,
       :project => Projects.simply_agile,
-      :start_date => Date.yesterday,
+      :start_date => (Date.today - 7),
+      :end_date => Date.yesterday,
       :initial_estimate => 4,
       :stories => [Stories.iteration_planning_included]
     )
