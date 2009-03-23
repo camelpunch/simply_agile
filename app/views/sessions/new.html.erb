@@ -1,17 +1,28 @@
 <% content_for :title, "Login" %>
 <% content_for :h1, "Login" %>
-<% form_for User.new, :url => session_url do |f| %>
-  <p>
-  <%= f.label :email_address %>
-  <%= f.text_field :email_address, :class => 'auto_focus' %>
-  </p>
-  <p>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  </p>
-  <p class="submit">
-  <%= f.submit 'Login' %>
-  </p>
-<% end %>
 
-<p>or <%= link_to "create an account", new_user_path %></p>
+<div id="existing_users" class="section">
+  <h2>Existing users</h2>
+  <% form_for User.new, :url => session_url do |f| %>
+    <p>
+      <%= f.label :email_address %>
+      <%= f.text_field :email_address, :class => 'auto_focus' %>
+    </p>
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </p>
+    <p class="submit">
+      <%= f.submit 'Login' %>
+    </p>
+  <% end %>
+</div>
+
+<div id="new_users" class="section">
+  <h2>New users</h2>
+
+  <p>
+    <%= link_to "Sign up today", new_user_path %> to start maximising your
+    agile team's potential.
+  </p>
+</div>
