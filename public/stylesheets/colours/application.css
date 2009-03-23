@@ -43,6 +43,7 @@ body.javascript #request h2#request_header { background:#ff7f2a }
 
 /* projects/show */
 body#projects_show #iterations .active { background:#e4e5f3 }
+body#projects_show #iterations .planned { background:#f1f1f8 }
 body#projects_show #iterations ol li a img { border:2px solid #fff }
 body#projects_show #iterations ol li a:hover img,
 body#projects_show #iterations ol li a:focus img { border:2px solid #999 }
