@@ -2,38 +2,40 @@
 
 <% form_for @user do |form| %>
   <h2>Create an account</h2>
-  <div>
-    <%= form.error_messages %>
+  <div class="container">
+    <div>
+      <%= form.error_messages %>
+      <p>
+        <%= form.label :email_address %>
+        <%= form.text_field :email_address, :class => 'auto_focus' %>
+      </p>
+      <p class="description">
+        The email address is used to log in to the system. We will only use this
+        address to send important account information.
+        <strong>We will never send unsolicated emails to your email address
+        or pass it on to third parties.</strong>
+        We take your privacy seriously. See our 
+        <%= link_to "privacy policy", privacy_policy_path %>
+        for more details.
+      </p>
+    </div>
     <p>
-      <%= form.label :email_address %>
-      <%= form.text_field :email_address, :class => 'auto_focus' %>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
     </p>
-    <p class="description">
-      The email address is used to log in to the system. We will only use this
-      address to send important account information.
-      <strong>We will never send unsolicated emails to your email address
-      or pass it on to third parties.</strong>
-      We take your privacy seriously. See our 
-      <%= link_to "privacy policy", privacy_policy_path %>
-      for more details.
+    <div>
+      <p>
+        <%= form.label :organisation_name %>
+        <%= form.text_field :organisation_name %>
+      </p>
+      <p class="description">
+        Stories, projects and iterations are automatically shared with other
+        members of your organisation. Once you have signed up you can add or
+        remove members.
+      </p>
+    </div>
+    <p class="submit">
+      <%= form.submit 'Create account' %>
     </p>
   </div>
-  <p>
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </p>
-  <div>
-    <p>
-      <%= form.label :organisation_name %>
-      <%= form.text_field :organisation_name %>
-    </p>
-    <p class="description">
-      Stories, projects and iterations are automatically shared with other
-      members of your organisation. Once you have signed up you can add or
-      remove members.
-    </p>
-  </div>
-  <p class="submit">
-    <%= form.submit 'Create account' %>
-  </p>
 <% end %>

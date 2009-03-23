@@ -14,6 +14,7 @@ body.non_session #content { text-align:left }
 #new_user form,
 #existing_users form,
 #new_users p,
+form.new_user .container,
 .flash p { padding:10px 14px }
 label { display:block; margin-top:.5em }
 
