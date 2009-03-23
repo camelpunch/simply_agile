@@ -220,6 +220,19 @@ describe Iteration do
     end
   end
 
+  describe "named finder for pending" do
+    before :each do
+      Iteration.destroy_all
+      @active = Iterations.active_iteration
+      @pending = Iterations.first_iteration
+      @finished = Iterations.finished_iteration
+    end
+
+    it "should only return pending iterations" do
+      Iteration.pending.should == [@pending]
+    end
+  end
+
   describe "updating all burndown data points" do
     before :each do
       @it1 = mock_model(Iteration)

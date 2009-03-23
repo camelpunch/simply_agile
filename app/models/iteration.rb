@@ -9,6 +9,7 @@ class Iteration < ActiveRecord::Base
   validates_presence_of :name, :duration, :project_id
 
   named_scope :active, :conditions => 'start_date IS NOT NULL'
+  named_scope :pending, :conditions => 'start_date IS NULL'
 
   def validate
     errors.add(:stories, "must be assigned") if stories.empty?

@@ -9,18 +9,12 @@
 
 <%= simple_format h(@project.description) %>
 
-<div id="stories" class="section">
-  <h2>Stories</h2>
-  <ul>
-    <li>
-    <%= link_to "Stories that still need to be worked on",
-      backlog_project_stories_path(@project) %>
-    </li>
-    <li>
-    <%= link_to "Stories that have been completed",
-      finished_project_stories_path(@project) %>
-    </li>
-  </ul>
+<div id="backlog" class="section">
+  <h2>Backlog</h2>
+  <p>
+  <%= link_to h("Full #{@project} backlog"), backlog_project_stories_path(@project) %>
+  </p>
+  <%= render @project.stories.backlog.all(:limit => 10) %>
 </div>
 
 <div id="iterations" class="section">
@@ -37,9 +31,23 @@
       </p>
     </div>
   <% else %>
-    <ol>
-      <%= render(:partial => 'iterations/list_item', 
-                 :collection => @project.iterations) %>
-    </ol>
+    <% unless @project.iterations.active.empty? %>
+      <div class="section">
+        <h3>Active</h3>
+        <ol>
+          <%= render(:partial => 'iterations/list_item', 
+                     :collection => @project.iterations.active) %>
+        </ol>
+      </div>
+    <% end %>
+    <% unless @project.iterations.pending.empty? %>
+      <div class="section">
+        <h3>Pending</h3>
+        <ol>
+          <%= render(:partial => 'iterations/list_item', 
+                     :collection => @project.iterations.pending) %>
+        </ol>
+      </div>
+    <% end %>
   <% end %>
 </div>

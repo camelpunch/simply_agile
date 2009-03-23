@@ -27,7 +27,7 @@ $(document).ready(function() {
   }
   
   // backlog
-  if ($('#backlog')[0]) {
+  if ($('body#stories_backlog')[0]) {
     BacklogPrioritisation.init();
   }
 });
