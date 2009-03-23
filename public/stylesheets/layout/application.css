@@ -28,7 +28,8 @@ body.javascript #request a#close_request { position:absolute; top:5px; right:8px
 
 body.javascript #request .edit_acceptance_criterion,
 body.javascript #request .edit a,
-body.javascript #request .delete form { display:none }
+body.javascript #request .delete form,
+body.javascript #request #backlog_link { display:none }
 /* end javascript request */
 
 /* breadcrumbs */

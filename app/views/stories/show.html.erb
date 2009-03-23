@@ -32,7 +32,7 @@
 </div>
 
 <% if @story.iteration_id.blank? || @story.iteration.pending? %>
-  <p>
+  <p id="backlog_link">
   <%= link_to h("#{@project} Backlog"), backlog_project_stories_path(@project) %>
   </p>
 <% end %>
