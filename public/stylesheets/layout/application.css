@@ -46,13 +46,16 @@ body.javascript #request #backlog_link { display:none }
 #actions li { width:104px; display:block; margin:0 auto }
 #actions a { width:104px; height:29px }
 
-.section { position:relative; padding:40px 36px 22px 36px; 
+div.section { position:relative; padding:40px 36px 22px 36px; 
            margin:60px 0 }
-.section h2 { position:absolute; top:-25px; padding:12px 23px; 
+div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
-.section>h2 { left:-13px }
-.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
+div.section>h2 { left:-13px }
+div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
     top:0; left: 0 }
+
+div.section_container { position:relative }
+div.section_container a.section { position:absolute; right:9px; top:42px }
 /* end content */
 
 /* forms */
@@ -63,6 +66,17 @@ form p.checkbox label { display:inline; padding-left:5px }
 /* home/show */
 .active_iteration { float: left; width: 50%; }
 /* end home/show */
+
+/* projects/show */
+body#projects_show #backlog { width:56%; float:left }
+body#projects_show #iterations { width:40%; float:right; position:relative }
+body#projects_show #iterations div.section { padding:0 }
+body#projects_show #iterations .active,
+body#projects_show #iterations .planned { position:relative; overflow:hidden;
+                                          padding-bottom:15px }
+body#projects_show #iterations ol li { width:50%; float:left }
+body#projects_show #iterations ol li a { display:block; width:150px; margin:0 auto }
+/* end projects/show */
 
 /* iterations */
 body.iterations #stories { clear:both;
