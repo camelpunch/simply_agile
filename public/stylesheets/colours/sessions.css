@@ -2,6 +2,11 @@
 #header { text-indent:-20000px; 
           background:#ff7f2a url(/images/a_simple_tool_for_effective_agile_teams.png) center 19px no-repeat }
 #existing_users,
-#new_users { background:#e5e5e5 }
+#new_users,
+#new_user { background:#e5e5e5 }
+.flash { background:#ffbe93 }
 #existing_users form,
-#new_users p { background:#fff }
+#new_users p,
+.flash p { background:#fff }
+
+li { list-style-type:square }

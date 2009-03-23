@@ -8,7 +8,7 @@
                             'typography/sessions', 
                             'colours/sessions', 
                             :cache => :sessions) %>
-    <title>Simply Agile Beta</title>
+    <title><%= yield :title %> | Simply Agile</title>
   </head>
 
   <body class="<%= body_classes.join(' ') %>" id="<%=

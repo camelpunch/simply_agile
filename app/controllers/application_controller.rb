@@ -49,7 +49,6 @@ class ApplicationController < ActionController::Base
     if current_user
       true
     else
-      flash[:notice] = "Please log in to continue"
       session[:redirect_to] = request.referer
       redirect_to new_session_url
     end
