@@ -1,0 +1,22 @@
+#container { text-align:center; margin:20px 0 0 0; padding-top:148px }
+#header { height:60px }
+#content { width:950px; margin:15px auto }
+#beta_warning,
+#new_existing,
+body.non_session #content { text-align:left }
+#beta_warning { width:56%; float:left }
+#new_existing { width:40%; float:right }
+.flash,
+#existing_users,
+#new_users,
+#new_user { padding:10px 15px 15px 15px; margin-bottom:15px }
+#new_user form,
+#existing_users form,
+#new_users p,
+.flash p { padding:10px 14px }
+label { display:block; margin-top:.5em }
+
+#privacy_policies_show dt { float:left; clear:left; width:10em }
+#privacy_policies_show dd { display:block; margin-left:10em }
+
+li { margin-left:15px }

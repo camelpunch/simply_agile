@@ -1,0 +1,8 @@
+h1 { font-size:267% }
+h2 { font-size:197%; margin:0 0 .5em 0 }
+.errorExplanation h2 { font-size:123.1%; font-weight:bold }
+#privacy_policies_show h2 { margin:1em 0 .5em 0 }
+#privacy_policies_show p { margin:1em 0 }
+p, dl, li { font-size:123.1% }
+#beta_warning p { font-size:123.1%; margin:1em 0; line-height:1.5em }
+p.description { font-size:108%; margin-bottom:1em }

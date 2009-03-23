@@ -2,7 +2,7 @@ class UserAcknowledgementsController < ApplicationController
   skip_before_filter :login_required
   before_filter :get_user
 
-  layout 'sessions'
+  layout 'landing'
 
   def create
     if @user.acknowledge(params)
