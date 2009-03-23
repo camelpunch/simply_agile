@@ -1,4 +1,5 @@
-.story{ overflow:auto; height:100%; border-width:1px; border-style:solid }
+.draggables .story{ overflow:auto }
+.story{ height:100%; border-width:1px; border-style:solid }
 .story ol{ margin:4px 0 0 0 }
 .story ol li{ display:block; padding:0 5px }
 
