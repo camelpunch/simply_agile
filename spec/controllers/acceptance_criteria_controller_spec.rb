@@ -230,6 +230,7 @@ describe AcceptanceCriteriaController do
         before :each do
           @attributes = {:complete => 'true'}
           @acceptance_criterion.stub!(:update_attributes).and_return(true)
+          @story.stub!(:status).and_return('gets', 'changed')
         end
 
         it "should return success code" do
@@ -237,10 +238,13 @@ describe AcceptanceCriteriaController do
           response.should be_success
         end
 
-        it "should set the text to the flash notice" do
-          controller.stub!(:flash).and_return(:notice => 'stuffses')
+        it "should set the text" do
           do_call :format => 'js'
-          response.body.should include('stuffses')
+          response.body.should_not be_blank
+        end
+
+        it "should not use flash" do
+          controller.should_not_receive(:flash)
         end
       end
     end
