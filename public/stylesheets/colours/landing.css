@@ -1,6 +1,7 @@
 #container { background:url(/images/simply_agile_large.png) center top no-repeat }
 #header { text-indent:-20000px; 
           background:#ff7f2a url(/images/a_simple_tool_for_effective_agile_teams.png) center 19px no-repeat }
+#footer, #footer a { color:#666 }
 #existing_users,
 #new_users,
 #new_user { background:#e5e5e5 }
