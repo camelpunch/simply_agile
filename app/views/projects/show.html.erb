@@ -15,9 +15,15 @@
     :class => 'section' %>
   <div class="section">
     <h2>Backlog</h2>
+    <% if @project.stories.backlog.empty? %>
+      <p>
+      This project has no backlog.
+      </p>
+    <% else %>
     <ol>
     <%= render @project.stories.backlog.all(:limit => 10) %>
     </ol>
+    <% end %>
   </div>
 </div>
 

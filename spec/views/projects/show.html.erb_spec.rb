@@ -4,6 +4,7 @@ describe "/projects/show" do
 
   before :each do
     @backlog = mock('Collection',
+                    :empty? => true,
                     :all => [])
     @stories = mock('Collection',
                     :backlog => @backlog)
