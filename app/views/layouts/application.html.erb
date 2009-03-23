@@ -50,11 +50,7 @@
       <% if ! @current_user.verified? && @current_user.created_at < 1.day.ago -%>
         <%= render :partial => 'shared/verify' %>
       <% end -%>
-      <div id="footer">
-        <p>
-          Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
-        </p>
-      </div>
+      <%= render :partial => 'shared/footer' %>
     </div>
     <%= javascript_include_tag('jquery-1.3.2.min', 
                                'jquery-ui-1.7.custom.min',

@@ -1,6 +1,7 @@
 #container { text-align:center; margin:20px 0 0 0; padding-top:148px }
 #header { height:60px }
 #content { width:950px; margin:15px auto }
+#footer { clear:both; padding:30px 0 }
 #beta_warning,
 #new_existing,
 body.non_session #content { text-align:left }
