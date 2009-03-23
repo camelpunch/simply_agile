@@ -30,3 +30,9 @@
     <%= render :partial => 'acceptance_criteria/list' %>
   </div>
 </div>
+
+<% if @story.iteration_id.blank? || @story.iteration.pending? %>
+  <p>
+  <%= link_to h("#{@project} Backlog"), backlog_project_stories_path(@project) %>
+  </p>
+<% end %>
