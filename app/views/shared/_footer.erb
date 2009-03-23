@@ -2,4 +2,7 @@
   <p>
   Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
   </p>
+  <% if @current_user %>
+    <%= button_to 'Log Out', session_path, :method => :delete %>
+  <% end %>
 </div>

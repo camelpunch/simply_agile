@@ -83,4 +83,17 @@ describe SessionsController do
       end
     end
   end
+
+  describe "destroy" do
+    it "should set session user id to nil" do
+      session[:user_id] = 1
+      delete :destroy
+      session[:user_id].should be_nil
+    end
+
+    it "should redirect to /" do
+      delete :destroy
+      response.should redirect_to(root_url)
+    end
+  end
 end
