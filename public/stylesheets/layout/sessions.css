@@ -1,0 +1,9 @@
+#container { margin:20px 0 0 0; padding-top:148px }
+#header { height:60px }
+#content { width:950px; margin:15px auto }
+#beta_warning { width:56%; float:left }
+#new_existing { width:40%; float:right }
+#existing_users,
+#new_users { padding:15px; margin-bottom:15px }
+#existing_users form,
+#new_users p { padding:10px 14px }

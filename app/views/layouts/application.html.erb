@@ -3,8 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <%= stylesheet_link_tag 'reset-fonts', 'layout', 'typography', 'colours',
-      :cache => true %>
+    <%= stylesheet_link_tag('reset-fonts', 
+                            'layout/application', 
+                            'typography/application', 
+                            'colours/application',
+                            :cache => true) %>
     <title><%= h yield(:title) %> | Simply Agile</title>
   </head>
 
