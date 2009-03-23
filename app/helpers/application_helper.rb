@@ -4,7 +4,7 @@ module ApplicationHelper
     items = content.split("\n")
 
     xml = Builder::XmlMarkup.new
-    xml.ol :class => 'story_content' do
+    xml.ol do
       items.each do |item|
         xml.li do |li|
           li << h(item)

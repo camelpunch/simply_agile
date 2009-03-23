@@ -25,7 +25,8 @@ var DraggableStories = {
   createDroppables: function() {
     var form = $(this).parents('form');
     var container = form.find('.draggables');
-    var content = $(this).parents('li').find('.content');
+    var li = $(this).parents('li');
+    var content = li.find('.content');
     var status = $(this).val();
     var id = this.id;
 
@@ -69,7 +70,7 @@ var DraggableStories = {
       droppable_position = droppable.position();
       droppable.addClass('ui-state-highlight');
 
-      container.append('<div id="draggable_' + this.id + '"><div>'+content.html()+'</div></div>');
+      container.append('<div class="story" id="draggable_' + this.id + '">'+content.html()+'</div>');
 
       var draggable = $('#draggable_' + this.id);
       draggable.draggable({ 
@@ -84,6 +85,9 @@ var DraggableStories = {
 
       DraggableStories.setDraggableStatus(draggable, status);
     }
+
+    // remove 'story' class from li
+    li.removeClass('story');
   },
 
   createContainer: function() {

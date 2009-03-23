@@ -9,10 +9,6 @@ I want stories to be formatted nicely
 So that my eyes don't hurt"
     end
 
-    it "should use an ol with a class" do
-      helper.story_format(@content).should have_tag('ol.story_content')
-    end
-
     it "should turn lines into list items" do
       helper.story_format(@content).should have_tag('li', 'As a developer')
     end

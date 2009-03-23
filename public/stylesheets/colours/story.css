@@ -1,0 +1,12 @@
+.ui-draggable.story { cursor:pointer }
+
+.story { border-color:#ccc }
+.story,
+.story h3 { background:#fff }
+.story h3 a { color:#000 }
+
+.story h3 { border-bottom:2px solid #99f }
+.story ol li { border-bottom:1px solid #ccf }
+
+/* don't affect breadcrumbs */
+#breadcrumbs .story { border:none }

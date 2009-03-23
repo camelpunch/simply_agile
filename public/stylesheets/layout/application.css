@@ -140,13 +140,8 @@ body#stories_backlog.javascript #content input { display:none }
 /* end stories/backlog */
 
 /* iterations/show active */
-body#iterations_show h1 { margin-bottom:0 }
 body#iterations_show.javascript #stories .guidance { position:absolute; width:99%;
                                                      top:0 }
-body#iterations_show.javascript #stories_list input,
-body#iterations_show.javascript #stories_list label,
-body#iterations_show.javascript #stories_list .content,
-body#iterations_show.javascript #stories_list p.submit{ display:none }
 
 
 body#iterations_show.javascript ol#stories_list li { position:relative;
@@ -154,7 +149,8 @@ body#iterations_show.javascript ol#stories_list li { position:relative;
                                                      margin-top:10px }
 body#iterations_show.javascript ol#stories_list li,
 .ui-droppable { height:9em }
-body#iterations_show.javascript ol#stories_list li ol li { height:auto; display:inline }
+body#iterations_show.javascript ol#stories_list li ol li { height:auto; 
+                                                           margin:0 }
 
 body#iterations_show #headings { overflow:hidden }
 body#iterations_show #headings ol { width:100% }
@@ -167,9 +163,6 @@ body#iterations_show #headings li,
 .ui-draggable { width:24.5% }
 
 .draggables { overflow:auto }
-.ui-draggable { overflow:auto; height:100%; border-width:1px; border-style:solid }
-.ui-draggable h3{ padding:5px }
-.ui-draggable p{ padding:0 5px; margin:4px 0 0 0 }
 /* end iteration/show active */
 
 /* sessions/new */

@@ -57,10 +57,6 @@ body.iterations .display .content { background:#fff }
 /* end iterations/new */
 
 /* iterations/show when active */
-.ui-draggable { cursor:pointer }
-.ui-draggable h3 { background:#fff }
-.ui-draggable h3 a { color:#000 }
-
 .draggables .pending { border-color:#ddd }
 .draggables .in_progress { border-color:#3dc0fd }
 .draggables .testing { border-color:#fde03d }
@@ -68,16 +64,12 @@ body.iterations .display .content { background:#fff }
 
 .draggables .ui-droppable { background:#fff; border-color:#fff }
 
-.pending h3,
 #headings .pending { background:#ddd }
 #headings .pending { border-color:#ddd }
-.in_progress h3,
 #headings .in_progress { background:#3dc0fd }
 #headings .in_progress { border-color:#3dc0fd }
-.testing h3,
 #headings .testing { background:#fde03d }
 #headings .testing { border-color:#fde03d }
-.complete h3,
 #headings .complete { background:#3dfd4f }
 #headings .complete { border-color:#3dfd4f }
 
