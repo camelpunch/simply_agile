@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resource :session
+  map.resource :privacy_policy
+  
   map.resources :iterations
 
   map.resource :organisation do |organisation|

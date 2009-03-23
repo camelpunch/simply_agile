@@ -75,9 +75,9 @@ body.iterations .display .content { background:#fff }
 
 /* end iterations/show when active */
 
-<<<<<<< HEAD:public/stylesheets/colours.css
+/* beta */
+#beta_warning { background: #eee; border: 1px solid #ff7f2a; }
+/* end beta */
+
 #headings .complete { background:#3dfd4f }
 #acceptance_criteria #completed, .aside { color: #aaa }
-=======
-#acceptance_criteria #completed { color: #aaa }
->>>>>>> master:public/stylesheets/colours.css

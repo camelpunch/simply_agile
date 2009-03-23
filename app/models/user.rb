@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
 
     return false unless self.update_attributes(
       :acknowledgement_token => nil,
+      :verified => true,
       :password => options[:password]
     )
     

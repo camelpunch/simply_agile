@@ -408,6 +408,10 @@ describe User do
         @user.encrypted_password.should == Digest::SHA1.hexdigest(@password)
       end
 
+      it "should verify the account" do
+        @user.should be_verified
+      end
+
       it "should return true" do
         @response.should be_true
       end
