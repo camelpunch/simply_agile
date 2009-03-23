@@ -149,7 +149,7 @@ body#iterations_show.javascript ol#stories_list li { position:relative;
                                                      margin-top:10px }
 body#iterations_show.javascript ol#stories_list li,
 .ui-droppable { height:9em }
-body#iterations_show.javascript ol#stories_list li ol li { height:auto; 
+body#iterations_show.javascript ol#stories_list li ol li { height:inherit; 
                                                            margin:0 }
 
 body#iterations_show #headings { overflow:hidden }

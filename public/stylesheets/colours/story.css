@@ -1,4 +1,12 @@
-.ui-draggable.story { cursor:pointer }
+.draggables .pending h3 { background:#ddd }
+.draggables .pending { border-color:#ddd }
+.draggables .in_progress h3 { background:#3dc0fd }
+.draggables .in_progress { border-color:#3dc0fd }
+.draggables .testing h3 { background:#fde03d }
+.draggables .testing { border-color:#fde03d }
+.draggables .complete h3 { background:#3dfd4f }
+.draggables .complete { border-color:#3dfd4f }
+.draggables .story { cursor:pointer }
 
 .story { border-color:#ccc }
 .story,

@@ -57,11 +57,6 @@ body.iterations .display .content { background:#fff }
 /* end iterations/new */
 
 /* iterations/show when active */
-.draggables .pending { border-color:#ddd }
-.draggables .in_progress { border-color:#3dc0fd }
-.draggables .testing { border-color:#fde03d }
-.draggables .complete { border-color:#3dfd4f }
-
 .draggables .ui-droppable { background:#fff; border-color:#fff }
 
 #headings .pending { background:#ddd }
