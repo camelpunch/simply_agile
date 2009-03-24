@@ -15,12 +15,41 @@ function DraggableStories() {
   // handle resize event
   $(window).resize( function() {
     // remove all JSy elements
-    $('.draggables').remove();
+    $('#draggables_container').remove();
 
     // re-initialise
     instance.createContainer();
     $('input[name="story[status]"]').each( function() { new DroppableStatus(this) } );
   });
+}
+DraggableStories.prototype = {
+  createContainer: function() {
+    // make a container for all draggables
+    $('ol.stories').before('<div id="draggables_container"></div>');
+
+    var container = $('#draggables_container');
+
+    // make draggable container for each form
+    $('ol.stories form').each( function() {
+      container.append('<div id="draggables_for_'+this.id+'" class="draggables"></div>');
+    });
+  },
+
+  // make headings based on first set of labels
+  labelColumns: function() {
+    var html = '<div id="headings"><ol>';
+
+    $($('form.edit_story')[0]).find('label').each( function() {
+      var content = $(this).html();
+      var label_for = $(this).attr('for');
+      var class_name = $('#'+label_for).val();
+
+      html += '<li class="'+class_name+'">'+content+'</li>';
+    });
+    html += '</ol></div>';
+
+    $('ol.stories').before(html);
+  }
 }
 
 function DraggableStory(droppable_status) {
@@ -45,7 +74,8 @@ function DraggableStory(droppable_status) {
     })
     .css('position', 'absolute')
     .css('top', droppable_position.top)
-    .css('left', droppable_position.left);
+    .css('left', droppable_position.left)
+    .width(this.droppable.width());
 
   DraggableStory.setStatus(this.element, status);
 }
@@ -61,7 +91,7 @@ function DroppableStatus(input) {
   var instance = this;
   this.input = input;
   this.form = $(this.input).parents('form');
-  this.container = this.form.find('.draggables');
+  this.container = $('#draggables_for_'+this.form.attr('id'));
   this.li = $(this.input).parents('li');
   this.status = $(this.input).val();
 
@@ -103,34 +133,5 @@ function DroppableStatus(input) {
   // make a draggable if button is checked
   if ($(this.input).attr('checked')) {
     new DraggableStory(this); 
-  }
-
-  // remove 'story' class from li
-  this.li.removeClass('story');
-}
-
-DraggableStories.prototype = {
-
-  createContainer: function() {
-    // make draggable container for each form
-    $('ol.stories form').each( function() {
-      $(this).append('<div class="draggables"></div>');
-    });
-  },
-
-  // make headings based on first set of labels
-  labelColumns: function() {
-    var html = '<div id="headings"><ol>';
-
-    $($('form.edit_story')[0]).find('label').each( function() {
-      var label = $(this).html();
-      var label_for = $(this).attr('for');
-      var class_name = $('#'+label_for).val();
-
-      html += '<li class="'+class_name+'">'+label+'</li>';
-    });
-    html += '</ol></div>';
-
-    $('ol.stories').before(html);
   }
 }

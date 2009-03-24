@@ -1,10 +1,11 @@
 ol.stories{ overflow:hidden }
 ol.stories li.story{ margin-bottom:15px }
 
-.draggables .story{ overflow:auto }
 .story{ height:100%; border-width:1px; border-style:solid; max-width:400px }
 .story ol{ margin:4px 0 0 0 }
 .story ol li{ display:block; padding:0 5px }
+
+.draggables .story{ overflow:auto; height:auto }
 
 .javascript .story .estimate{ position:absolute; top:5px; right:5px; 
                               margin:0 }
