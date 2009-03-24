@@ -49,20 +49,6 @@ body#projects_show #iterations ol li a:hover img,
 body#projects_show #iterations ol li a:focus img { border:2px solid #999 }
 /* end projects/show */
 
-/* iterations/show when active */
-.draggables .ui-droppable { background:#fff; border-color:#fff }
-
-#headings .pending { background:#ddd }
-#headings .pending { border-color:#ddd }
-#headings .in_progress { background:#3dc0fd }
-#headings .in_progress { border-color:#3dc0fd }
-#headings .testing { background:#fde03d }
-#headings .testing { border-color:#fde03d }
-#headings .complete { background:#3dfd4f }
-#headings .complete { border-color:#3dfd4f }
-
-/* end iterations/show when active */
-
 /* beta */
 #beta_warning { background: #eee; border: 1px solid #ff7f2a; }
 /* end beta */

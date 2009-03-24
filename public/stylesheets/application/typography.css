@@ -32,5 +32,6 @@ body#projects_show #iterations h3 { text-align:right; font-size:123.1%;
                                     padding:7px 10px 15px 0 }
 /* end projects/show */
 
+/* iteration_inactive */
 body#iterations_show .javascript #stories .guidance,
-body#iterations_show .javascript #headings ol li { text-align:center }
+/* end iteartion_inactive */

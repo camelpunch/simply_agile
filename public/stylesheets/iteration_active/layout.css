@@ -1,0 +1,23 @@
+body.iteration_active .javascript #stories .guidance { position:absolute; width:99%;
+                                                       top:0 }
+body.iteration_active .javascript ol.stories li { position:relative;
+                                                  clear:left; display:block;
+                                                  margin-top:10px }
+body.iteration_active .javascript ol.stories li,
+.ui-droppable { height:9em }
+body.iteration_active .javascript ol.stories li ol li { height:auto; 
+                                                        margin:0 }
+
+body.iteration_active #headings { overflow:hidden }
+body.iteration_active #headings ol { width:100% }
+body.iteration_active #headings li { height:2em; line-height:2em }
+
+body.iteration_active #headings li,
+body.iteration_active .ui-droppable { float:left; border-width:1px; 
+                                      border-style:solid }
+
+body.iteration_active #headings li,
+body.iteration_active .ui-droppable,
+body.iteration_active .ui-draggable { width:24.5% }
+
+body.iteration_active .draggables { overflow:auto }
