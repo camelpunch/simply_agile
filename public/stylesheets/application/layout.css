@@ -79,47 +79,6 @@ body#projects_show #iterations ol li { width:50%; float:left }
 body#projects_show #iterations ol li a { display:block; width:150px; margin:0 auto }
 /* end projects/show */
 
-/* iterations */
-body.iterations #stories { clear:both;
-                           /*ie6*/ height:200px }
-body.iterations form>#stories,
-body.iterations div>#stories { min-height:200px; height:auto }
-.javascript #stories_iteration_container { float:left }
-.javascript #stories_available_container { float:right }
-.javascript #stories_available_container,
-.javascript #stories_iteration_container { /*ie6*/ width:47% }
-.javascript div>#stories_available_container,
-.javascript div>#stories_iteration_container { width:49% }
-.javascript #stories_iteration,
-.javascript #stories_available { width:70%; height:auto }
-.javascript #stories_iteration { /*ie6*/ margin-right:6% }
-.javascript #stories_available { /*ie6*/ margin-left:1% }
-.javascript div>#stories_iteration { margin-right:11% }
-.javascript div>#stories_available { margin-left:11% }
-
-.javascript #stories span.estimate { position:absolute; top:15px; right:0;
-                                         width:110px }
-
-.javascript #stories .display_and_estimate .display .content,
-.javascript #stories .include input,
-.javascript #stories .include label { display:none }
-
-.javascript #stories ol li.story .display_and_estimate { overflow:hidden }
-.javascript #stories ol li.story { clear:left;
-                                       /*ie6*/ height:50px }
-.javascript #stories ol>li.story { position:relative; min-height:50px; height:auto }
-.javascript .include a { display:block; width:60px; height:42px }
-.javascript .include>a { position:absolute; top:0 }
-.javascript #stories_available .include>a { left:-79px }
-.javascript #stories_iteration .include>a { right:-79px }
-
-.javascript #stories .display { float:left }
-.javascript #stories .estimate { float:right }
-.javascript #stories .estimate label { display:none }
-
-body.iterations p.submit { clear:both }
-/* end iterations */
-
 /* stories/show */
 #acceptance_criteria { margin-bottom:15px }
 #acceptance_criteria table { table-layout:fixed }

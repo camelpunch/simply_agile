@@ -1,0 +1,38 @@
+body.iteration_planning #stories { clear:both;
+                                   /*ie6*/ height:200px }
+body.iteration_planning form>#stories,
+body.iteration_planning div>#stories { min-height:200px; height:auto }
+body.iteration_planning .javascript #stories_iteration_container { float:left }
+body.iteration_planning .javascript #stories_available_container { float:right }
+body.iteration_planning .javascript #stories_available_container,
+body.iteration_planning .javascript #stories_iteration_container { /*ie6*/ width:47% }
+body.iteration_planning .javascript div>#stories_available_container,
+body.iteration_planning .javascript div>#stories_iteration_container { width:49% }
+body.iteration_planning .javascript #stories_iteration,
+body.iteration_planning .javascript #stories_available { width:70%; height:auto }
+body.iteration_planning .javascript #stories_iteration { /*ie6*/ margin-right:6% }
+body.iteration_planning .javascript #stories_available { /*ie6*/ margin-left:1% }
+body.iteration_planning .javascript div>#stories_iteration { margin-right:11% }
+body.iteration_planning .javascript div>#stories_available { margin-left:11% }
+
+body.iteration_planning .javascript #stories span.estimate { position:absolute; top:15px; right:0;
+                                         width:110px }
+
+body.iteration_planning .javascript #stories .display_and_estimate .display .content,
+body.iteration_planning .javascript #stories .include input,
+body.iteration_planning .javascript #stories .include label { display:none }
+
+body.iteration_planning .javascript #stories ol li.story .display_and_estimate { overflow:hidden }
+body.iteration_planning .javascript #stories ol li.story { clear:left;
+                                       /*ie6*/ height:50px }
+body.iteration_planning .javascript #stories ol>li.story { position:relative; min-height:50px; height:auto }
+body.iteration_planning .javascript .include a { display:block; width:60px; height:42px }
+body.iteration_planning .javascript .include>a { position:absolute; top:0 }
+body.iteration_planning .javascript #stories_available .include>a { left:-79px }
+body.iteration_planning .javascript #stories_iteration .include>a { right:-79px }
+
+body.iteration_planning .javascript #stories .display { float:left }
+body.iteration_planning .javascript #stories .estimate { float:right }
+body.iteration_planning .javascript #stories .estimate label { display:none }
+
+body.iteration_planning p.submit { clear:both }

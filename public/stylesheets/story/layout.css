@@ -10,9 +10,9 @@ ol.stories li.story{ margin-bottom:15px }
                               margin:0 }
 .story ol{ clear:both }
 
-body#iterations_show .javascript form.edit_story input,
-body#iterations_show .javascript form.edit_story label,
-body#iterations_show .javascript li .content,
-body#iterations_show .javascript form.edit_story p.submit{ display:none }
+body.iteration_active .javascript form.edit_story input,
+body.iteration_active .javascript form.edit_story label,
+body.iteration_active .javascript li .content,
+body.iteration_active .javascript form.edit_story p.submit{ display:none }
 
 body#projects_show #backlog li.story{ float:left; margin-right:15px }
