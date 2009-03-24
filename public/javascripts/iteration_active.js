@@ -9,7 +9,7 @@ function DraggableStories() {
   
   // make droppables for each input box
   $('input[name="story[status]"]').each( function() {
-    instance.createDroppable(this)
+    new DroppableStatus(this);
   });
 
   // handle resize event
@@ -19,23 +19,24 @@ function DraggableStories() {
 
     // re-initialise
     instance.createContainer();
-    $('input[name="story[status]"]').each( function() { instance.createDroppable(this) } );
+    $('input[name="story[status]"]').each( function() { new DroppableStatus(this) } );
   });
 }
 
-function DraggableStory(input, droppable) {
-  var li = $(input).parents('ol.stories>li');
-  var content = li.find('.content');
-  var form = $(input).parents('form');
-  var container = form.find('.draggables');
-  var status = $(input).val();
+function DraggableStory(droppable_status) {
+  this.input = droppable_status.input;
+  this.droppable = droppable_status.droppable;
 
-  droppable_position = droppable.position();
-  droppable.addClass('ui-state-highlight');
+  var content = droppable_status.li.find('.content');
+  var container = droppable_status.container;
+  var status = droppable_status.status;
 
-  container.append('<div class="story" id="draggable_' + input.id + '">'+content.html()+'</div>');
+  droppable_position = this.droppable.position();
+  this.droppable.addClass('ui-state-highlight');
 
-  this.element = $('#draggable_' + input.id);
+  container.append('<div class="story" id="draggable_' + this.input.id + '">'+content.html()+'</div>');
+
+  this.element = $('#draggable_' + this.input.id);
   this.element.draggable({ 
       revert: 'invalid',
       axis: 'x', 
@@ -56,60 +57,59 @@ DraggableStory.setStatus = function(element, status) {
   element.addClass(status);
 }
 
-DraggableStories.prototype = {
+function DroppableStatus(input) {
+  var instance = this;
+  this.input = input;
+  this.form = $(this.input).parents('form');
+  this.container = this.form.find('.draggables');
+  this.li = $(this.input).parents('li');
+  this.status = $(this.input).val();
 
-  createDroppable: function(input) {
-    var instance = this;
-    var form = $(input).parents('form');
-    var container = form.find('.draggables');
-    var li = $(input).parents('li');
-    var content = li.find('.content');
-    var status = $(input).val();
-    var id = input.id;
+  this.container.append('<div class="'+this.status+'" id="droppable_' + this.input.id + '"></div>');
 
-    container.append('<div class="'+status+'" id="droppable_' + id + '"></div>');
+  this.droppable = $('#droppable_' + this.input.id)
+    .droppable({ 
+      drop: function(ev, ui) { 
+        var id_parts = instance.input.id.split('_');
+        var story_id = id_parts[id_parts.length - 1];
 
-    var droppable = $('#droppable_' + id)
-      .droppable({ 
-        drop: function(ev, ui) { 
-          var id_parts = id.split('_');
-          var story_id = id_parts[id_parts.length - 1];
+        // check the radio button
+        $('li#story_'+story_id+' ol input').val([instance.status]);
 
-          // check the radio button
-          $('li#story_'+story_id+' ol input').val([status]);
-
-          // send the request
-          form.ajaxSubmit({
-            success: function() {
-              if (DraggableStories.previous_status == 'complete' || status == 'complete') {
-                var location_parts = location.href.split('/');
-                var iteration_id = location_parts[location_parts.length - 1];
-                $('#burndown').attr('src',
-                                    '/iterations/' + iteration_id +
-                                    '/burndown?' + new Date().getTime());
-              }
-
-              DraggableStories.previous_status = status;
+        // send the request
+        instance.form.ajaxSubmit({
+          success: function() {
+            if (DraggableStories.previous_status == 'complete' || this.status == 'complete') {
+              var location_parts = location.href.split('/');
+              var iteration_id = location_parts[location_parts.length - 1];
+              $('#burndown').attr('src',
+                                  '/iterations/' + iteration_id +
+                                  '/burndown?' + new Date().getTime());
             }
-          });
-          
-          // change class of elements
-          var draggable = container.find('.ui-draggable');
-          DraggableStory.setStatus(draggable, status);
 
-          // custom snapping
-          $(ui.draggable).css('left', $(this).position().left);
-        }
-      });
+            DraggableStories.previous_status = this.status;
+          }
+        });
+        
+        // change class of elements
+        var draggable = instance.container.find('.ui-draggable');
+        DraggableStory.setStatus(draggable, instance.status);
 
-    // make a draggable if button is checked
-    if ($(input).attr('checked')) {
-      new DraggableStory(input, droppable); 
-    }
+        // custom snapping
+        $(ui.draggable).css('left', $(this).position().left);
+      }
+    });
 
-    // remove 'story' class from li
-    li.removeClass('story');
-  },
+  // make a draggable if button is checked
+  if ($(this.input).attr('checked')) {
+    new DraggableStory(this); 
+  }
+
+  // remove 'story' class from li
+  this.li.removeClass('story');
+}
+
+DraggableStories.prototype = {
 
   createContainer: function() {
     // make draggable container for each form
