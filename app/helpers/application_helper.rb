@@ -32,6 +32,7 @@ module ApplicationHelper
     xml = Builder::XmlMarkup.new
     xml.div :class => 'flash' do
       flash.each do |type, message|
+        next if message.blank?
         xml.div :class => type do
           xml.h2 type.to_s.titleize
           xml.p do |p|

@@ -47,6 +47,13 @@ So that my eyes don't hurt"
         helper.render_flash.should have_tag('p', 'hello')
       end
     end
+
+    describe "with blank message" do
+      it "should not barf" do
+        flash[:notice] = nil
+        lambda {helper.render_flash}.should_not raise_error
+      end
+    end
   end
 
   describe "contextual_new_story_path" do
