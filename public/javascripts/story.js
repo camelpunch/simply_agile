@@ -7,6 +7,7 @@ function Story(element) {
   this.createContainer();
   this.createLessAnchor();
 
+  // add 'more' link if needed
   if (this.acceptance_criteria[0]) {
     this.createMoreAnchor();
   }
@@ -21,7 +22,6 @@ Story.prototype = {
   createMoreAnchor: function() {
     var instance = this;
 
-    // add 'more' link if needed
     this.container
       .append('<a class="more" href="#more">More</a>')
 
@@ -41,6 +41,8 @@ Story.prototype = {
     if (this.acceptance_criteria.is(':visible')) { 
       html = '« Less'
       this.less.hide();
+    } else if (!this.story_content.is(':visible')) {
+      this.more.hide();
     } else {
       html = 'More »';
       this.less.show();
@@ -51,6 +53,7 @@ Story.prototype = {
   createLessAnchor: function() {
     var instance = this;
 
+    this.container.find('a.less').remove();
     this.container.append('<a class="less" href="#less">Less</a>');
     this.less = this.container.find('a.less');
 

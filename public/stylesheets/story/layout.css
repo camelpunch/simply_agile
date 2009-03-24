@@ -1,4 +1,5 @@
 ol.stories{ overflow:hidden }
+body.iteration_planning ol.stories { overflow:visible }
 ol.stories li.story{ margin-bottom:15px }
 
 #content .story{ height:100%; max-width:400px; position:relative }
