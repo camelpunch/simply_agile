@@ -2,7 +2,7 @@ class RemoveOrganisationIdFromUsers < ActiveRecord::Migration
   def self.create_organisation_memberships
     User.find(:all, :conditions => 'organisation_id IS NOT NULL').each do |user|
       if user.organisation_id
-        OrganisationMembership.create!(
+        OrganisationMember.create!(
           :user_id => user.id,
           :organisation_id => user.organisation_id
         )
@@ -16,7 +16,7 @@ class RemoveOrganisationIdFromUsers < ActiveRecord::Migration
   end
 
   def self.set_organisation_ids
-    OrganisationMembership.all.each do |membership|
+    OrganisationMember.all.each do |membership|
       user = User.find(membership.user_id)
       user.update_attribute(:organisation_id, membership.organisation_id)
     end

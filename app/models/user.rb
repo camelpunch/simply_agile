@@ -3,8 +3,8 @@ class User < ActiveRecord::Base
   attr_accessor :organisation_name
   attr_accessor :sponsor
 
-  has_many :organisation_memberships
-  has_many :organisations, :through => :organisation_memberships
+  has_many :organisation_members
+  has_many :organisations, :through => :organisation_members
   has_many :organisation_sponsors
   has_many :projects, :through => :organisation
 

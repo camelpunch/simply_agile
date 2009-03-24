@@ -36,8 +36,8 @@ describe User do
   end
 
   describe "associations" do
-    it "should have many organisation_memberships" do
-      User.should have_many(:organisation_memberships)
+    it "should have many organisation_members" do
+      User.should have_many(:organisation_members)
     end
 
     it "should have many organisations" do
@@ -115,7 +115,7 @@ describe User do
           @user = User.new(
             :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
           )
-          @user.organisation_memberships.build(:organisation => @organisation)
+          @user.organisation_members.build(:organisation => @organisation)
           @user.sponsor = @sponsor
 
           @user.save!
@@ -143,7 +143,7 @@ describe User do
           @user = User.new(
             :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
           )
-          @user.organisation_memberships.build(:organisation => @organisation)
+          @user.organisation_members.build(:organisation => @organisation)
           @user.sponsor = @sponsor
 
           @user.save!

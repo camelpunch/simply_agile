@@ -20,6 +20,10 @@ describe Organisation do
       Organisation.should have_many(:iterations)
     end
 
+    it "should have many organisation members" do
+      Organisation.should have_many(:organisation_members)
+    end
+
     it "should have many users" do
       Organisation.should have_many(:users)
     end

@@ -29,7 +29,7 @@ class Iterations < ObjectMother
     )
   end
 
-    define_iteration(:erroneous_iteration,
+  define_iteration(:erroneous_iteration,
     :name => 'Erroneous Iteration',
     :project => Projects.simply_agile)
 end
