@@ -1,29 +1,18 @@
 function DraggableStories() {
-  var instance = this;
-
   // add some guidance
   $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
 
   this.labelColumns();
-  this.createContainer();
+  this.create();
   
-  // make droppables for each input box
-  $('input[name="story[status]"]').each( function() {
-    new DroppableStatus(this);
-  });
-
   // handle resize event
-  $(window).resize( function() {
-    // remove all JSy elements
-    $('#draggables_container').remove();
-
-    // re-initialise
-    instance.createContainer();
-    $('input[name="story[status]"]').each( function() { new DroppableStatus(this) } );
-  });
+  $(window).resize(this.create);
 }
 DraggableStories.prototype = {
-  createContainer: function() {
+  create: function() {
+    // remove all existing JSy elements
+    $('#draggables_container').remove();
+
     // make a container for all draggables
     $('ol.stories').before('<div id="draggables_container"></div>');
 
@@ -33,6 +22,9 @@ DraggableStories.prototype = {
     $('ol.stories form').each( function() {
       container.append('<div id="draggables_for_'+this.id+'" class="draggables"></div>');
     });
+
+    // make droppables for each radio button
+    $('input[name="story[status]"]').each( function() { new DroppableStatus(this) } );
   },
 
   // make headings based on first set of labels
@@ -63,7 +55,7 @@ function DraggableStory(droppable_status) {
   droppable_position = this.droppable.position();
   this.droppable.addClass('ui-state-highlight');
 
-  container.append('<div class="story" id="draggable_' + this.input.id + '">'+content.html()+'</div>');
+  container.append('<div class="story" id="draggable_'+this.input.id+'">'+content.html()+'</div>');
 
   this.element = $('#draggable_' + this.input.id);
   this.element.draggable({ 
