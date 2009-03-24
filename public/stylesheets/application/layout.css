@@ -149,8 +149,8 @@ body#iterations_show.javascript ol.stories li { position:relative;
                                                 margin-top:10px }
 body#iterations_show.javascript ol.stories li,
 .ui-droppable { height:9em }
-body#iterations_show.javascript ol.stories li ol li { height:inherit; 
-                                                           margin:0 }
+body#iterations_show.javascript ol.stories li ol li { height:auto; 
+                                                      margin:0 }
 
 body#iterations_show #headings { overflow:hidden }
 body#iterations_show #headings ol { width:100% }
