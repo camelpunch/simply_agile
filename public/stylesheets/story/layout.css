@@ -9,7 +9,7 @@ ol.stories li.story{ margin-bottom:15px }
 #content .story li{ display:block; padding:0 5px }
 
 #content .story .header { overflow:hidden }
-#content .story h3 { float:left; width:40% }
+#content .story h3 { overflow:hidden; float:left; width:40% }
 
 /* less/more links */
 #content .story .less_more { float:left; width:7em; margin-top:4px }
@@ -31,4 +31,5 @@ body.iteration_active .javascript form.edit_story p.submit{ display:none }
 
 /* page-dependent default states */
 #content .story .acceptance_criteria { display:none }
+body#stories_backlog #content .story ol { display:none }
 /* end page-dependent default states */
