@@ -16,10 +16,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def current_user
-    @current_user ||= User.valid.find_by_id(session[:user_id])
-  end
-
   def decide_layout
     layout = ''
     respond_to do |format|
@@ -35,14 +31,17 @@ class ApplicationController < ActionController::Base
     layout
   end
 
-  def get_organisation
-    @organisation = current_user.organisation
+  def current_user
+    @current_user ||= User.valid.find_by_id(session[:user_id])
+  end
+
+  def current_organisation
+    @current_organisation ||=
+      current_user.organisations.find_by_id(session[:organisation_id])
   end
 
   def get_project
-    if params[:project_id]
-      @project = current_user.organisation.projects.find(params[:project_id])
-    end
+    @project = current_organisation.projects.find_by_id(params[:project_id])
   end
 
   def login_required

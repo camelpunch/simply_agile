@@ -3,23 +3,19 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe ActiveIterationsController do
   before :each do
     login
+    setup_project
+    @story = Stories.create_story!(:project => @project)
+    @iteration = Iterations.create_iteration!(
+      :project => @project,
+      :stories => [@story]
+    )
   end
 
   describe "get iteration" do
     before :each do
-      @iteration = mock_model(Iteration)
-      @iterations = mock('Collection')
-      @iterations.stub!(:find).with(@iteration.id.to_s).and_return(@iteration)
-      @organisation.stub!(:iterations).and_return(@iterations)
-      
       controller.stub!(:params).and_return(
         :iteration_id => @iteration.id.to_s
       )
-    end
-
-    it "should try to find the iteration" do
-      @iterations.should_receive(:find).with(@iteration.id.to_s)
-      controller.send(:get_iteration)
     end
 
     it "should set the instance variable" do
@@ -33,22 +29,10 @@ describe ActiveIterationsController do
       post :create, :iteration_id => @iteration.id
     end
 
-    before :each do
-      @project = mock_model(Project)
-      @iteration = mock_model(Iteration, :project => @project)
-      @iteration.stub!(:start)
-      controller.stub!(:get_iteration)
-      controller.instance_variable_set("@iteration", @iteration)
-    end
-
-    it "should assign the iteration" do
-      controller.should_receive(:get_iteration)
+    it "should start an iteration" do
       do_call
-    end
-
-    it "should call start on the iteration" do
-      @iteration.should_receive(:start)
-      do_call
+      @iteration.reload
+      @iteration.start_date.should_not be_nil
     end
 
     it "should redirect to Iterations#show" do

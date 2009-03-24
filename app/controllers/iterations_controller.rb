@@ -29,6 +29,7 @@ class IterationsController < ApplicationController
     redirect_to [@project, @iteration]
 
   rescue ActiveRecord::RecordInvalid => e
+    debugger if $debug
     @stories = e.record.planned_stories
     render :template => 'iterations/edit'
   end

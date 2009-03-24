@@ -60,7 +60,7 @@ So that "
       render :template => 'stories/new_with_iteration'
     elsif @project
       render :template => 'stories/new_with_project'
-    elsif current_user.organisation.projects.empty?
+    elsif current_organisation.projects.empty?
       render :template => 'stories/new_guidance'
     else
       render :template => 'stories/new_without_project'

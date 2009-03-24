@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
   attr_protected :organisation_id
 
+  validates_presence_of :name
+
   belongs_to :organisation
   has_many :iterations, :dependent => :destroy
   has_many :stories, :dependent => :destroy

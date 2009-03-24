@@ -37,10 +37,10 @@ class ProjectsController < ApplicationController
   protected
 
   def get_project
-    @project = current_user.organisation.projects.find(params[:id])
+    @project = current_organisation.projects.find(params[:id])
   end
 
   def new_project
-    @project = current_user.organisation.projects.build(params[:project])
+    @project = current_organisation.projects.build(params[:project])
   end
 end

@@ -49,23 +49,29 @@ Spec::Runner.configure do |config|
   config.include AssociationMatchers
 
   def login
-    @organisation = mock_model Organisation
-    @user = mock_model User, :organisation => @organisation, :verified => true
-    controller.stub!(:login_required).and_return(true)
-    controller.stub!(:current_user).and_return(@user)
+    @user = Users.create_user!
+    session[:user_id] = @user.id
+    @organisation = @user.organisations.first
+    session[:organisation_id] = @organisation.id
   end
 
-  def stub_projects!
-    @project = mock_model(Project, :organisation_id => @organisation.id)
-    @projects = mock('Collection', :empty? => false)
-    @projects.stub!(:find).with(@project.id.to_s).and_return(@project)
-    @organisation.stub!(:projects).and_return(@projects)
+  def setup_project(organisation = @organisation)
+    raise "Organisation required" unless organisation
+    @project = Projects.create_project!(:organisation => organisation)
+  end
+
+  def setup_iteration
+    @story = Stories.create_story!(:project => @project)
+    @iteration = Iterations.create_iteration!(
+      :project => @project,
+      :stories => [@story]
+    )
   end
 
   describe "it belongs to a project", :shared => true do
     it "should assign the project" do
-      controller.should_receive(:get_project)
       do_call
+      assigns[:project].should == @project
     end
   end
 

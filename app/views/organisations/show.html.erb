@@ -2,7 +2,7 @@
 <% content_for :h1, h(@organisation.name) %>
 
 <div class="section">
-  <h2>Organisation Members</h2>
+  <h2><%= h(@organisation.name) %> Members</h2>
 
   <table>
     <% @organisation.users.each do |user| -%>

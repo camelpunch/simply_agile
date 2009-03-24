@@ -36,8 +36,12 @@ describe User do
   end
 
   describe "associations" do
-    it "should belong to an organisation" do
-      User.should belong_to(:organisation)
+    it "should have many organisation_memberships" do
+      User.should have_many(:organisation_memberships)
+    end
+
+    it "should have many organisations" do
+      User.should have_many(:organisations)
     end
 
     it "should have many projects" do
@@ -89,12 +93,8 @@ describe User do
     describe "for an existing organisation" do
       before :each do
         @sponsor = Users.create_user!
-        @user = User.new(
-          Users.user_prototype.merge(
-            :sponsor => @sponsor,
-            :organisation => @sponsor.organisation
-          )
-        )
+        @user = User.new(Users.user_prototype.merge(:sponsor => @sponsor))
+        @user.organisations << @sponsor.organisations.first
       end
 
       it "should not try to encrypt the password" do
@@ -115,7 +115,7 @@ describe User do
           @user = User.new(
             :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
           )
-          @user.organisation = @organisation
+          @user.organisation_memberships.build(:organisation => @organisation)
           @user.sponsor = @sponsor
 
           @user.save!
@@ -143,7 +143,7 @@ describe User do
           @user = User.new(
             :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
           )
-          @user.organisation = @organisation
+          @user.organisation_memberships.build(:organisation => @organisation)
           @user.sponsor = @sponsor
 
           @user.save!
@@ -156,10 +156,7 @@ describe User do
 
         it "should not generate the same token" do
           @user.save
-          new_user = Users.create_user!(
-            :sponsor => @sponsor,
-            :organisation => @organisation
-          )
+          new_user = Users.create_user!(:sponsor => @sponsor)
           @user.acknowledgement_token.should_not ==
             new_user.acknowledgement_token
         end
@@ -188,19 +185,18 @@ describe User do
 
     it "should be false if sponsor attribute is set" do
       @user.sponsor = @sponsor
-      @user.signup?.should be_false
+      @user.should_not be_signup
     end
 
     it "should be false if an organisation sponsor exists" do
       @user.organisation_sponsors.build(
-        :sponsor_id => @sponsor.id,
-        :organisation => @sponsor.organisation
+        :sponsor_id => @sponsor.id
       )
-      @user.signup?.should be_false
+      @user.should_not be_signup
     end
 
     it "should be true otherwise" do
-      @user.signup?.should be_true
+      @user.should be_signup
     end
   end
 
@@ -241,43 +237,12 @@ describe User do
       end
     end
 
-    describe "organisation" do
-      before :each do
-        @user.organisation_name = nil
-        @user.organisation = nil
-      end
-
-      it "should require an organisation" do
-        @user.stub!(:signup?).and_return(false)
-        @user.valid?
-        @user.errors.invalid?(:organisation_id).should be_true
-      end
-
-      it "should not require an organisation if organisation name is given" do
-        @user.organisation_name = 'some name'
-        @user.valid?
-        @user.errors.invalid?(:organisation_id).should be_false
-      end
-
-      it "should not require an organisation name if organisation is given" do
-        @user.organisation = Organisations.create_organisation!
-        @user.valid?
-        @user.errors.invalid?(:organisation_name).should be_false
-      end
-
-      it "should add an error to organisation name if both name and organisation are blank" do
-        @user.valid?
-        @user.errors.on(:organisation_name).should_not be_nil
-      end
-    end
-
     describe "password" do
       before :each do
         @user.password = nil
       end
       
       it "should require a password on signup" do
-        @user.organisation = nil
         @user.valid?
         @user.errors.invalid?(:password).should be_true
       end
@@ -381,8 +346,7 @@ describe User do
     before :each do
       @sponsor = Users.create_user!
       @user = Users.create_user!(
-        :sponsor => @sponsor,
-        :organisation => @sponsor.organisation
+        :sponsor => @sponsor
       )
     end
 

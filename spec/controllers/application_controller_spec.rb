@@ -66,15 +66,69 @@ describe ApplicationController do
     end
   end
 
+  describe "current_organisation" do
+    before(:each) do
+      login
+    end
+
+    describe "with a current organisation set" do
+      before :each do
+        @organisation = @user.organisations.first
+        @organisation.should_not be_nil
+        session[:organisation_id] = @organisation.id
+      end
+
+      it "should return the organisation" do
+        controller.send(:current_organisation).should == @organisation
+      end
+
+      it "should assign an instance variable" do
+        controller.send(:current_organisation)
+        controller.instance_variable_get("@current_organisation").should ==
+          @organisation
+      end
+    end
+
+    describe "with an invalid current organisation" do
+      before :each do
+        @organisation_for_other_user = Organisations.create_organisation!
+        session[:organisation_id] = @organisation_for_other_user.id
+      end
+
+      it "should return nil" do
+        controller.send(:current_organisation).should be_nil
+      end
+
+      it "should not set an instance variable" do
+        controller.send(:current_organisation)
+        controller.instance_variable_get("@current_organisation").should be_nil
+      end
+    end
+    
+    describe "with no current organisation set" do
+      before :each do
+        session[:organisation_id] = nil
+      end
+      
+      it "should return nil" do
+        controller.send(:current_organisation).should be_nil
+      end
+      
+      it "should not set an instance variable" do
+        controller.send(:current_organisation)
+        controller.instance_variable_get("@current_organisation").should be_nil
+      end
+    end
+  end
+
   describe "get_project" do
     before :each do
       login
-      stub_projects!
+      @project = Projects.create_project!(:organisation => @organisation)
     end
 
     it "should restrict to user's projects" do
       controller.stub!(:params).and_return({:project_id => @project.id.to_s})
-      @projects.stub!(:find).with(@project.id.to_s).and_return(@project)
       controller.send(:get_project)
       controller.instance_variable_get("@project").should == @project
     end
@@ -83,22 +137,6 @@ describe ApplicationController do
       controller.stub!(:params).and_return({})
       @user.should_not_receive(:organisation)
       controller.send(:get_project)
-    end
-  end
-
-  describe "get_organisation" do
-    before :each do
-      login
-    end
-    
-    it "should get the organisation the current user" do
-      @user.should_receive(:organisation)
-      controller.send(:get_organisation)
-    end
-
-    it "should assign the instance variable" do
-      controller.send(:get_organisation)
-      controller.instance_variable_get("@organisation").should == @organisation
     end
   end
 

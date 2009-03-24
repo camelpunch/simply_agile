@@ -3,15 +3,15 @@ class User < ActiveRecord::Base
   attr_accessor :organisation_name
   attr_accessor :sponsor
 
-  belongs_to :organisation
+  has_many :organisation_memberships
+  has_many :organisations, :through => :organisation_memberships
   has_many :organisation_sponsors
   has_many :projects, :through => :organisation
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
-  validates_presence_of :organisation_id, :unless => :signup?
   validates_presence_of :organisation_name, :on => :create,
-    :if => lambda { |user| user.signup? && user.organisation.nil? }
+    :if => lambda { |user| user.signup? && user.organisations.empty? }
   validates_presence_of :password, :if => :password_required?
 
   default_scope :order => 'email_address'
@@ -30,8 +30,10 @@ class User < ActiveRecord::Base
     else
       self.acknowledgement_token ||= generate_token
     end
-    
-    self.organisation ||= Organisation.create!(:name => organisation_name)
+
+    if (organisation_name)
+      self.organisations.create!(:name => organisation_name)
+    end
   end
 
   def before_save
@@ -43,7 +45,7 @@ class User < ActiveRecord::Base
   def after_create
     unless signup?
       self.organisation_sponsors.create!(
-        :organisation => organisation,
+        :organisation => organisations.first,
         :sponsor_id => sponsor.id
       )
     end
