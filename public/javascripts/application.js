@@ -14,9 +14,6 @@ $(document).ready(function() {
     // start swapper
     StorySwapper.init();
     
-    // start toggles
-    StoryToggler.init();
-
     // AJAXy story adding
     new NewStoryAdder();
   }

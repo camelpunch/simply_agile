@@ -88,7 +88,6 @@ var StorySwapper = {
 
     StorySwapper.updateEstimates();
     StorySwapper.bindEstimates();
-    StoryToggler.bindAnchors(story);
   },
 
   bindEstimates: function() {
@@ -116,34 +115,3 @@ var StorySwapper = {
   }
 }
 
-var StoryToggler = {
-  init: function() {
-    // insert expand links
-    $('ol li.story').each( function() {
-      $(this).find('.content')
-      .before('<a class="expand" href="#'+this.id+'">Show Story</a>');
-    });
-
-    StoryToggler.bindAnchors();
-  },
-
-  // expand functionality for story content
-  bindAnchors: function(base) {
-    if (base) {
-      base.find('a.expand').click(StoryToggler.toggleContent);
-    } else {
-      $('a.expand').click(StoryToggler.toggleContent);
-    }
-  },
-
-  toggleContent: function() {
-    var id = this.href.split('#')[1];
-    $('#'+id+' .content').toggle();
-    if ($(this).html() == 'Show Story') {
-      $(this).html('Hide Story');
-    } else {
-      $(this).html('Show Story');
-    }
-    return false;
-  }
-}

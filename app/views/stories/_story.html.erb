@@ -22,42 +22,11 @@
 
   <% if story.iteration && story.iteration.active? %>
     <% form_for [story.project, story.iteration, story] do |form| %>
-      <ol>
-        <li>
-        <%= form.radio_button(:status, 'pending', 
-                              :id => "story_status_pending_#{story.id}") %>
-        <%= form.label "status_pending_#{story.id}", 'Pending' %>
-        </li>
-        <li>
-        <%= form.radio_button(:status, 'in_progress',
-                              :id => "story_status_in_progress_#{story.id}") %>
-        <%= form.label "status_in_progress_#{story.id}", 'In Progress' %>
-        </li>
-        <li>
-        <%= form.radio_button(:status, 'testing',
-                              :id => "story_status_testing_#{story.id}") %>
-        <%= form.label "status_testing_#{story.id}", 'Testing' %>
-        </li>
-        <li>
-        <%= form.radio_button(:status, 'complete',
-                              :id => "story_status_complete_#{story.id}") %>
-        <%= form.label "status_complete_#{story.id}", 'Complete' %>
-        </li>
-      </ol>
-      <p class="submit">
-      <%= form.submit 'Update Status', :id => nil %>
-      </p>
+      <%= render :partial => 'stories/status_form', :object => form %>
     <% end %>
   <% end %>
 
   <% if controller.action_name == 'backlog' %>
-    <p>
-    <%= label_tag "priorities_#{story.id}", 'Priority' %>
-    <%= text_field_tag("project[priorities[#{story.id}]]", 
-                       story.priority,
-                       :id => "priorities_#{story.id}",
-                       :class => 'numeric',
-                       :size => 2) %>
-    </p>
+    <%= render :partial => 'stories/prioritising_story', :object => story %>
   <% end %>
 </li>
