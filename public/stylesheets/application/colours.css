@@ -36,9 +36,9 @@ div.section .errorExplanation h2 { border: none }
 div.section h2 { background:#fff }
 
 /* javascript request */
-body.javascript #request { background:#fff; border:2px solid #ff7f2a }
-body.javascript #request a#close_request { color:#fff }
-body.javascript #request h2#request_header { background:#ff7f2a }
+.javascript #request { background:#fff; border:2px solid #ff7f2a }
+.javascript #request a#close_request { color:#fff }
+.javascript #request h2#request_header { background:#ff7f2a }
 /* end javascript request */
 
 /* projects/show */

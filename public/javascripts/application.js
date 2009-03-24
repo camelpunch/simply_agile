@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('body').addClass('javascript');
+  $('#container').addClass('javascript');
 
   // highlight first erroneous field / auto focus field
   var first_error_field = $('.field_with_errors')[0];

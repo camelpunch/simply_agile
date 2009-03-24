@@ -4,6 +4,7 @@
   <li class="first-child project"><%= link_to h(@iteration.project), @iteration.project %></li>
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
+<% body_classes << 'iteration_active' %>
 
 <div>
   <%= image_tag(iteration_burndown_path(@iteration), 
