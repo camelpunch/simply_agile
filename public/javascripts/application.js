@@ -19,8 +19,12 @@ $(document).ready(function() {
   }
 
   // iterations/show when active
-  if ($('body#iterations_show .section form.edit_story')[0]) {
+  if ($('body').hasClass('iteration_active')) {
     new DraggableStories();
+    // don't enhance stories
+  } else {
+    // normal story enhancements
+    $('#content .story').each( function() { new Story(this) });
   }
   
   // backlog
@@ -28,8 +32,6 @@ $(document).ready(function() {
     BacklogPrioritisation.init();
   }
 
-  // story enhancements
-  $('#content .story').each( function() { new Story(this) });
 });
 
 // add header to AJAX requests to play nice with Rails' content negotiation

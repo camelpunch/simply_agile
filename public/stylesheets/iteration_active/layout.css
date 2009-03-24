@@ -2,7 +2,7 @@ body.iteration_active .javascript #stories .guidance { position:absolute; width:
                                                        top:0 }
 body.iteration_active .javascript ol.stories { display:none }
 
-body.iteration_active .ui-droppable { height:9em }
+body.iteration_active .ui-droppable { height:8em }
 
 body.iteration_active #headings { overflow:hidden }
 body.iteration_active #headings ol { width:100% }
