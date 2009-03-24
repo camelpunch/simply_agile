@@ -101,7 +101,7 @@ function DroppableStatus(input) {
         // send the request
         instance.form.ajaxSubmit({
           success: function() {
-            if (DraggableStories.previous_status == 'complete' || this.status == 'complete') {
+            if (DroppableStatus.previous_statuses[story_id] == 'complete' || instance.status == 'complete') {
               var location_parts = location.href.split('/');
               var iteration_id = location_parts[location_parts.length - 1];
               $('#burndown').attr('src',
@@ -109,7 +109,7 @@ function DroppableStatus(input) {
                                   '/burndown?' + new Date().getTime());
             }
 
-            DraggableStories.previous_status = this.status;
+            DroppableStatus.previous_statuses[story_id] = instance.status;
           }
         });
         
@@ -127,3 +127,5 @@ function DroppableStatus(input) {
     new DraggableStory(this); 
   }
 }
+
+DroppableStatus.previous_statuses = {};
