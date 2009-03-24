@@ -2,7 +2,7 @@ var DraggableStories = {
 
   init: function() {
     // add some guidance
-    $('#stories_list').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
+    $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
 
     DraggableStories.labelColumns();
     DraggableStories.createContainer();
@@ -92,7 +92,7 @@ var DraggableStories = {
 
   createContainer: function() {
     // make draggable container for each form
-    $('#stories_list form').each( function() {
+    $('ol.stories form').each( function() {
       $(this).append('<div class="draggables"></div>');
     });
   },
@@ -110,7 +110,7 @@ var DraggableStories = {
     });
     html += '</ol></div>';
 
-    $('#stories_list').before(html);
+    $('ol.stories').before(html);
   },
 
   setDraggableStatus: function(draggable, status) {
