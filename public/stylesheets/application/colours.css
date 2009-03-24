@@ -49,13 +49,6 @@ body#projects_show #iterations ol li a:hover img,
 body#projects_show #iterations ol li a:focus img { border:2px solid #999 }
 /* end projects/show */
 
-/* iterations/new */
-body.iterations .include a{ background-repeat:no-repeat }
-body.iterations #stories_available .include a { background-image:url(/images/arrow_large_left_highlighted.png) }
-body.iterations #stories_iteration .include a { background-image:url(/images/arrow_large_right_highlighted.png) }
-body.iterations .display .content { background:#fff }
-/* end iterations/new */
-
 /* iterations/show when active */
 .draggables .ui-droppable { background:#fff; border-color:#fff }
 
