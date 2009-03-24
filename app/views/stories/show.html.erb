@@ -1,5 +1,5 @@
 <% content_for :title, "#{@story} | #{@project} Stories" %>
-<% content_for :h1, h(@story) %>
+<% content_for :h1, "Story ##{@story.id}" %>
 <% content_for :actions do %>
 <li><%= link_to 'Edit', [:edit, @project, @iteration, @story] %></li>
 <% end %>
@@ -8,13 +8,17 @@
   <li class="story"><%= h @story %></li>
 <% end %>
 
-<%= simple_format h(@story.content) %>
-
-<% if @story.estimate? %>
-  <p>
-    This story is estimated at <%= h @story.estimate %>.
-  </p>
-<% end %>
+<div class="story">
+  <div class="content">
+    <div class="header">
+      <h3><%= h @story %></h3>
+      <% if @story.estimate? %>
+      <p class="estimate">Story Points: <%= @story.estimate %></p>
+      <% end %>
+    </div>
+    <%= story_format @story.content %>
+  </div>
+</div>
 
 <div id="acceptance_criteria">
   <h2>Acceptance Criteria</h2>

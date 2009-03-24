@@ -80,16 +80,16 @@ body#projects_show #iterations ol li a { display:block; width:150px; margin:0 au
 /* end projects/show */
 
 /* stories/show */
-#acceptance_criteria { margin-bottom:15px }
-#acceptance_criteria table { table-layout:fixed }
-#acceptance_criteria table td { padding:0 5px }
-#acceptance_criteria table td.edit,
-#acceptance_criteria table td.delete { width:4em }
-#acceptance_criteria p.checkbox input { display:block; float:left }
-#acceptance_criteria p.checkbox label { display:block; float:left; width:16em }
+body#stories_show #acceptance_criteria { margin:15px 0 }
+body#stories_show #acceptance_criteria table { table-layout:fixed }
+body#stories_show #acceptance_criteria table td { padding:0 5px }
+body#stories_show #acceptance_criteria table td.edit,
+body#stories_show #acceptance_criteria table td.delete { width:4em }
+body#stories_show #acceptance_criteria p.checkbox input { display:block; float:left }
+body#stories_show #acceptance_criteria p.checkbox label { display:block; float:left; width:16em }
 body#stories_show .javascript #acceptance_criteria table td.name { display:none }
-.javascript #acceptance_criteria table .submit_complete { display:none }
-#acceptance_criteria form { display:inline }
+body#stories_show .javascript #acceptance_criteria table .submit_complete { display:none }
+body#stories_show #acceptance_criteria form { display:inline }
 /* end stories/show */
 
 /* stories/backlog */
