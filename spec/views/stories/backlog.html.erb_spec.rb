@@ -7,6 +7,7 @@ describe "/stories/backlog" do
     @stories = []
     @project = mock_model(Project, :stories => @stories)
     @story = mock_model(Story, 
+                        :acceptance_criteria => [],
                         :iteration => nil,
                         :estimate? => true,
                         :estimate => 2,
