@@ -1,20 +1,17 @@
-.draggables .pending h3 { background:#ddd }
-.draggables .pending { border-color:#ddd }
-.draggables .in_progress h3 { background:#3dc0fd }
-.draggables .in_progress { border-color:#3dc0fd }
-.draggables .testing h3 { background:#fde03d }
-.draggables .testing { border-color:#fde03d }
-.draggables .complete h3 { background:#3dfd4f }
-.draggables .complete { border-color:#3dfd4f }
+.draggables .pending h3 { border-color:#ddd }
+.draggables .in_progress h3 { border-color:#3dc0fd }
+.draggables .testing h3 { border-color:#fde03d }
+.draggables .complete h3 { border-color:#3dfd4f }
 .draggables .story { cursor:pointer }
 
-.story { border-color:#ccc }
+.story .content { border-color:#ccc }
 .story,
 .story h3 { background:#fff }
-.story h3 a { color:#000 }
+.story h3 a, .story h4 { color:#333 }
 
 .story h3 { border-bottom:2px solid #99f }
-.story ol li { border-bottom:1px solid #ccf }
+.story ol li{ border-bottom:1px solid #ccf }
+.story ol li:last-child{ border-bottom:none }
 
 /* don't affect breadcrumbs */
 #breadcrumbs .story { border:none }

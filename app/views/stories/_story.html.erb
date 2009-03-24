@@ -7,6 +7,16 @@
     <%= story_format story.content %>
   </div>
 
+  <% unless story.acceptance_criteria.empty? %>
+    <div class="acceptance_criteria">
+      <h4>Acceptance Criteria</h4>
+      <ul>
+        <% story.acceptance_criteria.each do |criterion| %>
+          <li><%= h criterion %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <% if story.iteration && story.iteration.active? %>
     <% form_for [story.project, story.iteration, story] do |form| %>

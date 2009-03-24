@@ -30,6 +30,9 @@ $(document).ready(function() {
   if ($('body#stories_backlog')[0]) {
     BacklogPrioritisation.init();
   }
+
+  // story enhancements
+  $('#content .story').each( function() { new Story(this) });
 });
 
 // add header to AJAX requests to play nice with Rails' content negotiation

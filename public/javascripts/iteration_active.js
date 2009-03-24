@@ -49,15 +49,27 @@ function DraggableStory(droppable_status) {
   this.droppable = droppable_status.droppable;
 
   var content = droppable_status.li.find('.content');
+  var acceptance_criteria = droppable_status.li.find('.acceptance_criteria');
   var container = droppable_status.container;
   var status = droppable_status.status;
 
   droppable_position = this.droppable.position();
   this.droppable.addClass('ui-state-highlight');
 
-  container.append('<div class="story" id="draggable_'+this.input.id+'">'+content.html()+'</div>');
+  container.append('<div class="story" id="draggable_'+
+      this.input.id+
+      '"><div class="content">'+
+      content.html()+
+      '</div></div>');
 
   this.element = $('#draggable_' + this.input.id);
+
+  if (acceptance_criteria[0]) {
+    this.element.find('.content').append('<div class="acceptance_criteria">'+
+        acceptance_criteria.html()+
+        '</div>');
+  }
+
   this.element.draggable({ 
       revert: 'invalid',
       axis: 'x', 
