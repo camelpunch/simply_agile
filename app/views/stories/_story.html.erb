@@ -21,7 +21,8 @@
     <%= story_format story.content %>
   </div>
 
-  <% unless story.acceptance_criteria.empty? %>
+  <% if (!body_classes.include?('iteration_active') &&
+         !story.acceptance_criteria.empty?) %>
     <div class="acceptance_criteria">
       <h4>Acceptance Criteria</h4>
       <ul>
