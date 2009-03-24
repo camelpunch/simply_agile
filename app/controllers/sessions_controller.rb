@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_filter :login_required
+  skip_before_filter :select_organisation
 
   def create
     email_address = params[:user][:email_address]

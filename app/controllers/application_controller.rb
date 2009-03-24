@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   before_filter :login_required
+  before_filter :select_organisation
 
   protected
 
@@ -51,6 +52,17 @@ class ApplicationController < ActionController::Base
       flash[:notice] = "Please log in to continue"
       session[:redirect_to] = request.referer
       redirect_to new_session_url
+    end
+  end
+
+  def select_organisation
+    if session[:organisation_id].nil? && current_user.organisations.size == 1
+      session[:organisation_id] = current_user.organisations.first.id
+    end
+
+    unless current_organisation
+      session[:redirect_to] = request.referer
+      redirect_to organisations_url
     end
   end
 end

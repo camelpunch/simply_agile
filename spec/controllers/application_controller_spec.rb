@@ -5,11 +5,6 @@ describe ApplicationController do
   before :each do
     @user = mock_model User
     @referer = 'some/referer'
-#    @request = mock('Request',
-#      :protocol => '',
-#      :host_with_port => '',
-#      :referer => @referer)
-#    controller.stub!(:request).and_return(@request)
   end
 
   describe "current_user" do
@@ -175,4 +170,77 @@ describe ApplicationController do
     end
   end
 
+  describe "select organisation" do
+    before :each do
+      @user = Users.create_user!
+      @organisation = @user.organisations.first
+      session[:user_id] = @user
+    end
+
+    def current_organisation
+      controller.instance_variable_get("@current_organisation")
+    end
+
+    describe "with an organisation selected" do
+      before :each do
+        session[:organisation_id] = @organisation.id
+      end
+
+      it "should assign the organisation" do
+        controller.send(:select_organisation)
+        current_organisation.should == @organisation
+      end
+
+      it "should not redirect" do
+        controller.send(:select_organisation)
+        response.should_not be_redirect
+      end
+    end
+
+    describe "with only one organisation" do
+      it "should set the organisation" do
+        controller.send(:select_organisation)
+        current_organisation.should == @organisation
+      end
+
+      it "should set the organsation id in the session" do
+        controller.send(:select_organisation)
+        session[:organisation_id].should == @organisation.id
+      end
+
+      it "should not redirect" do
+        controller.send(:select_organisation)
+        response.should_not be_redirect
+      end
+    end
+
+    describe "with many organisations" do
+      before :each do
+        session[:organisation_id] = nil
+        @alternative_organisation = Organisations.create_organisation!
+        @alternative_organisation.organisation_members.create!(
+          :user => @user
+        )
+        @controller.instance_variable_set("@current_user", nil)
+        controller.stub!(:redirect_to)
+      end
+
+      it "should not assign an organisation" do
+        controller.send(:select_organisation)
+        current_organisation.should be_nil
+      end
+
+      it "should store the referer" do
+        referer = 'redirect_here'
+        request.stub!(:referer).and_return(referer)
+        controller.send(:select_organisation)
+        session[:redirect_to].should == referer
+      end
+
+      it "should redirect to the organisations index" do
+        controller.should_receive(:redirect_to).with(organisations_url)
+        controller.send(:select_organisation)
+      end
+    end
+  end
 end
