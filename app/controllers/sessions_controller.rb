@@ -9,7 +9,21 @@ class SessionsController < ApplicationController
 
     if user
       session[:user_id] = user.id
+      do_redirect
+    else
+      flash.now[:notice] = "User and password not found. Please try again."
+      render :template => 'sessions/new'
+    end
+  end
 
+  def update
+    session[:organisation_id] = params[:organisation_id]
+    do_redirect
+  end
+
+  protected
+
+  def do_redirect
       stored_redirect_url = session[:redirect_to]
       if stored_redirect_url
         session[:redirect_to] = nil
@@ -17,9 +31,5 @@ class SessionsController < ApplicationController
       else
         redirect_to root_url
       end
-    else
-      flash.now[:notice] = "User and password not found. Please try again."
-      render :template => 'sessions/new'
-    end
   end
 end

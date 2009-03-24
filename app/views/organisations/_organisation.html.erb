@@ -1,0 +1,12 @@
+<li>
+  <h3>
+    <%= button_to h(organisation.name),
+                session_path, :method => :put,
+                :organisation_id => organisation.id %>
+  </h3>
+  <p>
+    <%= pluralize organisation.projects.count, "project" %>,
+    <%= pluralize organisation.stories.count, "story" %>,
+    <%= pluralize organisation.iterations.active.count, "active iteration" %>
+  </p>
+</li>
