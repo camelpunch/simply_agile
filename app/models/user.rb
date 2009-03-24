@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
   has_many :organisation_sponsors
-  has_many :projects, :through => :organisation
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
@@ -54,6 +53,10 @@ class User < ActiveRecord::Base
   def self.find_by_email_address_and_password(email_address, password)
     find_by_email_address_and_encrypted_password(email_address,
       hash_password(password))
+  end
+
+  def projects
+    organisations.find(:all, :include => :projects).collect(&:projects).flatten
   end
 
   def verify(options)

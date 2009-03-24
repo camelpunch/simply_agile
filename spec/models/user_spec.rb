@@ -44,12 +44,31 @@ describe User do
       User.should have_many(:organisations)
     end
 
-    it "should have many projects" do
-      User.should have_many(:projects)
-    end
-
     it "should belong to an organisation sponsor" do
       User.should have_many(:organisation_sponsors)
+    end
+  end
+
+  describe "projects" do
+    before :each do
+      @user = Users.create_user!
+      @users_projects = []
+
+      @organisation1 = Organisations.create_organisation!
+      @organisation1.organisation_members.create!(:user => @user)
+      @users_projects << @organisation1.projects.create!(:name => 'project1')
+
+      @organisation2 = Organisations.create_organisation!
+      @organisation2.organisation_members.create!(:user => @user)
+      @users_projects << @organisation2.projects.create!(:name => 'project2')
+
+      @organisation3 = Organisations.create_organisation!
+      @organisation3.projects.create!(:name => "someone else's project")
+
+    end
+
+    it "should return projects which belong to the user's organisations" do
+      @user.projects.should == @users_projects
     end
   end
 
