@@ -5,6 +5,8 @@
   <li class="iteration"><%= link_to h(@iteration), [@project, @iteration] %></li>
   <li>Edit</li>
 <% end %>
+<% body_classes << 'iteration_planning' %>
+
 <% form_for [@project, @iteration] do |form| %>
   <%= render form %>
   <p class="submit">

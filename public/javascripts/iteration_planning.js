@@ -34,7 +34,9 @@ var StorySwapper = {
       }
     });
 
-    if (!inserted) ol.append(story);
+    if (!inserted) {
+      ol.append(story);
+    }
   },
 
   convertCheckBoxes: function() {
@@ -68,7 +70,7 @@ var StorySwapper = {
     $('ol li.story').each( function() {
       if ($(this).find('input[checked]:checked')[0]) {
         var story = $(this).remove();
-        $('#stories_iteration ol').append(story);
+        $('#stories_iteration>ol').append(story);
       }
     });
   },
@@ -78,8 +80,8 @@ var StorySwapper = {
     var story = checkbox.parents('li.story').remove();
 
     var append_to = checked_before_removal 
-      ? $('#stories_iteration ol') 
-      : $('#stories_available ol');
+      ? $('#stories_iteration>ol') 
+      : $('#stories_available>ol');
 
     StorySwapper.appendStory(story, append_to);
 
