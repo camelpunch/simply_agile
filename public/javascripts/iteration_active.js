@@ -1,36 +1,73 @@
-var DraggableStories = {
+function DraggableStories() {
+  var instance = this;
 
-  init: function() {
-    // add some guidance
-    $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
+  // add some guidance
+  $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
 
-    DraggableStories.labelColumns();
-    DraggableStories.createContainer();
-    
-    // make droppables for each input box
-    $('input[name="story[status]"]').each(DraggableStories.createDroppables);
+  this.labelColumns();
+  this.createContainer();
+  
+  // make droppables for each input box
+  $('input[name="story[status]"]').each( function() {
+    instance.createDroppable(this)
+  });
 
-    // handle resize event
-    $(window).resize( function() {
-      // remove all JSy elements
-      $('.draggables').remove();
+  // handle resize event
+  $(window).resize( function() {
+    // remove all JSy elements
+    $('.draggables').remove();
 
-      // re-initialise
-      DraggableStories.createContainer();
-      $('input[name="story[status]"]').each(DraggableStories.createDroppables);
-    });
-  },
+    // re-initialise
+    instance.createContainer();
+    $('input[name="story[status]"]').each( function() { instance.createDroppable(this) } );
+  });
+}
 
-  // should be bound to a single radio button
-  createDroppables: function() {
-    var form = $(this).parents('form');
+function DraggableStory(input, droppable) {
+  var li = $(input).parents('ol.stories>li');
+  var content = li.find('.content');
+  var form = $(input).parents('form');
+  var container = form.find('.draggables');
+  var status = $(input).val();
+
+  droppable_position = droppable.position();
+  droppable.addClass('ui-state-highlight');
+
+  container.append('<div class="story" id="draggable_' + input.id + '">'+content.html()+'</div>');
+
+  this.element = $('#draggable_' + input.id);
+  this.element.draggable({ 
+      revert: 'invalid',
+      axis: 'x', 
+      containment: 'parent',
+      cursor: 'pointer'
+    })
+    .css('position', 'absolute')
+    .css('top', droppable_position.top)
+    .css('left', droppable_position.left);
+
+  DraggableStory.setStatus(this.element, status);
+}
+DraggableStory.setStatus = function(element, status) {
+  element.removeClass('pending');
+  element.removeClass('in_progress');
+  element.removeClass('testing');
+  element.removeClass('complete');
+  element.addClass(status);
+}
+
+DraggableStories.prototype = {
+
+  createDroppable: function(input) {
+    var instance = this;
+    var form = $(input).parents('form');
     var container = form.find('.draggables');
-    var li = $(this).parents('li');
+    var li = $(input).parents('li');
     var content = li.find('.content');
-    var status = $(this).val();
-    var id = this.id;
+    var status = $(input).val();
+    var id = input.id;
 
-    container.append('<div class="'+status+'" id="droppable_' + this.id + '"></div>');
+    container.append('<div class="'+status+'" id="droppable_' + id + '"></div>');
 
     var droppable = $('#droppable_' + id)
       .droppable({ 
@@ -58,7 +95,7 @@ var DraggableStories = {
           
           // change class of elements
           var draggable = container.find('.ui-draggable');
-          DraggableStories.setDraggableStatus(draggable, status);
+          DraggableStory.setStatus(draggable, status);
 
           // custom snapping
           $(ui.draggable).css('left', $(this).position().left);
@@ -66,24 +103,8 @@ var DraggableStories = {
       });
 
     // make a draggable if button is checked
-    if ($(this).attr('checked')) {
-      droppable_position = droppable.position();
-      droppable.addClass('ui-state-highlight');
-
-      container.append('<div class="story" id="draggable_' + this.id + '">'+content.html()+'</div>');
-
-      var draggable = $('#draggable_' + this.id);
-      draggable.draggable({ 
-          revert: 'invalid',
-          axis: 'x', 
-          containment: 'parent',
-          cursor: 'pointer'
-        })
-        .css('position', 'absolute')
-        .css('top', droppable_position.top)
-        .css('left', droppable_position.left);
-
-      DraggableStories.setDraggableStatus(draggable, status);
+    if ($(input).attr('checked')) {
+      new DraggableStory(input, droppable); 
     }
 
     // remove 'story' class from li
@@ -111,13 +132,5 @@ var DraggableStories = {
     html += '</ol></div>';
 
     $('ol.stories').before(html);
-  },
-
-  setDraggableStatus: function(draggable, status) {
-    draggable.removeClass('pending');
-    draggable.removeClass('in_progress');
-    draggable.removeClass('testing');
-    draggable.removeClass('complete');
-    draggable.addClass(status);
   }
 }

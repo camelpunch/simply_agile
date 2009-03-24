@@ -23,7 +23,7 @@ $(document).ready(function() {
 
   // iterations/show when active
   if ($('body#iterations_show .section form.edit_story')[0]) {
-    DraggableStories.init();
+    new DraggableStories();
   }
   
   // backlog
