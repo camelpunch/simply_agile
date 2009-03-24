@@ -1,7 +1,7 @@
-.draggables .pending h3 { border-color:#ddd }
-.draggables .in_progress h3 { border-color:#3dc0fd }
-.draggables .testing h3 { border-color:#fde03d }
-.draggables .complete h3 { border-color:#3dfd4f }
+.draggables .pending .header { border-color:#ddd }
+.draggables .in_progress .header { border-color:#3dc0fd }
+.draggables .testing .header { border-color:#fde03d }
+.draggables .complete .header { border-color:#3dfd4f }
 .draggables .story { cursor:pointer }
 
 .story .content { border-color:#ccc }
