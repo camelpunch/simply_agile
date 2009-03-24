@@ -9,7 +9,7 @@
 .story h3 { background:#fff }
 .story h3 a, .story h4 { color:#333 }
 
-.story h3 { border-bottom:2px solid #99f }
+.story .header { border-bottom:2px solid #99f }
 .story ol li{ border-bottom:1px solid #ccf }
 .story ol li:last-child{ border-bottom:none }
 

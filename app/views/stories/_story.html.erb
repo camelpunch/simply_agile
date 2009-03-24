@@ -1,9 +1,11 @@
 <li class="story" id="story_<%= story.id %>">
   <div class="content">
+    <div class="header">
     <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
     <% if story.estimate? %>
       <p class="estimate">Story Points: <%= story.estimate %></p>
     <% end %>
+    </div>
     <%= story_format story.content %>
   </div>
 

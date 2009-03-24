@@ -1,18 +1,21 @@
 ol.stories{ overflow:hidden }
 ol.stories li.story{ margin-bottom:15px }
 
-.story{ height:100%; max-width:400px }
-.story .content { border-width:1px; border-style:solid }
-.story ol, .story ul{ margin:4px 0 0 0 }
-.story li{ display:block; padding:0 5px }
+#content .story{ height:100%; max-width:400px; position:relative }
+#content .draggables .story { height:auto }
+#content .story .content { border-width:1px; border-style:solid }
+#content .story ol, .story ul{ margin:4px 0 0 0 }
+#content .story li{ display:block; padding:0 5px }
 
-/* more links */
-.story a.more { position:absolute; right:5px; bottom:0 }
-/* end more links */
+#content .story h3 { width:50% }
+
+/* less/more links */
+#content .story .less_more { float:left; width:50% }
+/* end less/more links */
 
 .draggables .story{ overflow:auto; height:auto }
 
-.javascript .story .estimate{ position:absolute; top:5px; right:5px; 
+.javascript #content .story .estimate{ position:absolute; top:5px; right:5px; 
                               margin:0 }
 .story ol{ clear:both }
 
@@ -25,5 +28,5 @@ body#projects_show #backlog li.story{ float:left; margin-right:15px;
                                       width:43% }
 
 /* page-dependent default states */
-li.story .acceptance_criteria { display:none }
+#content .story .acceptance_criteria { display:none }
 /* end page-dependent default states */
