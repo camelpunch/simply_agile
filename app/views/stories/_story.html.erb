@@ -7,16 +7,18 @@
     <%= label_tag "stories_#{story.id}_include", "Include" %>
     </div>
   <% end %>
+
   <div class="content">
     <div class="header">
-    <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
-
-    <% if body_classes.include?('iteration_planning') %>
-      <%= render :partial => 'stories/estimating_story', :object => story %>
-    <% elsif story.estimate? %>
-      <p class="estimate">Story Points: <%= story.estimate %></p>
-    <% end %>
-
+      <% if body_classes.include?('iteration_planning') %>
+        <h3><%= h(story) %></h3>
+        <%= render :partial => 'stories/estimating_story', :object => story %>
+      <% else %>
+        <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
+        <% if story.estimate? %>
+          <p class="estimate">Story Points: <%= story.estimate %></p>
+        <% end %>
+      <% end %>
     </div>
     <%= story_format story.content %>
   </div>
@@ -33,7 +35,7 @@
     </div>
   <% end %>
 
-  <% if story.iteration && story.iteration.active? %>
+  <% if body_classes.include?('iteration_active') %>
     <% form_for [story.project, story.iteration, story] do |form| %>
       <%= render :partial => 'stories/status_form', :object => form %>
     <% end %>
