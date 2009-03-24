@@ -13,6 +13,7 @@ function Story(element) {
 }
 Story.prototype = {
   createContainer: function() {
+    this.element.find('.less_more').remove();
     this.element.find('h3').after('<div class="less_more"></div>');
     this.container = this.element.find('.less_more');
   },

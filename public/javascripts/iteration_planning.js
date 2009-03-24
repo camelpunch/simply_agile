@@ -90,6 +90,8 @@ var StorySwapper = {
 
     StorySwapper.updateEstimates();
     StorySwapper.bindEstimates();
+
+    new Story(story);
   },
 
   bindEstimates: function() {
