@@ -44,7 +44,7 @@ DraggableStories.prototype = {
     
     // set height of each row to the height of the draggable content
     $('.draggables').each( function() {
-      var height = $(this).find('.story .content').height();
+      var height = $(this).find('.story .content').height() + 9;
 
       $(this).height(height);
       $(this).find('.ui-droppable').height(height);
