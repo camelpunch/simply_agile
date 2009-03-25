@@ -397,9 +397,14 @@ describe StoriesController do
     it_should_behave_like "it operates on an existing story"
     it_should_behave_like "it's successful"
 
-    it "should render the estimate template" do
+    it "should render the story partial" do
       do_call
-      response.should render_template('stories/estimate')
+      response.should render_template('stories/story')
+    end
+
+    it "should set up body_classes" do
+      do_call
+      assigns[:body_classes].should include('iteration_planning')
     end
   end
 
