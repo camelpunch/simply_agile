@@ -22,7 +22,7 @@ function NewStoryAdder() {
             url: this.url + '/estimate',
             success: function(html, status) {
               // add the story to the available list
-              $('#stories_available>ol').prepend(html)
+              $('#stories_available>ol').prepend(html);
 
               // re-initialise the page
               StorySwapper.initStories();
@@ -30,8 +30,7 @@ function NewStoryAdder() {
               StorySwapper.convertCheckBoxes();
               StorySwapper.updateEstimates();
 
-              $('a.expand').remove();
-              StoryToggler.init();
+              new Story($('#stories_available>ol>li:first-child'));
             }
           });
         }
