@@ -2,6 +2,27 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
 
+  describe "story_format" do
+    before :each do
+      @content = "As a developer
+I want stories to be formatted nicely
+So that my eyes don't hurt"
+    end
+
+    it "should turn lines into list items" do
+      helper.story_format(@content).should have_tag('li', 'As a developer')
+    end
+
+    it "should return nil if empty" do
+      helper.story_format('').should be_nil
+    end
+
+    it "should escape html" do
+      helper.story_format('<script>alert("hi")</script>').
+        should_not have_tag('script')
+    end
+  end
+
   describe "render_flash" do
     describe "with no flash" do
       it "should return nil" do
@@ -24,6 +45,13 @@ describe ApplicationHelper do
 
       it "should render a p for the message" do
         helper.render_flash.should have_tag('p', 'hello')
+      end
+    end
+
+    describe "with blank message" do
+      it "should not barf" do
+        flash[:notice] = nil
+        lambda {helper.render_flash}.should_not raise_error
       end
     end
   end

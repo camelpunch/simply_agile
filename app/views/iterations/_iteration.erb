@@ -1,0 +1,7 @@
+<li>
+<%= link_to(
+  image_tag(iteration.pending? ? 'burndown.png' : iteration_burndown_path(iteration, :width => 150), 
+    :width => 150, :height => 112, :alt => "Burndown chart for #{h iteration.name}"),
+  [iteration.project, iteration]) %>
+<%= link_to h(iteration), [iteration.project, iteration] %>
+</li>

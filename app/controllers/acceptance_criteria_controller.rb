@@ -20,16 +20,17 @@ class AcceptanceCriteriaController < ApplicationController
       @story.reload
       if story_status != @story.status
         new_status = ActiveSupport::Inflector.titleize(@story.status)
-        flash[:notice] = "Story status has changed to '#{new_status}'"
+        message = "Story status has changed to '#{new_status}'"
       end
 
       respond_to do |format|
         format.html do
+          flash[:notice] = message
           redirect_to project_story_url(@story.project, @story)
         end
 
         format.js do
-          render :text => flash[:notice]
+          render :text => message
         end
       end
 

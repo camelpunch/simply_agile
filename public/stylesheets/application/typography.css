@@ -24,13 +24,20 @@ form input.numeric { text-align:right }
 
 #footer { font-size:77% }
 
-.section h2 { font-size:146.5% }
+div.section h2 { font-size:146.5% }
+
+/* projects/show */
+body#projects_show #iterations ol li a { text-align:center }
+body#projects_show #iterations h3 { text-align:right; font-size:123.1%;
+                                    padding:7px 10px 15px 0 }
+/* end projects/show */
 
 /* iterations/new */
 body.iterations .include a { text-indent:-20000px; outline:none; text-underline:none }
 body.iterations .display h3 { font-weight:bold }
-body.javascript #stories span.estimate { text-align:center }
+.javascript #request_container { text-align:left }
+.javascript #stories span.estimate { text-align:center }
 /* end iterations/new */
 
-body#iterations_show.javascript #stories .guidance,
-body#iterations_show.javascript #headings ol li { text-align:center }
+body#iterations_show .javascript #stories .guidance,
+body#iterations_show .javascript #headings ol li { text-align:center }

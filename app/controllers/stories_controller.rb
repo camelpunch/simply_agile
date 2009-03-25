@@ -48,7 +48,8 @@ class StoriesController < ApplicationController
   end
 
   def estimate
-    render :partial => 'stories/estimate', :object => @story 
+    @body_classes = [controller_name, 'iteration_planning']
+    render :partial => 'stories/story', :object => @story 
   end
 
   def new

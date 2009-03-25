@@ -2,7 +2,7 @@ var StorySwapper = {
   init: function() {
     // create an iteration stories div
     $('#stories_available')
-      .before('<div id="stories_iteration_container"><div class="section" id="stories_iteration"><span class="estimate">Story Points (<span class="numeric">0</span>)</span><h2>Iteration stories</h2><ol></ol></div></div>');
+      .before('<div id="stories_iteration_container"><div class="section" id="stories_iteration"><span class="estimate">Story Points (<span class="numeric">0</span>)</span><h2>Iteration stories</h2><ol class="stories"></ol></div></div>');
 
     // wrap the available div
     var available_div = $('#stories_available').remove();
@@ -34,7 +34,9 @@ var StorySwapper = {
       }
     });
 
-    if (!inserted) ol.append(story);
+    if (!inserted) {
+      ol.append(story);
+    }
   },
 
   convertCheckBoxes: function() {
@@ -68,7 +70,7 @@ var StorySwapper = {
     $('ol li.story').each( function() {
       if ($(this).find('input[checked]:checked')[0]) {
         var story = $(this).remove();
-        $('#stories_iteration ol').append(story);
+        $('#stories_iteration>ol').append(story);
       }
     });
   },
@@ -78,8 +80,8 @@ var StorySwapper = {
     var story = checkbox.parents('li.story').remove();
 
     var append_to = checked_before_removal 
-      ? $('#stories_iteration ol') 
-      : $('#stories_available ol');
+      ? $('#stories_iteration>ol') 
+      : $('#stories_available>ol');
 
     StorySwapper.appendStory(story, append_to);
 
@@ -88,7 +90,8 @@ var StorySwapper = {
 
     StorySwapper.updateEstimates();
     StorySwapper.bindEstimates();
-    StoryToggler.bindAnchors(story);
+
+    new Story(story);
   },
 
   bindEstimates: function() {
@@ -116,34 +119,3 @@ var StorySwapper = {
   }
 }
 
-var StoryToggler = {
-  init: function() {
-    // insert expand links
-    $('ol li.story').each( function() {
-      $(this).find('.content')
-      .before('<a class="expand" href="#'+this.id+'">Show Story</a>');
-    });
-
-    StoryToggler.bindAnchors();
-  },
-
-  // expand functionality for story content
-  bindAnchors: function(base) {
-    if (base) {
-      base.find('a.expand').click(StoryToggler.toggleContent);
-    } else {
-      $('a.expand').click(StoryToggler.toggleContent);
-    }
-  },
-
-  toggleContent: function() {
-    var id = this.href.split('#')[1];
-    $('#'+id+' .content').toggle();
-    if ($(this).html() == 'Show Story') {
-      $(this).html('Hide Story');
-    } else {
-      $(this).html('Show Story');
-    }
-    return false;
-  }
-}

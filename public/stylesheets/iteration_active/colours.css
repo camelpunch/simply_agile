@@ -1,0 +1,13 @@
+body.iteration_active .draggables .ui-droppable { background:#fff; border-color:#fff }
+
+body.iteration_active .javascript .story .content p.estimate { background:#eee }
+body.iteration_active #headings .pending { background:#ddd }
+body.iteration_active .javascript .story .content p.estimate,
+body.iteration_active #headings .pending { border-color:#ddd }
+body.iteration_active #headings .in_progress { background:#3dc0fd }
+body.iteration_active #headings .in_progress { border-color:#3dc0fd }
+body.iteration_active #headings .testing { background:#fde03d }
+body.iteration_active #headings .testing { border-color:#fde03d }
+body.iteration_active #headings .complete { background:#3dfd4f }
+body.iteration_active #headings .complete { border-color:#3dfd4f }
+

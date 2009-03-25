@@ -1,9 +1,8 @@
-<% content_for :title, "Login" %>
-<% content_for :h1, "Login" %>
+<% content_for :title, "Welcome to Simply Agile beta" %>
 
-<div id="existing_users" class="section">
+<div id="existing_users">
   <h2>Existing users</h2>
-  <% form_for User.new, :url => session_url do |f| %>
+  <% form_for User.new, :url => session_path do |f| %>
     <p>
       <%= f.label :email_address %>
       <%= f.text_field :email_address, :class => 'auto_focus' %>
@@ -18,9 +17,8 @@
   <% end %>
 </div>
 
-<div id="new_users" class="section">
+<div id="new_users">
   <h2>New users</h2>
-
   <p>
     <%= link_to "Sign up today", new_user_path %> to start maximising your
     agile team's potential.

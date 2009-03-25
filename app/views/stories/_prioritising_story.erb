@@ -1,0 +1,8 @@
+<p>
+<%= label_tag "priorities_#{prioritising_story.id}", 'Priority' %>
+<%= text_field_tag("project[priorities[#{prioritising_story.id}]]", 
+                   prioritising_story.priority,
+                   :id => "priorities_#{prioritising_story.id}",
+                   :class => 'numeric',
+                   :size => 2) %>
+</p>

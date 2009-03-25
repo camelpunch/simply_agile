@@ -3,8 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <%= stylesheet_link_tag 'reset-fonts', 'layout', 'typography', 'colours',
-      :cache => true %>
+    <%= stylesheet_link_tag('reset-fonts', 
+                            'story/layout', 
+                            'story/typography', 
+                            'story/colours', 
+                            'iteration_planning/layout',
+                            'iteration_planning/typography',
+                            'iteration_planning/colours',
+                            'iteration_active/layout',
+                            'iteration_active/typography',
+                            'iteration_active/colours',
+                            'application/layout', 
+                            'application/typography', 
+                            'application/colours',
+                            :cache => true) %>
     <title><%= h yield(:title) %> | Simply Agile</title>
   </head>
 
@@ -54,11 +66,7 @@
       <% if ! @current_user.verified? && @current_user.created_at < 1.day.ago -%>
         <%= render :partial => 'shared/verify' %>
       <% end -%>
-      <div id="footer">
-        <p>
-          Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
-        </p>
-      </div>
+      <%= render :partial => 'shared/footer' %>
     </div>
     <%= javascript_include_tag('jquery-1.3.2.min',
       'jquery-ui-1.7.custom.min',
