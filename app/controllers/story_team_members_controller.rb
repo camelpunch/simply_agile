@@ -18,7 +18,9 @@ class StoryTeamMembersController < ApplicationController
   end
 
   def destroy
-    @story_team_member = StoryTeamMember.find(params[:id])
+    @story_team_member = 
+      StoryTeamMember.find(params[:id],
+                           :conditions => ['user_id = ?', current_user.id])
     @story_team_member.destroy
     redirect_to [
       @story_team_member.story.project, 

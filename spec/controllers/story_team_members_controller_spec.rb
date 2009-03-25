@@ -64,19 +64,37 @@ describe StoryTeamMembersController do
 
     before :each do
       @story_team_member = 
-        StoryTeamMembers.create_story_team_member!(:story => @story)
+        StoryTeamMembers.create_story_team_member!(:user => @user,
+                                                   :story => @story)
     end
 
-    it "should delete" do
-      do_call
-      StoryTeamMember.should_not be_exist(@story_team_member.id)
+    describe "myself" do
+      it "should delete" do
+        do_call
+        StoryTeamMember.should_not be_exist(@story_team_member.id)
+      end
+
+      it "should redirect to the story page" do
+        do_call
+        response.should redirect_to(project_iteration_story_url(@project, 
+                                                                @iteration,
+                                                                @story))
+      end
     end
 
-    it "should redirect to the story page" do
-      do_call
-      response.should redirect_to(project_iteration_story_url(@project, 
-                                                              @iteration,
-                                                              @story))
+    describe "someone else" do
+      before :each do
+        @story_team_member.user = Users.create_user
+        @story_team_member.save!
+      end
+
+      it "should not delete" do
+        begin
+          do_call
+        rescue
+        end
+        StoryTeamMember.should be_exist(@story_team_member.id)
+      end
     end
   end
 
