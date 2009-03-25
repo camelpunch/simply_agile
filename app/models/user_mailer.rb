@@ -7,12 +7,17 @@ class UserMailer < ActionMailer::Base
     body       :user => user
   end
 
-  def acknowledgement(user)
-    subject    "You have been added to #{user.organisation.name}"
+  def acknowledgement(organisation_member)
+    organisation = organisation_member.organisation
+    user = organisation_member.user
+    sponsor = organisation_member.sponsor
+    token = organisation_member.acknowledgement_token
+
+    subject    "You have been added to #{organisation.name}"
     recipients user.email_address
     from       '"SimplyAgile" <noreply@jandaweb.com>'
 
-    body       :user => user,
-      :sponsor => user.organisation_sponsors.first.sponsor
+    body       :organisation => organisation, :user => user, 
+      :sponsor => sponsor, :token => token
   end
 end

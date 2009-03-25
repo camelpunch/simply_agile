@@ -75,6 +75,10 @@ describe OrganisationMembersController do
       it "should have the user set" do
         @organisation_member.user.should == assigns[:user]
       end
+
+      it "should have the sponsor set" do
+        @organisation_member.sponsor.should == @user
+      end
     end
 
     describe "with invalid user details" do

@@ -20,6 +20,10 @@ describe OrganisationMember do
     it "should belong to an organisation" do
       OrganisationMember.should belong_to(:organisation)
     end
+
+    it "should belong to a sponsor" do
+      OrganisationMember.should belong_to(:sponsor)
+    end
   end
 
   describe "acknowledgement token" do

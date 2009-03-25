@@ -1,6 +1,10 @@
 <% content_for :title, "Sharing" %>
 <% content_for :h1, h(@organisation.name) %>
 
+<% content_for :actions do %>
+  <li><%= link_to 'Change', organisations_path %></li>
+<% end %>
+
 <div class="section">
   <h2><%= h(@organisation.name) %> Members</h2>
 
