@@ -32,6 +32,16 @@ describe StoryTeamMember do
       @story_team_member.should have(1).error_on(:story_id)
     end
 
+    it "should require that story and user are a unique combination" do
+      user = Users.create_user
+      story = Stories.create_story
+      @story_team_member.user = user
+      @story_team_member.story = story
+      @story_team_member.save!
+      lambda {StoryTeamMember.create!(:user => user, :story => story)}.
+        should raise_error(ActiveRecord::RecordInvalid)
+    end
+
     it "should require that the user belongs to organisation of the story's project"
   end
 end

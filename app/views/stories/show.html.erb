@@ -20,13 +20,25 @@
   </div>
 </div>
 
-<% if @story.iteration && @story.iteration.active? && !@story.users.include?(@current_user) %>
-  <% form_for StoryTeamMember.new(:story => @story) do |f| %>
-    <p class="submit">
-    <%= f.hidden_field :story_id %>
-    <%= f.submit 'Work on this story' %>
-    </p>
-  <% end %>
+<% unless @story.team_members.empty? %>
+  <div id="users">
+    <h2>Story Team</h2>
+    <ul>
+      <%= render @story.team_members %>
+    </ul>
+
+    <% if (@story.iteration && 
+           @story.iteration.active? && 
+           !@story.users.include?(@current_user)) %>
+      <% form_for StoryTeamMember.new(:story => @story) do |f| %>
+        <p class="submit">
+        <%= f.hidden_field :story_id %>
+        <%= f.submit 'Work on this story' %>
+        </p>
+      <% end %>
+    <% end %>
+
+  </div>
 <% end %>
 
 <div id="acceptance_criteria">

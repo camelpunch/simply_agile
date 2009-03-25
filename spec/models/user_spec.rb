@@ -47,6 +47,14 @@ describe User do
     it "should belong to an organisation sponsor" do
       User.should have_many(:organisation_sponsors)
     end
+
+    it "should have many story team members" do
+      User.should have_many(:story_team_members)
+    end
+
+    it "should have many stories" do
+      User.should have_many(:stories)
+    end
   end
 
   describe "creation" do

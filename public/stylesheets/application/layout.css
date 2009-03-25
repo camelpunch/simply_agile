@@ -23,7 +23,8 @@
 .javascript #request { margin:0 auto; width:40%; height:60%;
                            min-height:340px; overflow:auto; position:relative }
 .javascript #request #request_body { padding:5px 15px 0 15px }
-.javascript #request h2#request_header { padding:5px 15px }
+.javascript #request h2 { margin-top:1em }
+.javascript #request h2#request_header { margin:0; padding:5px 15px }
 .javascript #request a#close_request { position:absolute; top:5px; right:8px }
 
 .javascript #request .edit_acceptance_criterion,
@@ -80,7 +81,11 @@ body#projects_show #iterations ol li a { display:block; width:150px; margin:0 au
 /* end projects/show */
 
 /* stories/show */
-body#stories_show #acceptance_criteria { margin:15px 0 }
+body#stories_show #users { width:20em }
+body#stories_show #users ul { overflow:hidden }
+body#stories_show #users a { float:left; clear:left }
+body#stories_show #users form.button-to { float:right }
+body#stories_show h2 { margin:1em 0 0 0 }
 body#stories_show #acceptance_criteria table { table-layout:fixed }
 body#stories_show #acceptance_criteria table td { padding:0 5px }
 body#stories_show #acceptance_criteria table td.edit,

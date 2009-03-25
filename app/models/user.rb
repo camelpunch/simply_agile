@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   belongs_to :organisation
   has_many :organisation_sponsors
   has_many :projects, :through => :organisation
+  has_many :story_team_members
+  has_many :stories, :through => :story_team_members
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address

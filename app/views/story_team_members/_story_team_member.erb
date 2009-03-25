@@ -1,0 +1,6 @@
+<li>
+<%= mail_to story_team_member.user.email_address %>
+<% if story_team_member.user == @current_user %>
+<%= button_to 'Remove Me', story_team_member, :method => :delete %>
+<% end %>
+</li>

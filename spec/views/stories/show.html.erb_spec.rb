@@ -15,6 +15,7 @@ describe "/stories/show" do
                                  :iteration_id => '',
                                  :iteration => nil,
                                  :users => [],
+                                 :team_members => [],
                                  :content => '')
     @active_iteration = mock_model(Iteration, :pending? => false, :active? => true)
     @pending_iteration = mock_model(Iteration, :pending? => true, :active? => false)
