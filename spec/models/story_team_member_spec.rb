@@ -8,6 +8,13 @@ describe StoryTeamMember do
     }
   end
 
+  describe "protection" do
+    it "should not allow mass-assignment of user_id" do
+      member = StoryTeamMember.new :user_id => 22
+      member.user_id.should be_blank
+    end
+  end
+
   describe "associations" do
     it "should belong to a user" do
       StoryTeamMember.should belong_to(:user)
