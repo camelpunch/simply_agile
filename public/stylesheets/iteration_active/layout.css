@@ -1,7 +1,8 @@
 body.iteration_active #burndown { float:right }
 body.iteration_active #stories { float:left }
 
-body.iteration_active .ui-droppable { height:7em }
+body.iteration_active #content .story,
+body.iteration_active .ui-droppable { height:10em }
 
 body.iteration_active #headings { overflow:hidden; margin-bottom:9px }
 body.iteration_active #headings ol { width:100% }
