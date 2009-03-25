@@ -156,7 +156,7 @@ function DroppableStatus(input) {
               var iteration_id = location_parts[location_parts.length - 1];
               $('#burndown img').attr('src',
                                       '/iterations/' + iteration_id +
-                                      '/burndown?' + new Date().getTime());
+                                      '/burndown?width=350&' + new Date().getTime());
             }
 
             DroppableStatus.previous_statuses[story_id] = instance.status;
