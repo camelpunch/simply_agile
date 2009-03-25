@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('body').addClass('javascript');
+  $('#container').addClass('javascript');
 
   // highlight first erroneous field / auto focus field
   var first_error_field = $('.field_with_errors')[0];
@@ -14,22 +14,24 @@ $(document).ready(function() {
     // start swapper
     StorySwapper.init();
     
-    // start toggles
-    StoryToggler.init();
-
     // AJAXy story adding
     new NewStoryAdder();
   }
 
   // iterations/show when active
-  if ($('body#iterations_show .section form.edit_story')[0]) {
-    DraggableStories.init();
+  if ($('body').hasClass('iteration_active')) {
+    new DraggableStories();
+    // don't enhance stories
+  } else if (!$('body#stories_show')[0]) {
+    // normal story enhancements
+    $('#content .story').each( function() { new Story(this) });
   }
   
   // backlog
-  if ($('#backlog')[0]) {
+  if ($('body#stories_backlog')[0]) {
     BacklogPrioritisation.init();
   }
+
 });
 
 // add header to AJAX requests to play nice with Rails' content negotiation

@@ -35,7 +35,7 @@ Request.prototype = {
   },
 
   draw: function(html) {
-    $('body').prepend('<div id="request_container"><div id="request">'+html+'</div></div>');
+    $('#container').prepend('<div id="request_container"><div id="request">'+html+'</div></div>');
     this.createCloseLink();
     this.bindForms();
     this.autoFocus();

@@ -1,0 +1,107 @@
+/* basic layout */
+#container { margin:0 0 0 0; position:relative }
+#header { width:100%; padding-bottom:5px }
+#contextual_new_story { position:absolute; width:118px; height:99px;
+                        right:30px; top:2px }
+#footer { clear:both; padding:0 0 30px 0 }
+
+#verify { position:fixed; top:0; z-index:11; width:100% }
+#verify div { margin:0 auto; width:52em; padding:4px 0 }
+#verify p { margin:0 }#verify p { margin:0 }#verify p { margin:0 }
+/* end basic layout */
+
+/* navigation */
+#navigation { height:67px; position:relative; width:24.05em }
+#header>#navigation { margin:0 auto }
+#navigation ol { position:absolute; left:0; bottom:0; height:2.5em }
+#navigation li { float:left; height:2.5em; line-height:2.5em; width:6em }
+#navigation li a { display:block; width:6em }
+/* end navigation */
+
+/* javascript request */
+.javascript #request_container { position:fixed; top:140px; height:100%; width:100%; z-index:11 }
+.javascript #request { margin:0 auto; width:40%; height:60%;
+                           min-height:340px; overflow:auto; position:relative }
+.javascript #request #request_body { padding:5px 15px 0 15px }
+.javascript #request h2#request_header { padding:5px 15px }
+.javascript #request a#close_request { position:absolute; top:5px; right:8px }
+
+.javascript #request .edit_acceptance_criterion,
+.javascript #request .edit a,
+.javascript #request .delete form,
+.javascript #request #backlog_link { display:none }
+/* end javascript request */
+
+/* breadcrumbs */
+#breadcrumbs { height:3em; padding-left:30px }
+#breadcrumbs li { float:left; margin-left:9px; padding-left:25px }
+#breadcrumbs li.first-child { margin-left:0; padding-left:0 }
+/* end breadcrumbs */
+
+/* content */
+#content { position:relative; margin:0 30px 0 0;
+           padding:20px 0 100px 30px;
+           overflow:hidden }
+#actions { position:absolute; right:0; top:20px; width:124px }
+#actions li { width:104px; display:block; margin:0 auto }
+#actions a { width:104px; height:29px }
+
+div.section { position:relative; padding:40px 36px 22px 36px; 
+              margin:60px 0 }
+div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
+              /*ie6*/ left:-50px }
+div.section>h2 { left:-13px }
+div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
+    top:0; left: 0 }
+
+div.section_container { position:relative }
+div.section_container a.section { position:absolute; right:9px; top:42px }
+/* end content */
+
+/* forms */
+form p label { display:block }
+form p.checkbox label { display:inline; padding-left:5px }
+/* end forms */
+
+/* home/show */
+.active_iteration { float: left; width: 50%; }
+/* end home/show */
+
+/* projects/show */
+body#projects_show #backlog { width:56%; float:left }
+body#projects_show #iterations { width:40%; float:right; position:relative }
+body#projects_show #iterations div.section { padding:0 }
+body#projects_show #iterations div.section .guidance { padding:30px 0 0 15px }
+body#projects_show #iterations .active,
+body#projects_show #iterations .planned { position:relative; overflow:hidden;
+                                          padding-bottom:15px }
+body#projects_show #iterations ol li { width:50%; float:left }
+body#projects_show #iterations ol li a { display:block; width:150px; margin:0 auto }
+/* end projects/show */
+
+/* stories/show */
+body#stories_show #acceptance_criteria { margin:15px 0 }
+body#stories_show #acceptance_criteria table { table-layout:fixed }
+body#stories_show #acceptance_criteria table td { padding:0 5px }
+body#stories_show #acceptance_criteria table td.edit,
+body#stories_show #acceptance_criteria table td.delete { width:4em }
+body#stories_show #acceptance_criteria p.checkbox input { display:block; float:left }
+body#stories_show #acceptance_criteria p.checkbox label { display:block; float:left; width:16em }
+body#stories_show .javascript #acceptance_criteria table td.name { display:none }
+body#stories_show .javascript #acceptance_criteria table .submit_complete { display:none }
+body#stories_show #acceptance_criteria form { display:inline }
+/* end stories/show */
+
+/* stories/backlog */
+body#stories_backlog .javascript #content p.submit,
+body#stories_backlog .javascript #content label,
+body#stories_backlog .javascript #content input { display:none }
+/* end stories/backlog */
+
+/* sessions/new */
+#existing_users { float: left; width: 55%; }
+#new_users { float: right; width: 25%; }
+#new_users a { font-size: 150% }
+/* end sessions/new */
+
+#beta_warning { padding: 0.5em; margin-bottom: 1em; }

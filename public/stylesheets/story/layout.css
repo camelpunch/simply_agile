@@ -1,0 +1,32 @@
+ol.stories{ overflow:hidden }
+body.iteration_planning ol.stories { overflow:visible }
+ol.stories li.story{ margin-bottom:15px }
+
+#content .story{ height:100%; max-width:400px; position:relative }
+#content .story .content { border-width:1px; border-style:solid }
+#content .story ol, .story ul{ margin:4px 0 0 0 }
+#content .story li{ display:block; padding:0 5px }
+
+#content .story .header { overflow:hidden }
+#content .story h3 { overflow:hidden; float:left; width:40% }
+
+/* less/more links */
+#content .story .less_more { float:left; width:7em; margin-top:4px }
+#content .story .less_more a { display:block }
+#content .story .less_more a.less { margin-right:.5em; float:left }
+#content .story .less_more a.more { float:left }
+/* end less/more links */
+
+.javascript #content .story .estimate{ position:absolute; top:5px; right:5px; 
+                              margin:0 }
+.story ol{ clear:both }
+
+body.iteration_active .javascript form.edit_story input,
+body.iteration_active .javascript form.edit_story label,
+body.iteration_active .javascript li .content,
+body.iteration_active .javascript form.edit_story p.submit{ display:none }
+
+/* page-dependent default states */
+#content .story .acceptance_criteria { display:none }
+body#stories_backlog #content .story ol { display:none }
+/* end page-dependent default states */

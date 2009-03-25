@@ -1,0 +1,29 @@
+body.iteration_active #burndown { float:right }
+body.iteration_active #stories { float:left }
+
+body.iteration_active #content .story,
+body.iteration_active .ui-droppable { height:10em }
+
+body.iteration_active #headings { overflow:hidden; margin-bottom:9px }
+body.iteration_active #headings ol { width:100% }
+body.iteration_active #headings li { height:2em; line-height:2em }
+
+body.iteration_active #headings li,
+body.iteration_active .ui-droppable { float:left; border-width:1px; 
+                                      border-style:solid }
+
+body.iteration_active #headings li,
+body.iteration_active .ui-droppable { width:24.5% }
+
+body.iteration_active .draggables,
+.draggables .story{ overflow:visible }
+
+body.iteration_active .javascript #content .story p.estimate {
+  border-style:solid; border-width:1px; padding:0 3px; top:4px; right:4px;
+  width:1em }
+
+body.iteration_active .javascript #content .story h3 { width:82% }
+
+body.iteration_active .javascript #stories h2,
+body.iteration_active .javascript ol.stories,
+body.iteration_active .javascript .estimate span { display:none }

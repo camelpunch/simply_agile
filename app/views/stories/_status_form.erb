@@ -1,0 +1,25 @@
+<ol>
+  <li>
+  <%= status_form.radio_button(:status, 'pending', 
+                        :id => "story_status_pending_#{status_form.object.id}") %>
+  <%= status_form.label "status_pending_#{status_form.object.id}", 'Pending' %>
+  </li>
+  <li>
+  <%= status_form.radio_button(:status, 'in_progress',
+                        :id => "story_status_in_progress_#{status_form.object.id}") %>
+  <%= status_form.label "status_in_progress_#{status_form.object.id}", 'In Progress' %>
+  </li>
+  <li>
+  <%= status_form.radio_button(:status, 'testing',
+                        :id => "story_status_testing_#{status_form.object.id}") %>
+  <%= status_form.label "status_testing_#{status_form.object.id}", 'Testing' %>
+  </li>
+  <li>
+  <%= status_form.radio_button(:status, 'complete',
+                        :id => "story_status_complete_#{status_form.object.id}") %>
+  <%= status_form.label "status_complete_#{status_form.object.id}", 'Complete' %>
+  </li>
+</ol>
+<p class="submit">
+<%= status_form.submit 'Update Status', :id => nil %>
+</p>

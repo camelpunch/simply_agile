@@ -4,9 +4,18 @@
 
   <head>
     <%= stylesheet_link_tag('reset-fonts', 
-                            'layout/application', 
-                            'typography/application', 
-                            'colours/application',
+                            'story/layout', 
+                            'story/typography', 
+                            'story/colours', 
+                            'iteration_planning/layout',
+                            'iteration_planning/typography',
+                            'iteration_planning/colours',
+                            'iteration_active/layout',
+                            'iteration_active/typography',
+                            'iteration_active/colours',
+                            'application/layout', 
+                            'application/typography', 
+                            'application/colours',
                             :cache => true) %>
     <title><%= h yield(:title) %> | Simply Agile</title>
   </head>
@@ -57,6 +66,7 @@
                                'jquery.form', 
                                'flash',
                                'request',
+                               'story',
                                'new_story_adder',
                                'acceptance_criteria', 
                                'iteration_planning',

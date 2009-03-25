@@ -1,0 +1,7 @@
+<div class="estimate">
+  <%= label_tag "stories_#{estimating_story.id}_estimate", "Estimate" %>
+  <%= text_field_tag("stories[#{estimating_story.id}][estimate]", 
+                     estimating_story.estimate, 
+                     :class => 'numeric', 
+                     :size => 2) %>
+</div>

@@ -8,7 +8,10 @@ class Iteration < ActiveRecord::Base
   has_many :burndown_data_points
   validates_presence_of :name, :duration, :project_id
 
-  named_scope :active, :conditions => 'start_date IS NOT NULL'
+  named_scope :active, 
+    :conditions => ['start_date IS NOT NULL AND (end_date IS NULL OR end_date > ?)', Date.today]
+  named_scope :pending, :conditions => 'start_date IS NULL'
+  named_scope :finished, :conditions => ['end_date < ?', Date.today]
 
   def validate
     errors.add(:stories, "must be assigned") if stories.empty?
@@ -63,8 +66,18 @@ class Iteration < ActiveRecord::Base
     end
   end
 
-  def end_date
-    start_date + duration
+  def duration=(value)
+    super value
+    if value && start_date?
+      self.end_date = start_date + value
+    end
+  end
+
+  def start_date=(value)
+    super value
+    if value && duration?
+      self.end_date = value + duration
+    end
   end
 
   def days_remaining
@@ -77,6 +90,10 @@ class Iteration < ActiveRecord::Base
 
   def active?
     ! self.start_date.nil?
+  end
+
+  def finished?
+    end_date? && end_date < Date.today
   end
 
   def burndown(width = nil)

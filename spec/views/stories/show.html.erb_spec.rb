@@ -12,11 +12,49 @@ describe "/stories/show" do
                                  :acceptance_criteria => [],
                                  :estimate? => nil,
                                  :iteration_id? => false,
+                                 :iteration_id => '',
                                  :content => '')
-
-    render 'stories/show'
+    @active_iteration = mock_model(Iteration, :pending? => false, :active? => true)
+    @pending_iteration = mock_model(Iteration, :pending? => true)
   end
 
-  it_should_behave_like "a standard view"
+  describe "without iteration" do
+    before :each do
+      render 'stories/show'
+    end
 
+    it_should_behave_like "a standard view"
+
+    it "should provide a link to backlog" do
+      response.should have_tag('a[href=?]', backlog_project_stories_path(assigns[:project]))
+    end
+  end
+
+  describe "with pending iteration" do
+    before :each do
+      assigns[:story].stub!(:iteration_id).and_return(@pending_iteration.id)
+      assigns[:story].stub!(:iteration).and_return(@pending_iteration)
+      render 'stories/show'
+    end
+
+    it_should_behave_like "a standard view"
+
+    it "should provide a link to backlog" do
+      response.should have_tag('a[href=?]', backlog_project_stories_path(assigns[:project]))
+    end
+  end
+
+  describe "with active iteration" do
+    before :each do
+      assigns[:story].stub!(:iteration_id).and_return(@active_iteration.id)
+      assigns[:story].stub!(:iteration).and_return(@active_iteration)
+      render 'stories/show'
+    end
+
+    it_should_behave_like "a standard view"
+
+    it "should not provide a link to backlog" do
+      response.should_not have_tag('a[href=?]', backlog_project_stories_path(assigns[:project]))
+    end
+  end
 end

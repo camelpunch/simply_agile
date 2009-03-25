@@ -18,7 +18,7 @@
   <p class="estimate total">
   Total Story Points: <%= @iteration.stories.sum(:estimate) %>
   </p>
-  <ol>
+  <ol class="stories">
     <%= render @iteration.stories %>
   </ol>
 <% end %>
