@@ -20,7 +20,7 @@
         <td>
           <% unless user == @current_user -%>
             <%= button_to "Remove from organisation",
-              organisation_member_path(user.id),
+              organisation_member_path(@organisation, user.id),
               :method => :delete %>
           <% end -%>
         </td>
@@ -29,7 +29,7 @@
   </table>
 
   <h3>Add somebody to this organisation</h3>
-  <% form_for @user, :url => organisation_members_path do |form| -%>
+  <% form_for @user, :url => organisation_members_path(@organisation) do |form| -%>
     <div>
       <%= form.error_messages %>
     </div>

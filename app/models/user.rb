@@ -42,12 +42,12 @@ class User < ActiveRecord::Base
   end
 
   def after_create
-    unless signup?
-      self.organisation_sponsors.create!(
-        :organisation => organisations.first,
-        :sponsor_id => sponsor.id
-      )
-    end
+#    unless signup?
+#      self.organisation_sponsors.create!(
+#        :organisation => organisations.first,
+#        :sponsor_id => sponsor.id
+#      )
+#    end
   end
 
   def self.find_by_email_address_and_password(email_address, password)

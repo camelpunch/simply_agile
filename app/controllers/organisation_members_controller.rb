@@ -1,31 +1,30 @@
 class OrganisationMembersController < ApplicationController
-  before_filter :get_organisation
-  before_filter :new_user, :only => [:create]
+  before_filter :get_or_create_user, :only => [:create]
   before_filter :get_user, :only => [:destroy]
 
   def create
-    if @user.update_attributes(params[:user])
-      redirect_to organisation_path
+    unless @user.new_record? || @user.organisations.include?(current_organisation)
+      current_organisation.organisation_members.create(:user => @user)
+      redirect_to current_organisation
     else
       render :template => 'organisations/show'
     end
   end
 
   def destroy
-    @user.destroy
+    @user.organisation_members.
+      find_by_organisation_id(current_organisation.id).destroy
     redirect_to organisation_url
   end
 
   protected
 
-  def new_user
-    @user = User.new(
-      :organisation => @organisation,
-      :sponsor => @current_user
-    )
+  def get_or_create_user
+    @user = User.find(:first, :conditions => params[:user])
+    @user ||= User.create(params[:user].merge(:sponsor => current_user))
   end
 
   def get_user
-    @user = @organisation.users.find(params[:id])
+    @user = current_organisation.users.find(params[:id])
   end
 end

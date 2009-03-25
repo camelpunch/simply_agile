@@ -17,7 +17,11 @@
             <li id="nav_home"><%= link_to_unless_current 'Home', root_path, :accesskey => 'h' %></li>
             <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path, :accesskey => 'p' %></li>
             <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path, :accesskey => 'i' %></li>
-            <li id="nav_sharing"><%= link_to_unless_current 'Sharing', organisations_path, :accesskey => 's' %></li>
+            <li id="nav_sharing">
+              <%= link_to_unless_current 'Sharing',
+                @current_organisation ? @current_organisation : organisations_path,
+                :accesskey => 's' %>
+            </li>
           </ol>
         </div>
         <div id="breadcrumbs">
@@ -56,18 +60,18 @@
         </p>
       </div>
     </div>
-    <%= javascript_include_tag('jquery-1.3.2.min', 
-                               'jquery-ui-1.7.custom.min',
-                               'jquery.form', 
-                               'flash',
-                               'request',
-                               'new_story_adder',
-                               'acceptance_criteria', 
-                               'iteration_planning',
-                               'iteration_active',
-                               'backlog_prioritisation',
-                               'application', 
-                               :cache => true) %>
+    <%= javascript_include_tag('jquery-1.3.2.min',
+      'jquery-ui-1.7.custom.min',
+      'jquery.form',
+      'flash',
+      'request',
+      'new_story_adder',
+      'acceptance_criteria',
+      'iteration_planning',
+      'iteration_active',
+      'backlog_prioritisation',
+      'application',
+      :cache => true) %>
   </body>
 
 </html>
