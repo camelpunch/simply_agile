@@ -1,8 +1,15 @@
 <% content_for :title, "Organisations" %>
 <% content_for :h1, "Organisations" %>
 
+<% if @organisations.empty? -%>
+  <h2>Oh dear. You have no organisations.</h2>
+  <p>
+    At some point you will be able to sign up for a new plan from here.
+  </p>
+<% else -%>
 <h2>Select the organisation you wish to work on</h2>
 
 <ul>
   <%= render @organisations %>
 </ul>
+<% end -%>
