@@ -17,8 +17,6 @@ ol.stories li.story{ margin-bottom:15px }
 #content .story .less_more a.more { float:left }
 /* end less/more links */
 
-.draggables .story{ overflow:auto; height:auto }
-
 .javascript #content .story .estimate{ position:absolute; top:5px; right:5px; 
                               margin:0 }
 .story ol{ clear:both }

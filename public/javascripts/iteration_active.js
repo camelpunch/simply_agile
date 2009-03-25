@@ -1,3 +1,10 @@
+function objectsFromInput(input) {
+  this.form = $(input).parents('form');
+  this.container = $('#draggables_for_'+this.form.attr('id'));
+  this.li = $(input).parents('li');
+  this.status = $(input).val();
+  this.droppable = $('#droppable_' + input.id);
+}
 function DraggableStories() {
   // add some guidance
   $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
@@ -27,7 +34,26 @@ DraggableStories.prototype = {
     });
 
     // make droppables for each radio button
-    $('input[name="story[status]"]').each( function() { new DroppableStatus(this) } );
+    this.droppables = $.map($('input[name="story[status]"]'), function(input, i) { 
+      return new DroppableStatus(input);
+    });
+
+    this.draggables = $.map($('input[name="story[status]"]:checked'), function(input, i) {
+      return new DraggableStory(input); 
+    });
+    
+    // set height of each row to the height of the draggable content
+    $('.draggables').each( function() {
+      var height = $(this).find('.story .content').height();
+
+      $(this).height(height);
+      $(this).find('.ui-droppable').height(height);
+    });
+
+    // set positions on each draggable
+    $(this.draggables).each( function() {
+      this.setPosition();
+    });
   },
 
   // make headings based on first set of labels
@@ -47,16 +73,17 @@ DraggableStories.prototype = {
   }
 }
 
-function DraggableStory(droppable_status) {
-  this.input = droppable_status.input;
-  this.droppable = droppable_status.droppable;
+function DraggableStory(input) {
+  var objects = new objectsFromInput(input);
+  this.input = input;
+  this.droppable = objects.droppable;
 
-  var content = droppable_status.li.find('.content');
-  var acceptance_criteria = droppable_status.li.find('.acceptance_criteria');
-  var container = droppable_status.container;
-  var status = droppable_status.status;
+  var content = objects.li.find('.content');
+  var acceptance_criteria = objects.li.find('.acceptance_criteria');
+  var container = objects.container;
+  var status = objects.status;
 
-  droppable_position = this.droppable.position();
+  var droppable_position = this.droppable.position();
   this.droppable.addClass('ui-state-highlight');
 
   container.append('<div class="story" id="draggable_'+
@@ -80,9 +107,7 @@ function DraggableStory(droppable_status) {
       cursor: 'pointer'
     })
     .css('position', 'absolute')
-    .css('top', droppable_position.top)
-    .css('left', droppable_position.left)
-    .width(this.droppable.width()+2);
+    .width(this.droppable.width());
 
   DraggableStory.setStatus(this.element, status);
 }
@@ -93,18 +118,28 @@ DraggableStory.setStatus = function(element, status) {
   element.removeClass('complete');
   element.addClass(status);
 }
+DraggableStory.prototype = {
+  setPosition: function() {
+    var droppable_position = this.droppable.position();
+    this.element
+      .css('top', droppable_position.top)
+      .css('left', droppable_position.left);
+  }
+}
 
 function DroppableStatus(input) {
   var instance = this;
   this.input = input;
-  this.form = $(this.input).parents('form');
-  this.container = $('#draggables_for_'+this.form.attr('id'));
-  this.li = $(this.input).parents('li');
-  this.status = $(this.input).val();
+  var objects = new objectsFromInput(input);
+  this.form = objects.form;
+  this.container = objects.container;
+  this.li = objects.li;
+  this.status = objects.status;
 
-  this.container.append('<div class="'+this.status+'" id="droppable_' + this.input.id + '"></div>');
+  this.container.append('<div class="'+this.status+'" id="droppable_' + input.id + '"></div>');
 
-  this.droppable = $('#droppable_' + this.input.id)
+  this.droppable = $('#droppable_' + input.id);
+  this.droppable
     .droppable({ 
       drop: function(ev, ui) { 
         var id_parts = instance.input.id.split('_');
@@ -133,14 +168,11 @@ function DroppableStatus(input) {
         DraggableStory.setStatus(draggable, instance.status);
 
         // custom snapping
-        $(ui.draggable).css('left', $(this).position().left);
+        $(ui.draggable)
+          .css('left', $(this).position().left)
+          .css('top', $(this).position().top);
       }
-    });
-
-  // make a draggable if button is checked
-  if ($(this.input).attr('checked')) {
-    new DraggableStory(this); 
-  }
+    }); 
 }
 
 DroppableStatus.previous_statuses = {};

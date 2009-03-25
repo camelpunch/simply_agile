@@ -15,7 +15,8 @@ body.iteration_active .ui-droppable { float:left; border-width:1px;
 body.iteration_active #headings li,
 body.iteration_active .ui-droppable { width:24.5% }
 
-body.iteration_active .draggables { overflow:auto }
+body.iteration_active .draggables,
+.draggables .story{ overflow:visible }
 
 body.iteration_active .javascript #content .story h3 { width:90% }
 
