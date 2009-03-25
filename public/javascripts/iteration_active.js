@@ -79,7 +79,7 @@ function DraggableStory(droppable_status) {
     .css('position', 'absolute')
     .css('top', droppable_position.top)
     .css('left', droppable_position.left)
-    .width(this.droppable.width());
+    .width(this.droppable.width()+2);
 
   DraggableStory.setStatus(this.element, status);
 }
