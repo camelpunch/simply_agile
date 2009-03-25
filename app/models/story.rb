@@ -15,6 +15,9 @@ class Story < ActiveRecord::Base
            :order => 'criterion',
            :dependent => :destroy)
 
+  has_many :team_members, :class_name => 'StoryTeamMember'
+  has_many :users, :through => :team_members
+
   default_scope :order => 'priority, name'
 
   named_scope :assigned_or_available_for, lambda {|iteration|

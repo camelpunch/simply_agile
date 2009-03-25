@@ -1,7 +1,7 @@
 <% content_for :title, "#{@story} | #{@project} Stories" %>
 <% content_for :h1, "Story ##{@story.id}" %>
 <% content_for :actions do %>
-<li><%= link_to 'Edit', [:edit, @project, @iteration, @story] %></li>
+<li><%= link_to 'Edit', [:edit, @project, @story.iteration, @story] %></li>
 <% end %>
 <% content_for :breadcrumbs do %>
   <%= story_breadcrumbs @story %>
@@ -19,6 +19,15 @@
     <%= story_format @story.content %>
   </div>
 </div>
+
+<% if @story.iteration && @story.iteration.active? && !@story.users.include?(@current_user) %>
+  <% form_for StoryTeamMember.new(:story => @story) do |f| %>
+    <p class="submit">
+    <%= f.hidden_field :story_id %>
+    <%= f.submit 'Work on this story' %>
+    </p>
+  <% end %>
+<% end %>
 
 <div id="acceptance_criteria">
   <h2>Acceptance Criteria</h2>

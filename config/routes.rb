@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :privacy_policy
   
   map.resources :iterations
+  map.resources :story_team_members
 
   map.resource :organisation do |organisation|
     organisation.resources :members, :controller => 'organisation_members'

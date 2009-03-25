@@ -14,6 +14,16 @@ describe Story do
     Story.create!(@valid_attributes)
   end
 
+  describe "associations" do
+    it "should have many team members" do
+      Story.should have_many(:team_members)
+    end
+
+    it "should have many users" do
+      Story.should have_many(:users)
+    end
+  end
+
   describe "default scope" do
     before :each do
       Story.delete_all

@@ -13,9 +13,11 @@ describe "/stories/show" do
                                  :estimate? => nil,
                                  :iteration_id? => false,
                                  :iteration_id => '',
+                                 :iteration => nil,
+                                 :users => [],
                                  :content => '')
     @active_iteration = mock_model(Iteration, :pending? => false, :active? => true)
-    @pending_iteration = mock_model(Iteration, :pending? => true)
+    @pending_iteration = mock_model(Iteration, :pending? => true, :active? => false)
   end
 
   describe "without iteration" do
