@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include TokenGeneration
+
   attr_accessor :password
   attr_accessor :organisation_name
   attr_accessor :sponsor
@@ -19,15 +21,12 @@ class User < ActiveRecord::Base
     :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
 
   DAYS_UNTIL_UNVERIFIED = 7
-  TOKEN_LENGTH = 6
 
   def before_create
     if signup?
       self.verified ||= false
       self.verification_token ||= generate_token
       self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
-    else
-      self.acknowledgement_token ||= generate_token
     end
 
     if (organisation_name)
@@ -74,15 +73,18 @@ class User < ActiveRecord::Base
   end
 
   def acknowledge(options)
-    return false unless options[:token] == acknowledgement_token
+    organisation_member = organisation_members.
+      find_by_acknowledgement_token(options[:token])
+    return false unless organisation_member
 
     return false unless self.update_attributes(
-      :acknowledgement_token => nil,
       :verified => true,
       :password => options[:password]
     )
-    
-    self.organisation_sponsors.first.destroy
+
+    return false unless organisation_member.update_attributes(
+      :acknowledgement_token => nil
+    )
   end
 
   protected
@@ -97,12 +99,5 @@ class User < ActiveRecord::Base
 
   def hash_password(plaintext)
     self.class.hash_password(plaintext)
-  end
-
-  def generate_token
-    chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ23456789'
-    token = ''
-    TOKEN_LENGTH.times { token << chars[rand(chars.length)] }
-    token
   end
 end

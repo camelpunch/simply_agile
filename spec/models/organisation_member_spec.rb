@@ -21,4 +21,25 @@ describe OrganisationMember do
       OrganisationMember.should belong_to(:organisation)
     end
   end
+
+  describe "acknowledgement token" do
+    before :each do
+      @user = Users.create_user!
+      @organisation = Organisations.create_organisation!
+      @organisation_member =
+        @organisation.organisation_members.create!(:user => @user)
+    end
+
+    it "should be created with membership" do
+      @organisation_member.acknowledgement_token.should_not be_nil
+    end
+
+    it "should be unique" do
+      new_user = Users.create_user!
+      new_organisation_member =
+        @organisation.organisation_members.create!(:user => new_user)
+      new_organisation_member.acknowledgement_token.should_not ==
+        @organisation_member.acknowledgement_token
+    end
+  end
 end

@@ -153,34 +153,6 @@ describe User do
           @organisation_sponsor.organisation.should == @organisation
         end
       end
-
-      describe "acknowledgement token" do
-        before :each do
-          @sponsor = Users.create_user!
-          @organisation = Organisations.create_organisation!
-
-          @user = User.new(
-            :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
-          )
-          @user.organisation_members.build(:organisation => @organisation)
-          @user.sponsor = @sponsor
-
-          @user.save!
-        end
-
-        it "should be generated when a user is created" do
-          @user.save
-          @user.acknowledgement_token.should_not be_nil
-        end
-
-        it "should not generate the same token" do
-          @user.save
-          new_user = Users.create_user!(:sponsor => @sponsor)
-          @user.acknowledgement_token.should_not ==
-            new_user.acknowledgement_token
-        end
-      end
-
     end
   end
 
@@ -277,14 +249,6 @@ describe User do
         @user.valid?
         @user.errors.invalid?(:password).should be_false
       end
-
-      it "should require a password on update if acknowledgement_token is set" do
-        @user = Users.create_user!(:acknowledgement_token => 'abcdef')
-        @user.encrypted_password = ''
-        @user.password = ''
-        @user.valid?
-        @user.errors.invalid?(:password).should be_true
-      end
     end
   end
 
@@ -367,20 +331,24 @@ describe User do
       @user = Users.create_user!(
         :sponsor => @sponsor
       )
+      @organisation = @sponsor.organisations.first
+      @organisation_member =
+        @organisation.organisation_members.create!(:user => @user)
     end
 
     describe "with valid token and password" do
       before :each do
         @password = 'some new password'
         @response = @user.acknowledge(
-          :token => @user.acknowledgement_token,
+          :token => @organisation_member.acknowledgement_token,
           :password => @password
         )
         @user.reload
       end
 
       it "should set acknowledgement_token to nil" do
-        @user.acknowledgement_token.should be_nil
+        @organisation_member.reload
+        @organisation_member.acknowledgement_token.should be_nil
       end
 
       it "should delete the organisation sponsor" do
@@ -411,7 +379,8 @@ describe User do
       end
 
       it "should not set acknowledgement_token to nil" do
-        @user.acknowledgement_token.should_not be_nil
+        @organisation_member.reload
+        @organisation_member.acknowledgement_token.should_not be_nil
       end
 
       it "should not delete the organisation sponsor" do
@@ -430,14 +399,15 @@ describe User do
     describe "with no password" do
       before :each do
         @response = @user.acknowledge(
-          :token => @user.acknowledgement_token,
+          :token => @organisation_member.acknowledgement_token,
           :password => ''
         )
         @user.reload
       end
 
       it "should not set acknowledgement_token to nil" do
-        @user.acknowledgement_token.should_not be_nil
+        @organisation_member.reload
+        @organisation_member.acknowledgement_token.should_not be_nil
       end
 
       it "should not delete the organisation sponsor" do
