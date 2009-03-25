@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
 
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
-  has_many :organisation_sponsors
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
@@ -65,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def signup?
-    sponsor.nil? && organisation_sponsors.empty?
+    sponsor.nil?
   end
 
   def acknowledged?
