@@ -1,5 +1,7 @@
+body.iteration_active .javascript #content .story p.estimate,
 body.iteration_active .javascript #stories .guidance,
 body.iteration_active .javascript #burndown,
 body.iteration_active .javascript #headings ol li { text-align:center }
 body.iteration_active h1 { margin-bottom:0 }
 body.iteration_active #content .story li { font-size:93%; padding:2px 5px 1px }
+body.iteration_active .javascript .story .content p.estimate { font-weight:bold }

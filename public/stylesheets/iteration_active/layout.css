@@ -18,6 +18,10 @@ body.iteration_active .ui-droppable { width:24.5% }
 body.iteration_active .draggables,
 .draggables .story{ overflow:visible }
 
+body.iteration_active .javascript #content .story p.estimate {
+  border-style:solid; border-width:1px; padding:0 3px; top:4px; right:4px;
+  width:1em }
+
 body.iteration_active .javascript #content .story h3 { width:90% }
 
 body.iteration_active .javascript #stories h2,
