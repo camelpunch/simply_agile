@@ -17,7 +17,7 @@
         <td>
           <% if user == @current_user -%>
             <span class="aside">(you)</span>
-          <% elsif ! user.acknowledged? -%>
+          <% elsif ! user.acknowledged_for?(@current_organisation) -%>
             <span class="aside">Account is not yet acknowledged</span>
           <% end -%>
         </td>

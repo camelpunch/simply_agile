@@ -18,5 +18,6 @@ class UserAcknowledgementsController < ApplicationController
 
   def get_user
     @user = User.find(params[:user_id])
+    @user.signup = true
   end
 end

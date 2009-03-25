@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   attr_accessor :organisation_name
-  attr_accessor :sponsor
+  attr_accessor :signup
 
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
@@ -39,15 +39,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def after_create
-#    unless signup?
-#      self.organisation_sponsors.create!(
-#        :organisation => organisations.first,
-#        :sponsor_id => sponsor.id
-#      )
-#    end
-  end
-
   def self.find_by_email_address_and_password(email_address, password)
     find_by_email_address_and_encrypted_password(email_address,
       hash_password(password))
@@ -57,18 +48,24 @@ class User < ActiveRecord::Base
     organisations.find(:all, :include => :projects).collect(&:projects).flatten
   end
 
+  def signup?
+    signup
+  end
+
   def verify(options)
     return false unless options[:token] == verification_token
     self.update_attributes!(:verify_by => nil, :verified => true)
     true
   end
 
-  def signup?
-    sponsor.nil?
-  end
-
-  def acknowledged?
-    organisation_sponsors.empty?
+  def acknowledged_for?(organisation)
+    organisation_members.find(
+      :first,
+      :conditions => {
+        :organisation_id => organisation.id,
+        :acknowledgement_token => nil
+      }
+    )
   end
 
   def acknowledge(options)
@@ -76,6 +73,7 @@ class User < ActiveRecord::Base
       find_by_acknowledgement_token(options[:token])
     return false unless organisation_member
 
+    self.signup = true
     return false unless self.update_attributes(
       :verified => true,
       :password => options[:password]
@@ -84,12 +82,14 @@ class User < ActiveRecord::Base
     return false unless organisation_member.update_attributes(
       :acknowledgement_token => nil
     )
+
+    true
   end
 
   protected
 
   def password_required?
-    encrypted_password.blank? && ((! new_record?) || signup?)
+    signup? && encrypted_password.blank?
   end
 
   def self.hash_password(plaintext)

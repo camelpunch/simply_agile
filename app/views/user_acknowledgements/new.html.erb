@@ -14,6 +14,7 @@
       </p>
     <% end -%>
   </div>
+  <% if @user.encrypted_password.blank? -%>
   <div>
     <p>
       <%= label_tag :password %>
@@ -23,7 +24,8 @@
       Choose a password to access your account.
     </p>
   </div>
+  <% end -%>
   <p class="submit">
-    <%= submit_tag 'Create Account' %>
+    <%= submit_tag 'Acknowledge' %>
   </p>
 <% end -%>

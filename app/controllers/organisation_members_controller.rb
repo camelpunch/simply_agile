@@ -24,7 +24,7 @@ class OrganisationMembersController < ApplicationController
 
   def get_or_create_user
     @user = User.find(:first, :conditions => params[:user])
-    @user ||= User.create(params[:user].merge(:sponsor => current_user))
+    @user ||= User.create(params[:user])
   end
 
   def get_user

@@ -3,12 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe UserAcknowledgementsController do
   before :each do
     @sponsor = Users.create_user!
-    @user = Users.create_user!(
-      :sponsor => @sponsor
-    )
+    @user = Users.create_user!
     @organisation = @sponsor.organisations.first
     @organisation_member =
-      @organisation.organisation_members.create!(:user => @user)
+      @organisation.organisation_members.create!(
+      :user => @user,
+      :sponsor => @sponsor
+    )
   end
 
   describe "new" do

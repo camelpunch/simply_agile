@@ -44,9 +44,10 @@ describe UserVerificationsController do
       end
 
       it "should not set verified to true" do
+        @user.should_not be_verified
         do_call(:token => '12345')
         @user.reload
-        @user.verified.should be_false
+        @user.should_not be_verified
       end
 
       it "should not log the user in" do
