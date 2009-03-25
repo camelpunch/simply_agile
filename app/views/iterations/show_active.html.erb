@@ -6,26 +6,24 @@
 <% end %>
 <% body_classes << 'iteration_active' %>
 
-<div>
-  <%= image_tag(iteration_burndown_path(@iteration), 
-                :alt => 'Burndown Chart',
-                :width => 600,
-                :height => 450,
-                :id => "burndown") %>
-</div>
-
-<p id="time_remaining">
-<% if @iteration.finished? %>
-This iteration finished on <%= @iteration.end_date %>.
-<% else %>
-This iteration ends in <%= pluralize @iteration.days_remaining, 'day' %> 
-on <%= @iteration.end_date %>.
-<% end %>
-</p>
-
-<div id="stories" class="section">
+<div id="stories">
   <h2>Stories</h2>
   <ol class="stories">
     <%= render @iteration.stories %>
   </ol>
 </div>
+
+<div id="burndown">
+  <%= image_tag(iteration_burndown_path(@iteration, :width => 350), 
+                :alt => 'Burndown Chart',
+                :width => 350) %>
+  <p id="time_remaining">
+  <% if @iteration.finished? %>
+  This iteration finished on <%= @iteration.end_date %>.
+  <% else %>
+  This iteration ends in <%= pluralize @iteration.days_remaining, 'day' %> 
+  on <%= @iteration.end_date %>.
+  <% end %>
+  </p>
+</div>
+

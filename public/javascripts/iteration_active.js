@@ -10,6 +10,9 @@ function DraggableStories() {
 }
 DraggableStories.prototype = {
   create: function() {
+    // size div
+    $('#stories').width($(window).width() - 430);
+
     // remove all existing JSy elements
     $('#draggables_container').remove();
 
@@ -116,9 +119,9 @@ function DroppableStatus(input) {
             if (DroppableStatus.previous_statuses[story_id] == 'complete' || instance.status == 'complete') {
               var location_parts = location.href.split('/');
               var iteration_id = location_parts[location_parts.length - 1];
-              $('#burndown').attr('src',
-                                  '/iterations/' + iteration_id +
-                                  '/burndown?' + new Date().getTime());
+              $('#burndown img').attr('src',
+                                      '/iterations/' + iteration_id +
+                                      '/burndown?' + new Date().getTime());
             }
 
             DroppableStatus.previous_statuses[story_id] = instance.status;

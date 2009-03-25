@@ -16,7 +16,7 @@
       <% else %>
         <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
         <% if story.estimate? %>
-          <p class="estimate">Story Points: <%= story.estimate %></p>
+          <p class="estimate" title="Story Points"><span>Story Points: </span><%= story.estimate %></p>
         <% end %>
       <% end %>
     </div>
