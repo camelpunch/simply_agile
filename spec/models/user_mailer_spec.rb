@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe UserMailer do
   describe "verification" do
     before :each do
-      @user = Users.create_user!
+      @user = Users.create_user!(:signup => true)
       @mail = UserMailer.create_verification(@user)
     end
 

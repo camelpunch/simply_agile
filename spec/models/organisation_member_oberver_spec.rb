@@ -4,10 +4,9 @@ describe OrganisationMemberObserver do
   before :each do
     @sponsor = Users.create_user!
     @organisation = Organisations.create_organisation!
-    @user = Users.create_user!(:sponsor => @sponsor)
+    @user = Users.create_user!
     @organisation_member =
-      @organisation.organisation_members.build(:user => @user)
-
+      @organisation.organisation_members.build(:user => @user, :sponsor => @sponsor)
   end
 
   it "should send an authorisation email" do

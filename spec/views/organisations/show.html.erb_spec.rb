@@ -6,7 +6,7 @@ describe "/organisations/show" do
     users << mock_model(
       User,
       :email_address => 'user@jandaweb.com',
-      :acknowledged? => true
+      :acknowledged_for? => true
     )
     @organisation = mock_model(Organisation, :name => 'Jandaweb', :users => users)
     assigns[:organisation] = @organisation

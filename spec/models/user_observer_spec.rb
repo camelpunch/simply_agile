@@ -4,6 +4,7 @@ describe UserObserver do
   describe "new user, new organisation" do
     before :each do
       @user = User.new(Users.user_prototype)
+      @user.signup = true
     end
 
     it "should send a verification email" do
