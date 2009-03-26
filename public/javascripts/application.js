@@ -1,4 +1,22 @@
 $(document).ready(function() {
+  // no JS support for shit browsers
+  if (!$.support.boxModel) {
+    var message = "<p>Your browser does not support modern web standards. "+
+    "Please upgrade to a more recent browser for a better experience.</p>";
+
+    if ($('.important_message')[0]) {
+      $('.important_message div').prepend(message);
+    } else {
+      $('#content').after('<div class="important_message"><div>'+message+'</div></div>');
+    }
+
+    $('.important_message')
+      .css({position: 'absolute', textAlign: 'center', opacity:0.9});
+    $('.important_message div')
+      .css({width:'auto', 
+            margin:0});
+    return false; 
+  }
   $('#container').addClass('javascript');
 
   // highlight first erroneous field / auto focus field

@@ -1,7 +1,7 @@
 body,legend { color:#333 }
 #header { background:#fff 28px 2px url(/images/simply_agile.png) no-repeat }
 
-#verify div { color:#000; background:#ff5; opacity:0.9 }
+.important_message div { color:#000; background:#ff5; opacity:0.9 }
 
 /* navigation */
 #navigation a { background:#fff; color:#333; outline:none }
