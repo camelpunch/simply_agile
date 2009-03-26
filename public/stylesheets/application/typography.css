@@ -1,4 +1,4 @@
-h1 { margin-bottom:1em; font-size:250% }
+h1 { font-size:250% }
 h1 a { text-decoration:none }
 h2,caption { font-weight:bold; font-size:138.5% }
 p { margin:1em 0 1em 0 }
@@ -27,12 +27,6 @@ legend { font-weight:bold; padding-top:2em }
 
 div.section h2 { font-size:146.5% }
 
-/* projects/show */
-body#projects_show #iterations ol li a { text-align:center }
-body#projects_show #iterations h3 { text-align:right; font-size:123.1%;
-                                    padding:7px 10px 15px 0 }
-/* end projects/show */
-
 /* iterations/new */
 body.iterations .include a { text-indent:-20000px; outline:none; text-underline:none }
 body.iterations .display h3 { font-weight:bold }
@@ -42,3 +36,8 @@ body.iterations .display h3 { font-weight:bold }
 
 body#iterations_show .javascript #stories .guidance,
 body#iterations_show .javascript #headings ol li { text-align:center }
+
+#iterations h3 { text-align:right; font-size:123.1%;
+                                    padding:7px 10px 15px 0 }
+li.iteration a { text-align:center }
+#breadcrumbs li.iteration a { text-align:left }

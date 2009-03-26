@@ -64,20 +64,26 @@ form p.checkbox label { display:inline; padding-left:5px }
 /* end forms */
 
 /* home/show */
-.active_iteration { float: left; width: 50%; }
+body#home_show #getting_started { width:20em; float:left; 
+                                  margin:0 60px 0 0 }
+body#home_show #getting_started .section { margin-bottom:0 }
+body#home_show #iterations { width:680px; float:left }
+body#home_show #iterations div.active { padding-top:45px }
+body#home_show #iterations ol { overflow:hidden }
 /* end home/show */
+
+/* projects/index */
+body#projects_index .section { width:20em }
+/* end projects/index */
 
 /* projects/show */
 body#projects_show #backlog { width:56%; float:left }
 body#projects_show #iterations { width:40%; float:right; position:relative }
-body#projects_show #iterations div.section { padding:0 }
-body#projects_show #iterations div.section .guidance { padding:30px 0 0 15px }
-body#projects_show #iterations .active,
-body#projects_show #iterations .planned { position:relative; overflow:hidden;
-                                          padding-bottom:15px }
-body#projects_show #iterations ol li { width:50%; float:left }
-body#projects_show #iterations ol li a { display:block; width:150px; margin:0 auto }
 /* end projects/show */
+
+/* iterations/index */
+body#iterations_index .active { padding-top:30px }
+/* end iterations/index */
 
 /* stories/show */
 body#stories_show #acceptance_criteria { margin:15px 0 }
@@ -110,3 +116,15 @@ body#organisations_show .section table { width:100% }
 /* end sessions/new */
 
 #beta_warning { padding: 0.5em; margin-bottom: 1em; }
+
+/* iteration lists */
+#iterations div.section { padding:0 }
+#iterations div.section .guidance { padding:30px 0 0 15px }
+#iterations .active,
+#iterations .planned { position:relative; overflow:hidden;
+                                          padding-bottom:15px }
+li.iteration { width:50%; float:left }
+#breadcrumbs li.iteration { width:auto }
+li.iteration a { display:block; width:100%; margin:0 auto }
+#breadcrumbs li.iteration a { display:inline; width:auto; margin:inherit }
+/* end iteration lists */

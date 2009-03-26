@@ -41,17 +41,17 @@ div.section h2 { background:#fff }
 .javascript #request h2#request_header { background:#ff7f2a }
 /* end javascript request */
 
-/* projects/show */
-body#projects_show #iterations .active { background:#e4e5f3 }
-body#projects_show #iterations .planned { background:#f1f1f8 }
-body#projects_show #iterations ol li a img { border:2px solid #fff }
-body#projects_show #iterations ol li a:hover img,
-body#projects_show #iterations ol li a:focus img { border:2px solid #999 }
-/* end projects/show */
-
 /* beta */
 #beta_warning { background: #eee; border: 1px solid #ff7f2a; }
 /* end beta */
 
 #headings .complete { background:#3dfd4f }
 #acceptance_criteria #completed, .aside { color: #aaa }
+
+/* iteration lists */
+#iterations li a img { border:2px solid #fff }
+#iterations li a:hover img,
+#iterations li a:focus img { border:2px solid #999 }
+#iterations .active { background:#e4e5f3 }
+#iterations .planned { background:#f1f1f8 }
+/* end iteration lists */
