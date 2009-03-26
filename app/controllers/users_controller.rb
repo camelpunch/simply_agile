@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   layout "sessions"
 
   skip_before_filter :login_required
+  skip_before_filter :select_organisation
   before_filter :new_user
 
   def create

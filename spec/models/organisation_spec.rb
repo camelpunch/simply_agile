@@ -16,8 +16,16 @@ describe Organisation do
       Organisation.should have_many(:projects)
     end
 
+    it "should have many stories" do
+      Organisation.should have_many(:stories)
+    end
+
     it "should have many iterations" do
       Organisation.should have_many(:iterations)
+    end
+
+    it "should have many organisation members" do
+      Organisation.should have_many(:organisation_members)
     end
 
     it "should have many users" do

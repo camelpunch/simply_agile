@@ -36,16 +36,35 @@ describe User do
   end
 
   describe "associations" do
-    it "should belong to an organisation" do
-      User.should belong_to(:organisation)
+    it "should have many organisation_members" do
+      User.should have_many(:organisation_members)
     end
 
-    it "should have many projects" do
-      User.should have_many(:projects)
+    it "should have many organisations" do
+      User.should have_many(:organisations)
+    end
+  end
+
+  describe "projects" do
+    before :each do
+      @user = Users.create_user!
+      @users_projects = []
+
+      @organisation1 = Organisations.create_organisation!
+      @organisation1.organisation_members.create!(:user => @user)
+      @users_projects << @organisation1.projects.create!(:name => 'project1')
+
+      @organisation2 = Organisations.create_organisation!
+      @organisation2.organisation_members.create!(:user => @user)
+      @users_projects << @organisation2.projects.create!(:name => 'project2')
+
+      @organisation3 = Organisations.create_organisation!
+      @organisation3.projects.create!(:name => "someone else's project")
+
     end
 
-    it "should belong to an organisation sponsor" do
-      User.should have_many(:organisation_sponsors)
+    it "should return projects which belong to the user's organisations" do
+      @user.projects.should == @users_projects
     end
 
     it "should have many story team members" do
@@ -58,9 +77,10 @@ describe User do
   end
 
   describe "creation" do
-    describe "for a new organisation" do
+    describe "on signup" do
       before(:each) do
         @user = User.new(Users.user_prototype)
+        @user.signup = true
       end
 
       it "should create a new organisation for the user" do
@@ -75,10 +95,11 @@ describe User do
         @user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
       end
 
-      it "should set acknowledged to true" do
-        @user.save
-        @user.acknowledged?.should be_true
-      end
+      it "needs acknowledgment rewritten"
+#      it "should set acknowledged to true" do
+#        @user.save
+#        @user.acknowledged?.should be_true
+#      end
 
       describe "verification token" do
         it "should be generated when a user is created" do
@@ -94,121 +115,29 @@ describe User do
       end
     end
 
-    describe "for an existing organisation" do
-      before :each do
-        @sponsor = Users.create_user!
-        @user = User.new(
-          Users.user_prototype.merge(
-            :sponsor => @sponsor,
-            :organisation => @sponsor.organisation
-          )
-        )
-      end
-
-      it "should not try to encrypt the password" do
-        @user.save!
-        @user.encrypted_password.should be_nil
-      end
-
-      it "should set acknowledged to false" do
-        @user.save!
-        @user.acknowledged?.should be_false
-      end
-      
-      describe "organisation sponsor" do
-        before :each do
-          @sponsor = Users.create_user!
-          @organisation = Organisations.create_organisation!
-
-          @user = User.new(
-            :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
-          )
-          @user.organisation = @organisation
-          @user.sponsor = @sponsor
-
-          @user.save!
-          @organisation_sponsor = @user.organisation_sponsors.first
-        end
-
-        it "should create an organisation sponsor" do
-          @organisation_sponsor.should_not be_nil
-        end
-
-        it "should set the sponsor" do
-          @organisation_sponsor.sponsor.should == @sponsor
-        end
-
-        it "should set the organisation" do
-          @organisation_sponsor.organisation.should == @organisation
-        end
-      end
-
-      describe "acknowledgement token" do
-        before :each do
-          @sponsor = Users.create_user!
-          @organisation = Organisations.create_organisation!
-
-          @user = User.new(
-            :email_address => "sponsored_user#{User.count + 1}@jandaweb.com"
-          )
-          @user.organisation = @organisation
-          @user.sponsor = @sponsor
-
-          @user.save!
-        end
-
-        it "should be generated when a user is created" do
-          @user.save
-          @user.acknowledgement_token.should_not be_nil
-        end
-
-        it "should not generate the same token" do
-          @user.save
-          new_user = Users.create_user!(
-            :sponsor => @sponsor,
-            :organisation => @organisation
-          )
-          @user.acknowledgement_token.should_not ==
-            new_user.acknowledgement_token
-        end
-      end
-
-    end
+    it "needs to be rewritten"
+#    describe "for an existing organisation" do
+#      before :each do
+#        @sponsor = Users.create_user!
+#        @user = User.new(Users.user_prototype.merge(:sponsor => @sponsor))
+#        @user.organisations << @sponsor.organisations.first
+#      end
+#
+#      it "should not try to encrypt the password" do
+#        @user.save!
+#        @user.encrypted_password.should be_nil
+#      end
+#
+#      it "should set acknowledged to false" do
+#        @user.save!
+#        @user.acknowledged?.should be_false
+#      end
+#    end
   end
 
   describe "password=" do
     it "should have the writer" do
       User.new.should respond_to(:password=)
-    end
-  end
-
-  describe "sponsor=" do
-    it "should have the writer" do
-      User.new.should respond_to(:sponsor=)
-    end
-  end
-
-  describe "signup" do
-    before :each do
-      @user = User.new(Users.user_prototype)
-      @sponsor = Users.create_user!
-    end
-
-    it "should be false if sponsor attribute is set" do
-      @user.sponsor = @sponsor
-      @user.signup?.should be_false
-    end
-
-    it "should be false if an organisation sponsor exists" do
-      @user.organisation_sponsors.build(
-        :sponsor_id => @sponsor.id,
-        :organisation => @sponsor.organisation
-      )
-      @user.signup?.should be_false
-    end
-
-    it "should be true otherwise" do
-      @user.signup?.should be_true
     end
   end
 
@@ -249,43 +178,13 @@ describe User do
       end
     end
 
-    describe "organisation" do
-      before :each do
-        @user.organisation_name = nil
-        @user.organisation = nil
-      end
-
-      it "should require an organisation" do
-        @user.stub!(:signup?).and_return(false)
-        @user.valid?
-        @user.errors.invalid?(:organisation_id).should be_true
-      end
-
-      it "should not require an organisation if organisation name is given" do
-        @user.organisation_name = 'some name'
-        @user.valid?
-        @user.errors.invalid?(:organisation_id).should be_false
-      end
-
-      it "should not require an organisation name if organisation is given" do
-        @user.organisation = Organisations.create_organisation!
-        @user.valid?
-        @user.errors.invalid?(:organisation_name).should be_false
-      end
-
-      it "should add an error to organisation name if both name and organisation are blank" do
-        @user.valid?
-        @user.errors.on(:organisation_name).should_not be_nil
-      end
-    end
-
     describe "password" do
       before :each do
         @user.password = nil
       end
       
       it "should require a password on signup" do
-        @user.organisation = nil
+        @user.signup = true
         @user.valid?
         @user.errors.invalid?(:password).should be_true
       end
@@ -300,14 +199,6 @@ describe User do
         @user.encrypted_password = 'hashed password'
         @user.valid?
         @user.errors.invalid?(:password).should be_false
-      end
-
-      it "should require a password on update if acknowledgement_token is set" do
-        @user = Users.create_user!(:acknowledgement_token => 'abcdef')
-        @user.encrypted_password = ''
-        @user.password = ''
-        @user.valid?
-        @user.errors.invalid?(:password).should be_true
       end
     end
   end
@@ -333,7 +224,7 @@ describe User do
 
   describe "verification" do
     before :each do
-      @user = Users.create_user!
+      @user = Users.create_user!(:signup => true)
     end
 
     it "should not be verified by default" do
@@ -385,12 +276,40 @@ describe User do
     end
   end
 
+  describe "acknowledged_for" do
+    before :each do
+      @user = Users.create_user!
+      @organisation = Organisations.create_organisation!
+      @organisation_member =
+        @organisation.organisation_members.create!(:user => @user)
+    end
+
+    it "should be false if the user does not belong to the organisation" do
+      alternative_organisation = Organisations.create_organisation!
+      @user.should_not be_acknowledged_for(alternative_organisation)
+    end
+
+    it "should be false if the acknowledgement token exists" do
+      @user.should_not be_acknowledged_for(@organisation)
+    end
+
+
+    it "should be true otherwise" do
+      @organisation_member.acknowledgement_token = nil
+      @organisation_member.save
+      @user.should be_acknowledged_for(@organisation)
+    end
+  end
+
   describe "acknowledge" do
     before :each do
       @sponsor = Users.create_user!
-      @user = Users.create_user!(
-        :sponsor => @sponsor,
-        :organisation => @sponsor.organisation
+      @user = Users.create_user!
+      @organisation = @sponsor.organisations.first
+      @organisation_member =
+        @organisation.organisation_members.create!(
+        :user => @user,
+        :sponsor => @sponsor
       )
     end
 
@@ -398,19 +317,22 @@ describe User do
       before :each do
         @password = 'some new password'
         @response = @user.acknowledge(
-          :token => @user.acknowledgement_token,
+          :token => @organisation_member.acknowledgement_token,
           :password => @password
         )
         @user.reload
       end
 
       it "should set acknowledgement_token to nil" do
-        @user.acknowledgement_token.should be_nil
+        @organisation_member.reload
+        @organisation_member.acknowledgement_token.should be_nil
       end
 
-      it "should delete the organisation sponsor" do
-        @user.organisation_sponsors.should be_empty
-      end
+      it "needs to rewrite the organisation sponsor"
+
+#      it "should delete the organisation sponsor" do
+#        @user.organisation_sponsors.should be_empty
+#      end
 
       it "should update the password" do
         @user.encrypted_password.should == Digest::SHA1.hexdigest(@password)
@@ -436,12 +358,14 @@ describe User do
       end
 
       it "should not set acknowledgement_token to nil" do
-        @user.acknowledgement_token.should_not be_nil
+        @organisation_member.reload
+        @organisation_member.acknowledgement_token.should_not be_nil
       end
 
-      it "should not delete the organisation sponsor" do
-        @user.organisation_sponsors.should_not be_empty
-      end
+      it "needs to be rewritten"
+#      it "should not delete the organisation sponsor" do
+#        @user.organisation_sponsors.should_not be_empty
+#      end
 
       it "should not update the password" do
         @user.encrypted_password.should be_nil
@@ -455,19 +379,21 @@ describe User do
     describe "with no password" do
       before :each do
         @response = @user.acknowledge(
-          :token => @user.acknowledgement_token,
+          :token => @organisation_member.acknowledgement_token,
           :password => ''
         )
         @user.reload
       end
 
       it "should not set acknowledgement_token to nil" do
-        @user.acknowledgement_token.should_not be_nil
+        @organisation_member.reload
+        @organisation_member.acknowledgement_token.should_not be_nil
       end
 
-      it "should not delete the organisation sponsor" do
-        @user.organisation_sponsors.should_not be_empty
-      end
+      it "needs rewriting"
+#      it "should not delete the organisation sponsor" do
+#        @user.organisation_sponsors.should_not be_empty
+#      end
 
       it "should update the password" do
         @user.encrypted_password.should be_nil

@@ -41,7 +41,7 @@ class AcceptanceCriteriaController < ApplicationController
   end
 
   def destroy
-    @story.acceptance_criteria.destroy(params[:id])
+    @story.acceptance_criteria.find(params[:id]).destroy
     render :partial => 'acceptance_criteria/list'
   end
 

@@ -11,6 +11,6 @@ class ActiveIterationsController < ApplicationController
 
   def get_iteration
     @iteration =
-      current_user.organisation.iterations.find(params[:iteration_id])
+      current_organisation.iterations.find(params[:iteration_id])
   end
 end

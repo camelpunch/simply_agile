@@ -1,7 +1,7 @@
 <% content_for :title, "Editing iteration #{@iteration}" %>
 <% content_for :h1, "Editing iteration #{h(@iteration)}" %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child"><%= link_to h(@project), @project %></li>
+  <li class="project"><%= link_to h(@project), @project %></li>
   <li class="iteration"><%= link_to h(@iteration), [@project, @iteration] %></li>
   <li>Edit</li>
 <% end %>

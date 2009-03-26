@@ -1,19 +1,19 @@
 class User < ActiveRecord::Base
+  include TokenGeneration
+
   attr_accessor :password
   attr_accessor :organisation_name
-  attr_accessor :sponsor
+  attr_accessor :signup
 
-  belongs_to :organisation
-  has_many :organisation_sponsors
-  has_many :projects, :through => :organisation
   has_many :story_team_members
   has_many :stories, :through => :story_team_members
+  has_many :organisation_members
+  has_many :organisations, :through => :organisation_members
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
-  validates_presence_of :organisation_id, :unless => :signup?
   validates_presence_of :organisation_name, :on => :create,
-    :if => lambda { |user| user.signup? && user.organisation.nil? }
+    :if => lambda { |user| user.signup? && user.organisations.empty? }
   validates_presence_of :password, :if => :password_required?
 
   default_scope :order => 'email_address'
@@ -22,18 +22,17 @@ class User < ActiveRecord::Base
     :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
 
   DAYS_UNTIL_UNVERIFIED = 7
-  TOKEN_LENGTH = 6
 
   def before_create
     if signup?
       self.verified ||= false
       self.verification_token ||= generate_token
       self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
-    else
-      self.acknowledgement_token ||= generate_token
     end
-    
-    self.organisation ||= Organisation.create!(:name => organisation_name)
+
+    if (organisation_name)
+      self.organisations.create!(:name => organisation_name)
+    end
   end
 
   def before_save
@@ -42,18 +41,17 @@ class User < ActiveRecord::Base
     end
   end
 
-  def after_create
-    unless signup?
-      self.organisation_sponsors.create!(
-        :organisation => organisation,
-        :sponsor_id => sponsor.id
-      )
-    end
-  end
-
   def self.find_by_email_address_and_password(email_address, password)
     find_by_email_address_and_encrypted_password(email_address,
       hash_password(password))
+  end
+
+  def projects
+    organisations.find(:all, :include => :projects).collect(&:projects).flatten
+  end
+
+  def signup?
+    signup
   end
 
   def verify(options)
@@ -62,30 +60,38 @@ class User < ActiveRecord::Base
     true
   end
 
-  def signup?
-    sponsor.nil? && organisation_sponsors.empty?
-  end
-
-  def acknowledged?
-    organisation_sponsors.empty?
+  def acknowledged_for?(organisation)
+    organisation_members.find(
+      :first,
+      :conditions => {
+        :organisation_id => organisation.id,
+        :acknowledgement_token => nil
+      }
+    )
   end
 
   def acknowledge(options)
-    return false unless options[:token] == acknowledgement_token
+    organisation_member = organisation_members.
+      find_by_acknowledgement_token(options[:token])
+    return false unless organisation_member
 
+    self.signup = true
     return false unless self.update_attributes(
-      :acknowledgement_token => nil,
       :verified => true,
       :password => options[:password]
     )
-    
-    self.organisation_sponsors.first.destroy
+
+    return false unless organisation_member.update_attributes(
+      :acknowledgement_token => nil
+    )
+
+    true
   end
 
   protected
 
   def password_required?
-    encrypted_password.blank? && ((! new_record?) || signup?)
+    signup? && encrypted_password.blank?
   end
 
   def self.hash_password(plaintext)
@@ -94,12 +100,5 @@ class User < ActiveRecord::Base
 
   def hash_password(plaintext)
     self.class.hash_password(plaintext)
-  end
-
-  def generate_token
-    chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ23456789'
-    token = ''
-    TOKEN_LENGTH.times { token << chars[rand(chars.length)] }
-    token
   end
 end

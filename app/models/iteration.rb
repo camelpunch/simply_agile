@@ -69,7 +69,7 @@ class Iteration < ActiveRecord::Base
   def duration=(value)
     super value
     if value && start_date?
-      self.end_date = start_date + value
+      self.end_date = start_date + value.to_i
     end
   end
 

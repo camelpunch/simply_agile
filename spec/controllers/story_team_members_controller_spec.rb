@@ -4,8 +4,6 @@ describe StoryTeamMembersController do
 
   before :each do
     login
-    @user = Users.create_user
-    controller.stub!(:current_user).and_return(@user)
     @project = Projects.create_project
     @iteration = Iterations.create_iteration :project => @project
     @story = Stories.create_story(:project => @project,

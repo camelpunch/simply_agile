@@ -84,6 +84,45 @@ describe SessionsController do
     end
   end
 
+  describe "update" do
+    def do_call
+      put :update, :organisation_id => @organisation.id
+    end
+
+    before :each do
+      @organisation = Organisations.create_organisation!
+    end
+
+    it "should set the organisation_id in the session" do
+      do_call
+      session[:organisation_id].should == @organisation.id.to_s
+    end
+
+    describe "with redirect_to set" do
+      before :each do
+        @redirect_to = 'http://some.where/'
+        session[:redirect_to] = @redirect_to
+      end
+
+      it "should redirect to session[:redirect_to]" do
+        do_call
+        response.should redirect_to(@redirect_to)
+      end
+
+      it "should clear session[:redirect_to]" do
+        do_call
+        session[:redirect_to].should be_nil
+      end
+    end
+
+    describe "without redirect_to set" do
+      it "should redirect to the applicaiton home page" do
+        do_call
+        response.should redirect_to(root_url)
+      end
+    end
+  end
+
   describe "destroy" do
     it "should set session user id to nil" do
       session[:user_id] = 1

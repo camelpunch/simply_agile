@@ -3,10 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe ProjectsController do
   before :each do
     login
-    @project = mock_model Project
-    @new_project = mock_model Project
-    @projects = mock('Collection', :build => @new_project, :find => @project)
-    @user.organisation.stub!(:projects).and_return(@projects)
+    @project = Projects.create_project!(:organisation => @organisation)
   end
 
   describe "get_project" do
@@ -23,14 +20,15 @@ describe ProjectsController do
       controller.stub!(:params).and_return({})
     end
 
-    it "should set the organisation from the user" do
-      @projects.should_receive(:build)
+    it "should set the organisation from the organisation" do
       controller.send(:new_project)
+      project = controller.instance_variable_get("@project")
+      project.organisation.should == @organisation
     end
 
     it "should set the instance variable" do
       controller.send(:new_project)
-      controller.instance_variable_get("@project").should == @new_project
+      controller.instance_variable_get("@project").should be_kind_of(Project)
     end
   end
   
@@ -64,20 +62,20 @@ describe ProjectsController do
       @attributes = {'name' => 'some name'}
     end
 
-    it "should attempt to save" do
-      @new_project.should_receive(:update_attributes).with(@attributes)
+    it "should set the attributes" do
       do_call
+      assigns[:project].name.should == @attributes['name']
     end
 
     describe "success" do
       before :each do
-        @new_project.stub!(:update_attributes).with(@attributes).
-          and_return(true)
+        @new_project = Project.new
       end
 
       it "should redirect to project page" do
         do_call
-        response.should redirect_to(project_url(@new_project))
+        project = assigns[:project]
+        response.should redirect_to(project_url(project))
       end
 
       it "should provide a flash notice" do
@@ -88,8 +86,7 @@ describe ProjectsController do
 
     describe "failure" do
       before :each do
-        @new_project.stub!(:update_attributes).with(@attributes).
-          and_return(false)
+        @attributes[:name] = nil
       end
 
       it "should re-render the new template" do
@@ -104,25 +101,14 @@ describe ProjectsController do
       get :show, :id => @project.id
     end
 
-    before :each do
-      Project.stub!(:find).with(@project.id.to_s).and_return(@project)
-      @project.stub!(:stories).and_return([@story])
-      controller.stub!(:get_project)
-      controller.instance_variable_set('@project', @project)
-    end
-
     it_should_behave_like "it's successful"
 
     it "should assign the project" do
-      controller.should_receive(:get_project)
       do_call
+      assigns[:project].should == @project
     end
 
     describe "with no stories" do
-      before :each do
-        @project.stub!(:stories).and_return([])
-      end
-
       it "should render the guidance template" do
         do_call
         response.should render_template('projects/show_guidance')
@@ -133,10 +119,6 @@ describe ProjectsController do
   describe "edit" do
     def do_call
       get :edit, :id => @project.id
-    end
-
-    before :each do
-      Project.stub!(:find).with(@project.id.to_s).and_return(@project)
     end
 
     it_should_behave_like "it's successful"
@@ -154,18 +136,17 @@ describe ProjectsController do
 
     before :each do
       @attributes = {'name' => 'some new name'}
-      controller.instance_variable_set('@project', @project)
-      @project.stub!(:update_attributes)
     end
 
     it "should assign the project" do
-      controller.should_receive(:get_project)
       do_call
+      assigns[:project].should == @project
     end
 
-    it "should attempt to save" do
-      @project.should_receive(:update_attributes).with(@attributes)
+    it "should update attributes" do
       do_call
+      @project.reload
+      @project.name.should == @attributes['name']
     end
 
     describe "success" do
@@ -196,8 +177,7 @@ describe ProjectsController do
 
     describe "failure" do
       before :each do
-        @project.stub!(:update_attributes).with(@attributes).
-          and_return(false)
+        @attributes = { :name => nil }
       end
 
       it "should re-render the new template" do

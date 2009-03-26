@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :iterations
   map.resources :story_team_members
 
-  map.resource :organisation do |organisation|
+  map.resources :organisations do |organisation|
     organisation.resources :members, :controller => 'organisation_members'
   end
 

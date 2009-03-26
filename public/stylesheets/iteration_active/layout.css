@@ -1,5 +1,4 @@
-body.iteration_active #burndown { float:right }
-body.iteration_active #stories { float:left }
+body.iteration_active #burndown { position:fixed; right:30px; top:180px }
 
 body.iteration_active #content .story,
 body.iteration_active .ui-droppable { height:10em }

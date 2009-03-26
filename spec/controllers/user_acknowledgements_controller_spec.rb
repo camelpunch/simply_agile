@@ -3,9 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe UserAcknowledgementsController do
   before :each do
     @sponsor = Users.create_user!
-    @user = Users.create_user!(
-      :sponsor => @sponsor,
-      :organisation => @sponsor.organisation
+    @user = Users.create_user!
+    @organisation = @sponsor.organisations.first
+    @organisation_member =
+      @organisation.organisation_members.create!(
+      :user => @user,
+      :sponsor => @sponsor
     )
   end
 
@@ -24,7 +27,7 @@ describe UserAcknowledgementsController do
 
   describe "create" do
     def do_call(options = {})
-      token = options[:token] || @user.acknowledgement_token
+      token = options[:token] || @organisation_member.acknowledgement_token
       post :create, :user_id => @user.id,
         :token => token, :password => @password
     end
@@ -42,7 +45,7 @@ describe UserAcknowledgementsController do
 
     it "should pass the token to acknowledge" do
       @user.should_receive(:acknowledge) do |args|
-        args.should include(:token => @user.acknowledgement_token)
+        args.should include(:token => @organisation_member.acknowledgement_token)
       end
       do_call
     end

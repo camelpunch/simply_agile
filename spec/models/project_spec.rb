@@ -13,6 +13,17 @@ describe Project do
     Project.create!(@valid_attributes)
   end
 
+  describe "validation" do
+    before :each do
+      @project = Project.new
+      @project.valid?
+    end
+
+    it "should require a name" do
+      @project.errors.should be_invalid(:name)
+    end
+  end
+
   describe "available_stories" do
     before :all do
       @project = Projects.create_project! 

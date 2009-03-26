@@ -13,12 +13,9 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   before_filter :login_required
+  before_filter :select_organisation
 
   protected
-
-  def current_user
-    @current_user ||= User.valid.find_by_id(session[:user_id])
-  end
 
   def decide_layout
     layout = ''
@@ -35,22 +32,36 @@ class ApplicationController < ActionController::Base
     layout
   end
 
-  def get_organisation
-    @organisation = current_user.organisation
+  def current_user
+    @current_user ||= User.valid.find_by_id(session[:user_id])
+  end
+
+  def current_organisation
+    @current_organisation ||=
+      current_user.organisations.find_by_id(session[:organisation_id])
   end
 
   def get_project
-    if params[:project_id]
-      @project = current_user.organisation.projects.find(params[:project_id])
-    end
+    @project = current_organisation.projects.find_by_id(params[:project_id])
   end
 
   def login_required
     if current_user
       true
     else
-      session[:redirect_to] = request.referer
+      session[:redirect_to] = request.request_uri
       redirect_to new_session_url
+    end
+  end
+
+  def select_organisation
+    if session[:organisation_id].nil? && current_user.organisations.size == 1
+      session[:organisation_id] = current_user.organisations.first.id
+    end
+
+    unless current_organisation
+      session[:redirect_to] = request.request_uri
+      redirect_to organisations_url
     end
   end
 end

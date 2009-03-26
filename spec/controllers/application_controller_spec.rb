@@ -4,7 +4,7 @@ describe ApplicationController do
   
   before :each do
     @user = mock_model User
-    @referer = 'some/referer'
+    @request_uri = '/some/place'
   end
 
   describe "current_user" do
@@ -61,15 +61,69 @@ describe ApplicationController do
     end
   end
 
+  describe "current_organisation" do
+    before(:each) do
+      login
+    end
+
+    describe "with a current organisation set" do
+      before :each do
+        @organisation = @user.organisations.first
+        @organisation.should_not be_nil
+        session[:organisation_id] = @organisation.id
+      end
+
+      it "should return the organisation" do
+        controller.send(:current_organisation).should == @organisation
+      end
+
+      it "should assign an instance variable" do
+        controller.send(:current_organisation)
+        controller.instance_variable_get("@current_organisation").should ==
+          @organisation
+      end
+    end
+
+    describe "with an invalid current organisation" do
+      before :each do
+        @organisation_for_other_user = Organisations.create_organisation!
+        session[:organisation_id] = @organisation_for_other_user.id
+      end
+
+      it "should return nil" do
+        controller.send(:current_organisation).should be_nil
+      end
+
+      it "should not set an instance variable" do
+        controller.send(:current_organisation)
+        controller.instance_variable_get("@current_organisation").should be_nil
+      end
+    end
+    
+    describe "with no current organisation set" do
+      before :each do
+        session[:organisation_id] = nil
+      end
+      
+      it "should return nil" do
+        controller.send(:current_organisation).should be_nil
+      end
+      
+      it "should not set an instance variable" do
+        controller.send(:current_organisation)
+        controller.instance_variable_get("@current_organisation").should be_nil
+      end
+    end
+  end
+
   describe "get_project" do
     before :each do
       login
-      stub_projects!
+      @project = Projects.create_project!(:organisation => @organisation)
     end
 
     it "should restrict to user's projects" do
       controller.stub!(:params).and_return({:project_id => @project.id.to_s})
-      @projects.stub!(:find).with(@project.id.to_s).and_return(@project)
       controller.send(:get_project)
       controller.instance_variable_get("@project").should == @project
     end
@@ -78,22 +132,6 @@ describe ApplicationController do
       controller.stub!(:params).and_return({})
       @user.should_not_receive(:organisation)
       controller.send(:get_project)
-    end
-  end
-
-  describe "get_organisation" do
-    before :each do
-      login
-    end
-    
-    it "should get the organisation the current user" do
-      @user.should_receive(:organisation)
-      controller.send(:get_organisation)
-    end
-
-    it "should assign the instance variable" do
-      controller.send(:get_organisation)
-      controller.instance_variable_get("@organisation").should == @organisation
     end
   end
 
@@ -119,10 +157,10 @@ describe ApplicationController do
         controller.send(:login_required)
       end
 
-      it "should set the session[:redirect_to] to the referer" do
-        @request.stub!(:referer).and_return(@referer)
+      it "should set the session[:redirect_to] to the requested uri" do
+        @request.stub!(:request_uri).and_return(@request_uri)
         controller.send(:login_required)
-        session[:redirect_to].should == @referer
+        session[:redirect_to].should == @request_uri
       end
 
       it "should not provide a flash notice for now" do
@@ -134,4 +172,76 @@ describe ApplicationController do
     end
   end
 
+  describe "select organisation" do
+    before :each do
+      @user = Users.create_user!
+      @organisation = @user.organisations.first
+      session[:user_id] = @user
+    end
+
+    def current_organisation
+      controller.instance_variable_get("@current_organisation")
+    end
+
+    describe "with an organisation selected" do
+      before :each do
+        session[:organisation_id] = @organisation.id
+      end
+
+      it "should assign the organisation" do
+        controller.send(:select_organisation)
+        current_organisation.should == @organisation
+      end
+
+      it "should not redirect" do
+        controller.send(:select_organisation)
+        response.should_not be_redirect
+      end
+    end
+
+    describe "with only one organisation" do
+      it "should set the organisation" do
+        controller.send(:select_organisation)
+        current_organisation.should == @organisation
+      end
+
+      it "should set the organsation id in the session" do
+        controller.send(:select_organisation)
+        session[:organisation_id].should == @organisation.id
+      end
+
+      it "should not redirect" do
+        controller.send(:select_organisation)
+        response.should_not be_redirect
+      end
+    end
+
+    describe "with many organisations" do
+      before :each do
+        session[:organisation_id] = nil
+        @alternative_organisation = Organisations.create_organisation!
+        @alternative_organisation.organisation_members.create!(
+          :user => @user
+        )
+        @controller.instance_variable_set("@current_user", nil)
+        controller.stub!(:redirect_to)
+      end
+
+      it "should not assign an organisation" do
+        controller.send(:select_organisation)
+        current_organisation.should be_nil
+      end
+
+      it "should store the request_uri" do
+        request.stub!(:request_uri).and_return(@request_uri)
+        controller.send(:select_organisation)
+        session[:redirect_to].should == @request_uri
+      end
+
+      it "should redirect to the organisations index" do
+        controller.should_receive(:redirect_to).with(organisations_url)
+        controller.send(:select_organisation)
+      end
+    end
+  end
 end

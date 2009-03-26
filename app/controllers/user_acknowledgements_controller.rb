@@ -1,5 +1,6 @@
 class UserAcknowledgementsController < ApplicationController
   skip_before_filter :login_required
+  skip_before_filter :select_organisation
   before_filter :get_user
 
   layout 'landing'
@@ -17,5 +18,6 @@ class UserAcknowledgementsController < ApplicationController
 
   def get_user
     @user = User.find(params[:user_id])
+    @user.signup = true
   end
 end

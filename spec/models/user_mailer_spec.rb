@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe UserMailer do
   describe "verification" do
     before :each do
-      @user = Users.create_user!
+      @user = Users.create_user!(:signup => true)
       @mail = UserMailer.create_verification(@user)
     end
 
@@ -23,15 +23,19 @@ describe UserMailer do
   describe "acknowledgement" do
     before :each do
       @sponsor = Users.create_user!
-      @user = Users.create_user!(
-        :sponsor => @sponsor,
-        :organisation => @sponsor.organisation
+      @organisation = @sponsor.organisations.first
+
+      @user = Users.create_user!
+
+      @organisation_member = @organisation.organisation_members.create!(
+        :user => @user,
+        :sponsor => @sponsor
       )
-      @mail = UserMailer.create_acknowledgement(@user)
+      @mail = UserMailer.create_acknowledgement(@organisation_member)
     end
 
     it "should set the subject" do
-      @mail.subject.should == "You have been added to #{@user.organisation.name}"
+      @mail.subject.should == "You have been added to #{@organisation.name}"
     end
 
     it "should set the recipient" do
