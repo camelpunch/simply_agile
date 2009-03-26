@@ -99,7 +99,7 @@ body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
 /* organisations/show */
-body#organisations_show .section { width:20em }
+body#organisations_show .section { width:45em }
 body#organisations_show .section table { width:100% }
 /* end organisations/show */
 
