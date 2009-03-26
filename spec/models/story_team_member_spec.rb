@@ -29,6 +29,12 @@ describe StoryTeamMember do
     before :each do
       @story_team_member = StoryTeamMember.new
       @story_team_member.valid?
+
+      @project = Projects.create_project
+      @organisation1 = Organisations.create_organisation :projects => [@project]
+      @organisation2 = Organisations.create_organisation
+      @user = Users.create_user :organisations => [@organisation2]
+      @story = Stories.create_story :project => @project
     end
 
     it "should require a user" do
@@ -40,15 +46,19 @@ describe StoryTeamMember do
     end
 
     it "should require that story and user are a unique combination" do
-      user = Users.create_user
-      story = Stories.create_story
-      @story_team_member.user = user
-      @story_team_member.story = story
+      @user.organisations << @organisation1
+      @story_team_member.user = @user
+      @story_team_member.story = @story
       @story_team_member.save!
-      lambda {StoryTeamMember.create!(:user => user, :story => story)}.
+      lambda {StoryTeamMember.create!(:user => @user, :story => @story)}.
         should raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "should require that the user belongs to organisation of the story's project"
+    it "should require that user belongs to organisation of story's project" do
+      @story_team_member.user = @user
+      @story_team_member.story = @story
+      @story_team_member.valid?
+      @story_team_member.should have(1).error_on(:story)
+    end
   end
 end

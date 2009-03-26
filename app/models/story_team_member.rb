@@ -7,4 +7,10 @@ class StoryTeamMember < ActiveRecord::Base
 
   validates_uniqueness_of :story_id, :scope => :user_id,
     :message => 'is already assigned to you'
+
+  def validate
+    if story && !user.organisations.include?(story.project.organisation)
+      errors.add(:story, "must belong to one of your projects")
+    end
+  end
 end

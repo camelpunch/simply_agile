@@ -4,10 +4,12 @@ describe StoryTeamMembersController do
 
   before :each do
     login
-    @project = Projects.create_project
+    @project = Projects.create_project :organisation => @organisation
     @iteration = Iterations.create_iteration :project => @project
     @story = Stories.create_story(:project => @project,
                                   :iteration => @iteration)
+    @user.organisations << @story.project.organisation
+    @user.save!
   end
 
   describe "create" do
@@ -82,7 +84,8 @@ describe StoryTeamMembersController do
 
     describe "someone else" do
       before :each do
-        @story_team_member.user = Users.create_user
+        @story_team_member.user = 
+          Users.create_user :organisations => [@organisation]
         @story_team_member.save!
       end
 
