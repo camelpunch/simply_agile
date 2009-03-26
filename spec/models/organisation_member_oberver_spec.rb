@@ -16,4 +16,13 @@ describe OrganisationMemberObserver do
       @organisation_member.save
     end
   end
+
+  it "should not send an email if the sponsor is nil" do
+    OrganisationMember.with_observers(:organisation_member_observer) do
+      UserMailer.should_not_receive(:deliver_acknowledgement).
+        with(@organisation_member)
+      @organisation_member.sponsor = nil
+      @organisation_member.save
+    end
+  end
 end
