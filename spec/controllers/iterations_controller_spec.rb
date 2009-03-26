@@ -80,6 +80,42 @@ describe IterationsController do
     end
   end
 
+  describe "index" do
+    def do_call
+      get :index
+    end
+    
+    before :each do
+      @active_iterations = []
+      3.times do
+        project = Projects.create_project!(:organisation => @organisation)
+        story = Stories.create_story!(:project => @project)
+        iteration = Iterations.create_iteration!(
+          :project => project,
+          :stories => [story]
+        )
+        iteration.start
+        @active_iterations << iteration
+      end
+
+      # Create some pending iterations too
+      2.times do
+        story = Stories.create_story!(:project => @project)
+        Iterations.create_iteration!(
+          :project => @project,
+          :stories => [story]
+        )
+      end
+    end
+
+    it_should_behave_like "it's successful"
+
+    it "should assign all of the active iterations for a the organisation" do
+      do_call
+      assigns[:iterations].should == @active_iterations
+    end
+  end
+
   describe "new" do
     def do_call
       get :new, :project_id => @project.id
