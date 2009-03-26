@@ -4,7 +4,7 @@ describe ApplicationController do
   
   before :each do
     @user = mock_model User
-    @referer = 'some/referer'
+    @request_uri = '/some/place'
   end
 
   describe "current_user" do
@@ -157,10 +157,10 @@ describe ApplicationController do
         controller.send(:login_required)
       end
 
-      it "should set the session[:redirect_to] to the referer" do
-        @request.stub!(:referer).and_return(@referer)
+      it "should set the session[:redirect_to] to the requested uri" do
+        @request.stub!(:request_uri).and_return(@request_uri)
         controller.send(:login_required)
-        session[:redirect_to].should == @referer
+        session[:redirect_to].should == @request_uri
       end
 
       it "should not provide a flash notice for now" do
@@ -232,11 +232,10 @@ describe ApplicationController do
         current_organisation.should be_nil
       end
 
-      it "should store the referer" do
-        referer = 'redirect_here'
-        request.stub!(:referer).and_return(referer)
+      it "should store the request_uri" do
+        request.stub!(:request_uri).and_return(@request_uri)
         controller.send(:select_organisation)
-        session[:redirect_to].should == referer
+        session[:redirect_to].should == @request_uri
       end
 
       it "should redirect to the organisations index" do

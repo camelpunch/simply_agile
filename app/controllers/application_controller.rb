@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
     if current_user
       true
     else
-      session[:redirect_to] = request.referer
+      session[:redirect_to] = request.request_uri
       redirect_to new_session_url
     end
   end
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     end
 
     unless current_organisation
-      session[:redirect_to] = request.referer
+      session[:redirect_to] = request.request_uri
       redirect_to organisations_url
     end
   end
