@@ -20,16 +20,16 @@
   </div>
 </div>
 
-<% unless @story.team_members.empty? %>
+<% if @story.iteration && @story.iteration.active? %>
   <div id="users">
     <h2>Story Team</h2>
-    <ul>
+    <% unless @story.team_members.empty? %>
+      <ul>
       <%= render @story.team_members %>
-    </ul>
+      </ul>
+    <% end %>
 
-    <% if (@story.iteration && 
-           @story.iteration.active? && 
-           !@story.users.include?(@current_user)) %>
+    <% unless @story.users.include?(@current_user) %>
       <% form_for StoryTeamMember.new(:story => @story) do |f| %>
         <p class="submit">
         <%= f.hidden_field :story_id %>
@@ -37,7 +37,6 @@
         </p>
       <% end %>
     <% end %>
-
   </div>
 <% end %>
 
