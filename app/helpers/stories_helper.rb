@@ -2,7 +2,7 @@ module StoriesHelper
 
   def story_breadcrumbs(story)
     output = <<-XML
-    <li class="first-child project">#{link_to(h(@project), @project)}</li>
+    <li class="project">#{link_to(h(@project), @project)}</li>
     XML
 
     if @story.iteration_id?

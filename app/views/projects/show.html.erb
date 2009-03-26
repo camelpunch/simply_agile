@@ -4,7 +4,7 @@
 <li><%= link_to "Edit", edit_project_path(@project) %></li>
 <% end %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child project"><%= h @project %></li>
+  <li class="project"><%= h @project %></li>
 <% end %>
 
 <%= simple_format h(@project.description) %>

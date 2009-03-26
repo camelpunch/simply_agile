@@ -35,7 +35,7 @@
 /* breadcrumbs */
 #breadcrumbs { height:3em; padding-left:30px }
 #breadcrumbs li { float:left; margin-left:9px; padding-left:25px }
-#breadcrumbs li.first-child { margin-left:0; padding-left:0 }
+#breadcrumbs li.organisation { margin-left:0; padding-left:0 }
 /* end breadcrumbs */
 
 /* content */
