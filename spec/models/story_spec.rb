@@ -196,7 +196,7 @@ describe Story do
       @story.stub!(:acceptance_criteria).and_return(@acs)
     end
 
-    describe "where all accepance criteria are completed" do
+    describe "where all acceptance criteria are completed" do
       before :each do
         @acs.stub!(:uncompleted).and_return([])
       end
@@ -226,7 +226,7 @@ describe Story do
       end
     end
 
-    describe "where not all accepance criteria are completed" do
+    describe "where not all acceptance criteria are completed" do
       before :each do
         ac = mock_model(AcceptanceCriterion)
         @acs.stub!(:uncompleted).and_return([ac])
