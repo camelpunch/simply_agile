@@ -1,7 +1,7 @@
 <% content_for :title, "#{@project} Backlog" %>
 <% content_for :h1, h("#{@project} Backlog") %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="project"><%= link_to h(@project), @project %></li>
   <li class="story">Backlog</li>
 <% end %>
 <% body_classes << 'guidance' %>

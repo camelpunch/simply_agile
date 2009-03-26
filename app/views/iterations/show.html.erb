@@ -4,7 +4,7 @@
 <li><%= link_to 'Edit', edit_project_iteration_path(@project, @iteration) %></li>
 <% end %>
 <% content_for :breadcrumbs do %>
-  <li class="first-child project"><%= link_to h(@project), @project %></li>
+  <li class="project"><%= link_to h(@project), @project %></li>
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
 

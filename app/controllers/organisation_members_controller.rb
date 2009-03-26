@@ -10,6 +10,7 @@ class OrganisationMembersController < ApplicationController
       )
       redirect_to current_organisation
     else
+      @organisation = current_organisation
       render :template => 'organisations/show'
     end
   end

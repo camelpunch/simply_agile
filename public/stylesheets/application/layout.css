@@ -35,7 +35,7 @@
 /* breadcrumbs */
 #breadcrumbs { height:3em; padding-left:30px }
 #breadcrumbs li { float:left; margin-left:9px; padding-left:25px }
-#breadcrumbs li.first-child { margin-left:0; padding-left:0 }
+#breadcrumbs li.organisation { margin-left:0; padding-left:0 }
 /* end breadcrumbs */
 
 /* content */
@@ -97,6 +97,11 @@ body#stories_backlog .javascript #content p.submit,
 body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
+
+/* organisations/show */
+body#organisations_show .section { width:45em }
+body#organisations_show .section table { width:100% }
+/* end organisations/show */
 
 /* sessions/new */
 #existing_users { float: left; width: 55%; }
