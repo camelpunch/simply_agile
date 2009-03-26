@@ -25,10 +25,9 @@
     </ol>
     <% if @project.stories.backlog.size > 10 -%>
     <p class="more">
-      .. and <%= @project.stories.backlog.size - 10 %> more in the
+      …and <%= @project.stories.backlog.size - 10 %> more in the
       <%= link_to "full backlog",
-                  backlog_project_stories_path(@project) %>
-      .
+                  backlog_project_stories_path(@project) %>.
     </p>
     <% end %>
     <% end -%>
