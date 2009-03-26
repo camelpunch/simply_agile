@@ -8,6 +8,7 @@ describe "/iterations/edit" do
                         :estimate => '',
                         :acceptance_criteria => [],
                         :iteration_id? => false,
+                        :iteration => nil,
                         :project => @project)
     @project = mock_model(Project,
                           :stories => @stories)

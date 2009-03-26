@@ -1,11 +1,11 @@
 var BacklogPrioritisation = {
   init: function() {
     // guidance
-    $('#backlog')
+    $('ol.stories')
       .before('<p class="guidance">Drag stories to change priority.</p>');
 
     // enable sorting
-    $('#backlog').sortable({
+    $('ol.stories').sortable({
       axis: 'y',
       stop: function(event, ui) {
         var ids = $(this).sortable('toArray');

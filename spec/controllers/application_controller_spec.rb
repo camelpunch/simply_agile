@@ -5,11 +5,6 @@ describe ApplicationController do
   before :each do
     @user = mock_model User
     @referer = 'some/referer'
-#    @request = mock('Request',
-#      :protocol => '',
-#      :host_with_port => '',
-#      :referer => @referer)
-#    controller.stub!(:request).and_return(@request)
   end
 
   describe "current_user" do
@@ -130,10 +125,12 @@ describe ApplicationController do
         session[:redirect_to].should == @referer
       end
 
-      it "should provide a flash notice" do
+      it "should not provide a flash notice for now" do
         controller.send(:login_required)
-        flash[:notice].should_not be_blank
+        flash[:notice].should be_blank
       end
+
+      it "should provide a flash notice when we finish beta"
     end
   end
 

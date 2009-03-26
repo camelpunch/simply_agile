@@ -4,24 +4,26 @@
   <li class="first-child project"><%= link_to h(@iteration.project), @iteration.project %></li>
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
+<% body_classes << 'iteration_active' %>
 
-<div>
-  <%= image_tag(iteration_burndown_path(@iteration), 
-                :alt => 'Burndown Chart',
-                :width => 600,
-                :height => 450,
-                :id => "burndown") %>
-</div>
-
-<p id="time_remaining">
-  This iteration ends in <%= @iteration.days_remaining %> days on
-  <%= @iteration.end_date.to_s(:default) %>
-</p>
-
-<div id="stories" class="section">
+<div id="stories">
   <h2>Stories</h2>
-  <ol id="stories_list">
-    <%= render :partial => 'stories/changeable_story',
-               :collection => @iteration.stories %>
+  <ol class="stories">
+    <%= render @iteration.stories %>
   </ol>
 </div>
+
+<div id="burndown">
+  <%= image_tag(iteration_burndown_path(@iteration, :width => 350), 
+                :alt => 'Burndown Chart',
+                :width => 350) %>
+  <p id="time_remaining">
+  <% if @iteration.finished? %>
+  This iteration finished on <%= @iteration.end_date %>.
+  <% else %>
+  This iteration ends in <%= pluralize @iteration.days_remaining, 'day' %> 
+  on <%= @iteration.end_date %>.
+  <% end %>
+  </p>
+</div>
+

@@ -9,37 +9,54 @@
 
 <%= simple_format h(@project.description) %>
 
-<div id="stories" class="section">
-  <h2>Stories</h2>
-  <ul>
-    <li>
-    <%= link_to "Stories that still need to be worked on",
-      backlog_project_stories_path(@project) %>
-    </li>
-    <li>
-    <%= link_to "Stories that have been completed",
-      finished_project_stories_path(@project) %>
-    </li>
-  </ul>
+<div id="backlog" class="section_container">
+  <%= link_to h("Full #{@project} backlog"), 
+    backlog_project_stories_path(@project),
+    :class => 'section' %>
+  <div class="section">
+    <h2>Backlog</h2>
+    <% if @project.stories.backlog.empty? %>
+      <p>
+      This project has no backlog.
+      </p>
+    <% else %>
+    <ol class="stories">
+    <%= render @project.stories.backlog.all(:limit => 10) %>
+    </ol>
+    <% end %>
+  </div>
 </div>
 
-<div id="iterations" class="section">
-  <h2>Iterations</h2>
-  <p>
+<div id="iterations" class="section_container">
   <%= link_to("Plan an iteration", 
-              new_project_iteration_path(@project))
+              new_project_iteration_path(@project),
+              :class => 'section')
   %>
-  </p>
-  <% if @project.iterations.empty? %>
-    <div class="guidance">
-      <p>
-      This project has no iterations.
-      </p>
-    </div>
-  <% else %>
-    <ol>
-      <%= render(:partial => 'iterations/list_item', 
-                 :collection => @project.iterations) %>
-    </ol>
-  <% end %>
+  <div class="section">
+    <h2>Iterations</h2>
+    <% if @project.iterations.empty? %>
+      <div class="guidance">
+        <p>
+        This project has no iterations.
+        </p>
+      </div>
+    <% else %>
+      <% unless @project.iterations.active.empty? %>
+        <div class="active">
+          <h3>Active</h3>
+          <ol>
+            <%= render @project.iterations.active %>
+          </ol>
+        </div>
+      <% end %>
+      <% unless @project.iterations.pending.empty? %>
+        <div class="planned">
+          <h3>Planned</h3>
+          <ol>
+            <%= render @project.iterations.pending %>
+          </ol>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>

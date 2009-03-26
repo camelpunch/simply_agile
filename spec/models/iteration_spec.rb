@@ -118,6 +118,15 @@ describe Iteration do
     end
   end
 
+  describe "setting the duration after the start date" do
+    it "should set the end_date" do
+      iteration = Iteration.new
+      iteration.start_date = Date.today
+      iteration.duration = 7
+      iteration.end_date.should == 7.days.from_now.to_date
+    end
+  end
+
   describe "story points" do
     before :each do
       project = Projects.simply_agile
@@ -177,7 +186,7 @@ describe Iteration do
 
     it "should not create data points if the interation has less than one day to go" do
       @iteration.update_attributes(
-        :start_date => Date.today - @iteration.duration
+        :end_date => Date.today
       )
       @iteration.update_burndown_data_points
       @iteration.burndown_data_points.should be_empty
@@ -208,15 +217,30 @@ describe Iteration do
     end
   end
   
-  describe "named finder for active" do
+  describe "named finders" do
     before :each do
       Iteration.destroy_all
       @active = Iterations.active_iteration
-      @inactive = Iterations.first_iteration
+      @pending = Iterations.first_iteration
+      @finished = Iterations.finished_iteration
     end
     
-    it "should only return active iterations" do
-      Iteration.active.should == [@active]
+    describe "active" do
+      it "should only return active iterations" do
+        Iteration.active.should == [@active]
+      end
+    end
+
+    describe "pending" do
+      it "should only return pending iterations" do
+        Iteration.pending.should == [@pending]
+      end
+    end
+
+    describe "finished" do
+      it "should only return finished iterations" do
+        Iteration.finished.should == [@finished]
+      end
     end
   end
 
@@ -256,10 +280,21 @@ describe Iteration do
       @iteration.start_date.should == Date.today
     end
 
+    it "should set the end_date to today + duration" do
+      @iteration.start
+      @iteration.reload
+      @iteration.end_date.should == 7.days.from_now.to_date
+    end
+
     it "should set the initial estimate" do
       @iteration.start
       @iteration.reload
       @iteration.initial_estimate.should == @iteration.story_points_remaining
+    end
+
+    it "should be finished if finished" do
+      @iteration.end_date = 2.days.ago
+      @iteration.should be_finished
     end
 
     it "should be pending if not started" do

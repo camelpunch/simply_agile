@@ -3,45 +3,64 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <%= stylesheet_link_tag 'reset-fonts', 'layout', 'typography', 'colours',
-      :cache => true %>
-    <title><%= h yield(:title) %> | Simply Agile</title>
+    <%= stylesheet_link_tag('reset-fonts', 
+                            'landing/layout', 
+                            'landing/typography', 
+                            'landing/colours', 
+                            :cache => 'landing') %>
+    <title><%= yield :title %> | Simply Agile</title>
   </head>
 
   <body class="<%= body_classes.join(' ') %>" id="<%=
         "#{controller.controller_name}_#{controller.action_name}" %>">
-    <div id="content">
-      <h1><%= yield(:h1) %></h1>
-      
-      <div id="beta_warning">
-        <h2>Welcome to the Simply Agile Beta</h2>
-        <p>
+    <div id="container">
+      <div id="header">
+        <p>Simply Agile - A Simple Tool for Effective Agile Teams</p>
+      </div>
+      <div id="content">
+        <div id="beta_warning">
+          <h1>Welcome to Simply Agile beta</h1>
+          <% if controller.controller_name != 'sessions' %>
+            <p id="home_link">
+            <%= link_to 'Back to home page', root_path %>
+            </p>
+          <% end %>
+          <p>
           You are welcome to try this system out, but please be aware that this is
           a pre-release version. It may contain bugs, some functionality may be
           unfinished and you might snag your jumper on the odd rough edge.
-        </p>
-
-        <p>
+          </p>
+          <p>
           We are not currently charging for access to the system but when it comes out
           of beta during early April 2009 we will start charging. If you start using
           the site now you will have the option of moving onto a paid plan or cancelling
           your account when the beta period ends.
-        </p>
-
-        <p>
+          </p>
+          <p>
           We'd love to hear any feedback you have about the system. Please send it to
-          <a href="mailto:feedback@besimplyagile.com">feedback@besimplyagile.com</a>.
-        </p>
-      </div>
+          <%= mail_to 'feedback@besimplyagile.com', 'feedback@besimplyagile.com', :encode => "hex" %>.
+          </p>
+        </div>
 
-      <%= render_flash %>
-      <%= yield %>
+        <div id="new_existing">
+          <%= render_flash %>
+          <%= yield %>
+        </div>
+      </div>
+      <%= render :partial => 'shared/footer' %>
     </div>
-    <%= javascript_include_tag('jquery-1.3.2.min.js',
-      'jquery.form.js',
-      'acceptance_criteria',
-      'application',
-      :cache => true) %>
+    <%= javascript_include_tag('jquery-1.3.2.min', 
+                               'jquery-ui-1.7.custom.min',
+                               'jquery.form', 
+                               'flash',
+                               'request',
+                               'new_story_adder',
+                               'acceptance_criteria', 
+                               'iteration_planning',
+                               'iteration_active',
+                               'backlog_prioritisation',
+                               'application', 
+                               :cache => true) %>
   </body>
 
 </html>
