@@ -53,7 +53,7 @@
         <div class="active">
           <h3>Active</h3>
           <ol>
-            <%= render @project.iterations.active %>
+            <%= render @project.iterations.active, :width => 150 %>
           </ol>
         </div>
       <% end %>
@@ -61,7 +61,7 @@
         <div class="planned">
           <h3>Planned</h3>
           <ol>
-            <%= render @project.iterations.pending %>
+            <%= render @project.iterations.pending, :width => 150 %>
           </ol>
         </div>
       <% end %>

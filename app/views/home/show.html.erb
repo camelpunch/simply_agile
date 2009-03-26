@@ -1,23 +1,18 @@
 <% content_for :title, "Simply Agile Home" %>
 <% content_for :h1, "Simply Agile Home" %>
-<% if ! @active_iterations.empty? -%>
-  <ul>
-    <% @active_iterations.each do |iteration| -%>
-      <li class="active_iteration">
-        <h3>
-        <%= link_to(h(iteration.name),
-          project_iteration_path(iteration.project, iteration)) %>
-        </h3>
-        <%= link_to(
-          image_tag(iteration_burndown_path(iteration, :width => 300),
-            :width => 300, :height => 225,
-            :alt => "Burndown chart for #{h iteration.name}"
-          ),
-          project_iteration_path(iteration.project, iteration)
-        ) %>
-      </li>
-    <% end -%>
-  </ul>
-<% else -%>
-  <%= render :partial => 'projects/list' %>
+
+<p>To get started...</p>
+
+<ul>
+  <li><%= link_to "Create a new project", new_project_path %></li>
+  <li><%= link_to "Create a new story", new_story_path %></li>
+  <li><%= link_to "Plan an iteration", new_iteration_path %></li>
+</ul>
+
+<% unless @active_iterations.empty? -%>
+  <p>or work on one of these active iterations</p>
+
+  <ol>
+    <%= render @active_iterations, :width => 300 %>
+  </ol>
 <% end -%>
