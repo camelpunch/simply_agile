@@ -14,13 +14,19 @@ class AcceptanceCriteriaController < ApplicationController
   end
 
   def update
-    story_status = @story.status
+    previous_story_status = @story.status
+    previous_story_users_empty = @story.users.empty?
 
     if @acceptance_criterion.update_attributes(params[:acceptance_criterion])
       @story.reload
-      if story_status != @story.status
+      if previous_story_status != @story.status
         new_status = ActiveSupport::Inflector.titleize(@story.status)
-        message = "Story status has changed to '#{new_status}'"
+        message = "Story status has changed to '#{new_status}'. "
+      end
+
+      if !previous_story_users_empty && @story.users.empty?
+        message ||= ''
+        message << "Story team members have been removed." 
       end
 
       respond_to do |format|

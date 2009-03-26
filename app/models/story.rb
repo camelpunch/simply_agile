@@ -57,9 +57,11 @@ class Story < ActiveRecord::Base
     return if iteration.nil?
     if acceptance_criteria.uncompleted.empty?
       if (status == Status::PENDING || status == Status::IN_PROGRESS)
+        users.clear
         self.update_attributes(:status => Status::TESTING)
       end
     elsif status == Status::TESTING || status == Status::COMPLETE
+      users.clear
       self.update_attributes(:status => Status::IN_PROGRESS)
     end
   end

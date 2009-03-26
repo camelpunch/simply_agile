@@ -201,6 +201,13 @@ describe Story do
         @acs.stub!(:uncompleted).and_return([])
       end
 
+      it "should remove all team members from the story" do
+        @story.users << Users.create_user
+        @story.stub!(:status).and_return(Story::Status::IN_PROGRESS)
+        @story.update_status_from_acceptance_criteria
+        @story.users.should be_empty
+      end
+
       it "should change status from in progress to testing" do
         @story.stub!(:status).and_return(Story::Status::IN_PROGRESS)
         @story.should_receive(:status=).with(Story::Status::TESTING)
@@ -230,6 +237,13 @@ describe Story do
       before :each do
         ac = mock_model(AcceptanceCriterion)
         @acs.stub!(:uncompleted).and_return([ac])
+      end
+
+      it "should remove all team members from the story" do
+        @story.users << Users.create_user
+        @story.stub!(:status).and_return(Story::Status::TESTING)
+        @story.update_status_from_acceptance_criteria
+        @story.users.should be_empty
       end
 
       it "should change status from testing to in progress" do

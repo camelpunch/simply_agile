@@ -230,7 +230,7 @@ describe AcceptanceCriteriaController do
             :project_id => @story.project.id,
             :story_id => @story.id,
             :acceptance_criterion => { :complete => true }
-          flash.now[:notice].should_not be_blank
+          flash[:notice].should_not be_blank
         end
       end
 
@@ -244,7 +244,7 @@ describe AcceptanceCriteriaController do
             :project_id => @story.project.id,
             :story_id => @story.id,
             :acceptance_criterion => { :complete => false }
-          flash.now[:notice].should_not be_blank
+          flash[:notice].should_not be_blank
         end
       end
 
@@ -257,7 +257,7 @@ describe AcceptanceCriteriaController do
           :project_id => @story.project.id,
           :story_id => @story.id,
           :acceptance_criterion => { :complete => true }
-        flash.now[:notice].should be_blank
+        flash[:notice].should be_blank
       end
 
       it "should not set flash notice when acceptance criterion are uncompleted and story status is in progress" do
@@ -267,7 +267,7 @@ describe AcceptanceCriteriaController do
           :project_id => @project.id,
           :story_id => @story.id,
           :acceptance_criterion => { :complete => false }
-        flash.now[:notice].should be_blank
+        flash[:notice].should be_blank
       end
     end
   end

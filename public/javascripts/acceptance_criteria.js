@@ -21,24 +21,7 @@ var AcceptanceCriteria = {
         $(this).before('<input type="hidden" value="false" name="acceptance_criterion[complete]" />');
       }
 
-      form.ajaxSubmit({
-        success: function(data, status) { 
-          new Flash({notice: data})
-          checked_before_removal = checked;
-
-          criterion.remove();
-
-          if (checked) {
-            $('#completed table').append(criterion);
-          } else {
-            $('#uncompleted table').append(criterion);
-          }
-
-          AcceptanceCriteria.bindCheckBoxes(criterion);
-          AcceptanceCriteria.formInit(criterion);
-          AcceptanceCriteria.anchorInit(criterion);
-        }
-      });
+      form.submit();
     });
   },
 
