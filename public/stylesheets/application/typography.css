@@ -6,6 +6,7 @@ table p { margin:0 }
 a:hover { text-decoration:none }
 
 form input.numeric { text-align:right }
+legend { font-weight:bold; padding-top:2em }
 
 #container { text-align:center } /* largely for ie6 centring but reused */
 #content { text-align:left }

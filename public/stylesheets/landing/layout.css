@@ -22,3 +22,5 @@ label { display:block; margin-top:.5em }
 #privacy_policies_show dd { display:block; margin-left:10em }
 
 li { margin-left:15px }
+
+body.user_verifications .flash { margin-top:15px; width:50% }
