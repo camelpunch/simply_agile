@@ -32,18 +32,17 @@
     <% end -%>
   </table>
 
-  <h3>Add somebody to this organisation</h3>
   <% form_for @user, :url => organisation_members_path(@organisation) do |form| -%>
-    <div>
+    <fieldset>
+      <legend>Add somebody to this organisation</legend>
       <%= form.error_messages %>
-    </div>
-
-    <p>
+      <p>
       <%= form.label :email_address %>
       <%= form.text_field :email_address %>
-    </p>
-    <p class="submit">
+      </p>
+      <p class="submit">
       <%= form.submit "Add user" %>
-    </p>
+      </p>
+    </fieldset>
   <% end -%>
 </div>
