@@ -24,3 +24,5 @@ label { display:block; margin-top:.5em }
 li { margin-left:15px }
 
 body.user_verifications .flash { margin-top:15px; width:50% }
+
+.important_message { display:none }
