@@ -39,5 +39,4 @@ body#iterations_show .javascript #headings ol li { text-align:center }
 
 #iterations h3 { text-align:right; font-size:123.1%;
                                     padding:7px 10px 15px 0 }
-li.iteration a { text-align:center }
-#breadcrumbs li.iteration a { text-align:left }
+#content li.iteration a { text-align:center }
