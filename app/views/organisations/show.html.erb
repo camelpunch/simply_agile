@@ -5,44 +5,46 @@
   <li><%= link_to 'Change', organisations_path %></li>
 <% end %>
 
-<div class="section">
-  <h2><%= h(@organisation.name) %> Members</h2>
+<div class="section_container">
+  <div class="section">
+    <h2><%= h(@organisation.name) %> Members</h2>
 
-  <table>
-    <% @organisation.users.each do |user| -%>
-      <tr>
-        <td>
-          <%= user.email_address %>
-        </td>
-        <td class="aside">
-          <% if user == @current_user -%>
-            (you)
-          <% elsif ! user.acknowledged_for?(@current_organisation) -%>
-            Account is not yet acknowledged
-          <% end -%>
-        </td>
-        <td>
-          <% unless user == @current_user -%>
-            <%= button_to "Remove from organisation",
-              organisation_member_path(@organisation, user.id),
-              :method => :delete %>
-          <% end -%>
-        </td>
-      </tr>
+    <table>
+      <% @organisation.users.each do |user| -%>
+        <tr>
+          <td>
+            <%= user.email_address %>
+          </td>
+          <td class="aside">
+            <% if user == @current_user -%>
+              (you)
+            <% elsif ! user.acknowledged_for?(@current_organisation) -%>
+              Account is not yet acknowledged
+            <% end -%>
+          </td>
+          <td>
+            <% unless user == @current_user -%>
+              <%= button_to "Remove from organisation",
+                organisation_member_path(@organisation, user.id),
+                :method => :delete %>
+            <% end -%>
+          </td>
+        </tr>
+      <% end -%>
+    </table>
+
+    <% form_for @user, :url => organisation_members_path(@organisation) do |form| -%>
+      <fieldset>
+        <legend>Add somebody to this organisation</legend>
+        <%= form.error_messages %>
+        <p>
+        <%= form.label :email_address %>
+        <%= form.text_field :email_address %>
+        </p>
+        <p class="submit">
+        <%= form.submit "Add user" %>
+        </p>
+      </fieldset>
     <% end -%>
-  </table>
-
-  <% form_for @user, :url => organisation_members_path(@organisation) do |form| -%>
-    <fieldset>
-      <legend>Add somebody to this organisation</legend>
-      <%= form.error_messages %>
-      <p>
-      <%= form.label :email_address %>
-      <%= form.text_field :email_address %>
-      </p>
-      <p class="submit">
-      <%= form.submit "Add user" %>
-      </p>
-    </fieldset>
-  <% end -%>
+  </div>
 </div>

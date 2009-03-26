@@ -9,13 +9,15 @@
   </p>
 </div>
 <% else %>
-  <div id="projects" class="section">
-    <h2>Projects</h2>
-    <p>
-    <%= link_to "Make a new project", new_project_path %>
-    </p>
-    <ol>
-      <%= render @current_organisation.projects %>
-    </ol>
+  <div class="section_container">
+    <div id="projects" class="section">
+      <h2>Projects</h2>
+      <p>
+      <%= link_to "Make a new project", new_project_path %>
+      </p>
+      <ol>
+        <%= render @current_organisation.projects %>
+      </ol>
+    </div>
   </div>
 <% end %>

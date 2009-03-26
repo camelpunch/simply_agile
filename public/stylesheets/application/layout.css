@@ -42,20 +42,20 @@
 #content { position:relative; margin:0 30px 0 0;
            padding:20px 0 100px 30px;
            overflow:hidden }
-#actions { position:absolute; right:0; top:20px; width:124px }
+#actions { position:absolute; right:0; top:20px; width:124px; z-index:20 }
 #actions li { width:104px; display:block; margin:0 auto }
 #actions a { width:104px; height:29px }
 
 div.section { position:relative; padding:40px 36px 22px 36px; 
-              margin:0 }
+              margin:23px 0 0 11px }
 div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 div.section>h2 { left:-13px }
 div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
     top:0; left: 0 }
 
-div.section_container { position:relative }
-div.section_container a.section { position:absolute; right:9px; top:-18px }
+div.section_container { position:relative; overflow:hidden }
+div.section_container a.section { position:absolute; right:9px; top:6px }
 /* end content */
 
 /* forms */
@@ -122,6 +122,6 @@ body#organisations_show .section table { width:100% }
 #iterations .active,
 #iterations .planned { position:relative; overflow:hidden;
                                           padding-bottom:15px }
-#content li.iteration { width:50%; float:left }
+#content li.iteration { width:49%; float:left; margin-bottom:15px }
 #content li.iteration a { display:block; width:100%; margin:0 auto }
 /* end iteration lists */

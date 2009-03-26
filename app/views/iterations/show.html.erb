@@ -8,6 +8,7 @@
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
 
+<div class="section_container">
 <div class="section">
 <h2>Stories</h2>
 <% if @iteration.stories.empty? %>
@@ -22,6 +23,7 @@
     <%= render @iteration.stories %>
   </ol>
 <% end %>
+</div>
 </div>
 
 <p>
