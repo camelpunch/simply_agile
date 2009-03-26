@@ -87,12 +87,6 @@ describe User do
         @user.encrypted_password.should == Digest::SHA1.hexdigest('some password')
       end
 
-      it "needs acknowledgment rewritten"
-#      it "should set acknowledged to true" do
-#        @user.save
-#        @user.acknowledged?.should be_true
-#      end
-
       describe "verification token" do
         it "should be generated when a user is created" do
           @user.save
@@ -107,24 +101,12 @@ describe User do
       end
     end
 
-    it "needs to be rewritten"
-#    describe "for an existing organisation" do
-#      before :each do
-#        @sponsor = Users.create_user!
-#        @user = User.new(Users.user_prototype.merge(:sponsor => @sponsor))
-#        @user.organisations << @sponsor.organisations.first
-#      end
-#
-#      it "should not try to encrypt the password" do
-#        @user.save!
-#        @user.encrypted_password.should be_nil
-#      end
-#
-#      it "should set acknowledged to false" do
-#        @user.save!
-#        @user.acknowledged?.should be_false
-#      end
-#    end
+    describe "on being added to an organisation" do
+      it "should be verified" do
+        @user = Users.create_user!
+        @user.should be_verified
+      end
+    end
   end
 
   describe "password=" do
@@ -320,12 +302,6 @@ describe User do
         @organisation_member.acknowledgement_token.should be_nil
       end
 
-      it "needs to rewrite the organisation sponsor"
-
-#      it "should delete the organisation sponsor" do
-#        @user.organisation_sponsors.should be_empty
-#      end
-
       it "should update the password" do
         @user.encrypted_password.should == Digest::SHA1.hexdigest(@password)
       end
@@ -354,11 +330,6 @@ describe User do
         @organisation_member.acknowledgement_token.should_not be_nil
       end
 
-      it "needs to be rewritten"
-#      it "should not delete the organisation sponsor" do
-#        @user.organisation_sponsors.should_not be_empty
-#      end
-
       it "should not update the password" do
         @user.encrypted_password.should be_nil
       end
@@ -381,11 +352,6 @@ describe User do
         @organisation_member.reload
         @organisation_member.acknowledgement_token.should_not be_nil
       end
-
-      it "needs rewriting"
-#      it "should not delete the organisation sponsor" do
-#        @user.organisation_sponsors.should_not be_empty
-#      end
 
       it "should update the password" do
         @user.encrypted_password.should be_nil

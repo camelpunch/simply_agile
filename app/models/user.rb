@@ -23,9 +23,11 @@ class User < ActiveRecord::Base
 
   def before_create
     if signup?
-      self.verified ||= false
+      self.verified = false
       self.verification_token ||= generate_token
       self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
+    else
+      self.verified = true
     end
 
     if (organisation_name)

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :new_user
 
   def create
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(params[:user].merge(:signup => true))
       session[:user_id] = @user.id
       redirect_to root_url
     else
