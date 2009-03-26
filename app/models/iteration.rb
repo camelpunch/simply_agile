@@ -7,6 +7,8 @@ class Iteration < ActiveRecord::Base
   has_many :stories
   has_many :burndown_data_points
   validates_presence_of :name, :duration, :project_id
+  validates_numericality_of :duration, 
+    :greater_than_or_equal_to => 1, :only_integer => true
 
   named_scope :active, 
     :conditions => ['start_date IS NOT NULL AND (end_date IS NULL OR end_date > ?)', Date.today]
