@@ -7,9 +7,10 @@
     At some point you will be able to sign up for a new plan from here.
   </p>
 <% else -%>
-<h2>Select the organisation you wish to work on</h2>
-
-<ul>
-  <%= render @organisations %>
-</ul>
+  <div class="section">
+    <h2>Select the organisation for which you wish to work</h2>
+    <ul>
+      <%= render @organisations %>
+    </ul>
+  </div>
 <% end -%>
