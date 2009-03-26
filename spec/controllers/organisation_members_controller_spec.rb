@@ -95,6 +95,10 @@ describe OrganisationMembersController do
       it "should display the 'show' page" do
         response.should render_template('organisations/show')
       end
+
+      it "should assign the organisation" do
+        assigns[:organisation].should == @organisation
+      end
     end
 
     describe "when a user is already a member of the organisation" do
