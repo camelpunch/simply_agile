@@ -64,8 +64,7 @@ form p.checkbox label { display:inline; padding-left:5px }
 /* end forms */
 
 /* home/show */
-body#home_show #getting_started { width:20em; float:left; 
-                                  margin:0 60px 0 0 }
+body#home_show #getting_started { width:20em; float:left; margin-right:60px }
 body#home_show #getting_started .section { margin-bottom:0 }
 body#home_show #iterations { width:680px; float:left }
 body#home_show #iterations div.active { padding-top:45px }
