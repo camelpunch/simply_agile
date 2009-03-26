@@ -1,4 +1,4 @@
-h1 { margin-bottom:1em; font-size:250% }
+h1 { font-size:250%; margin-bottom:1em }
 h1 a { text-decoration:none }
 h2,caption { font-weight:bold; font-size:138.5% }
 p { margin:1em 0 1em 0 }
@@ -6,11 +6,12 @@ table p { margin:0 }
 a:hover { text-decoration:none }
 
 form input.numeric { text-align:right }
+legend { font-weight:bold; padding-top:2em }
 
 #container { text-align:center } /* largely for ie6 centring but reused */
 #content { text-align:left }
 
-#verify { font-size:93%; font-weight:bold }
+.important_message { font-size:93%; font-weight:bold }
 
 #navigation { font-weight:bold; font-size:123.1%; text-align:center }
 #navigation a { text-decoration:none }
@@ -26,12 +27,6 @@ form input.numeric { text-align:right }
 
 div.section h2 { font-size:146.5% }
 
-/* projects/show */
-body#projects_show #iterations ol li a { text-align:center }
-body#projects_show #iterations h3 { text-align:right; font-size:123.1%;
-                                    padding:7px 10px 15px 0 }
-/* end projects/show */
-
 /* iterations/new */
 body.iterations .include a { text-indent:-20000px; outline:none; text-underline:none }
 body.iterations .display h3 { font-weight:bold }
@@ -41,3 +36,7 @@ body.iterations .display h3 { font-weight:bold }
 
 body#iterations_show .javascript #stories .guidance,
 body#iterations_show .javascript #headings ol li { text-align:center }
+
+#iterations h3 { text-align:right; font-size:123.1%;
+                                    padding:7px 10px 15px 0 }
+#content li.iteration a { text-align:center }

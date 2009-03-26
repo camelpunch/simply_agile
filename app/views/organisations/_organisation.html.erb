@@ -1,9 +1,8 @@
 <li>
-  <h3>
-    <%= button_to h(organisation.name),
-                session_path, :method => :put,
-                :organisation_id => organisation.id %>
-  </h3>
+  <% form_tag(session_path, :method => :put) do %>
+    <%= hidden_field_tag :organisation_id, organisation.id, :id => nil %>
+    <%= submit_tag h(organisation.name) %>
+  <% end %>
   <p>
     <%= pluralize organisation.projects.count, "project" %>,
     <%= pluralize organisation.stories.count, "story" %>,

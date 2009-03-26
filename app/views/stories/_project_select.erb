@@ -1,7 +1,7 @@
 <p>
 <%= label_tag :project_id %>
 <%= select_tag(:project_id, 
-               options_from_collection_for_select(@current_user.projects, 
+               options_from_collection_for_select(@current_organisation.projects, 
                                                   :id, 
                                                   :to_s, 
                                                   params[:project_id].to_i)) %>

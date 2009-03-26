@@ -1,4 +1,4 @@
-body.iteration_planning #stories { clear:both;
+body.iteration_planning #stories { clear:both; margin-top:30px;
                                    /*ie6*/ height:200px }
 body.iteration_planning form>#stories,
 body.iteration_planning div>#stories { min-height:200px; height:auto }

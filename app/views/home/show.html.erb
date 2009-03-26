@@ -1,23 +1,35 @@
-<% content_for :title, "Simply Agile Home" %>
-<% content_for :h1, "Simply Agile Home" %>
-<% if ! @active_iterations.empty? -%>
+<% content_for :title, "#{@current_organisation} Home" %>
+<% content_for :h1, h("#{@current_organisation} Home") %>
+
+<% content_for :actions do %>
+  <li><%= link_to 'Change', organisations_path %></li>
+<% end %>
+
+<div id="getting_started" class="section_container">
+  <div class="section">
+  <h2>Getting Started</h2>
+
   <ul>
-    <% @active_iterations.each do |iteration| -%>
-      <li class="active_iteration">
-        <h3>
-        <%= link_to(h(iteration.name),
-          project_iteration_path(iteration.project, iteration)) %>
-        </h3>
-        <%= link_to(
-          image_tag(iteration_burndown_path(iteration, :width => 300),
-            :width => 300, :height => 225,
-            :alt => "Burndown chart for #{h iteration.name}"
-          ),
-          project_iteration_path(iteration.project, iteration)
-        ) %>
-      </li>
+    <li><%= link_to "Create a new project", new_project_path %></li>
+    <% unless @projects.empty? -%>
+    <li><%= link_to "Create a new story", new_story_path %></li>
+    <li>
+      <%= render :partial => 'iterations/new' %>
+    </li>
     <% end -%>
   </ul>
-<% else -%>
-  <%= render :partial => 'projects/list' %>
+  </div>
+</div>
+
+<% unless @active_iterations.empty? -%>
+  <div id="iterations" class="section_container">
+    <div class="section">
+      <h2>Active Iterations</h2>
+      <div class="active">
+        <ol>
+          <%= render @active_iterations, :width => 300 %>
+        </ol>
+      </div>
+    </div>
+  </div>
 <% end -%>

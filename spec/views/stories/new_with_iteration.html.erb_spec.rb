@@ -13,7 +13,7 @@ describe "/stories/new_with_iteration" do
     assigns[:iteration] = @iteration
     assigns[:story] = @story
 
-    assigns[:current_user] = mock_model(User, :projects => [@project])
+    assigns[:current_organisation] = mock_model(Organisation, :projects => [@project])
 
     render 'stories/new_with_iteration'
   end

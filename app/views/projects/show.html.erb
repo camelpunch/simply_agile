@@ -23,7 +23,14 @@
     <ol class="stories">
     <%= render @project.stories.backlog.all(:limit => 10) %>
     </ol>
+    <% if @project.stories.backlog.size > 10 -%>
+    <p class="more">
+      …and <%= @project.stories.backlog.size - 10 %> more in the
+      <%= link_to "full backlog",
+                  backlog_project_stories_path(@project) %>.
+    </p>
     <% end %>
+    <% end -%>
   </div>
 </div>
 
@@ -45,7 +52,7 @@
         <div class="active">
           <h3>Active</h3>
           <ol>
-            <%= render @project.iterations.active %>
+            <%= render @project.iterations.active, :width => 150 %>
           </ol>
         </div>
       <% end %>
@@ -53,7 +60,7 @@
         <div class="planned">
           <h3>Planned</h3>
           <ol>
-            <%= render @project.iterations.pending %>
+            <%= render @project.iterations.pending, :width => 150 %>
           </ol>
         </div>
       <% end %>

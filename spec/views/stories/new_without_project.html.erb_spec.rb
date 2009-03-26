@@ -7,7 +7,7 @@ describe "/stories/new_without_project" do
                         :name => '',
                         :content => '',
                         :new_record? => true)
-    assigns[:current_user] = mock_model(User, :projects => [])
+    assigns[:current_organisation] = mock_model(Organisation, :projects => [])
     assigns[:story] = @story
     render 'stories/new_without_project'
   end

@@ -18,7 +18,14 @@ function DraggableStories() {
 DraggableStories.prototype = {
   create: function() {
     // size div
-    $('#stories').width($(window).width() - 430);
+    full_width = $(window).width();
+    if (full_width < 831) {
+      $('#burndown').hide();
+      full_width += 370;
+    } else {
+      $('#burndown').show();
+    }
+    $('#stories').width(full_width - 430);
 
     // remove all existing JSy elements
     $('#draggables_container').remove();

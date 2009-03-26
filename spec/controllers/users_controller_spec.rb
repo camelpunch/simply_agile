@@ -52,8 +52,8 @@ describe UsersController do
       do_call
     end
 
-    it "should update user params" do
-      @user.should_receive(:attributes=).with(@user_params)
+    it "should update user params and signup" do
+      @user.should_receive(:attributes=).with(@user_params.merge('signup' => true))
       do_call
     end
 

@@ -4,7 +4,7 @@ class OrganisationMembersController < ApplicationController
 
   def create
     unless @user.new_record? || @user.organisations.include?(current_organisation)
-      current_organisation.organisation_members.create(
+      current_organisation.organisation_members.create!(
         :user => @user,
         :sponsor => @current_user
       )

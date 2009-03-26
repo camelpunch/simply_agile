@@ -2,11 +2,11 @@ var StorySwapper = {
   init: function() {
     // create an iteration stories div
     $('#stories_available')
-      .before('<div id="stories_iteration_container"><div class="section" id="stories_iteration"><span class="estimate">Story Points (<span class="numeric">0</span>)</span><h2>Iteration stories</h2><ol class="stories"></ol></div></div>');
+      .before('<div id="stories_iteration_container" class="section_container"><div class="section" id="stories_iteration"><span class="estimate">Story Points (<span class="numeric">0</span>)</span><h2>Iteration stories</h2><ol class="stories"></ol></div></div>');
 
     // wrap the available div
     var available_div = $('#stories_available').remove();
-    $('#stories_iteration_container').after('<div id="stories_available_container"><div class="section" id="stories_available"><span class="estimate">Story Points (<span class="numeric">0</span>)</span>'+available_div.html()+'</div></div>');
+    $('#stories_iteration_container').after('<div id="stories_available_container" class="section_container"><div class="section" id="stories_available"><span class="estimate">Story Points (<span class="numeric">0</span>)</span>'+available_div.html()+'</div></div>');
 
     StorySwapper.initStories();
     StorySwapper.convertCheckBoxes();

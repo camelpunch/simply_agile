@@ -109,6 +109,24 @@ describe Iteration do
       @iteration.errors.on(:duration).should_not be_nil
     end
 
+    it "should require the duration be a number" do
+      @iteration.duration = 'a'
+      @iteration.valid?
+      @iteration.errors.on(:duration).should_not be_nil
+    end
+
+    it "should require the duration to be >= 1" do
+      @iteration.duration = 0
+      @iteration.valid?
+      @iteration.errors.on(:duration).should_not be_nil
+    end
+
+    it "should require the duration to be an integer" do
+      @iteration.duration = 1.5
+      @iteration.valid?
+      @iteration.errors.on(:duration).should_not be_nil
+    end
+
     it "should require a project" do
       @iteration.errors.on(:project_id).should_not be_nil
     end

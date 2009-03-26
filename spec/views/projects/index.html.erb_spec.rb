@@ -3,13 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/projects/index" do
 
   before :each do
-    assigns[:current_user] = mock_model User, :organisation => 'asdf'
+    assigns[:current_organisation] = mock_model Organisation
     @projects = [ mock_model(Project) ]
   end
 
   describe "with projects" do
     before :each do
-      assigns[:current_user].stub!(:projects).and_return(@projects)
+      assigns[:current_organisation].stub!(:projects).and_return(@projects)
       render 'projects/index'
     end
 
@@ -22,7 +22,7 @@ describe "/projects/index" do
 
   describe "without projects" do
     before :each do
-      assigns[:current_user].stub!(:projects).and_return([])
+      assigns[:current_organisation].stub!(:projects).and_return([])
       render 'projects/index'
     end
 

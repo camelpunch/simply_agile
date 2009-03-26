@@ -38,10 +38,10 @@
         </div>
         <div id="breadcrumbs">
           <% breadcrumbs = yield(:breadcrumbs) %>
-          <% unless breadcrumbs.blank? %>
+          <% if @current_organisation %>
             <ol>
               <li class="organisation">
-                <%= link_to h(@current_organisation), @current_organisation %>
+                <%= link_to_unless_current h(@current_organisation), root_path %>
               </li>
               <%= yield :breadcrumbs %>
             </ol>
