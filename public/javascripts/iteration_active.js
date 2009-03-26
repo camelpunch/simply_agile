@@ -21,7 +21,7 @@ DraggableStories.prototype = {
     full_width = $(window).width();
     if (full_width < 831) {
       $('#burndown').hide();
-      full_width += 400;
+      full_width += 370;
     } else {
       $('#burndown').show();
     }
