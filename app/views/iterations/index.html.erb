@@ -1,0 +1,26 @@
+<% content_for :title, "#{h @current_organisation.name} Iterations" %>
+<% content_for :h1, "#{h @current_organisation.name} Iterations" %>
+
+<% if @iterations.empty? -%>
+  <p>
+    There are currently no active iterations for <%= h @current_organisation.name %>
+  </p>
+<% else -%>
+  <ul>
+    <% @iterations.each do |iteration| -%>
+      <li class="active_iteration">
+        <h3>
+        <%= link_to(h(iteration.name),
+          project_iteration_path(iteration.project, iteration)) %>
+        </h3>
+        <%= link_to(
+          image_tag(iteration_burndown_path(iteration, :width => 300),
+            :width => 300, :height => 225,
+            :alt => "Burndown chart for #{h iteration.name}"
+          ),
+          project_iteration_path(iteration.project, iteration)
+        ) %>
+      </li>
+    <% end -%>
+  </ul>
+<% end -%>
