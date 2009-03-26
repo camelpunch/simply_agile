@@ -7,6 +7,9 @@ describe "/home/show" do
 
     @active_iterations = []
     assigns[:active_iterations] = @active_iterations
+
+    @projects = []
+    assigns[:projects] = @projects
   end
 
   describe "with projects" do
