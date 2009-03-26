@@ -98,6 +98,11 @@ body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
+/* organisations/show */
+body#organisations_show .section { width:20em }
+body#organisations_show .section table { width:100% }
+/* end organisations/show */
+
 /* sessions/new */
 #existing_users { float: left; width: 55%; }
 #new_users { float: right; width: 25%; }

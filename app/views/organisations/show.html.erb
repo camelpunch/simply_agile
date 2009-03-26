@@ -14,11 +14,11 @@
         <td>
           <%= user.email_address %>
         </td>
-        <td>
+        <td class="aside">
           <% if user == @current_user -%>
-            <span class="aside">(you)</span>
+            (you)
           <% elsif ! user.acknowledged_for?(@current_organisation) -%>
-            <span class="aside">Account is not yet acknowledged</span>
+            Account is not yet acknowledged
           <% end -%>
         </td>
         <td>
