@@ -6,6 +6,8 @@
     There are currently no active iterations for <%= h @current_organisation.name %>
   </p>
 <% else -%>
+  <% width = @iterations.size == 1 ? 600 : 300 -%>
+  <% height = @iterations.size == 1 ? 450 : 225 -%>
   <ul>
     <% @iterations.each do |iteration| -%>
       <li class="active_iteration">
@@ -14,8 +16,8 @@
           project_iteration_path(iteration.project, iteration)) %>
         </h3>
         <%= link_to(
-          image_tag(iteration_burndown_path(iteration, :width => 300),
-            :width => 300, :height => 225,
+          image_tag(iteration_burndown_path(iteration, :width => width),
+            :width => width, :height => height,
             :alt => "Burndown chart for #{h iteration.name}"
           ),
           project_iteration_path(iteration.project, iteration)
