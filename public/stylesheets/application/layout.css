@@ -130,5 +130,5 @@ body #organisation_members .section table { width:100% }
 #iterations .planned { position:relative; overflow:hidden;
                                           padding-bottom:15px }
 #content li.iteration { padding:0 15px; float:left; margin-bottom:15px }
-#content li.iteration a { display:block; width:100%; margin:0 auto }
+#content li.iteration a { display:block; margin:0 auto }
 /* end iteration lists */
