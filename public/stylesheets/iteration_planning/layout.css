@@ -19,7 +19,7 @@ body.iteration_planning .javascript div>#stories_iteration { margin-right:11% }
 body.iteration_planning .javascript div>#stories_available { margin-left:11% }
 
 body.iteration_planning .javascript #stories span.estimate { position:absolute; top:15px; right:0;
-                                         width:110px }
+                                         width:140px }
 
 body.iteration_planning .javascript #stories .include input,
 body.iteration_planning .javascript #stories .include label { display:none }
