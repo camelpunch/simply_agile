@@ -9,7 +9,7 @@
 
 <%= simple_format h(@project.description) %>
 
-<div id="backlog" class="section_container">
+<div id="backlog" class="section_container first">
   <%= link_to h("Full #{@project} backlog"), 
     backlog_project_stories_path(@project),
     :class => 'section' %>
