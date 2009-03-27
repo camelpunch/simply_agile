@@ -11,6 +11,7 @@ body,legend { color:#333 }
 body.iterations li#nav_iterations a,
 body.projects li#nav_projects a,
 body.stories li#nav_projects a,
+body.organisation_members li#nav_sharing a,
 #breadcrumbs{ background:#ff7f2a; color:#fff }
 /* end livery colours */
 

@@ -8,6 +8,8 @@
 .important_message { position:fixed; top:0; left:0; z-index:11; width:100% }
 .important_message div { margin:0 auto; width:52em; padding:4px 0 }
 .important_message p { margin:0 }
+
+#errorExplanation { margin-bottom:15px }
 /* end basic layout */
 
 /* navigation */
@@ -65,20 +67,20 @@ form p.checkbox label { display:inline; padding-left:5px }
 /* end forms */
 
 /* home/show */
-body#home_show #getting_started { width:20em; float:left; margin-right:60px;
-                                  margin-bottom:45px }
-body#home_show #iterations { width:680px; float:left }
+.section_container.first { width:56%; max-width:472px; 
+                           min-width:275px; float:left; 
+                           margin-right:30px; 
+                           margin-bottom:30px }
+body#home_show #iterations { min-width:345px }
 body#home_show #iterations div.active { padding-top:45px }
 body#home_show #iterations ol { overflow:hidden }
 /* end home/show */
 
-/* projects/index */
-body#projects_index .section { width:20em }
-/* end projects/index */
-
 /* projects/show */
-body#projects_show #backlog { width:56%; float:left }
-body#projects_show #iterations { width:40%; float:right; position:relative }
+body#projects_show #backlog { width:56%; float:left; margin-bottom:30px;
+                              margin-right:30px;
+                              min-width:275px; max-width:472px }
+body#projects_show #iterations { min-width:250px }
 /* end projects/show */
 
 /* iterations/index */
@@ -109,8 +111,8 @@ body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
 /* organisations/show */
-body#organisations_show .section { width:45em }
-body#organisations_show .section table { width:100% }
+body #organisation_members.section_container { min-width:645px }
+body #organisation_members .section table { width:100% }
 /* end organisations/show */
 
 /* sessions/new */
@@ -127,6 +129,6 @@ body#organisations_show .section table { width:100% }
 #iterations .active,
 #iterations .planned { position:relative; overflow:hidden;
                                           padding-bottom:15px }
-#content li.iteration { width:49%; float:left; margin-bottom:15px }
-#content li.iteration a { display:block; width:100%; margin:0 auto }
+#content li.iteration { padding:0 15px; float:left; margin-bottom:15px }
+#content li.iteration a { display:block; margin:0 auto }
 /* end iteration lists */
