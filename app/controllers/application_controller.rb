@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  attr_accessor :google_analytics_disabled
+
   helper :all # include all helpers, all the time
 
   layout :decide_layout
@@ -15,7 +17,15 @@ class ApplicationController < ActionController::Base
   before_filter :login_required
   before_filter :select_organisation
 
+  def google_analytics?
+    %w(test production).include?(RAILS_ENV) && ! google_analytics_disabled
+  end
+
   protected
+
+  def no_google_analytics
+    self.google_analytics_disabled = true
+  end
 
   def decide_layout
     layout = ''
