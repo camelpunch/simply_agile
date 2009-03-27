@@ -34,13 +34,13 @@ Story.setStatus = function(element, status) {
 
   if (status == 'in_progress' || status == 'testing') {
     var html = '<img src="/images/fella_'+status+'.gif" alt="" />';
-    element.append(html);
+    element.find('.header').append(html);
   }
 }
 Story.prototype = {
   createContainer: function() {
     this.element.find('.less_more').remove();
-    this.element.find('h3').after('<div class="less_more"></div>');
+    this.element.find('h3').before('<div class="less_more"></div>');
     this.container = this.element.find('.less_more');
   },
 
