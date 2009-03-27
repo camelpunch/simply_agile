@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
 
   has_many :story_team_members
   has_many :stories, :through => :story_team_members
+  has_many :story_actions
+  has_many :iterations_worked_on, :through => :story_actions, :source => 'iteration'
+
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
 
@@ -50,6 +53,10 @@ class User < ActiveRecord::Base
 
   def projects
     organisations.find(:all, :include => :projects).collect(&:projects).flatten
+  end
+
+  def active_iterations_worked_on
+    iterations_worked_on.active
   end
 
   def signup?
