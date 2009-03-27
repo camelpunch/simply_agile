@@ -3,6 +3,7 @@ class AcceptanceCriteriaController < ApplicationController
   before_filter :get_story
   before_filter :new_acceptance_criterion, :only => :create
   before_filter :get_acceptance_criterion, :only => [:edit, :update]
+  before_filter :set_current_user_on_resource
 
   def create
     if @acceptance_criterion.update_attributes(params[:acceptance_criterion])

@@ -3,6 +3,7 @@ class StoriesController < ApplicationController
   before_filter :get_iteration, :only => [:new, :create]
   before_filter :get_story, :only => [:show, :estimate]
   before_filter :new_story, :only => [:new, :create]
+  before_filter :set_current_user_on_resource
 
   def backlog
     if @project.stories.backlog.empty?

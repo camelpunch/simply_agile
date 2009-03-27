@@ -132,6 +132,7 @@ describe AcceptanceCriteriaController do
 
     it_should_behave_like "it operates on a new criterion"
     it_should_behave_like "it saves a criterion"
+    it_should_behave_like "it sets the current user"
   end
 
   describe "destroy" do
@@ -143,6 +144,7 @@ describe AcceptanceCriteriaController do
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it belongs to a story"
     it_should_behave_like "it's successful"
+    it_should_behave_like "it sets the current user"
 
     it "should destroy the acceptance criterion" do
       do_call
@@ -166,6 +168,7 @@ describe AcceptanceCriteriaController do
     it_should_behave_like "it's successful"
 
     it_should_behave_like "it operates on an existing criterion" 
+    it_should_behave_like "it sets the current user"
   end
 
   describe "update" do
@@ -191,6 +194,7 @@ describe AcceptanceCriteriaController do
 
     it_should_behave_like "it operates on an existing criterion" 
     #    it_should_behave_like "it saves a criterion"
+    it_should_behave_like "it sets the current user"
     
     describe "js" do
       describe "success" do

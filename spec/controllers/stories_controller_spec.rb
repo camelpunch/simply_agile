@@ -190,6 +190,7 @@ describe StoriesController do
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it operates on a new story"
     it_should_behave_like "it's successful"
+    it_should_behave_like "it sets the current user"
 
     describe "with iteration" do
       def do_call
@@ -261,6 +262,7 @@ describe StoriesController do
 
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it operates on a new story"
+    it_should_behave_like "it sets the current user"
 
     it "should attempt to save" do
       do_call
@@ -361,6 +363,7 @@ describe StoriesController do
 
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it operates on an existing story"
+    it_should_behave_like "it sets the current user"
 
     describe "when iteration set on story" do
       before :each do
@@ -385,6 +388,7 @@ describe StoriesController do
   end
 
   describe "update" do
+
     describe "it has the standard story failure mode", :shared => true do
       before :each do
         @story_attributes["name"] = nil
@@ -443,6 +447,7 @@ describe StoriesController do
         end
 
         it_should_behave_like "it operates on an existing story from an iteration"
+        it_should_behave_like "it sets the current user"
 
         describe "success" do
           before :each do
