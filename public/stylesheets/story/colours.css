@@ -4,10 +4,11 @@
 .draggables .complete .header { border-color:#3dfd4f }
 .draggables .story { cursor:pointer }
 
-.story .content { border-color:#ccc }
+.story .content { border-color:#aaa }
 .story,
 .story h3 { background:#fff }
 .story h3 a, .story h4 { color:#333 }
+.story .less_more a { outline:none }
 
 .story .header { border-bottom:2px solid #99f }
 .story ol li{ border-bottom:1px solid #ccf }

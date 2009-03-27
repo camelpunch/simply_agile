@@ -30,7 +30,7 @@ body.iteration_active .javascript form.edit_story label,
 body.iteration_active .javascript li .content,
 body.iteration_active .javascript form.edit_story p.submit{ display:none }
 
-body#projects_show #backlog .story .less_more { margin-right:10px }
+body#projects_show #backlog .story .less_more { margin-right:5px }
 
 /* page-dependent default states */
 #content .story .acceptance_criteria { display:none }
