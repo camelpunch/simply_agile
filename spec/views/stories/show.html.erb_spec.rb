@@ -9,6 +9,7 @@ describe "/stories/show" do
                                    :iteration_id? => false,
                                    :name => '')
     assigns[:story] = mock_model(Story,
+                                 :status => 'testing',
                                  :acceptance_criteria => [],
                                  :estimate? => nil,
                                  :iteration_id? => false,

@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/iterations/edit" do
   before :each do
     @story = mock_model(Story,
+                        :status => 'pending',
+                        :team_members => [],
                         :name => '',
                         :content => '',
                         :estimate => '',

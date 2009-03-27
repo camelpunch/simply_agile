@@ -8,8 +8,7 @@
   <li class="story"><%= h @story %></li>
 <% end %>
 
-<div class="story_container">
-<div class="story">
+<div class="<%= story_classes @story %>">
   <div class="content">
     <div class="header">
       <h3><%= h @story %></h3>
@@ -19,7 +18,6 @@
     </div>
     <%= story_format @story.content %>
   </div>
-</div>
 </div>
 
 <% if @story.iteration && @story.iteration.active? %>

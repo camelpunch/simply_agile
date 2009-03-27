@@ -1,49 +1,47 @@
-<li class="story <%= story.status %> <%= story.team_members.empty? ? '' : 'with_team' %>" id="story_<%= story.id %>">
-  <div class="story_container">
-    <% if body_classes.include?('iteration_planning') %>
-      <div class="include">
-      <%= check_box_tag("stories[#{story.id}][include]", 
-                        '1', 
-                        story.iteration_id? || (@iteration && @iteration.stories.include?(story))) %>
-      <%= label_tag "stories_#{story.id}_include", "Include" %>
-      </div>
-    <% end %>
-
-    <div class="content">
-      <div class="header">
-        <% if body_classes.include?('iteration_planning') %>
-          <h3><%= h(story) %></h3>
-          <%= render :partial => 'stories/estimating_story', :object => story %>
-        <% else %>
-          <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
-          <% if story.estimate? %>
-            <p class="estimate" title="Story Points"><span>Story Points: </span><%= story.estimate %></p>
-          <% end %>
-        <% end %>
-      </div>
-      <%= story_format story.content %>
+<li class="<%= story_classes(story) %>" id="story_<%= story.id %>">
+  <% if body_classes.include?('iteration_planning') %>
+    <div class="include">
+    <%= check_box_tag("stories[#{story.id}][include]", 
+                      '1', 
+                      story.iteration_id? || (@iteration && @iteration.stories.include?(story))) %>
+    <%= label_tag "stories_#{story.id}_include", "Include" %>
     </div>
+  <% end %>
 
-    <% if (!body_classes.include?('iteration_active') &&
-           !story.acceptance_criteria.empty?) %>
-      <div class="acceptance_criteria">
-        <h4>Acceptance Criteria</h4>
-        <ul>
-          <% story.acceptance_criteria.each do |criterion| %>
-            <li><%= h criterion %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <% if body_classes.include?('iteration_active') %>
-      <% form_for [story.project, story.iteration, story] do |form| %>
-        <%= render :partial => 'stories/status_form', :object => form %>
+  <div class="content">
+    <div class="header">
+      <% if body_classes.include?('iteration_planning') %>
+        <h3><%= h(story) %></h3>
+        <%= render :partial => 'stories/estimating_story', :object => story %>
+      <% else %>
+        <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
+        <% if story.estimate? %>
+          <p class="estimate" title="Story Points"><span>Story Points: </span><%= story.estimate %></p>
+        <% end %>
       <% end %>
-    <% end %>
-
-    <% if controller.action_name == 'backlog' %>
-      <%= render :partial => 'stories/prioritising_story', :object => story %>
-    <% end %>
+    </div>
+    <%= story_format story.content %>
   </div>
+
+  <% if (!body_classes.include?('iteration_active') &&
+         !story.acceptance_criteria.empty?) %>
+    <div class="acceptance_criteria">
+      <h4>Acceptance Criteria</h4>
+      <ul>
+        <% story.acceptance_criteria.each do |criterion| %>
+          <li><%= h criterion %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if body_classes.include?('iteration_active') %>
+    <% form_for [story.project, story.iteration, story] do |form| %>
+      <%= render :partial => 'stories/status_form', :object => form %>
+    <% end %>
+  <% end %>
+
+  <% if controller.action_name == 'backlog' %>
+    <%= render :partial => 'stories/prioritising_story', :object => story %>
+  <% end %>
 </li>

@@ -40,7 +40,7 @@ $(document).ready(function() {
   if ($('body').hasClass('iteration_active')) {
     new DraggableStories();
     // don't enhance stories
-  } else if (!$('body#stories_show')[0]) {
+  } else {
     // normal story enhancements
     $('#content .story').each( function() { new Story(this) });
   }

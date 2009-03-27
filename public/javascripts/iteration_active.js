@@ -121,27 +121,7 @@ function DraggableStory(input) {
     .css('position', 'absolute')
     .width(this.droppable.width());
 
-  DraggableStory.setStatus(this.element, this.status);
-}
-DraggableStory.setStatus = function(element, status) {
-  element.removeClass('pending');
-  element.removeClass('in_progress');
-  element.removeClass('testing');
-  element.removeClass('complete');
-  element.addClass(status);
-
-  // draw the little fella
-  if (!element.hasClass('with_team')) return;
-  var html = '<img src="/images/fella_'+status+'.gif" alt="" />';
-  var img = element.find('img')[0];
-
-  if (img && status == 'complete' || status == 'pending') {
-    $(img).remove();
-  } else if (img) {
-    $(img).replaceWith(html);
-  } else {
-    element.append(html);
-  }
+  Story.setStatus(this.element, this.status);
 }
 DraggableStory.prototype = {
   setPosition: function() {
@@ -190,7 +170,7 @@ function DroppableStatus(input) {
         
         // change class of elements
         var draggable = instance.container.find('.ui-draggable');
-        DraggableStory.setStatus(draggable, instance.status);
+        Story.setStatus(draggable, instance.status);
 
         // custom snapping
         $(ui.draggable)

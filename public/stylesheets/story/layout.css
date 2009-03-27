@@ -10,7 +10,8 @@ ol.stories li.story{ margin-bottom:15px }
 #content .story .header { overflow:hidden }
 #content .story h3 { overflow:hidden; float:left; width:40% }
 
-#content .story img { position:absolute; top:-13px; right:29px }
+#content .story img { position:absolute; top:-13px; right:100px }
+body.iteration_active #content .story img { right:29px }
 
 /* less/more links */
 #content .story .less_more { float:left; width:7em; margin-top:4px }

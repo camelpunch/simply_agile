@@ -4,12 +4,40 @@ function Story(element) {
   this.story_content = this.element.find('ol');
   this.acceptance_criteria = this.element.find('.acceptance_criteria');
 
+  if (this.element.hasClass('pending')) this.status = 'pending';
+  if (this.element.hasClass('in_progress')) this.status = 'in_progress';
+  if (this.element.hasClass('testing')) this.status = 'testing';
+  if (this.element.hasClass('complete')) this.status = 'complete';
+
   this.createContainer();
   this.createLessAnchor();
 
   // add 'more' link if needed
   if (this.acceptance_criteria[0]) {
     this.createMoreAnchor();
+  }
+
+  Story.setStatus(this.element, this.status);
+}
+
+Story.setStatus = function(element, status) {
+  element.removeClass('pending');
+  element.removeClass('in_progress');
+  element.removeClass('testing');
+  element.removeClass('complete');
+  element.addClass(status);
+
+  // draw the little fella
+  if (!element.hasClass('with_team')) return;
+  var html = '<img src="/images/fella_'+status+'.gif" alt="" />';
+  var img = element.find('img')[0];
+
+  if (img && status == 'complete' || status == 'pending') {
+    $(img).remove();
+  } else if (img) {
+    $(img).replaceWith(html);
+  } else {
+    element.append(html);
   }
 }
 Story.prototype = {
