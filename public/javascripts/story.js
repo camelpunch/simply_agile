@@ -29,14 +29,11 @@ Story.setStatus = function(element, status) {
 
   // draw the little fella
   if (!element.hasClass('with_team')) return;
-  var html = '<img src="/images/fella_'+status+'.gif" alt="" />';
-  var img = element.find('img')[0];
 
-  if (img && status == 'complete' || status == 'pending') {
-    $(img).remove();
-  } else if (img) {
-    $(img).replaceWith(html);
-  } else {
+  var img = element.find('img').remove();
+
+  if (status == 'in_progress' || status == 'testing') {
+    var html = '<img src="/images/fella_'+status+'.gif" alt="" />';
     element.append(html);
   }
 }
