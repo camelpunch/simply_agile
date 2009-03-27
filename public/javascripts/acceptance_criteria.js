@@ -12,7 +12,7 @@ var AcceptanceCriteria = {
 
     if (!base) base = $('body');
 
-    $(base).find('input[type=checkbox][name=acceptance_criterion[complete]]').change( function() {
+    $(base).find('input[type=checkbox][name=acceptance_criterion[complete]]').click( function() {
       checked = $(this).attr('checked');
       form = $(this).parents('form');
       criterion = $(this).parents('tr');
