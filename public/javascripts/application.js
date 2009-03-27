@@ -1,6 +1,8 @@
 $(document).ready(function() {
   // no JS support for shit browsers
   if (!$.support.boxModel) {
+    $('head link[rel=stylesheet]').attr('href', '');
+
     var message = "<p>Your browser does not support modern web standards. "+
     "Please upgrade to a more recent browser for a better experience.</p>";
 
@@ -10,11 +12,9 @@ $(document).ready(function() {
       $('#content').after('<div class="important_message"><div>'+message+'</div></div>');
     }
 
-    $('.important_message')
-      .css({position: 'absolute', textAlign: 'center', opacity:0.9});
-    $('.important_message div')
-      .css({width:'auto', 
-            margin:0});
+    var div = $('.important_message').remove();
+    $('#container').prepend(div);
+
     return false; 
   }
   $('#container').addClass('javascript');

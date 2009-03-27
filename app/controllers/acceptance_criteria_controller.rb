@@ -5,11 +5,23 @@ class AcceptanceCriteriaController < ApplicationController
   before_filter :get_acceptance_criterion, :only => [:edit, :update]
 
   def create
-    if @acceptance_criterion.update_attributes(params[:acceptance_criterion])
-      render(:partial => 'acceptance_criteria/list')
-    else
-      render(:text => @acceptance_criterion.errors.full_messages.join("\n"),
-             :status => :unprocessable_entity)
+    respond_to do |format|
+      format.html do
+        if @acceptance_criterion.update_attributes(params[:acceptance_criterion])
+          redirect_to [@project, @story.iteration, @story]
+        else
+          render(:template => 'stories/show')
+        end
+      end
+
+      format.js do
+        if @acceptance_criterion.update_attributes(params[:acceptance_criterion])
+          render(:partial => 'acceptance_criteria/list')
+        else
+          render(:text => @acceptance_criterion.errors.full_messages.join("\n"),
+                 :status => :unprocessable_entity)
+        end
+      end
     end
   end
 
@@ -48,7 +60,15 @@ class AcceptanceCriteriaController < ApplicationController
 
   def destroy
     @story.acceptance_criteria.find(params[:id]).destroy
-    render :partial => 'acceptance_criteria/list'
+    respond_to do |format|
+      format.html do
+        redirect_to [@project, @story.iteration, @story]
+      end
+
+      format.js do
+        render :partial => 'acceptance_criteria/list'
+      end
+    end
   end
 
   def edit

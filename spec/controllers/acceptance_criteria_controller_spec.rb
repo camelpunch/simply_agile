@@ -55,11 +55,18 @@ describe AcceptanceCriteriaController do
     end
     
     describe "success" do
-      it_should_behave_like "it's successful"
-
-      it "should render the new list" do
+      it "should redirect to the story page" do
         do_call
-        response.should render_template('acceptance_criteria/list')
+        response.should redirect_to(project_iteration_story_url(@project, 
+                                                                @story.iteration, 
+                                                                @story))
+      end
+
+      describe "js" do
+        it "should render the new list" do
+          do_call :format => 'js'
+          response.should render_template('acceptance_criteria/list')
+        end
       end
     end
 
@@ -68,14 +75,25 @@ describe AcceptanceCriteriaController do
         @attributes['criterion'] = nil
       end
 
-      it "should render some text" do
-        do_call
-        response.body.should_not be_blank
+      describe "html" do
+        it "should re-render the stories/show page" do
+          do_call
+          response.should render_template('stories/show')
+        end
       end
 
-      it "should provide a failure response code" do
-        do_call
-        response.code.should == '422'
+      describe "js" do
+        before :each do
+          do_call :format => 'js'
+        end
+
+        it "should render some text" do
+          response.body.should_not be_blank
+        end
+
+        it "should provide a failure response code" do
+          response.code.should == '422'
+        end
       end
     end
   end
@@ -125,9 +143,12 @@ describe AcceptanceCriteriaController do
   end
 
   describe "create" do
-    def do_call
-      post :create, :project_id => @project.id, :story_id => @story.id,
-        :acceptance_criterion => @attributes
+    def do_call(params = {})
+      post :create, {
+        :project_id => @project.id, 
+        :story_id => @story.id,
+        :acceptance_criterion => @attributes 
+      }.merge(params)
     end
 
     it_should_behave_like "it operates on a new criterion"
@@ -135,23 +156,36 @@ describe AcceptanceCriteriaController do
   end
 
   describe "destroy" do
-    def do_call
-      delete :destroy, :id => @acceptance_criterion.id,
-        :project_id => @project.id, :story_id => @story.id
+    def do_call(params = {})
+      delete :destroy, {
+        :id => @acceptance_criterion.id,
+        :project_id => @project.id, 
+        :story_id => @story.id
+      }.merge(params)
     end
 
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it belongs to a story"
-    it_should_behave_like "it's successful"
 
     it "should destroy the acceptance criterion" do
       do_call
       AcceptanceCriterion.find_by_id(@acceptance_criterion.id).should be_nil
     end
 
-    it "should render the criteria partial" do
-      do_call
-      response.should render_template('acceptance_criteria/list')
+    describe "html" do
+      it "should redirect to the story page" do
+        do_call
+        response.should redirect_to(project_iteration_story_url(@project, 
+                                                                @story.iteration, 
+                                                                @story))
+      end
+    end
+
+    describe "js" do
+      it "should render the criteria partial" do
+        do_call :format => 'js'
+        response.should render_template('acceptance_criteria/list')
+      end
     end
   end
 
