@@ -88,12 +88,17 @@ function DraggableStory(input) {
   var content = objects.li.find('.content');
   var acceptance_criteria = objects.li.find('.acceptance_criteria');
   var container = objects.container;
-  var status = objects.status;
+  this.status = objects.status;
 
   var droppable_position = this.droppable.position();
   this.droppable.addClass('ui-state-highlight');
 
-  container.append('<div class="story" id="draggable_'+
+  var classes = 'story';
+  if (objects.li.hasClass('with_team')) {
+    classes += ' with_team';
+  }
+
+  container.append('<div class="'+classes+'" id="draggable_'+
       this.input.id+
       '"><div class="content">'+
       content.html()+
@@ -116,7 +121,7 @@ function DraggableStory(input) {
     .css('position', 'absolute')
     .width(this.droppable.width());
 
-  DraggableStory.setStatus(this.element, status);
+  DraggableStory.setStatus(this.element, this.status);
 }
 DraggableStory.setStatus = function(element, status) {
   element.removeClass('pending');
@@ -124,6 +129,19 @@ DraggableStory.setStatus = function(element, status) {
   element.removeClass('testing');
   element.removeClass('complete');
   element.addClass(status);
+
+  // draw the little fella
+  if (!element.hasClass('with_team')) return;
+  var html = '<img src="/images/fella_'+status+'.gif" alt="" />';
+  var img = element.find('img')[0];
+
+  if (img && status == 'complete' || status == 'pending') {
+    $(img).remove();
+  } else if (img) {
+    $(img).replaceWith(html);
+  } else {
+    element.append(html);
+  }
 }
 DraggableStory.prototype = {
   setPosition: function() {
