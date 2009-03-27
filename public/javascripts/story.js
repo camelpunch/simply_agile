@@ -23,7 +23,7 @@ Story.prototype = {
     var instance = this;
 
     this.container
-      .append('<a class="more" href="#more">More</a>')
+      .append('<a class="more" href="#more">More »</a>')
 
       .find('a.more').click(function() {
         instance.acceptance_criteria.toggle();    
@@ -54,7 +54,7 @@ Story.prototype = {
     var instance = this;
 
     this.container.find('a.less').remove();
-    this.container.append('<a class="less" href="#less">Less</a>');
+    this.container.append('<a class="less" href="#less">« Less</a>');
     this.less = this.container.find('a.less');
 
     this.less.click(function() {
