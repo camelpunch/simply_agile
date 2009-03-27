@@ -18,7 +18,7 @@ class Story < ActiveRecord::Base
   has_many :team_members, :class_name => 'StoryTeamMember'
   has_many :users, :through => :team_members
 
-  default_scope :order => 'priority, name'
+  default_scope :order => 'priority, created_at DESC'
 
   named_scope :assigned_or_available_for, lambda {|iteration|
     {

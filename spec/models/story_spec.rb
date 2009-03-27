@@ -27,13 +27,13 @@ describe Story do
   describe "default scope" do
     before :each do
       Story.delete_all
-      @priority_2_z = Stories.create_story! :priority => 2, :name => 'zed'
       @priority_2_a = Stories.create_story! :priority => 2, :name => 'ay'
+      @priority_2_z = Stories.create_story! :priority => 2, :name => 'zed'
       @priority_1 = Stories.create_story! :priority => 1
     end
 
-    it "should order by priority then name" do
-      Story.all.should == [@priority_1, @priority_2_a, @priority_2_z]
+    it "should order by priority then creation time descending" do
+      Story.all.should == [@priority_1, @priority_2_z, @priority_2_a]
     end
   end
 

@@ -112,7 +112,10 @@ describe IterationsController do
 
     it "should assign all of the active iterations for a the organisation" do
       do_call
-      assigns[:iterations].should == @active_iterations
+      assigns[:iterations].size.should == @active_iterations.size
+      @active_iterations.each do |iteration|
+        assigns[:iterations].should include(iteration)
+      end
     end
   end
 
