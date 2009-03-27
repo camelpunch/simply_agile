@@ -76,10 +76,6 @@ body#home_show #iterations div.active { padding-top:45px }
 body#home_show #iterations ol { overflow:hidden }
 /* end home/show */
 
-/* projects/index */
-body#projects_index .section { width:20em }
-/* end projects/index */
-
 /* projects/show */
 body#projects_show #backlog { width:56%; float:left; margin-bottom:30px;
                               margin-right:30px;
