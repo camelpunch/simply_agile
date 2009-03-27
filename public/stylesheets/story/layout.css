@@ -15,7 +15,7 @@ body.iteration_active .javascript #content .story h3 { margin-right:53px }
 body.iteration_active #content .story img { right:29px }
 
 /* less/more links */
-#content .story .less_more { float:right; margin-top:4px; margin-right:190px }
+#content .story .less_more { float:right; margin-top:4px; margin-right:105px }
 #content .story .less_more a { display:block }
 #content .story .less_more a.less { margin-right:.5em; float:left }
 #content .story .less_more a.more { float:left }
@@ -29,8 +29,6 @@ body.iteration_active .javascript form.edit_story input,
 body.iteration_active .javascript form.edit_story label,
 body.iteration_active .javascript li .content,
 body.iteration_active .javascript form.edit_story p.submit{ display:none }
-
-body#projects_show #backlog .story .less_more { margin-right:5px }
 
 /* page-dependent default states */
 #content .story .acceptance_criteria { display:none }
