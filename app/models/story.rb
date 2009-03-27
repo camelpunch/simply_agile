@@ -1,5 +1,6 @@
 class Story < ActiveRecord::Base
-
+  include CurrentUser
+  
   module Status
     PENDING = "pending"
     IN_PROGRESS = "in_progress"

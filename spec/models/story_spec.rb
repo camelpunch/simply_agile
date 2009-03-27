@@ -14,6 +14,10 @@ describe Story do
     Story.create!(@valid_attributes)
   end
 
+  it "should create a new instance given valid attributes" do
+    Story.create!(@valid_attributes)
+  end
+
   describe "associations" do
     it "should have many team members" do
       Story.should have_many(:team_members)

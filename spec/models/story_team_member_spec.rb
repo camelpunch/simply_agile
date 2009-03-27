@@ -7,6 +7,10 @@ describe StoryTeamMember do
       :story_id => 1
     }
   end
+  
+  it "should have a current user" do
+    StoryTeamMember.ancestors.should include(CurrentUser)
+  end
 
   describe "protection" do
     it "should not allow mass-assignment of user_id" do
