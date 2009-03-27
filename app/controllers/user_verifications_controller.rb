@@ -14,7 +14,7 @@ class UserVerificationsController < ApplicationController
       flash[:notice] = "Your account has now been verified."
       redirect_to root_url
     else
-      flash.now[:notice] = "The verification token has not been recognised."
+      flash.now[:error] = "The verification token has not been recognised."
       render :action => 'new'
     end
   end

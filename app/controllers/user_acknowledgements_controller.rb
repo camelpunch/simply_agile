@@ -10,6 +10,8 @@ class UserAcknowledgementsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_url
     else
+      flash.now[:error] = 
+      'Token not found - please check your latest acknowledgement email'
       render :action => 'new'
     end
   end

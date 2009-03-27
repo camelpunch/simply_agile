@@ -1,6 +1,7 @@
 <% content_for :title, "Acknowledge your account" %>
 <% content_for :h1, "Acknowledge your account" %>
 
+<%= render_flash %>
 <% form_tag :action => :create do -%>
   <%= error_messages_for :user %>
   <div>
