@@ -8,7 +8,7 @@ class UserAcknowledgementsController < ApplicationController
   def create
     if @user.acknowledge(params)
       session[:user_id] = @user.id
-      redirect_to root_url
+      redirect_to home_url
     else
       flash.now[:error] = 
       'Token not found - please check your latest acknowledgement email'

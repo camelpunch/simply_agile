@@ -69,7 +69,7 @@ describe UsersController do
 
       it "should redirect to the home page" do
         do_call
-        response.should redirect_to(root_url)
+        response.should redirect_to(home_url)
       end
 
       it "should set the user id in the session" do

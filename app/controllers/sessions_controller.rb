@@ -30,12 +30,12 @@ class SessionsController < ApplicationController
   protected
 
   def do_redirect
-      stored_redirect_url = session[:redirect_to]
-      if stored_redirect_url
-        session[:redirect_to] = nil
-        redirect_to stored_redirect_url
-      else
-        redirect_to root_url
-      end
+    stored_redirect_url = session[:redirect_to]
+    if stored_redirect_url
+      session[:redirect_to] = nil
+      redirect_to stored_redirect_url
+    else
+      redirect_to home_url
+    end
   end
 end

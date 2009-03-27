@@ -59,8 +59,8 @@ describe SessionsController do
           do_post
         end
 
-        it "should redirect to root URL" do
-          response.should redirect_to(root_url)
+        it "should redirect to home page" do
+          response.should redirect_to(home_url)
         end
       end
     end
@@ -116,9 +116,9 @@ describe SessionsController do
     end
 
     describe "without redirect_to set" do
-      it "should redirect to the applicaiton home page" do
+      it "should redirect to the application home page" do
         do_call
-        response.should redirect_to(root_url)
+        response.should redirect_to(home_url)
       end
     end
   end

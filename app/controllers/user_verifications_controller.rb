@@ -12,7 +12,7 @@ class UserVerificationsController < ApplicationController
     if @user.verify(params)
       session[:user_id] = @user.id
       flash[:notice] = "Your account has now been verified."
-      redirect_to root_url
+      redirect_to home_url
     else
       flash.now[:error] = "The verification token has not been recognised."
       render :action => 'new'

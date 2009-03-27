@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def create
     if @user.update_attributes(params[:user].merge(:signup => true))
       session[:user_id] = @user.id
-      redirect_to root_url
+      redirect_to home_url
     else
       render :action => 'new'
     end

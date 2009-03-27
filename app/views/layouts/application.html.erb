@@ -26,7 +26,7 @@
       <div id="header">
         <div id="navigation">
           <ol>
-            <li id="nav_home"><%= link_to_unless_current 'Home', root_path, :accesskey => 'h' %></li>
+            <li id="nav_home"><%= link_to_unless_current 'Home', home_path, :accesskey => 'h' %></li>
             <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path, :accesskey => 'p' %></li>
             <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path, :accesskey => 'i' %></li>
             <li id="nav_sharing">
@@ -41,7 +41,7 @@
           <% if @current_organisation %>
             <ol>
               <li class="organisation">
-                <%= link_to_unless_current h(@current_organisation), root_path %>
+                <%= link_to_unless_current h(@current_organisation), home_path %>
               </li>
               <%= yield :breadcrumbs %>
             </ol>

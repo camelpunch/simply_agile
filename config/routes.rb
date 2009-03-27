@@ -38,5 +38,6 @@ ActionController::Routing::Routes.draw do |map|
     iteration.resource :active_iteration
   end
 
-  map.root :controller => 'home', :action => 'show'
+  map.resource :home, :controller => 'home'
+  map.root :controller => 'public', :action => 'show'
 end
