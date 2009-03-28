@@ -1,8 +1,24 @@
 class HomeController < ApplicationController
   before_filter :get_active_iterations
   before_filter :get_projects
+  before_filter :get_active_iterations_worked_on
+  before_filter :get_stories
+
+  def show
+    if @active_iterations_worked_on.empty?
+      render :template => 'home/show_without_work'
+    end
+  end
 
   protected
+
+  def get_stories
+    @stories = current_user.stories
+  end
+
+  def get_active_iterations_worked_on
+    @active_iterations_worked_on = current_user.active_iterations_worked_on
+  end
 
   def get_active_iterations
     @active_iterations = current_organisation.iterations.active

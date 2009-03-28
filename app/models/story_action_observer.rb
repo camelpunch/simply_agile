@@ -1,5 +1,5 @@
 class StoryActionObserver < ActiveRecord::Observer
-  observe :story_team_member, :acceptance_criterion
+  observe :story_team_member, :acceptance_criterion, :story
 
   def before_save(obj)
     return if change_should_be_ignored?(obj)

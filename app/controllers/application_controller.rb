@@ -68,7 +68,9 @@ class ApplicationController < ActionController::Base
   def set_current_user_on_resource
     resource_name = controller_name.singularize
     resource = instance_variable_get("@#{resource_name}")
+    puts "\n*****got #{resource} from #{resource_name}"
     if resource && resource.respond_to?(:current_user=)
+      puts "\n***** setting #{resource} to #{current_user.email_address}\n\n\n"
       resource.current_user = current_user
     end
   end

@@ -4,6 +4,7 @@ class IterationsController < ApplicationController
   before_filter :get_iteration, :only => [:edit, :show, :update]
   before_filter :new_iteration, :only => [:new, :create]
   before_filter :get_stories, :only => [:edit, :new]
+  before_filter :set_current_user_on_resource
 
   def create
     @iteration.save_with_planned_stories_attributes! params[:stories]

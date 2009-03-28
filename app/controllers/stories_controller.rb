@@ -72,6 +72,7 @@ So that "
   def update
     if params[:iteration_id]
       get_story_from_iteration
+      set_current_user_on_resource
       
       @story.update_attributes! params[:story]
 

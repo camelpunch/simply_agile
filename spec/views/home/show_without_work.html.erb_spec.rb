@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe "/home/show" do
+describe "/home/show_without_work" do
   before :each do
     @user = mock_model User, :organisation => 'asdf'
     assigns[:current_user] = @user
@@ -15,7 +15,7 @@ describe "/home/show" do
   describe "with projects" do
     before(:each) do
       @user.stub!(:projects).and_return([mock_model(Project)])
-      render 'home/show'
+      render 'home/show_without_work'
     end
 
     it_should_behave_like "a standard view"
@@ -24,7 +24,7 @@ describe "/home/show" do
   describe "with no projects" do
     before :each do
       @user.stub!(:projects).and_return([])
-      render 'home/show'
+      render 'home/show_without_work'
     end
 
     it_should_behave_like "a standard view"
@@ -43,7 +43,7 @@ describe "/home/show" do
                                      :pending? => false
                                    )
       assigns[:active_iterations] = [@active_iteration]
-      render 'home/show'
+      render 'home/show_without_work'
     end
 
     it_should_behave_like "a standard view"
