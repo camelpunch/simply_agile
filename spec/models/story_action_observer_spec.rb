@@ -108,4 +108,16 @@ describe StoryActionObserver do
 
     it_should_behave_like "it does not create a story action"
   end
+
+  describe "duplicate entries" do
+    it "should not be created" do
+      @story.current_user = @user
+      Story.with_observers(:story_action_observer) do
+        @story.update_attributes!(:status => "complete")
+        @story.update_attributes!(:status => "testing")
+      end
+
+      StoryAction.count(:conditions => { :user_id => @user.id }).should == 1
+    end
+  end
 end
