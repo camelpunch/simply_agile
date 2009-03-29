@@ -74,4 +74,12 @@ class ApplicationController < ActionController::Base
       redirect_to organisations_url
     end
   end
+
+  def set_current_user_on_resource
+    resource_name = controller_name.singularize
+    resource = instance_variable_get("@#{resource_name}")
+    if resource && resource.respond_to?(:current_user=)
+      resource.current_user = current_user
+    end
+  end
 end

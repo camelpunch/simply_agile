@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'ostruct'
 
 describe ApplicationController do
   
@@ -242,6 +243,40 @@ describe ApplicationController do
         controller.should_receive(:redirect_to).with(organisations_url)
         controller.send(:select_organisation)
       end
+    end
+  end
+
+  describe "set_current_user_on_resource" do
+    before :each do
+      login
+      @resource = OpenStruct.new(:current_user => 'me')
+    end
+
+    it "should set the user on the resource" do
+      controller.instance_variable_set("@application", @resource)
+      controller.send(:set_current_user_on_resource)
+      @resource.current_user.should == @user
+    end
+
+    it "should get the resource name from the controller name" do
+      controller.stub!(:controller_name).and_return("stories")
+      controller.instance_variable_set("@story", @resource)
+      controller.send(:set_current_user_on_resource)
+      @resource.current_user.should == @user
+    end
+
+    it "should cope with the resource not being assigned" do
+      lambda { 
+        controller.send(:set_current_user_on_resource)
+      }.should_not raise_error
+    end
+
+    it "should cope with the resource not responding to current_user=" do
+      resource = Time.new
+      controller.instance_variable_set("@story", resource)
+      lambda { 
+        controller.send(:set_current_user_on_resource)
+      }.should_not raise_error
     end
   end
 end

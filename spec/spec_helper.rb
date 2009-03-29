@@ -106,6 +106,13 @@ Spec::Runner.configure do |config|
       assigns[:body_classes].should include('guidance')
     end
   end
+
+  describe "it sets the current user", :shared => true do
+    it "should try to set the current user" do
+      controller.should_receive(:set_current_user_on_resource)
+      do_call
+    end
+  end
 end
 
 class ActiveRecord::Base

@@ -43,6 +43,112 @@ describe User do
     it "should have many organisations" do
       User.should have_many(:organisations)
     end
+
+    it "should have many story_actions" do
+      User.should have_many(:story_actions)
+    end
+
+    it "should have many iterations_worked_on" do
+      User.should have_many(:iterations_worked_on)
+    end
+  end
+
+  describe "active work" do
+    before :each do
+      @user = Users.create_user!
+      @project = Projects.create_project!
+
+      @worked_on_story = Stories.create_story!(:project => @project)
+      @iteration = Iterations.create_iteration!(
+        :name => "Active, worked on",
+        :project => @project,
+        :stories => [@worked_on_story],
+        :duration => 2
+      )
+      @iteration.start
+      @user.story_actions.create!(
+        :iteration => @iteration, :story => @worked_on_story
+      )
+
+      @inactive_worked_on_story = Stories.create_story!(:project => @project)
+      @inactive_iteration = Iterations.create_iteration!(
+        :name => "Inactive, worked on",
+        :project => @project,
+        :stories => [@inactive_worked_on_story],
+        :duration => 1,
+        :start_date => 2.days.ago
+      )
+      @user.story_actions.create!(
+        :iteration => @inactive_iteration,
+        :story => @inactive_worked_on_story
+      )
+
+      @unworked_on_story = Stories.create_story!(:project => @project)
+      @not_worked_on_iteration = Iterations.create_iteration!(
+        :name => "not worked on",
+        :project => @project,
+        :stories => [@unworked_on_story]
+      )
+
+      @other_organisation = @user.organisations.create!(:name => 'other')
+      @other_project = @other_organisation.projects.create!(:name => 'other')
+      @other_story = Stories.create_story!(:project => @project)
+      @other_iteration = Iterations.create_iteration!(
+        :name => "Active, worked on",
+        :project => @other_project,
+        :stories => [@other_story],
+        :duration => 2
+      )
+      @other_iteration.start
+      @user.story_actions.create!(
+        :iteration => @other_iteration,
+        :story => @other_story
+      )
+    end
+
+    describe "active_iterations_worked_on" do
+      it "should return iterations for the stories worked on" do
+        @user.active_iterations_worked_on(@organisation).
+          should include(@iteration)
+      end
+
+      it "should not return iterations that are not active" do
+        @user.active_iterations_worked_on(@organisation).
+          should_not include(@inactive_iteration)
+      end
+
+      it "should not return iterations that the user has no actions for" do
+        @user.active_iterations_worked_on(@organisation).
+          should_not include(@iteration_not_worked_on)
+      end
+
+      it "should not return iterations for other organisations" do
+        @user.active_iterations_worked_on(@organisation).
+          should_not include(@other_story)
+      end
+    end
+
+    describe "active_stories_worked_on" do
+      it "should return stories for active iterations" do
+        @user.active_stories_worked_on(@organisation).
+          should include(@worked_on_story)
+      end
+
+      it "should not return stories for inactive iterations" do
+        @user.active_stories_worked_on(@organisation).
+          should_not include(@inactive_worked_on_story)
+      end
+
+      it "should not return stories with no actions" do
+        @user.active_stories_worked_on(@organisation).
+          should_not include(@unworked_on_story)
+      end
+
+      it "should not return stories for other organisation" do
+        @user.active_stories_worked_on(@organisation).
+          should_not include(@other_story)
+      end
+    end
   end
 
   describe "projects" do

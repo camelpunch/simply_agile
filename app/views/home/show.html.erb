@@ -5,31 +5,14 @@
   <li><%= link_to 'Change', organisations_path %></li>
 <% end %>
 
-<div id="getting_started" class="section_container first">
+<div id="iterations" class="section_container">
   <div class="section">
-  <h2>Getting Started</h2>
+    <h2>Recent work</h2>
 
-  <ul>
-    <li><%= link_to "Create a new project", new_project_path %></li>
-    <% unless @projects.empty? -%>
-    <li><%= link_to "Create a new story", new_story_path %></li>
-    <li>
-      <%= render :partial => 'iterations/new' %>
-    </li>
-    <% end -%>
-  </ul>
-  </div>
-</div>
-
-<% unless @active_iterations.empty? -%>
-  <div id="iterations" class="section_container">
-    <div class="section">
-      <h2>Active Iterations</h2>
-      <div class="active">
-        <ol>
-          <%= render @active_iterations, :width => 300 %>
-        </ol>
-      </div>
+    <div class="active">
+      <ol>
+        <%= render :partial => 'active_work', :collection => @active_iterations_worked_on %>
+      </ol>
     </div>
   </div>
-<% end -%>
+</div>

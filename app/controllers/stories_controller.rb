@@ -4,6 +4,9 @@ class StoriesController < ApplicationController
   before_filter :get_story, :only => [:show, :estimate]
   before_filter :new_story, :only => [:new, :create]
 
+  # update sets the current user
+  before_filter :set_current_user_on_resource, :except => [:update]
+
   def backlog
     if @project.stories.backlog.empty?
       render :template => 'stories/backlog_guidance'
@@ -71,6 +74,7 @@ So that "
   def update
     if params[:iteration_id]
       get_story_from_iteration
+      set_current_user_on_resource
       
       @story.update_attributes! params[:story]
 

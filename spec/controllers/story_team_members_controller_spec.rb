@@ -19,6 +19,8 @@ describe StoryTeamMembersController do
       }
     end
 
+    it_should_behave_like "it sets the current user"
+
     describe "success" do
       it "should assign the story to the user" do
         do_call
@@ -67,6 +69,8 @@ describe StoryTeamMembersController do
         StoryTeamMembers.create_story_team_member!(:user => @user,
                                                    :story => @story)
     end
+
+    it_should_behave_like "it sets the current user"
 
     describe "myself" do
       it "should delete" do

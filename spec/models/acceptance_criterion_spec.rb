@@ -14,6 +14,10 @@ describe AcceptanceCriterion do
     AcceptanceCriterion.create!(@valid_attributes)
   end
 
+  it "should have a current user" do
+    AcceptanceCriterion.ancestors.should include(CurrentUser)
+  end
+
   describe "validations" do
     before :each do
       @acceptance_criterion = AcceptanceCriterion.new

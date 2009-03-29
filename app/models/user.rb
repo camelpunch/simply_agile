@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
 
   has_many :story_team_members
   has_many :stories, :through => :story_team_members
+  has_many :story_actions
+  has_many :stories_worked_on, :through => :story_actions, :source => 'story'
+  has_many :iterations_worked_on, :through => :story_actions, :source => 'iteration'
+
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
 
@@ -50,6 +54,19 @@ class User < ActiveRecord::Base
 
   def projects
     organisations.find(:all, :include => :projects).collect(&:projects).flatten
+  end
+
+  def active_iterations_worked_on(organisation)
+    iterations_worked_on.active.select do |iteration|
+      iteration.project.organisation == organisation
+    end
+  end
+
+  def active_stories_worked_on(organisation)
+    active_iterations = active_iterations_worked_on(organisation)
+    stories_worked_on.delete_if do |story|
+      ! active_iterations.include?(story.iteration)
+    end
   end
 
   def signup?
