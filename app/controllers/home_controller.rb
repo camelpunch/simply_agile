@@ -13,11 +13,12 @@ class HomeController < ApplicationController
   protected
 
   def get_stories
-    @stories = current_user.stories
+    @stories = current_user.active_stories_worked_on(current_organisation)
   end
 
   def get_active_iterations_worked_on
-    @active_iterations_worked_on = current_user.active_iterations_worked_on
+    @active_iterations_worked_on = 
+      current_user.active_iterations_worked_on(current_organisation)
   end
 
   def get_active_iterations

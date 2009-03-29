@@ -37,7 +37,20 @@ describe HomeController do
         @iteration.start
 
         @user.story_actions.create!(:story => @story, :iteration => @iteration)
-        @user.story_team_members.create!(:story => @story)
+
+        @other_organisation = @user.organisations.create!(:name => 'other')
+        @other_project = @other_organisation.projects.create!(:name => 'active')
+        @other_story = Stories.create_story!(:project => @other_project)
+        @other_iteration = Iterations.create_iteration!(
+          :stories => [@other_story],
+          :project => @other_project
+        )
+        @other_iteration.start
+
+        @user.story_actions.create!(
+          :story => @other_story,
+          :iteration => @other_iteration
+        )
       end
 
       it_should_behave_like "it's successful"
