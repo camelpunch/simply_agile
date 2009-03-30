@@ -2,6 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
 
+  describe "render_price" do
+    it "should turn 25.0 into £25" do
+      helper.render_price(25.0).should == '£25'
+    end
+  end
+
   describe "story_format" do
     before :each do
       @content = "As a developer

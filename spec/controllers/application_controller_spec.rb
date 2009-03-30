@@ -181,7 +181,7 @@ describe ApplicationController do
     end
 
     def current_organisation
-      controller.instance_variable_get("@current_organisation")
+      controller.send(:current_organisation)
     end
 
     describe "with an organisation selected" do
@@ -200,20 +200,39 @@ describe ApplicationController do
       end
     end
 
+    describe "with no organisations" do
+      before :each do
+        Organisation.delete_all
+      end
+
+      it "should redirect to the new organisation page" do
+        controller.should_receive(:redirect_to).with(new_organisation_url)
+        controller.send(:select_organisation)
+      end
+    end
+
     describe "with only one organisation" do
+      before :each do
+        Organisation.delete_all
+        @organisation = Organisations.create_organisation
+        @user.organisations << @organisation
+        @user.save!
+      end
+
       it "should set the organisation" do
+        session[:organisation_id] = nil
         controller.send(:select_organisation)
         current_organisation.should == @organisation
       end
 
-      it "should set the organsation id in the session" do
+      it "should set the organisation id in the session" do
         controller.send(:select_organisation)
         session[:organisation_id].should == @organisation.id
       end
 
       it "should not redirect" do
+        controller.should_not_receive(:redirect_to)
         controller.send(:select_organisation)
-        response.should_not be_redirect
       end
     end
 
@@ -239,7 +258,7 @@ describe ApplicationController do
         session[:redirect_to].should == @request_uri
       end
 
-      it "should redirect to the organisations index" do
+      it "should redirect to the organisation page" do
         controller.should_receive(:redirect_to).with(organisations_url)
         controller.send(:select_organisation)
       end

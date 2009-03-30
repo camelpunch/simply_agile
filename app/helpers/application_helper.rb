@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def render_price(price)
+    number_to_currency(price, :unit => '£', :precision => 0)
+  end
+
   def google_analytics_tag(id)
     if controller.google_analytics?
       

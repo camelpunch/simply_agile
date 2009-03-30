@@ -65,11 +65,13 @@ class ApplicationController < ActionController::Base
   end
 
   def select_organisation
-    if session[:organisation_id].nil? && current_user.organisations.size == 1
-      session[:organisation_id] = current_user.organisations.first.id
-    end
+    return true if current_organisation
 
-    unless current_organisation
+    if current_user.organisations.count == 1
+      session[:organisation_id] = current_user.organisations.first.id
+    elsif current_user.organisations.empty?
+      redirect_to new_organisation_url
+    else
       session[:redirect_to] = request.request_uri
       redirect_to organisations_url
     end

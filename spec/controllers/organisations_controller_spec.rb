@@ -4,9 +4,27 @@ describe OrganisationsController do
   before :each do
     login
     session[:organisation_id] = nil
+
+    PaymentPlans.create_payment_plan!
   end
 
-  describe "GET index" do
+  describe "new" do
+    def do_call
+      get :new
+    end
+
+    it "should instantiate a new organisation" do
+      do_call
+      assigns[:organisation].should be_an(Organisation)
+    end
+
+    it "should instantiate plans" do
+      do_call
+      assigns[:payment_plans].first.should be_a(PaymentPlan)
+    end
+  end
+
+  describe "index" do
     def do_call
       get :index
     end
@@ -18,10 +36,9 @@ describe OrganisationsController do
 
   end
   
-  describe "GET 'show'" do
+  describe "show" do
     def do_call
       get :show, :id => 1
-      
     end
     
     it_should_behave_like "it's successful"

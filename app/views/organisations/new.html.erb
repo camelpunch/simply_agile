@@ -1,0 +1,39 @@
+<% content_for :title, "New Organisation" %>
+<% content_for :h1, "New Organisation" %>
+
+<% form_for @organisation do |f| %>
+  <div>
+    <p>
+    <%= f.label :name %>
+    <%= f.text_field :name, :class => 'auto_focus' %>
+    </p>
+    <p>
+    Stories, projects and iterations are automatically shared with other members of your organisation.
+    </p>
+  </div>
+  <fieldset>
+    <legend>Payment Plan</legend>
+    <p>
+    You don't have to pay for anything just yet - a payment method can be added
+    at any time before the end of your first month.
+    </p>
+    <p>
+    For now though, let us know what you think you might use. It can be changed later.
+    </p>
+    <ol>
+      <% @payment_plans.each_with_index do |plan, idx| %>
+        <li id="plan_<%= idx %>">
+        <%= f.radio_button :payment_plan_id, plan.id %>
+        <%= f.label "payment_plan_id_#{plan.id}", 
+          "#{h(plan.name)} <span class=\"numeric\">#{render_price(plan.price)}</span>" %>
+          <div class="description">
+            <%= simple_format plan.description %>
+          </div>
+          </li>
+        <% end %>
+      </ol>
+    </fieldset>
+    <p class="submit">
+    <%= f.submit 'Create' %>
+    </p>
+  <% end %>
