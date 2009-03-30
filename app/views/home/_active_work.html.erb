@@ -5,17 +5,18 @@ height = 450 / ratio
 
 iteration = active_work
 %>
+<li class="<%= cycle('odd', 'even') %>">
+  <div class="iteration">
+    <%= link_to(
+      image_tag(iteration.pending? ? 'burndown.png' : iteration_burndown_path(iteration, :width => width),
+        :width => width, :height => height, :alt => "Burndown chart for #{h iteration.name}"),
+      [iteration.project, iteration]) %>
+    <%= link_to h(iteration), [iteration.project, iteration] %>
+  </div>
 
-<li class="iteration">
-  <%= link_to(
-    image_tag(iteration.pending? ? 'burndown.png' : iteration_burndown_path(iteration, :width => width),
-      :width => width, :height => height, :alt => "Burndown chart for #{h iteration.name}"),
-    [iteration.project, iteration]) %>
-  <%= link_to h(iteration), [iteration.project, iteration] %>
-
-  <ul class="stories">
-    <%  @stories.select { |s| s.iteration = iteration }.each do |story| -%>
-      <li><%= link_to story %></li>
-    <% end -%>
-  </ul>
+  <div class="stories">
+    <ol class="stories">
+      <%= render @stories.select { |s| s.iteration == iteration } %>
+    </ol>
+  </div>
 </li>
