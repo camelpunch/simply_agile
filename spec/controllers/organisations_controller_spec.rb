@@ -5,7 +5,7 @@ describe OrganisationsController do
     login
     session[:organisation_id] = nil
 
-    PaymentPlans.create_payment_plan!
+    @payment_plan = PaymentPlans.create_payment_plan!
   end
 
   describe "new" do
@@ -21,6 +21,47 @@ describe OrganisationsController do
     it "should instantiate plans" do
       do_call
       assigns[:payment_plans].first.should be_a(PaymentPlan)
+    end
+  end
+
+  describe "create" do
+    def do_call(params = {})
+      post :create, :organisation => {
+        :name => 'New name',
+        :payment_plan_id => @payment_plan.id.to_s
+      }.merge(params)
+    end
+
+    describe "success" do
+      it "should redirect to the home url" do
+        do_call
+        response.should redirect_to(home_url)
+      end
+
+      it "should create a new organisation" do
+        lambda {do_call}.should change(Organisation, :count).by(1)
+      end
+
+      it "should assign the organisation to the user" do
+        do_call
+        Organisation.last(:order => 'id').users.should == [@user]
+      end
+    end
+
+    describe "failure" do
+      it "should re-render the new page" do
+        do_call :name => ''
+        response.should render_template('organisations/new')
+      end
+
+      it "should not create an organisation" do
+        lambda {do_call(:name => '')}.should_not change(Organisation, :count)
+      end
+
+      it "should assign payment plans" do
+        do_call :name => ''
+        assigns[:payment_plans].first.should be_a(PaymentPlan)
+      end
     end
   end
 

@@ -4,8 +4,17 @@ class OrganisationsController < ApplicationController
   before_filter :get_organisations, :only => [:index]
   before_filter :get_organisation, :only => [:show]
   before_filter :new_user
-  before_filter :new_organisation, :only => :new
+  before_filter :new_organisation, :only => [:new, :create]
   before_filter :get_payment_plans, :only => :new
+
+  def create
+    if @organisation.update_attributes(params[:organisation])
+      redirect_to home_url
+    else
+      get_payment_plans
+      render :template => 'organisations/new'
+    end
+  end
 
   protected
 
@@ -14,7 +23,7 @@ class OrganisationsController < ApplicationController
   end
 
   def new_organisation
-    @organisation = Organisation.new
+    @organisation = Organisation.new :users => [current_user]
   end
 
   def get_organisations

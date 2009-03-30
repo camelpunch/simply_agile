@@ -90,7 +90,7 @@ describe User do
         :stories => [@unworked_on_story]
       )
 
-      @other_organisation = @user.organisations.create!(:name => 'other')
+      @other_organisation = @user.organisations.create!(:name => 'other', :payment_plan_id => 1)
       @other_project = @other_organisation.projects.create!(:name => 'other')
       @other_story = Stories.create_story!(:project => @project)
       @other_iteration = Iterations.create_iteration!(

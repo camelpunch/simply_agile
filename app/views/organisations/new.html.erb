@@ -2,6 +2,7 @@
 <% content_for :h1, "New Organisation" %>
 
 <% form_for @organisation do |f| %>
+  <%= f.error_messages %>
   <div>
     <p>
     <%= f.label :name %>
