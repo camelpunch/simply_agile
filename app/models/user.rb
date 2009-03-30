@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   def active_iterations_worked_on(organisation)
     iterations_worked_on.active.select do |iteration|
       iteration.project.organisation == organisation
-    end
+    end.uniq
   end
 
   def active_stories_worked_on(organisation)

@@ -107,6 +107,13 @@ describe User do
     end
 
     describe "active_iterations_worked_on" do
+      it "should return a unique set of iterations" do
+        @user.story_actions.first.clone.save!
+        iterations = @user.active_iterations_worked_on(@organisation)
+        unique_iterations = iterations.uniq
+        iterations.should == unique_iterations
+      end
+
       it "should return iterations for the stories worked on" do
         @user.active_iterations_worked_on(@organisation).
           should include(@iteration)
