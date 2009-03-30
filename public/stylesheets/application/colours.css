@@ -52,4 +52,5 @@ div.section h2 { background:#fff }
 /* home/show */
 body#home_show #recent_work .section>ol>li { background:#e4e5f3;
                                              border-bottom:2px solid #fff }
+body#home_show #recent_work .section>ol>li:last-child { border:none }
 /* end home/show */

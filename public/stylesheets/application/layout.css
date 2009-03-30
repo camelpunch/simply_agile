@@ -75,7 +75,7 @@ body#home_show #iterations { min-width:345px }
 body#home_show #iterations div.active { padding-top:45px }
 body#home_show #iterations ol { overflow:hidden }
 body#home_show #recent_work .section { padding:0 }
-body#home_show #recent_work .section>ol>li { padding:45px 30px 0 30px }
+body#home_show #recent_work .section>ol>li { padding:45px 30px 15px 30px }
 body#home_show #recent_work .section>ol>li,
 body#home_show #recent_work li div.stories { overflow:hidden }
 body#home_show #recent_work li div.iteration { margin-right:30px }
