@@ -49,10 +49,8 @@ div.section h2 { background:#fff }
 #headings .complete { background:#3dfd4f }
 #acceptance_criteria #completed, .aside { color: #aaa }
 
-/* iteration lists */
-#iterations li a img { border:2px solid #fff }
-#iterations li a:hover img,
-#iterations li a:focus img { border:2px solid #999 }
-#iterations .active { background:#e4e5f3 }
-#iterations .planned { background:#f1f1f8 }
-/* end iteration lists */
+/* home/show */
+body#home_show #recent_work .section>ol>li { background:#e4e5f3;
+                                             border-bottom:2px solid #fff }
+body#home_show #recent_work .section>ol>li:last-child { border:none }
+/* end home/show */

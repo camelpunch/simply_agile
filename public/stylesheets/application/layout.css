@@ -74,6 +74,11 @@ form p.checkbox label { display:inline; padding-left:5px }
 body#home_show #iterations { min-width:345px }
 body#home_show #iterations div.active { padding-top:45px }
 body#home_show #iterations ol { overflow:hidden }
+body#home_show #recent_work .section { padding:0 }
+body#home_show #recent_work .section>ol>li { padding:45px 30px 15px 30px }
+body#home_show #recent_work .section>ol>li,
+body#home_show #recent_work li div.stories { overflow:hidden }
+body#home_show #recent_work li div.iteration { margin-right:30px }
 /* end home/show */
 
 /* projects/show */
@@ -126,13 +131,3 @@ body #organisation_members .section table { width:100% }
 /* end sessions/new */
 
 #beta_warning { padding: 0.5em; margin-bottom: 1em; }
-
-/* iteration lists */
-#iterations div.section { padding:0 }
-#iterations div.section .guidance { padding:30px 0 0 15px }
-#iterations .active,
-#iterations .planned { position:relative; overflow:hidden;
-                                          padding-bottom:15px }
-#content li.iteration { padding:0 15px; float:left; margin-bottom:15px }
-#content li.iteration a { display:block; margin:0 auto }
-/* end iteration lists */
