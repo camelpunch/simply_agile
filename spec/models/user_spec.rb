@@ -196,12 +196,6 @@ describe User do
         @user.signup = true
       end
 
-      it "should create a new organisation for the user" do
-        @user.organisation_name = 'New Organisation'
-        @user.save
-        Organisation.find_by_name('New Organisation').should_not be_nil
-      end
-
       it "should encrypt the password" do
         @user.password = 'some password'
         @user.save

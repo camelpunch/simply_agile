@@ -5,7 +5,7 @@ class Users < ObjectMother
     {
       :email_address => "user#{user_count + 1}@jandaweb.com",
       :password => 'password',
-      :organisation_name => "Organisation #{organisation_count}"
+      :organisations => [Organisation.create(:name => "Organisation #{organisation_count}")]
     }
   end
 end

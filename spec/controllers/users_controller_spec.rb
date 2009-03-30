@@ -42,8 +42,7 @@ describe UsersController do
 
       @user_params = {
         "email_address" => 'user@jandaweb.com',
-        "password" => 'password',
-        "organisation_name" => 'organisation'
+        "password" => 'password'
       }
     end
 
