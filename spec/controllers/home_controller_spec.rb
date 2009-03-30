@@ -67,7 +67,25 @@ describe HomeController do
 
       it "should render the standard show page" do
         do_call
-        response.should render_template("home/show")
+        response.should render_template("home/show.html")
+      end
+      
+      describe "with only recently finished iterations" do
+        before :each do
+          @iteration.update_attributes!(:end_date => 3.days.ago)
+        end
+
+        it "should assign all of the recently finished iterations" do
+          do_call
+          assigns[:recently_finished_iterations_worked_on].should ==
+            [@iteration]
+        end
+
+        it "should render the standard show page" do
+          Iteration.active.should_not include(@iteration)
+          do_call
+          response.should render_template("home/show.html")
+        end
       end
     end
   end

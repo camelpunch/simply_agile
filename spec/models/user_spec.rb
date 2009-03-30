@@ -53,7 +53,7 @@ describe User do
     end
   end
 
-  describe "active work" do
+  describe "worked on" do
     before :each do
       @user = Users.create_user!
       @project = Projects.create_project!
@@ -124,7 +124,7 @@ describe User do
 
       it "should not return iterations for other organisations" do
         @user.active_iterations_worked_on(@organisation).
-          should_not include(@other_story)
+          should_not include(@other_iteration)
       end
     end
 
@@ -147,6 +147,33 @@ describe User do
       it "should not return stories for other organisation" do
         @user.active_stories_worked_on(@organisation).
           should_not include(@other_story)
+      end
+    end
+
+    describe "finished_stories_worked_on" do
+      before :each do
+        @iteration.update_attributes(:end_date => 2.days.ago)
+        @inactive_iteration.update_attributes(:end_date => 10.days.ago)
+      end
+
+      it "should return iterations finished less than 7 days ago" do
+        @user.recently_finished_iterations_worked_on(@organisation).
+          should include(@iteration)
+      end
+
+      it "should not return older iterations" do
+        @user.recently_finished_iterations_worked_on(@organisation).
+          should_not include(@inactive_iteration)
+      end
+
+      it "should not return iterations not worked on" do
+        @user.recently_finished_iterations_worked_on(@organisation).
+          should_not include(@iteration_not_worked_on)
+      end
+
+      it "should not return iterations for other organisations" do
+        @user.recently_finished_iterations_worked_on(@organisation).
+          should_not include(@other_iteration)
       end
     end
   end
