@@ -13,6 +13,8 @@ class Iteration < ActiveRecord::Base
   named_scope :active, 
     :conditions => ['start_date IS NOT NULL AND (end_date IS NULL OR end_date > ?)', Date.today]
   named_scope :pending, :conditions => 'start_date IS NULL'
+  named_scope :recently_finished, 
+    :conditions => ['end_date < ? AND end_date > ?', Date.today, 7.days.ago]
   named_scope :finished, :conditions => ['end_date < ?', Date.today]
 
   def validate
