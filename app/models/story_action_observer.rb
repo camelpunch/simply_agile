@@ -16,8 +16,11 @@ class StoryActionObserver < ActiveRecord::Observer
     user = obj.current_user
     iteration = story.iteration
 
+    debugger
     StoryAction.find_or_create_by_user_id_and_story_id_and_iteration_id(
-      user.id, story.id, iteration.id
+      user.id, 
+      story.id, 
+      iteration.id
     )
   end
 
