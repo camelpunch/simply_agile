@@ -11,7 +11,7 @@ ol.stories li.story{ margin-bottom:15px }
 #content .story h3 { overflow:hidden }
 body.iteration_active .javascript #content .story h3 { margin-right:53px }
 
-#content .story img { position:absolute; bottom:1px; right:100px }
+#content .story img { position:absolute; bottom:1px; right:7.4em }
 body.iteration_active #content .story img { right:29px }
 
 /* less/more links */
