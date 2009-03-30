@@ -31,8 +31,7 @@ body.iteration_active .javascript li .content,
 body.iteration_active .javascript form.edit_story p.submit{ display:none }
 
 /* page-dependent default states */
-#content .story .acceptance_criteria { display:none }
-body#home_show #content .story ol,
-body#stories_backlog #content .story ol { display:none }
+#content .story .acceptance_criteria,
+body#stories_backlog #content .story ol,
 body#stories_show .story .less_more { display:none }
 /* end page-dependent default states */
