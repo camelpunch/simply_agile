@@ -1,5 +1,5 @@
 class Organisation < ActiveRecord::Base
-  attr_protected :user_ids
+  attr_accessible :name, :payment_plan_id, :users
 
   has_many :projects
   has_many :stories, :through => :projects

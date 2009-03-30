@@ -13,10 +13,18 @@ describe Organisation do
   end
 
   describe "protection" do
-    it "should not allow mass-assignment of users" do
-      user = Users.create_user!
-      organisation = Organisation.create! @valid_attributes.merge(:user_ids => [user.id])
+    before :each do
+      @user = Users.create_user!
+    end
+
+    it "should not allow mass-assignment of user ids" do
+      organisation = Organisation.create! @valid_attributes.merge(:user_ids => [@user.id])
       organisation.users.should be_empty
+    end
+
+    it "should allow mass-assignment of users" do
+      organisation = Organisation.create! @valid_attributes.merge(:users => [@user])
+      organisation.users.should == [@user]
     end
   end
 

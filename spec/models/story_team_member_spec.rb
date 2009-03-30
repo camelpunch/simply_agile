@@ -35,7 +35,8 @@ describe StoryTeamMember do
       @story_team_member.valid?
 
       @project = Projects.create_project
-      @organisation1 = Organisations.create_organisation :projects => [@project]
+      @organisation1 = Organisations.create_organisation
+      @organisation1.projects = [@project]
       @organisation2 = Organisations.create_organisation
       @user = Users.create_user :organisations => [@organisation2]
       @story = Stories.create_story :project => @project
