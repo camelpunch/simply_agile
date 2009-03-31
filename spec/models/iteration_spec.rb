@@ -134,6 +134,35 @@ describe Iteration do
     it "should require some stories" do
       @iteration.errors.on(:stories).should_not be_nil
     end
+
+    describe "limiting" do
+      before :each do
+        Project.delete_all
+        Iteration.delete_all
+        @project = Projects.create_project!
+        @limit = @project.organisation.payment_plan.active_iteration_limit
+
+        @create = lambda {
+          Iteration.create!(@valid_attributes.
+                            merge(:start_date => Date.today, # active
+                                  :project => @project))
+        }
+      end
+
+      it "should require free active iteration slots in the organisation" do
+        @limit.times { |i| @create.call }
+        @create.should raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it "should allow unlimited planned iterations" do
+        @limit.times { |i| @create.call }
+        lambda { 
+          Iteration.create!(@valid_attributes.
+                            merge(:start_date => nil,
+                                  :project => @project))
+        }.should_not raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 
   describe "setting the duration after the start date" do

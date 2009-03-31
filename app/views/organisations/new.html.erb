@@ -35,7 +35,7 @@
           <label for="organisation_payment_plan_id_<%= plan.id %>">
           <%= f.radio_button :payment_plan_id, plan.id %>
           <span class="name"><%= h plan.name %></span>
-          <span class="numeric"><%= render_price plan.price %> per month</span>
+          <span class="numeric"><%= number_to_currency plan.price %> per month</span>
           </label>
           <%= render plan %>
           <div class="description">

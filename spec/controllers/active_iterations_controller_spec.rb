@@ -29,15 +29,38 @@ describe ActiveIterationsController do
       post :create, :iteration_id => @iteration.id
     end
 
-    it "should start an iteration" do
-      do_call
-      @iteration.reload
-      @iteration.start_date.should_not be_nil
+    describe "success" do
+      it "should start an iteration" do
+        do_call
+        @iteration.reload
+        @iteration.start_date.should_not be_nil
+      end
+
+      it "should redirect to Iterations#show" do
+        do_call
+        response.should redirect_to(project_iteration_path(@project, @iteration))
+      end
     end
 
-    it "should redirect to Iterations#show" do
-      do_call
-      response.should redirect_to(project_iteration_path(@project, @iteration))
+    describe "failure" do
+      before :each do
+        @project.organisation.payment_plan.active_iteration_limit.times do |i|
+          story = Stories.create_story! :project => @project
+          Iterations.create_iteration!(:start_date => Date.today,
+                                       :project => @project,
+                                       :stories => [story])
+        end
+      end
+
+      it "should re-render the iteration page" do
+        do_call
+        response.should render_template('iterations/show')
+      end
+
+      it "should assign the project" do
+        do_call
+        assigns[:project].should == @project
+      end
     end
   end
 end

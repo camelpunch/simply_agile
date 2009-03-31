@@ -1,0 +1,17 @@
+"en-GB":
+  activerecord:
+    errors:
+      messages:
+        taken: "has been taken"
+        blank: "cannot be blank"
+        greater_than_or_equal_to: "must be at least {{count}}"
+      template:
+        header:
+          one: "Error with {{model}}" 
+          other: "{{count}} errors with {{model}}"
+        body: ""
+      models:
+        iteration:
+          attributes:
+            duration:
+              not_a_number: "must be a number"

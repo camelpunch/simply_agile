@@ -11,7 +11,9 @@
   <p>
     There are currently no active iterations for <%= h @current_organisation %>.
   </p>
+  <% unless @current_organisation.projects.empty? %>
   <%= render :partial => 'iterations/new' %>
+  <% end %>
 <% else -%>
   <div id="iterations" class="section_container">
     <div class="section">

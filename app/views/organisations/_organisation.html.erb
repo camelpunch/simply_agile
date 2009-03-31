@@ -5,7 +5,7 @@
   <% end %>
   <p>
     Payment Plan: <%= h organisation.payment_plan.name %>,
-    <%= render_price organisation.payment_plan.price %> per month
+    <%= number_to_currency organisation.payment_plan.price %> per month
     <%= render organisation.payment_plan %>
   </p>
   <p>

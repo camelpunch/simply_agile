@@ -8,7 +8,8 @@ class Iteration < ActiveRecord::Base
   has_many :burndown_data_points
   validates_presence_of :name, :duration, :project_id
   validates_numericality_of :duration, 
-    :greater_than_or_equal_to => 1, :only_integer => true
+    :greater_than_or_equal_to => 1, 
+    :only_integer => true
 
   named_scope :active, 
     :conditions => ['start_date IS NOT NULL AND (end_date IS NULL OR end_date > ?)', Date.today]
@@ -19,6 +20,10 @@ class Iteration < ActiveRecord::Base
 
   def validate
     errors.add(:stories, "must be assigned") if stories.empty?
+    if (active? && project && project.organisation.iterations.active.count >=
+        project.organisation.payment_plan.active_iteration_limit)
+      errors.add(:organisation, "active iteration limit reached")
+    end
   end
 
   def save_with_planned_stories_attributes!(attributes)
