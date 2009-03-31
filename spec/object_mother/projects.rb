@@ -4,7 +4,8 @@ class Projects < ObjectMother
 
   def self.project_prototype
     {
-      :name => 'protototo'
+      :name => 'protototo',
+      :organisation => Organisations.create_organisation!
     }
   end
 

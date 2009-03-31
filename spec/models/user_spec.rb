@@ -56,7 +56,10 @@ describe User do
   describe "worked on" do
     before :each do
       @user = Users.create_user!
-      @project = Projects.create_project!
+
+      @organisation = Organisations.create_organisation! :user => @user
+
+      @project = Projects.create_project! :organisation => @organisation
 
       @worked_on_story = Stories.create_story!(:project => @project)
       @iteration = Iterations.create_iteration!(
@@ -90,7 +93,9 @@ describe User do
         :stories => [@unworked_on_story]
       )
 
-      @other_organisation = @user.organisations.create!(:name => 'other', :payment_plan_id => 1)
+      @other_organisation = @user.organisations.
+        create!(:name => 'other', 
+                :payment_plan_id => @organisation.payment_plan.id)
       @other_project = @other_organisation.projects.create!(:name => 'other')
       @other_story = Stories.create_story!(:project => @project)
       @other_iteration = Iterations.create_iteration!(

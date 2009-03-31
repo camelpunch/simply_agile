@@ -4,7 +4,8 @@ class PaymentPlans < ObjectMother
   def self.payment_plan_prototype
     {
       :name => 'protototo',
-      :price => 25
+      :price => 25,
+      :project_limit => 2,
     }
   end
 

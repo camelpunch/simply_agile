@@ -5,7 +5,7 @@ describe Project do
     @valid_attributes = {
       :name => "value for name",
       :description => "description for project",
-      :organisation_id => "1"
+      :organisation => Organisations.create_organisation!
     }
   end
 
@@ -21,6 +21,25 @@ describe Project do
 
     it "should require a name" do
       @project.errors.should be_invalid(:name)
+    end
+
+    it "should require an organisation" do
+      @project.should have(1).error_on(:organisation_id)
+    end
+
+    it "should require free project slots in the organisation" do
+      Project.delete_all
+      @project.organisation = Organisations.create_organisation!
+      limit = @project.organisation.payment_plan.project_limit
+
+      create = lambda {
+        Project.create!(@valid_attributes.
+                        merge(:organisation => @project.organisation))
+      }
+
+      limit.times { |i| create.call }
+
+      create.should raise_error(ActiveRecord::RecordInvalid)
     end
   end
 

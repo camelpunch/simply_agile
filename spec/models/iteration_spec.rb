@@ -61,7 +61,7 @@ describe Iteration do
 
   describe "default name" do
     it "should use a default name if none is assigned" do
-      project = Project.create(:name => "woo")
+      project = Projects.create_project!(:name => "woo")
       iteration = project.iterations.build
       iteration.name.should == "Iteration #{project.iterations.count + 1}"
     end

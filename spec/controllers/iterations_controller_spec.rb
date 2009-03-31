@@ -87,7 +87,8 @@ describe IterationsController do
     
     before :each do
       @active_iterations = []
-      3.times do
+      Project.delete_all
+      2.times do
         project = Projects.create_project!(:organisation => @organisation)
         story = Stories.create_story!(:project => @project)
         iteration = Iterations.create_iteration!(
