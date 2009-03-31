@@ -1,0 +1,15 @@
+<p>
+  <%= form.label :cardholder_name %>
+  <%= form.text_field :cardholder_name %>
+</p>
+
+<p>
+  <%= form.label :card_number %>
+  <%= form.text_field :card_number %>
+</p>
+
+<p>
+  <%= form.label :expiry_month, "Expiry date" %>
+  <%= form.text_field :expiry_month, :size => 2 %>
+  <%= form.text_field :expiry_year, :size => 2 %>
+</p>

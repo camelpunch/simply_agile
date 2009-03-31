@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  last_for_digits: 1
+  expiry_month: 1
+  expiry_year: 1
+
+two:
+  last_for_digits: 1
+  expiry_month: 1
+  expiry_year: 1

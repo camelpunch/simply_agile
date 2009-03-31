@@ -31,5 +31,9 @@ describe Organisation do
     it "should have many users" do
       Organisation.should have_many(:users)
     end
+
+    it "should have one payment method" do
+      Organisation.should have_one(:payment_method)
+    end
   end
 end
