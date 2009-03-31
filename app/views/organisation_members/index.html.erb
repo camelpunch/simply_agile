@@ -33,7 +33,8 @@
       <% end -%>
     </table>
 
-    <% form_for @user, :url => organisation_members_path(@organisation) do |form| -%>
+    <% form_for(@organisation_member, 
+                :url => organisation_members_path(@organisation)) do |form| -%>
       <fieldset>
         <legend>Add somebody to this organisation</legend>
         <%= form.error_messages %>

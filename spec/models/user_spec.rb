@@ -3,6 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe User do
   before(:each) do
     @user = User.new
+    @valid_attributes = {
+      :email_address => "user#{User.count}@jandaweb.com",
+    }
   end
 
   it "should create a new instance given valid attributes" do
@@ -267,7 +270,7 @@ describe User do
       User.delete_all
       @user = User.new(Users.user_prototype)
     end
-    
+
     describe "email address" do
       before :each do
         @user.email_address = nil

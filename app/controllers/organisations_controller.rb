@@ -3,7 +3,6 @@ class OrganisationsController < ApplicationController
   
   before_filter :get_organisations, :only => [:index]
   before_filter :get_organisation, :only => [:show]
-  before_filter :new_user
   before_filter :new_organisation, :only => [:new, :create]
   before_filter :get_payment_plans, :only => :new
 
@@ -18,10 +17,6 @@ class OrganisationsController < ApplicationController
   end
 
   protected
-
-  def new_user
-    @user = User.new
-  end
 
   def new_organisation
     @organisation = Organisation.new :users => [current_user]

@@ -5,18 +5,39 @@ describe OrganisationMembersController do
     login
   end
 
+  describe "index" do
+    def do_call
+      get :index, :organisation_id => @organisation.id
+    end
+    
+    it_should_behave_like "it's successful"
+
+    it "should assign the organisation" do
+      do_call
+      assigns[:organisation].should == @organisation
+    end
+
+    it "should assign a new organisation member" do
+      do_call
+      assigns[:organisation_member].should be_kind_of(OrganisationMember)
+      assigns[:organisation_member].should be_new_record
+    end
+  end
+
   describe "create" do
     def do_call
-      post :create, :organisation_id => @organisation.id, :user => @user_params
+      post(:create, 
+           :organisation_id => @organisation.id, 
+           :organisation_member => @user_params)
     end
 
     before :each do
       @user_params = { "email_address" => 'user@jandaweb.com' }
     end
 
-    it "should redirect to the organisation page" do
+    it "should redirect to the organisation members page" do
       do_call
-      response.should redirect_to(organisation_url(@organisation))
+      response.should redirect_to(organisation_members_url(@organisation))
     end
 
     describe "with an existing user" do
@@ -81,27 +102,7 @@ describe OrganisationMembersController do
       end
     end
 
-    describe "with invalid user details" do
-      before :each do
-        @user_params = {'email_address' => ''}
-        @organisation_member_count = OrganisationMember.count
-        do_call
-      end
-
-      it "should not create a new organisaiton member" do
-        OrganisationMember.count.should == @organisation_member_count
-      end
-
-      it "should display the 'show' page" do
-        response.should render_template('organisations/show')
-      end
-
-      it "should assign the organisation" do
-        assigns[:organisation].should == @organisation
-      end
-    end
-
-    describe "when a user is already a member of the organisation" do
+    describe "when a member creation fails" do
       before :each do
         @user = Users.create_user!(
           :email_address => @user_params['email_address']
@@ -116,8 +117,12 @@ describe OrganisationMembersController do
         OrganisationMember.count.should == @organisation_member_count
       end
 
-      it "should display the 'show' page" do
-        response.should render_template('organisations/show')
+      it "should display the 'index' page" do
+        response.should render_template('organisation_members/index')
+      end
+
+      it "should assign the organisation member" do
+        assigns[:organisation_member].should be_an(OrganisationMember)
       end
     end
   end
@@ -144,9 +149,9 @@ describe OrganisationMembersController do
         @new_user.organisations.should_not include(@organisation)
       end
   
-      it "should redirect to the organisation page" do
+      it "should redirect to the organisation members page" do
         do_call
-        response.should redirect_to(organisation_url)
+        response.should redirect_to(organisation_members_url(@organisation))
       end
     end
 end

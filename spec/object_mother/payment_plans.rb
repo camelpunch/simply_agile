@@ -7,6 +7,7 @@ class PaymentPlans < ObjectMother
       :price => 25,
       :project_limit => 2,
       :active_iteration_limit => 2,
+      :user_limit => 5
     }
   end
 

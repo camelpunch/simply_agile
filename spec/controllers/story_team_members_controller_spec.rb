@@ -8,8 +8,10 @@ describe StoryTeamMembersController do
     @iteration = Iterations.create_iteration :project => @project
     @story = Stories.create_story(:project => @project,
                                   :iteration => @iteration)
-    @user.organisations << @story.project.organisation
-    @user.save!
+    unless @user.organisations.include?(@story.project.organisation)
+      @user.organisations << @story.project.organisation
+      @user.save!
+    end
   end
 
   describe "create" do

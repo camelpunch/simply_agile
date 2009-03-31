@@ -80,25 +80,5 @@ describe OrganisationsController do
       do_call
       assigns[:organisations].should == @user.organisations
     end
-
-  end
-  
-  describe "show" do
-    def do_call
-      get :show, :id => 1
-    end
-    
-    it_should_behave_like "it's successful"
-
-    it "should assign the organisation" do
-      do_call
-      assigns[:organisation].should == @organisation
-    end
-
-    it "should assign a new user" do
-      do_call
-      assigns[:user].should be_kind_of(User)
-      assigns[:user].should be_new_record
-    end
   end
 end
