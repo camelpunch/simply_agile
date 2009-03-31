@@ -34,6 +34,13 @@ vendor/plugins/no-peeping-toms:
   type: git
   revision: 7b7939c02ef42980afb69400fc898c59efceab18
   remote: braid/vendor/plugins/no-peeping-toms
+vendor/plugins/country_select: 
+  squashed: true
+  url: git://github.com/rails/country_select.git
+  branch: master
+  type: git
+  revision: d3b5d8656df3defc1653aafe1a9bb5f0164c1741
+  remote: braid/vendor/plugins/country-select
 vendor/plugins/assert_valid_xhtml: 
   squashed: true
   url: git@git.jandaweb.com:assert_valid_xhtml.git
