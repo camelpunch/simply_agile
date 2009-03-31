@@ -12,7 +12,9 @@
 
 .story .header { border-bottom:2px solid #99f }
 .story ol li{ border-bottom:1px solid #ccf }
-.story ol li:last-child{ border-bottom:none }
+.story ol li:last-child { border-bottom:none }
+
+.story .content p.estimate { background:#eee; border-color:#ddd }
 
 /* don't affect breadcrumbs */
 #breadcrumbs .story { border:none }

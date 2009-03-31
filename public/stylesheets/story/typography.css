@@ -1,3 +1,4 @@
 .story h3, .story h4{ font-weight:bold }
 .story h3{ padding:4px }
 .story h4{ padding:6px 0 0 4px }
+.story .estimate { text-align:center; font-weight:bold }

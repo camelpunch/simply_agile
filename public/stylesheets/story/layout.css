@@ -11,18 +11,21 @@ ol.stories li.story{ margin-bottom:15px }
 #content .story h3 { overflow:hidden }
 body.iteration_active .javascript #content .story h3 { margin-right:53px }
 
-#content .story img { position:absolute; bottom:1px; right:7.4em }
+#content .story img { position:absolute; bottom:1px; right:2.4em }
 body.iteration_active #content .story img { right:29px }
 
 /* less/more links */
+body#stories_backlog #content .story .less_more,
+body#projects_show #backlog .story .less_more { margin-right:2.4em }
 #content .story .less_more { float:right; margin-top:4px; margin-right:105px }
 #content .story .less_more a { display:block }
 #content .story .less_more a.less { margin-right:.5em; float:left }
 #content .story .less_more a.more { float:left }
 /* end less/more links */
 
-.javascript #content .story .estimate{ position:absolute; top:5px; right:5px; 
-                              margin:0 }
+#content .story .estimate { margin:0; position:absolute; border-style:solid; 
+                            border-width:1px; padding:0 3px; top:3px; right:3px }
+#content .story .estimate span { display:none }
 .story ol{ clear:both }
 
 body.iteration_active .javascript form.edit_story input,
@@ -31,8 +34,7 @@ body.iteration_active .javascript li .content,
 body.iteration_active .javascript form.edit_story p.submit{ display:none }
 
 /* page-dependent default states */
-#content .story .acceptance_criteria { display:none }
-body#home_show #content .story ol,
-body#stories_backlog #content .story ol { display:none }
+#content .story .acceptance_criteria,
+body#stories_backlog #content .story ol,
 body#stories_show .story .less_more { display:none }
 /* end page-dependent default states */
