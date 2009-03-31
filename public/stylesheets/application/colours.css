@@ -54,3 +54,10 @@ body#home_show #recent_work .section>ol>li { background:#e4e5f3;
                                              border-bottom:2px solid #fff }
 body#home_show #recent_work .section>ol>li:last-child { border:none }
 /* end home/show */
+
+/* organisations/new */
+form#new_organisation fieldset ol { border-color:#999 }
+form#new_organisation fieldset ol li#plan_0 label { background:#ccc }
+form#new_organisation fieldset ol li#plan_1 label { background:#ddd }
+form#new_organisation fieldset ol li#plan_2 label { background:#eee }
+/* end organisations/new */

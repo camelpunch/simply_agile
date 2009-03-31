@@ -119,6 +119,25 @@ body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
+/* organisations/new */
+form#new_organisation fieldset ol { 
+  width:60em; border-style:solid; overflow:hidden; border-width:1px 
+}
+form#new_organisation fieldset ol li { 
+  width:20em; display:block; float:left
+}
+form#new_organisation fieldset ol li label { 
+  padding:15px 0 5px 0;
+  height:6.5em;
+  display:block; margin:0 auto 
+}
+form#new_organisation fieldset ol li label span { 
+  display:block; clear:left
+}
+form#new_organisation fieldset ol li label span span { 
+}
+/* end organisations/new */
+
 /* organisations/show */
 body #organisation_members.section_container { min-width:645px }
 body #organisation_members .section table { width:100% }

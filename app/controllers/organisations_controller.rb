@@ -9,6 +9,7 @@ class OrganisationsController < ApplicationController
 
   def create
     if @organisation.update_attributes(params[:organisation])
+      session[:organisation_id] = @organisation.id
       redirect_to home_url
     else
       get_payment_plans

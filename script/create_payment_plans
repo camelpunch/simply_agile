@@ -1,0 +1,12 @@
+#!/bin/bash
+script/runner -e $1 "
+PaymentPlan.create!(:name => 'Espresso',
+                    :description => 'A Basic Package',
+                    :price => 10)
+PaymentPlan.create!(:name => 'Tall',
+                    :description => 'A Medium Package',
+                    :price => 25)
+PaymentPlan.create!(:name => 'Grande',
+                    :description => 'A Large Package',
+                    :price => 50)
+"

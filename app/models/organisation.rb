@@ -1,6 +1,7 @@
 class Organisation < ActiveRecord::Base
   attr_accessible :name, :payment_plan_id, :users
 
+  belongs_to :payment_plan
   has_many :projects
   has_many :stories, :through => :projects
   has_many :iterations, :through => :projects

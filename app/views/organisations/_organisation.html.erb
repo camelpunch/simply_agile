@@ -4,6 +4,10 @@
     <%= submit_tag h(organisation.name) %>
   <% end %>
   <p>
+    Payment Plan: <%= h organisation.payment_plan.name %>,
+    <%= render_price organisation.payment_plan.price %> per month
+  </p>
+  <p>
     <%= pluralize organisation.projects.count, "project" %>,
     <%= pluralize organisation.stories.count, "story" %>,
     <%= pluralize organisation.iterations.active.count, "active iteration" %>

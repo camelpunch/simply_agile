@@ -5,18 +5,26 @@
   <%= f.error_messages %>
   <div>
     <p>
-    <%= f.label :name %>
-    <%= f.text_field :name, :class => 'auto_focus' %>
+    Stories, projects and iterations are automatically shared with other members
+    of your organisation. 
     </p>
     <p>
-    Stories, projects and iterations are automatically shared with other members of your organisation.
+    You must give your organisation a name. It can be
+    changed later.
+    </p>
+    <p>
+    <%= f.label :name, 'Organisation name' %>
+    <%= f.text_field :name, :class => 'auto_focus' %>
     </p>
   </div>
   <fieldset>
-    <legend>Payment Plan</legend>
+    <legend>Choose Payment Plan</legend>
     <p>
-    You don't have to pay for anything just yet - a payment method can be added
-    at any time before the end of your first month.
+    Select a payment plan based on the needs of this organisation.
+    </p>
+    <p>
+    You don't have to pay for anything just yet: a payment method can be added
+    at any time before the end of the organisation's first month.
     </p>
     <p>
     For now though, let us know what you think you might use. It can be changed later.
@@ -24,13 +32,15 @@
     <ol>
       <% @payment_plans.each_with_index do |plan, idx| %>
         <li id="plan_<%= idx %>">
-        <%= f.radio_button :payment_plan_id, plan.id %>
-        <%= f.label "payment_plan_id_#{plan.id}", 
-          "#{h(plan.name)} <span class=\"numeric\">#{render_price(plan.price)}</span>" %>
+          <label for="organisation_payment_plan_id_<%= plan.id %>">
+          <%= f.radio_button :payment_plan_id, plan.id %>
+          <span class="name"><%= h plan.name %></span>
+          <span class="numeric"><%= render_price plan.price %> per month</span>
+          </label>
           <div class="description">
             <%= simple_format plan.description %>
           </div>
-          </li>
+        </li>
         <% end %>
       </ol>
     </fieldset>

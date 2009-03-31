@@ -48,6 +48,10 @@ describe Organisation do
     it "should have many users" do
       Organisation.should have_many(:users)
     end
+
+    it "should belong to a payment plan" do
+      Organisation.should belong_to(:payment_plan)
+    end
   end
 
   describe "validations" do

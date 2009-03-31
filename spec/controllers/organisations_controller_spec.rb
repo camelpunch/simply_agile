@@ -33,6 +33,12 @@ describe OrganisationsController do
     end
 
     describe "success" do
+      it "should switch to the new organisation" do
+        do_call
+        organisation = Organisation.last(:order => 'id')
+        session[:organisation_id].should == organisation.id
+      end
+
       it "should redirect to the home url" do
         do_call
         response.should redirect_to(home_url)
