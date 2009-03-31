@@ -6,6 +6,7 @@
   <p>
     Payment Plan: <%= h organisation.payment_plan.name %>,
     <%= render_price organisation.payment_plan.price %> per month
+    <%= render organisation.payment_plan %>
   </p>
   <p>
     <%= pluralize organisation.projects.count, "project" %>,

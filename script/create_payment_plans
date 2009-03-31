@@ -2,11 +2,20 @@
 script/runner -e $1 "
 PaymentPlan.create!(:name => 'Espresso',
                     :description => 'A Basic Package',
+                    :active_iteration_limit => 1,
+                    :project_limit => 3,
+                    :user_limit => 3,
                     :price => 10)
 PaymentPlan.create!(:name => 'Tall',
                     :description => 'A Medium Package',
+                    :active_iteration_limit => 10,
+                    :project_limit => 10,
+                    :user_limit => 10,
                     :price => 25)
 PaymentPlan.create!(:name => 'Grande',
                     :description => 'A Large Package',
+                    :active_iteration_limit => 50,
+                    :project_limit => 50,
+                    :user_limit => 50,
                     :price => 50)
 "

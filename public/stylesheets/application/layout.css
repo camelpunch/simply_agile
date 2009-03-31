@@ -135,8 +135,9 @@ form#new_organisation fieldset ol li label {
 form#new_organisation fieldset ol li label span { 
   display:block; clear:left
 }
-form#new_organisation fieldset ol li label span span { 
-}
+form#new_organisation fieldset ol li ul.limits { overflow:hidden }
+form#new_organisation fieldset ol li ul.limits, 
+form#new_organisation fieldset ol li div.description { margin-top:1em }
 /* end organisations/new */
 
 /* organisations/show */

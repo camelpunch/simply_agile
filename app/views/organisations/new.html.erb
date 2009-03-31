@@ -37,6 +37,7 @@
           <span class="name"><%= h plan.name %></span>
           <span class="numeric"><%= render_price plan.price %> per month</span>
           </label>
+          <%= render plan %>
           <div class="description">
             <%= simple_format plan.description %>
           </div>
