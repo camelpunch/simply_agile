@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resource :privacy_policy
   
-  map.resources :iterations
+  map.resources :iterations, :collection => { :finished => :get }
   map.resources :story_team_members
 
   map.resources :organisations do |organisation|

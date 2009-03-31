@@ -62,6 +62,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def recently_finished_iterations_worked_on(organisation)
+    iterations_worked_on.recently_finished.select do |iteration|
+      iteration.project.organisation == organisation
+    end
+  end
+
   def signup?
     signup
   end

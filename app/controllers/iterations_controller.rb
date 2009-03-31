@@ -1,6 +1,7 @@
 class IterationsController < ApplicationController
   before_filter :get_project, :except => [:index]
   before_filter :get_iterations, :only => [:index]
+  before_filter :get_finished_iterations, :only => [:finished]
   before_filter :get_iteration, :only => [:edit, :show, :update]
   before_filter :new_iteration, :only => [:new, :create]
   before_filter :get_stories, :only => [:edit, :new]
@@ -45,6 +46,10 @@ class IterationsController < ApplicationController
 
   def get_iterations
     @iterations = current_organisation.iterations.active
+  end
+
+  def get_finished_iterations
+    @iterations = current_organisation.iterations.finished
   end
 
   def get_iteration

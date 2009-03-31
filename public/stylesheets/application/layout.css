@@ -89,7 +89,8 @@ body#projects_show #iterations { min-width:250px }
 /* end projects/show */
 
 /* iterations/index */
-body#iterations_index .active { padding:45px 30px 30px 30px }
+body#iterations_index .active,
+body#iterations_finished .finished { padding:45px 30px 30px 30px }
 /* end iterations/index */
 
 /* stories/show */

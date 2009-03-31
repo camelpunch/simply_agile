@@ -239,6 +239,7 @@ describe Iteration do
     before :each do
       Iteration.destroy_all
       @active = Iterations.active_iteration
+      @recently_finished = Iterations.recently_finished_iteration
       @pending = Iterations.first_iteration
       @finished = Iterations.finished_iteration
     end
@@ -246,6 +247,12 @@ describe Iteration do
     describe "active" do
       it "should only return active iterations" do
         Iteration.active.should == [@active]
+      end
+    end
+
+    describe "recently_finished"do
+      it "should return iterations finished less than 7 days ago" do
+        Iteration.recently_finished.should == [@recently_finished]
       end
     end
 
@@ -257,7 +264,7 @@ describe Iteration do
 
     describe "finished" do
       it "should only return finished iterations" do
-        Iteration.finished.should == [@finished]
+        Iteration.finished.should == [@recently_finished, @finished]
       end
     end
   end
