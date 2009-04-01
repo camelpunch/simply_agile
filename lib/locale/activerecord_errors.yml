@@ -14,6 +14,6 @@
               blank: "email address is invalid"
       template:
         header:
-          one: "Error with {{model}}" 
-          other: "{{count}} errors with {{model}}"
+          one: "Error" 
+          other: "{{count}} errors"
         body: ""

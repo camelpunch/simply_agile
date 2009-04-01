@@ -13,7 +13,7 @@
 /* end basic layout */
 
 /* navigation */
-#navigation { height:67px; position:relative; width:24.05em }
+#navigation { height:67px; position:relative; width:30.05em }
 #header>#navigation { margin:0 auto }
 #navigation ol { position:absolute; left:0; bottom:0; height:2.5em }
 #navigation li { float:left; height:2.5em; line-height:2.5em; width:6em }
@@ -38,7 +38,7 @@
 /* breadcrumbs */
 #breadcrumbs { height:3em; padding-left:30px }
 #breadcrumbs li { float:left; margin-left:9px; padding-left:25px }
-#breadcrumbs li.organisation { margin-left:0; padding-left:0 }
+#breadcrumbs li.first-child { margin-left:0; padding-left:0 }
 /* end breadcrumbs */
 
 /* content */

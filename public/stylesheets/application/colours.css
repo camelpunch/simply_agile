@@ -11,6 +11,9 @@ body,legend { color:#333 }
 body.iterations li#nav_iterations a,
 body.projects li#nav_projects a,
 body.stories li#nav_projects a,
+body#organisations_index li#nav_account a,
+body#organisations_new li#nav_account a,
+body#organisations_create li#nav_account a,
 body.organisation_members li#nav_sharing a,
 #breadcrumbs{ background:#ff7f2a; color:#fff }
 /* end livery colours */
@@ -26,7 +29,7 @@ body.organisation_members li#nav_sharing a,
 
 #breadcrumbs { color:#333 }
 #breadcrumbs li { background:left center url(/images/arrow_small_right_orange_background.png) no-repeat }
-#breadcrumbs li.organisation { background:none }
+#breadcrumbs li.first-child { background:none }
 #breadcrumbs li a { color:#333 }
 #footer, #footer a { color:#666 }
 

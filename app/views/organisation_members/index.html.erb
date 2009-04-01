@@ -1,5 +1,8 @@
 <% content_for :title, "Sharing" %>
 <% content_for :h1, h(@organisation.name) %>
+<% content_for :breadcrumbs do %>
+  <li>Members</li>
+<% end %>
 
 <% content_for :actions do %>
   <li><%= link_to 'Change', organisations_path %></li>

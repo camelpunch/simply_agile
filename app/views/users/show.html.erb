@@ -1,0 +1,10 @@
+<% content_for :title, "Account" %>
+<% content_for :h1, "Account" %>
+<% @non_organisation = true %>
+<% content_for :breadcrumbs do %>
+  <li class="account first-child"><%= link_to 'Account', @current_user %></li>
+<% end %>
+
+<p>
+<%= link_to 'Create Organisation', new_organisation_path %>
+</p>
