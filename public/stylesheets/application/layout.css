@@ -124,7 +124,7 @@ body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
 /* organisations/index */
-body#organisations_index #content ol>li { width:50%; float:left; 
+body#organisations_index #content ol>li { width:49%; float:left; 
                                           margin-bottom:30px }
 body#organisations_index #content ol>li .section_container { margin-right:30px }
 /* end organisations/index */

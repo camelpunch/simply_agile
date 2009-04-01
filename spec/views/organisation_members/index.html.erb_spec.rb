@@ -16,6 +16,7 @@ describe "/organisation_members/index" do
                                :users => users)
     assigns[:organisation] = @organisation
     assigns[:organisation_member] = OrganisationMember.new
+    assigns[:current_user] = mock_model User
     assigns[:user] = User.new
   render 'organisation_members/index'
   end

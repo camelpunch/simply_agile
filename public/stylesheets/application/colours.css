@@ -12,9 +12,7 @@ body.active_iterations li#nav_iterations a,
 body.iterations li#nav_iterations a,
 body.projects li#nav_projects a,
 body.stories li#nav_projects a,
-body#organisations_index li#nav_account a,
-body#organisations_new li#nav_account a,
-body#organisations_create li#nav_account a,
+body.organisations li#nav_account a,
 body.organisation_members li#nav_sharing a,
 #breadcrumbs{ background:#ff7f2a; color:#fff }
 /* end livery colours */

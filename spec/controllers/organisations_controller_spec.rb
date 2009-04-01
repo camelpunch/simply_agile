@@ -8,6 +8,59 @@ describe OrganisationsController do
     @payment_plan = PaymentPlans.create_payment_plan!
   end
 
+  describe "edit" do
+    def do_call
+      get :edit, :id => @organisation.id
+    end
+
+    before :each do
+      @organisation = Organisations.create_organisation! :users => [@user]
+    end
+
+    it_should_behave_like "it's successful"
+    it_should_behave_like "it sets @current_organisation"
+
+    it "should assign the organisation" do
+      do_call
+      assigns[:organisation].should == @organisation
+    end
+  end
+
+  describe "update" do
+    def do_call
+      put :update, :id => @organisation.id,
+        :organisation => {:name => @name}
+    end
+
+    before :each do
+      @organisation = Organisations.create_organisation! :users => [@user]
+    end
+
+    it_should_behave_like "it sets @current_organisation"
+
+    describe "success" do
+      before :each do
+        @name = 'some valid name'
+      end
+
+      it "should redirect to the organisations index" do
+        do_call
+        response.should redirect_to(organisations_url)
+      end
+    end
+
+    describe "failure" do
+      before :each do
+        @name = ''
+      end
+
+      it "should re-render the edit page" do
+        do_call
+        response.should render_template('organisations/edit')
+      end
+    end
+  end
+
   describe "new" do
     def do_call
       get :new

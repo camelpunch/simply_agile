@@ -262,6 +262,11 @@ describe ApplicationController do
         controller.should_receive(:redirect_to).with(organisations_url)
         controller.send(:select_organisation)
       end
+
+      it "should provide a flash notice" do
+        controller.send(:select_organisation)
+        flash[:notice].should_not be_blank
+      end
     end
   end
 

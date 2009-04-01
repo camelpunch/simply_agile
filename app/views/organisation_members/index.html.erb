@@ -2,7 +2,9 @@
 <% content_for :h1, h(@organisation.name) %>
 <% @non_organisation = true %>
 <% content_for :breadcrumbs do %>
-  <li class="organisation first-child"><%= link_to h(@organisation), @organisation %></li>
+  <li class="account first-child"><%= link_to 'Account', @current_user %></li>
+  <li><%= link_to 'Organisations', :organisations %></li>
+  <li class="organisation"><%= h(@organisation) %></li>
   <li>Members</li>
 <% end %>
 
