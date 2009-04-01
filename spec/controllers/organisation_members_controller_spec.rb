@@ -107,7 +107,7 @@ describe OrganisationMembersController do
         @user = Users.create_user!(
           :email_address => @user_params['email_address']
         )
-        @organisation.organisation_members.create!(:user => @user)
+        @organisation.members.create!(:user => @user)
 
         @organisation_member_count = OrganisationMember.count
         do_call
@@ -130,17 +130,12 @@ describe OrganisationMembersController do
     describe "destroy" do
       def do_call
         delete :destroy, :organisation_id => @organisation.id,
-          :id => @new_user.id
+          :id => @member.id
       end
   
       before :each do
         @new_user = Users.create_user!
-        @organisation.organisation_members.create!(:user => @new_user)
-      end
-  
-      it "should assign the user" do
-        do_call
-        assigns[:user].should == @new_user
+        @member = @organisation.members.create!(:user => @new_user)
       end
   
       it "should remove the user from the organisation" do

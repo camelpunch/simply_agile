@@ -1,14 +1,10 @@
 class OrganisationMembersController < ApplicationController
+  before_filter :get_organisation
   before_filter :new_organisation_member, :only => [:index, :create]
-  before_filter :get_user, :only => [:destroy]
-
-  def index
-    @organisation = current_organisation
-  end
 
   def create
     if @organisation_member.save
-      redirect_to [current_organisation, :members]
+      redirect_to [@organisation, :members]
     else
       @organisation = current_organisation
       render :template => 'organisation_members/index'
@@ -16,12 +12,15 @@ class OrganisationMembersController < ApplicationController
   end
 
   def destroy
-    @user.organisation_members.
-      find_by_organisation_id(current_organisation.id).destroy
-    redirect_to [current_organisation, :members]
+    @organisation.members.find(params[:id]).destroy
+    redirect_to [@organisation, :members]
   end
 
   protected
+
+  def get_organisation
+    @organisation = current_user.organisations.find(params[:organisation_id])
+  end
 
   def new_organisation_member
     email_address = 
@@ -31,12 +30,8 @@ class OrganisationMembersController < ApplicationController
       end
 
     @user = User.find_or_create_by_email_address email_address
-    @organisation_member = OrganisationMember.new(:organisation => current_organisation,
+    @organisation_member = OrganisationMember.new(:organisation => @organisation,
                                                   :user => @user,
                                                   :sponsor => current_user)
-  end
-
-  def get_user
-    @user = current_organisation.users.find(params[:id])
   end
 end

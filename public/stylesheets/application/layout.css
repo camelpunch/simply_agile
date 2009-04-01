@@ -57,8 +57,10 @@ div.section>h2 { left:-13px }
 div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
     top:0; left: 0 }
 
-div.section_container { position:relative; overflow:hidden }
-div.section_container a.section { position:absolute; right:9px; top:6px }
+.section_container { position:relative; overflow:hidden }
+.section_container a.section,
+.section_container ul.section_links { position:absolute; right:9px; top:6px }
+.section_container ul.section_links li { float:left; margin-left:1em }
 /* end content */
 
 /* forms */
@@ -120,6 +122,12 @@ body#stories_backlog .javascript #content p.submit,
 body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
+
+/* organisations/index */
+body#organisations_index #content ol>li { width:50%; float:left; 
+                                          margin-bottom:30px }
+body#organisations_index #content ol>li .section_container { margin-right:30px }
+/* end organisations/index */
 
 /* organisations/new */
 form#new_organisation fieldset ol { 

@@ -240,7 +240,7 @@ describe ApplicationController do
       before :each do
         session[:organisation_id] = nil
         @alternative_organisation = Organisations.create_organisation!
-        @alternative_organisation.organisation_members.create!(
+        @alternative_organisation.members.create!(
           :user => @user
         )
         @controller.instance_variable_set("@current_user", nil)

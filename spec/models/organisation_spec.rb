@@ -4,12 +4,24 @@ describe Organisation do
   before(:each) do
     @valid_attributes = {
       :name => "value for name",
-      :payment_plan_id => 1
+      :payment_plan_id => PaymentPlans.create_payment_plan!.id
     }
   end
 
   it "should create a new instance given valid attributes" do
     Organisation.create!(@valid_attributes)
+  end
+
+  describe "default scope" do
+    before :each do
+      Organisation.delete_all
+      @b = Organisations.create_organisation! :name => 'b'
+      @a = Organisations.create_organisation! :name => 'a'
+    end
+
+    it "should order by name" do
+      Organisation.all.should == [@a, @b]
+    end
   end
 
   describe "protection" do
@@ -23,7 +35,8 @@ describe Organisation do
     end
 
     it "should allow mass-assignment of users" do
-      organisation = Organisation.create! @valid_attributes.merge(:users => [@user])
+      organisation = 
+        Organisation.create! @valid_attributes.merge(:users => [@user])
       organisation.users.should == [@user]
     end
   end
@@ -41,8 +54,8 @@ describe Organisation do
       Organisation.should have_many(:iterations)
     end
 
-    it "should have many organisation members" do
-      Organisation.should have_many(:organisation_members)
+    it "should have many members" do
+      Organisation.should have_many(:members)
     end
 
     it "should have many users" do

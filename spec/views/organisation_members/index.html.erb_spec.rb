@@ -8,7 +8,12 @@ describe "/organisation_members/index" do
       :email_address => 'user@jandaweb.com',
       :acknowledged_for? => true
     )
-    @organisation = mock_model(Organisation, :name => 'Jandaweb', :users => users)
+    members = []
+    members << mock_model(OrganisationMember, :user => users.first)
+    @organisation = mock_model(Organisation, 
+                               :name => 'Jandaweb', 
+                               :members => members,
+                               :users => users)
     assigns[:organisation] = @organisation
     assigns[:organisation_member] = OrganisationMember.new
     assigns[:user] = User.new

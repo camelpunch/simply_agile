@@ -84,5 +84,7 @@ describe OrganisationsController do
       do_call
       assigns[:organisations].should == @user.organisations
     end
+
+    it_should_behave_like "it sets @current_organisation"
   end
 end

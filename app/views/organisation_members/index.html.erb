@@ -1,11 +1,13 @@
 <% content_for :title, "Sharing" %>
 <% content_for :h1, h(@organisation.name) %>
+<% @non_organisation = true %>
 <% content_for :breadcrumbs do %>
+  <li class="organisation first-child"><%= link_to h(@organisation), @organisation %></li>
   <li>Members</li>
 <% end %>
 
 <% content_for :actions do %>
-  <li><%= link_to 'Change', organisations_path %></li>
+  <li><%= link_to 'Organisations', organisations_path %></li>
 <% end %>
 
 <div id="organisation_members" class="section_container first">
@@ -13,22 +15,22 @@
     <h2><%= h(@organisation.name) %> Members</h2>
 
     <table>
-      <% @organisation.users.each do |user| -%>
+      <% @organisation.members.each do |member| -%>
         <tr>
           <td>
-            <%= user.email_address %>
+            <%= member.user.email_address %>
           </td>
           <td class="aside">
-            <% if user == @current_user -%>
+            <% if member.user == @current_user -%>
               (you)
-            <% elsif ! user.acknowledged_for?(@current_organisation) -%>
+            <% elsif ! member.user.acknowledged_for?(@organisation) -%>
               Account is not yet acknowledged
             <% end -%>
           </td>
           <td>
-            <% unless user == @current_user -%>
+            <% if member.user != @current_user -%>
               <%= button_to "Remove from organisation",
-                organisation_member_path(@organisation, user.id),
+                organisation_member_path(@organisation, member),
                 :method => :delete %>
             <% end -%>
           </td>

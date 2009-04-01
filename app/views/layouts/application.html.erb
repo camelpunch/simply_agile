@@ -32,12 +32,12 @@
             <li id="nav_home"><%= link_to_unless_current 'Home', home_path, :accesskey => 'h' %></li>
             <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path, :accesskey => 'p' %></li>
             <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path, :accesskey => 'i' %></li>
-            <li id="nav_account"><%= link_to_unless_current 'Account', @current_user, :accesskey => 'a' %></li>
             <% if @current_organisation %>
               <li id="nav_sharing">
               <%= link_to_unless_current 'Sharing', [@current_organisation, :members], :accesskey => 's' %>
               </li>
             <% end %>
+            <li id="nav_account"><%= link_to_unless_current 'Account', @current_user, :accesskey => 'a' %></li>
           </ol>
         </div>
         <div id="breadcrumbs">

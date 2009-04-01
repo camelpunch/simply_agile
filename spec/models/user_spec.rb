@@ -199,11 +199,11 @@ describe User do
       @users_projects = []
 
       @organisation1 = Organisations.create_organisation!
-      @organisation1.organisation_members.create!(:user => @user)
+      @organisation1.members.create!(:user => @user)
       @users_projects << @organisation1.projects.create!(:name => 'project1')
 
       @organisation2 = Organisations.create_organisation!
-      @organisation2.organisation_members.create!(:user => @user)
+      @organisation2.members.create!(:user => @user)
       @users_projects << @organisation2.projects.create!(:name => 'project2')
 
       @organisation3 = Organisations.create_organisation!
@@ -405,7 +405,7 @@ describe User do
       @user = Users.create_user!
       @organisation = Organisations.create_organisation!
       @organisation_member =
-        @organisation.organisation_members.create!(:user => @user)
+        @organisation.members.create!(:user => @user)
     end
 
     it "should be false if the user does not belong to the organisation" do
@@ -431,7 +431,7 @@ describe User do
       @user = Users.create_user!
       @organisation = @sponsor.organisations.first
       @organisation_member =
-        @organisation.organisation_members.create!(
+        @organisation.members.create!(
         :user => @user,
         :sponsor => @sponsor
       )
