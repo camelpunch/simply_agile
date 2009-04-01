@@ -73,6 +73,7 @@ form p.checkbox label { display:inline; padding-left:5px }
                            margin-bottom:30px }
 body#home_show #iterations { min-width:345px }
 body#home_show #iterations div.active { padding-top:45px }
+body#home_show #recently_finished_iterations .finished ol,
 body#home_show #iterations ol { overflow:hidden }
 body#home_show #recent_work .section { padding:0 }
 body#home_show #recent_work .section>ol>li { padding:45px 30px 15px 30px }
