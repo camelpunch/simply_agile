@@ -1,6 +1,7 @@
 class OrganisationsController < ApplicationController
   skip_before_filter :select_organisation, :only => [:index, :new, :create]
   
+  before_filter :current_organisation, :only => [:new, :create]
   before_filter :get_organisations, :only => [:index]
   before_filter :get_organisation, :only => [:show]
   before_filter :new_organisation, :only => [:new, :create]

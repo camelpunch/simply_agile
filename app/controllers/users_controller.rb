@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   skip_before_filter :login_required, :only => [:new, :create]
   skip_before_filter :select_organisation
+  before_filter :current_organisation, :only => [:show]
   before_filter :new_user, :only => [:new, :create]
 
   def show

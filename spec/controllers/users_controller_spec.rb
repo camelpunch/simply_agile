@@ -32,6 +32,8 @@ describe UsersController do
       get :show, :id => Users.create_user!.id      
       response.should redirect_to(user_url(@user))
     end
+
+    it_should_behave_like "it sets @current_organisation"
   end
 
   describe "new" do

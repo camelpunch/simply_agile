@@ -22,6 +22,8 @@ describe OrganisationsController do
       do_call
       assigns[:payment_plans].first.should be_a(PaymentPlan)
     end
+
+    it_should_behave_like "it sets @current_organisation"
   end
 
   describe "create" do
@@ -31,6 +33,8 @@ describe OrganisationsController do
         :payment_plan_id => @payment_plan.id.to_s
       }.merge(params)
     end
+
+    it_should_behave_like "it sets @current_organisation"
 
     describe "success" do
       it "should switch to the new organisation" do

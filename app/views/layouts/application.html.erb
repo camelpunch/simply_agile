@@ -33,26 +33,24 @@
             <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path, :accesskey => 'p' %></li>
             <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path, :accesskey => 'i' %></li>
             <li id="nav_account"><%= link_to_unless_current 'Account', @current_user, :accesskey => 'a' %></li>
-            <li id="nav_sharing">
             <% if @current_organisation %>
+              <li id="nav_sharing">
               <%= link_to_unless_current 'Sharing', [@current_organisation, :members], :accesskey => 's' %>
-            <% else %>
-              <%= link_to 'Sharing', organisations_path, :accesskey => 's' %>
+              </li>
             <% end %>
-            </li>
           </ol>
         </div>
         <div id="breadcrumbs">
           <% breadcrumbs = yield(:breadcrumbs) %>
-          <% if @current_organisation %>
+          <% if @non_organisation %>
+            <ol>
+              <%= yield :breadcrumbs %>
+            </ol>
+          <% elsif @current_organisation %>
             <ol>
               <li class="organisation first-child">
                 <%= link_to_unless_current h(@current_organisation), home_path %>
               </li>
-              <%= yield :breadcrumbs %>
-            </ol>
-          <% elsif @non_organisation %>
-            <ol>
               <%= yield :breadcrumbs %>
             </ol>
           <% end %>
