@@ -1,5 +1,8 @@
-<li>
+<li class="organisation<%= 
+    if organisation.suspended? then ' suspended' else '' end
+  %>">
 <div class="section_container">
+  <% unless organisation.suspended? %>
   <ul class="section_links">
     <li>
     <%= link_to 'Rename', [:edit, organisation] %>
@@ -8,9 +11,11 @@
     <%= link_to 'Members', [organisation, :members] %>
     </li>
   </ul>
+  <% end %>
   <div class="section">
-    <h2><%= h organisation %></h2>
-    <% if @current_user.organisations.many? %>
+    <h2><%= h organisation %>
+      <%= if organisation.suspended? then '(suspended)' else '' end %></h2>
+    <% if !organisation.suspended? && @current_user.organisations.many? %>
       <% form_tag(session_path, :method => :put) do %>
         <%= hidden_field_tag :organisation_id, organisation.id, :id => nil %>
         <%= submit_tag "Switch to this organisation" %>

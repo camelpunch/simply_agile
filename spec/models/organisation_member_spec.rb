@@ -57,6 +57,14 @@ describe OrganisationMember do
       @organisation_member.valid?
     end
 
+    it "should require that the organisation is not suspended" do
+      organisation = Organisations.create_organisation!
+      organisation.update_attribute :suspended, true
+      @organisation_member.organisation = organisation
+      @organisation_member.valid?
+      @organisation_member.should have(1).error_on(:organisation)
+    end
+
     it "should require a user" do
       @organisation_member.should have(1).error_on(:user_id)
     end

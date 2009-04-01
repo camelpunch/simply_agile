@@ -1,5 +1,6 @@
 class OrganisationsController < ApplicationController
   skip_before_filter :select_organisation
+  skip_before_filter :prevent_suspended_organisation_access
   
   before_filter :current_organisation
   before_filter :get_organisations, :only => [:index]

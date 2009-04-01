@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :login_required
   before_filter :select_organisation
+  before_filter :prevent_suspended_organisation_access
 
   def google_analytics?
     %w(test production).include?(RAILS_ENV) && ! google_analytics_disabled
@@ -47,6 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organisation
+    return nil unless current_user
     @current_organisation ||=
       current_user.organisations.find_by_id(session[:organisation_id])
   end
@@ -75,6 +77,14 @@ class ApplicationController < ActionController::Base
       redirect_to new_organisation_url
     else
       session[:organisation_id] = current_user.organisations.first.id
+    end
+  end
+
+  def prevent_suspended_organisation_access
+    if current_organisation && current_organisation.suspended?
+      flash[:error] = "Organisation is suspended."
+      session[:organisation_id] = nil
+      redirect_to organisations_url
     end
   end
 

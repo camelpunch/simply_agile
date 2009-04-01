@@ -5,12 +5,26 @@ describe OrganisationMembersController do
     login
   end
 
+  describe "get_organisation" do
+    it "should not get suspended organisations" do
+      @organisation.update_attribute :suspended, true
+      controller.stub!(:params).and_return(:organisation_id => @organisation.id)
+      lambda {controller.send(:get_organisation)}.
+        should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe "index" do
     def do_call
       get :index, :organisation_id => @organisation.id
     end
     
     it_should_behave_like "it's successful"
+
+    it "should not require a current_organisation" do
+      controller.should_not_receive(:select_organisation)
+      do_call
+    end
 
     it "should assign the organisation" do
       do_call

@@ -67,6 +67,16 @@ describe ApplicationController do
       login
     end
 
+    describe "with no current_user set" do
+      before :each do
+        controller.stub!(:current_user).and_return(nil)
+      end
+
+      it "should return nil" do
+        controller.send(:current_organisation).should be_nil
+      end
+    end
+
     describe "with a current organisation set" do
       before :each do
         @organisation = @user.organisations.first
@@ -173,6 +183,57 @@ describe ApplicationController do
     end
   end
 
+  describe "prevent_suspended_organisation_access" do
+    before :each do
+      @organisation = mock_model(Organisation)
+      controller.stub!(:current_organisation).and_return(@organisation)
+      controller.stub!(:redirect_to)
+    end
+
+    describe "when there's no current_organisation" do
+      before :each do
+        controller.stub!(:current_organisation).and_return(nil)
+      end
+
+      it "should not barf" do
+        controller.send(:prevent_suspended_organisation_access)
+      end
+    end
+
+    describe "when suspended" do
+      before :each do
+        @organisation.stub!(:suspended?).and_return(true)
+      end
+
+      it "should redirect to organisations/index" do
+        controller.should_receive(:redirect_to).with(organisations_url)
+        controller.send(:prevent_suspended_organisation_access)
+      end
+
+      it "should provide a flash error" do
+        controller.send(:prevent_suspended_organisation_access)
+        flash[:error].should_not be_blank
+      end
+
+      it "should clear the current_organisation" do
+        session[:organisation_id] = 1
+        controller.send(:prevent_suspended_organisation_access)
+        session[:organisation_id].should be_blank
+      end
+    end
+
+    describe "when not suspended" do
+      before :each do
+        @organisation.stub!(:suspended?).and_return(false)
+      end
+
+      it "should not redirect" do
+        controller.should_not_receive(:redirect_to)
+        controller.send(:prevent_suspended_organisation_access)
+      end
+    end
+  end
+
   describe "select organisation" do
     before :each do
       @user = Users.create_user!
@@ -195,8 +256,8 @@ describe ApplicationController do
       end
 
       it "should not redirect" do
+        controller.should_not_receive(:redirect_to)
         controller.send(:select_organisation)
-        response.should_not be_redirect
       end
     end
 

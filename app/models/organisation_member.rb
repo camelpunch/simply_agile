@@ -16,6 +16,8 @@ class OrganisationMember < ActiveRecord::Base
 
   def validate
     if organisation
+      errors.add(:organisation, "is suspended") if organisation.suspended?
+
       count = self.class.count(:conditions => {:organisation_id => organisation_id})
       if count >= organisation.payment_plan.user_limit
         errors.add(:organisation, "user limit reached")

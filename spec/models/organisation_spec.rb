@@ -12,6 +12,22 @@ describe Organisation do
     Organisation.create!(@valid_attributes)
   end
 
+  describe "active" do
+    before :each do
+      @active = Organisations.create_organisation!
+      @suspended = Organisations.create_organisation!
+      @suspended.update_attribute :suspended, true
+    end
+
+    it "should not get suspended organisations" do
+      Organisation.active.should_not include(@suspended)
+    end
+
+    it "should get not-suspended organisations" do
+      Organisation.active.should include(@active)
+    end
+  end
+
   describe "default scope" do
     before :each do
       Organisation.delete_all
@@ -79,6 +95,12 @@ describe Organisation do
 
     it "should require a payment plan" do
       @organisation.should have(1).error_on(:payment_plan_id)
+    end
+
+    it "should require that the organisation is not suspended" do
+      @organisation.suspended = true
+      @organisation.valid?
+      @organisation.should have(1).error_on(:suspended)
     end
   end
 end

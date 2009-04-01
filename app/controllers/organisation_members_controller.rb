@@ -1,4 +1,5 @@
 class OrganisationMembersController < ApplicationController
+  skip_before_filter :select_organisation
   before_filter :get_organisation
   before_filter :new_organisation_member, :only => [:index, :create]
 
@@ -19,7 +20,8 @@ class OrganisationMembersController < ApplicationController
   protected
 
   def get_organisation
-    @organisation = current_user.organisations.find(params[:organisation_id])
+    @organisation = 
+      current_user.organisations.active.find(params[:organisation_id])
   end
 
   def new_organisation_member

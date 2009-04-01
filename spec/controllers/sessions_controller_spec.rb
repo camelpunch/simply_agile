@@ -95,7 +95,33 @@ describe SessionsController do
 
     it "should set the organisation_id in the session" do
       do_call
-      session[:organisation_id].should == @organisation.id.to_s
+      session[:organisation_id].should == @organisation.id
+    end
+
+    describe "when current_organisation is suspended" do
+      before :each do
+        @organisation.update_attribute :suspended, true
+      end
+
+      it "should not call the filter" do
+        controller.should_not_receive(:prevent_suspended_organisation_access)
+        do_call
+      end
+
+      it "should not set the new id" do
+        do_call
+        session[:organisation_id].should_not == @organisation.id.to_s
+      end
+
+      it "should redirect to organisations/index" do
+        do_call
+        response.should redirect_to(organisations_url)
+      end
+
+      it "should set flash error" do
+        do_call
+        flash[:error].should_not be_blank
+      end
     end
 
     describe "with redirect_to set" do

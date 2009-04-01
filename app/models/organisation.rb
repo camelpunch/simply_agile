@@ -12,7 +12,12 @@ class Organisation < ActiveRecord::Base
   validates_presence_of :payment_plan_id,
     :message => 'must be selected'
 
+  validates_exclusion_of :suspended, :in => [true]
+
   default_scope :order => 'name'
+
+  named_scope :active, 
+    :conditions => ['suspended IS NULL OR suspended = ?', false]
 
   def to_s
     name || "New Organisation"
