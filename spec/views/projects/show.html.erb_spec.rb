@@ -10,6 +10,7 @@ describe "/projects/show" do
                     :backlog => @backlog)
     @iterations = mock('Collection',
                        :empty? => true,
+                       :finished => [],
                        :active => [],
                        :pending => [])
     @project = mock_model(Project, 
