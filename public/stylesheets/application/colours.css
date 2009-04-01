@@ -8,6 +8,7 @@ body,legend { color:#333 }
 
 /* livery colours */
 #navigation li,
+body.active_iterations li#nav_iterations a,
 body.iterations li#nav_iterations a,
 body.projects li#nav_projects a,
 body.stories li#nav_projects a,

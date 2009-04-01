@@ -279,9 +279,13 @@ describe Iteration do
       end
     end
 
-    describe "recently_finished"do
+    describe "recently_finished" do
       it "should return iterations finished less than 7 days ago" do
         Iteration.recently_finished.should == [@recently_finished]
+      end
+
+      it "should not return iterations finished greater than 7 days ago" do
+        Iteration.recently_finished.should_not include(@finished)
       end
     end
 

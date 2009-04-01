@@ -35,7 +35,7 @@ class Iterations < ObjectMother
     story = Stories.create_story! :project => Projects.simply_agile!
     Iteration.create!(
       :name => 'Active Iteration',
-      :duration => 7,
+      :duration => 10,
       :project => Projects.simply_agile,
       :start_date => (Date.today - 10),
       :initial_estimate => 4,
@@ -50,7 +50,7 @@ class Iterations < ObjectMother
       :name => 'Finished Iteration',
       :duration => 7,
       :project => Projects.simply_agile,
-      :start_date => (Date.today - 30),
+      :start_date => (Date.today - 15),
       :initial_estimate => 4,
       :stories => [story]
     )
