@@ -355,6 +355,11 @@ describe Iteration do
       @iteration.should be_finished
     end
 
+    it "should be finished if finished today" do
+      @iteration.end_date = Date.today
+      @iteration.should be_finished
+    end
+
     it "should be pending if not started" do
       @iteration.should be_pending
     end

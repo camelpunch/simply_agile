@@ -102,7 +102,7 @@ class Iteration < ActiveRecord::Base
   end
 
   def finished?
-    end_date? && end_date < Date.today
+    end_date? && end_date <= Date.today
   end
 
   def burndown(width = nil)
