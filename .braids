@@ -1,50 +1,43 @@
 --- 
 vendor/plugins/jandacap: 
   squashed: true
-  url: git@git.jandaweb.com:jandacap.git
   branch: master
+  url: git@git.jandaweb.com:jandacap.git
   type: git
   revision: 166d295f668c2e2eb2088229a0205c29fc194588
   remote: braid/vendor/plugins/jandacap
-vendor/plugins/active_merchant: 
-  squashed: true
-  url: git://github.com/Shopify/active_merchant.git
-  branch: master
-  type: git
-  revision: bb84232c660a28531c0a35f14ba53fdb626d99b9
-  remote: braid/vendor/plugins/active-merchant
-vendor/plugins/objectmother: 
-  squashed: true
-  url: git://github.com/jcinnamond/objectmother.git
-  branch: master
-  type: git
-  revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
-  remote: braid/vendor/plugins/objectmother
 vendor/plugins/validates_email_format_of: 
   squashed: true
-  url: http://github.com/alexdunae/validates_email_format_of.git
   branch: master
+  url: http://github.com/alexdunae/validates_email_format_of.git
   type: git
   revision: 57baad6e4a87eea20505e8b18628390559afbf3d
   remote: braid/vendor/plugins/validates-email-format-of
+vendor/plugins/objectmother: 
+  squashed: true
+  branch: master
+  url: git://github.com/jcinnamond/objectmother.git
+  type: git
+  revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
+  remote: braid/vendor/plugins/objectmother
 vendor/plugins/no-peeping-toms: 
   squashed: true
-  url: http://github.com/pat-maddox/no-peeping-toms.git
   branch: master
+  url: http://github.com/pat-maddox/no-peeping-toms.git
   type: git
   revision: 7b7939c02ef42980afb69400fc898c59efceab18
   remote: braid/vendor/plugins/no-peeping-toms
 vendor/plugins/country_select: 
   squashed: true
-  url: git://github.com/rails/country_select.git
   branch: master
+  url: git://github.com/rails/country_select.git
   type: git
   revision: d3b5d8656df3defc1653aafe1a9bb5f0164c1741
   remote: braid/vendor/plugins/country-select
 vendor/plugins/assert_valid_xhtml: 
   squashed: true
-  url: git@git.jandaweb.com:assert_valid_xhtml.git
   branch: master
+  url: git@git.jandaweb.com:assert_valid_xhtml.git
   type: git
   revision: 7c4e0cbfd5bfecd0ce8e077498b8322cef8d46bc
   remote: braid/vendor/plugins/assert-valid-xhtml
