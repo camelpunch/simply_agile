@@ -124,12 +124,14 @@ body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
-/* organisations/index */
+/* organisations/index and payment_methods/index */
+body#payment_methods_index #content ol>li,
 body#organisations_index #content ol>li { width:49%; float:left; 
-                                          height:22em; overflow:auto;
+                                          height:23em; overflow:auto;
                                           margin-bottom:30px }
+body#payment_methods_index #content ol>li .section_container,
 body#organisations_index #content ol>li .section_container { margin-right:30px }
-/* end organisations/index */
+/* end organisations/index and payment_methods/index */
 
 /* organisations/new */
 form#new_organisation fieldset ol { 
