@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
   has_many :story_actions
   has_many :stories_worked_on, :through => :story_actions, :source => 'story'
   has_many :iterations_worked_on, :through => :story_actions, :source => 'iteration'
-
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
+  has_many :payment_methods
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address

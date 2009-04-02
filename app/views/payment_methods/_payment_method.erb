@@ -1,0 +1,21 @@
+<li class="payment_method">
+<div class="section_container">
+  <div class="section">
+    <h2><%= h payment_method.organisation %></h2>
+    <%= render payment_method.organisation.payment_plan %>
+    <p>
+    Card number: <%= payment_method.last_four_digits.to_s.rjust(4, '0').rjust(16, '*') %>
+    </p>
+    <p>
+    Expiry: 
+    <%= 
+      payment_method.expiry_month.to_s.rjust(2, '0') 
+    %>/<%= 
+      payment_method.expiry_year.to_s.rjust(2, '0') 
+    %>
+    </p>
+
+    <%= button_to 'Cancel this payment', payment_method, :method => :delete %>
+  </div>
+</div>
+</li>

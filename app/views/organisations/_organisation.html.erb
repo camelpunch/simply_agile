@@ -21,11 +21,7 @@
         <%= submit_tag "Switch to this organisation" %>
       <% end %>
     <% end %>
-    <p>
-    Payment Plan: <%= h organisation.payment_plan.name %>,
-    <%= number_to_currency organisation.payment_plan.price %> per month
     <%= render organisation.payment_plan %>
-    </p>
     <p>
     <%= pluralize organisation.projects.count, "project" %>,
     <%= pluralize organisation.stories.count, "story" %>,

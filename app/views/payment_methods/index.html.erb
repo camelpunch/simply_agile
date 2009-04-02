@@ -1,0 +1,15 @@
+<% content_for :title, 'Payments' %>
+<% content_for :h1, "Payments" %>
+<% @non_organisation = true %>
+<% content_for :breadcrumbs do %>
+  <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
+  <li>Payments</li>
+<% end %>
+
+<p>
+You are paying for the following organisations.
+</p>
+
+<ol>
+  <%= render @payment_methods %>
+</ol>

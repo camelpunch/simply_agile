@@ -62,6 +62,10 @@ describe User do
   end
 
   describe "associations" do
+    it "should have many payment_methods" do
+      User.should have_many(:payment_methods)
+    end
+
     it "should have many organisation_members" do
       User.should have_many(:organisation_members)
     end

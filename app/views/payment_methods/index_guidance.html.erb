@@ -1,13 +1,12 @@
-<% content_for :title, "Account" %>
-<% content_for :h1, "Account" %>
+<% content_for :title, "Payments" %>
+<% content_for :h1, "Payments" %>
 <% @non_organisation = true %>
 <% content_for :breadcrumbs do %>
   <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
+  <li>Payments</li>
 <% end %>
+<% body_classes << 'guidance' %>
 
 <p>
-<%= link_to 'Payments', :payment_methods %>
-</p>
-<p>
-<%= link_to 'Organisations', :organisations %>
+You are not paying for any organisation's usage.
 </p>
