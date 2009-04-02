@@ -6,6 +6,13 @@ vendor/plugins/jandacap:
   type: git
   revision: 166d295f668c2e2eb2088229a0205c29fc194588
   remote: braid/vendor/plugins/jandacap
+vendor/plugins/active_merchant: 
+  squashed: true
+  url: git://github.com/tekin/active_merchant.git
+  branch: master
+  type: git
+  revision: bb84232c660a28531c0a35f14ba53fdb626d99b9
+  remote: braid/vendor/plugins/active-merchant
 vendor/plugins/validates_email_format_of: 
   squashed: true
   branch: master
