@@ -6,13 +6,15 @@ class PaymentMethod < ActiveRecord::Base
 
   belongs_to :billing_address
   accepts_nested_attributes_for :billing_address
-
   belongs_to :user
   belongs_to :organisation
 
-  before_create :set_last_four_digits
-
   CARD_TYPES = ['mastercard', 'visa']
+
+  validates_presence_of(:repeat_payment_token)
+
+  before_create :set_last_four_digits
+  before_validation :test_payment
 
   def credit_card
     @credit_card ||= create_credit_card
@@ -29,6 +31,12 @@ class PaymentMethod < ActiveRecord::Base
       :last_name => last_name,
       :type => card_type
     )
+  end
+
+  def test_payment
+    authorisation = Authorisation.create(:payment_method => self, :amount => 100)
+    self.repeat_payment_token = authorisation.payment.reference
+    authorisation.void
   end
 
   protected

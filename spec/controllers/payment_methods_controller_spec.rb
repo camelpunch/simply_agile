@@ -3,6 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe PaymentMethodsController do
   before :each do
     login
+    stub_payment_gateway
   end
   
   describe "GET 'new'" do

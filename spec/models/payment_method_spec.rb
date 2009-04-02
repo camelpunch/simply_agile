@@ -3,16 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe PaymentMethod do
   before(:each) do
     ActiveMerchant::Billing::Base.mode = :test
-
-    @valid_attributes = {
-      :last_four_digits => 1,
-      :expiry_month => 1,
-      :expiry_year => 1
-    }
-  end
-
-  it "should create a new instance given valid attributes" do
-    PaymentMethod.create!(@valid_attributes)
+    stub_payment_gateway
   end
 
   describe "associations" do
@@ -41,6 +32,32 @@ describe PaymentMethod do
       @payment_method.last_four_digits.should == 4444
     end
   end
+
+  describe "test_payment" do
+    before :each do
+      @payment_method = PaymentMethod.new
+    end
+
+    it "should create a new authorization" do
+      authorisation_count = Authorisation.count
+      @payment_method.test_payment
+      Authorisation.count.should == authorisation_count + 1
+    end
+
+    it "should store the repeat_payment_token" do
+      @payment_method.test_payment
+      last_payment = Payment.find(:last, :order => 'id')
+      @payment_method.repeat_payment_token.should ==
+        last_payment.reference
+    end
+
+    it "should create a new void" do
+      void_count = Void.count
+      @payment_method.test_payment
+      Void.count.should == void_count + 1
+    end
+  end
+
 
   describe "card types" do
     it "should return visa and mastercard" do

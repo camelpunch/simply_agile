@@ -11,7 +11,8 @@ class PaymentMethodsController < ApplicationController
   protected
 
   def new_payment_method
-    @payment_method = @organisation.build_payment_method(params[:payment_method])
+    @payment_method = PaymentMethod.new(params[:payment_method])
+    @payment_method.organisation = @organisation
     @payment_method.build_billing_address
   end
 

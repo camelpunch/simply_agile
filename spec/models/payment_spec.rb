@@ -39,4 +39,22 @@ describe Payment do
       @payment.vendor_tx_code.should == @id
     end
   end
+
+  describe "reference" do
+    before :each do
+      @vpstxid = "{F48981C8-158B-4EFA-B8A8-635D3B7A86CE}"
+      @tx_auth_no = "5123"
+      @security_key = "08S2ZURVM4"
+      @payment = Payment.create!(
+        :vpstxid => @vpstxid,
+        :tx_auth_no => @tx_auth_no,
+        :security_key => @security_key
+      )
+    end
+
+    it "should join the vendor id, vps tx id, auth id and security key" do
+      @payment.reference.should ==
+        "#{@payment.vendor_tx_code};#{@vpstxid};#{@tx_auth_no};#{@security_key}"
+    end
+  end
 end

@@ -6,7 +6,6 @@ describe BillingAddress do
       :name => "value for name",
       :address_line_1 => "value for address_line_1",
       :address_line_2 => "value for address_line_2",
-      :address_line_3 => "value for address_line_3",
       :county => "value for county",
       :town => "value for town",
       :postcode => "value for postcode",

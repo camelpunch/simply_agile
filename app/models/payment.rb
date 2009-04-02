@@ -6,4 +6,8 @@ class Payment < ActiveRecord::Base
   def before_create
     self.vendor_tx_code ||= ActiveMerchant::Utils.generate_unique_id
   end
+
+  def reference
+    [vendor_tx_code, vpstxid, tx_auth_no, security_key].join(';')
+  end
 end
