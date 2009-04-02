@@ -21,6 +21,14 @@
     This organisation has no valid payment method.
     <%= link_to 'Update payment details', [:new, @current_organisation, :payment_method] %>.
     </p>
+      <% if @current_organisation.next_payment_date.past? %>
+        <p class="suspension">
+        Organisation will be suspended on 
+          <%= @current_organisation.next_payment_date +
+            OrganisationSuspender::GRACE_PERIOD %>
+        unless a payment method is added
+        </p>
+      <% end %>
     <% end %>
   </div>
 </div>
