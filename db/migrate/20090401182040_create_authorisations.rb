@@ -2,9 +2,9 @@ class CreateAuthorisations < ActiveRecord::Migration
   def self.up
     create_table :authorisations do |t|
       t.integer :payment_id
-      t.string :vpstxid
+      t.string :authorisation
       t.string :status
-      t.string :status_detail
+      t.text :status_detail
       t.integer :amount
 
       t.timestamps

@@ -1,6 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Authorisation do
+  before :each do
+    @payment_method = PaymentMethods.create_payment_method!
+    @credit_card = @payment_method.credit_card
+    @amount = 100
+  end
+
   describe "associations" do
     it "should belong to a payment" do
       Authorisation.should belong_to(:payment)
@@ -8,12 +14,6 @@ describe Authorisation do
   end
 
   describe "creation" do
-    before :each do
-      @payment_method = PaymentMethods.create_payment_method!
-      @credit_card = @payment_method.credit_card
-      @amount = 100
-    end
-
     def do_protx_action
       @authorisation = Authorisation.create!(
         :amount => @amount,
@@ -89,6 +89,56 @@ describe Authorisation do
         do_protx_action
         @authorisation.payment.tx_auth_no.should == "5123"
       end
+
+      it "should store the authorization" do
+        do_protx_action
+        @authorisation.authorisation.should ==
+          "2;{F48981C8-158B-4EFA-B8A8-635D3B7A86CE};5123;08S2ZURVM4"
+      end
+    end
+  end
+
+  describe "capture" do
+    before :each do
+      @authorisation = Authorisation.create!(
+        :amount => @amount,
+        :payment_method => @payment_method
+      )
+
+      stub_payment_gateway
+    end
+
+    it "should create a new capture object" do
+      capture_count = Capture.count
+      @authorisation.capture(@amount)
+      Capture.count.should == capture_count + 1
+    end
+
+    it "should associate the capture with the payment" do
+      @authorisation.capture(@amount)
+      @authorisation.payment.capture.should be_kind_of(Capture)
+    end
+  end
+
+  describe "void" do
+    before :each do
+      @authorisation = Authorisation.create!(
+        :amount => @amount,
+        :payment_method => @payment_method
+      )
+
+      stub_payment_gateway
+    end
+
+    it "should create a new void object" do
+      void_count = Void.count
+      @authorisation.void
+      Void.count.should == void_count + 1
+    end
+
+    it "should association the void with the payment" do
+      @authorisation.void
+      @authorisation.payment.void.should be_kind_of(Void)
     end
   end
 end

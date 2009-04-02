@@ -17,10 +17,26 @@ class Authorisation < ActiveRecord::Base
     self.status_detail = response.params['StatusDetail']
 
     if response.success?
+      self.authorisation = response.authorization
       payment.vpstxid = response.params['VPSTxId']
       payment.security_key = response.params['SecurityKey']
       payment.tx_auth_no = response.params['TxAuthNo']
       payment.save!
     end
+  end
+
+  def capture(amount = self.amount)
+    Capture.create(
+      :payment_id => payment.id,
+      :authorization => authorisation,
+      :amount => amount
+    )
+  end
+
+  def void
+    Void.create(
+      :payment_id => payment.id,
+      :authorization => authorisation
+    )
   end
 end

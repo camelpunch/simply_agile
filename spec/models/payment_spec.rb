@@ -14,13 +14,29 @@ describe Payment do
     Payment.create!(@valid_attributes)
   end
 
+  describe "associations" do
+    it "should have_one authorisation" do
+      Payment.should have_one(:authorisation)
+    end
+
+    it "should have_one capture" do
+      Payment.should have_one(:capture)
+    end
+
+    it "should have_one void" do
+      Payment.should have_one(:void)
+    end
+  end
+
   describe "vendor_tx_code" do
     before :each do
+      @id = "some id"
+      ActiveMerchant::Utils.should_receive(:generate_unique_id).and_return(@id)
       @payment = Payment.create!
     end
 
-    it "should be set to the current year followed by the number of payments" do
-      @payment.vendor_tx_code.should == "#{Date.today.year}-#{Payment.count}"
+    it "should use generate_unique_id from ActiveMerchant" do
+      @payment.vendor_tx_code.should == @id
     end
   end
 end
