@@ -30,6 +30,8 @@ class Organisation < ActiveRecord::Base
   end
 
   def has_payment_method_prompt?
+    return false if next_payment_date.blank?
+
     if payment_method && (payment_method.has_expired? ||
                           payment_method.has_failed?)
       true

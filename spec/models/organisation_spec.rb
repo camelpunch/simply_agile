@@ -17,21 +17,30 @@ describe Organisation do
       today = Date.today
       period = Organisation::PAYMENT_LOGIN_GRACE_PERIOD
 
-      @no_payment_before_limit = Organisations.create_organisation!
-      @no_payment_before_limit.created_at = (period-1).days.ago
+      @no_next_payment_date = Organisations.create_organisation!
+      @no_next_payment_date.created_at = (period+1).days.ago
 
-      @no_payment_after_limit = Organisations.create_organisation!
-      @no_payment_after_limit.created_at = (period+1).days.ago
+      Organisation.with_observers(:organisation_observer) do
+        @no_payment_before_limit = Organisations.create_organisation!
+        @no_payment_before_limit.created_at = (period-1).days.ago
 
-      expired_payment_method = mock_model(PaymentMethod, :has_expired? => true)
-      @expired = Organisations.create_organisation!
-      @expired.stub!(:payment_method).and_return(expired_payment_method)
+        @no_payment_after_limit = Organisations.create_organisation!
+        @no_payment_after_limit.created_at = (period+1).days.ago
 
-      failed_payment_method = mock_model(PaymentMethod, 
-                                         :has_expired? => false,
-                                         :has_failed? => true)
-      @failed = Organisations.create_organisation!
-      @failed.stub!(:payment_method).and_return(failed_payment_method)
+        expired_payment_method = mock_model(PaymentMethod, :has_expired? => true)
+        @expired = Organisations.create_organisation!
+        @expired.stub!(:payment_method).and_return(expired_payment_method)
+
+        failed_payment_method = mock_model(PaymentMethod, 
+                                           :has_expired? => false,
+                                           :has_failed? => true)
+        @failed = Organisations.create_organisation!
+        @failed.stub!(:payment_method).and_return(failed_payment_method)
+      end
+    end
+
+    it "should not prompt if there is no next_payment_date but is after period" do
+      @no_next_payment_date.should_not have_payment_method_prompt
     end
 
     it "should not prompt if there is no payment method before PAYMENT_LOGIN_GRACE_PERIOD days" do
