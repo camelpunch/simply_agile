@@ -25,8 +25,8 @@ describe OrganisationSuspender do
       @one_day_past.reload.should be_suspended 
     end
 
-    it "should not suspend organisations at start of grace period" do
-      @at_start.reload.should_not be_suspended 
+    it "should suspend organisations exactly GRACE_PERIOD days ago" do
+      @at_start.reload.should be_suspended 
     end
 
     it "should not suspend organisations inside grace period" do
