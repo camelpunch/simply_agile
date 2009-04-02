@@ -2,14 +2,25 @@ require File.join(File.dirname(__FILE__), 'organisations')
 class Projects < ObjectMother
   truncate_project
 
-  def self.project_prototype
-    {
-      :name => 'protototo'
-    }
-  end
+  class << self
+    extend ActiveSupport::Memoizable
 
-  define_project(:simply_agile, 
-                 :name => 'Simply Agile',
-                 :organisation => Organisations.jandaweb)
+    def create_project!(attributes = {})
+      project = Project.new({:name => 'protototo'}.merge(attributes))
+      project.organisation = attributes[:organisation] || Organisations.create_organisation!
+      project.save!
+      project
+    end
+
+    def simply_agile
+      project = Project.new(:name => 'Simply Agile')
+      project.organisation = Organisations.jandaweb!
+      project.save!
+      project
+    end
+    memoize :simply_agile
+
+    alias :simply_agile! :simply_agile
+  end
 
 end

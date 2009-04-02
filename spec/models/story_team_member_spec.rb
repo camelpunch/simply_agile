@@ -34,11 +34,12 @@ describe StoryTeamMember do
       @story_team_member = StoryTeamMember.new
       @story_team_member.valid?
 
-      @project = Projects.create_project
-      @organisation1 = Organisations.create_organisation :projects => [@project]
-      @organisation2 = Organisations.create_organisation
-      @user = Users.create_user :organisations => [@organisation2]
-      @story = Stories.create_story :project => @project
+      @project = Projects.create_project!
+      @organisation1 = Organisations.create_organisation!
+      @organisation1.projects = [@project]
+      @organisation2 = Organisations.create_organisation!
+      @user = Users.create_user! :organisations => [@organisation2]
+      @story = Stories.create_story! :project => @project
     end
 
     it "should require a user" do
@@ -50,7 +51,7 @@ describe StoryTeamMember do
     end
 
     it "should require that story and user are a unique combination" do
-      @user.organisations << @organisation1
+      @user.organisations << @story.project.organisation
       @story_team_member.user = @user
       @story_team_member.story = @story
       @story_team_member.save!

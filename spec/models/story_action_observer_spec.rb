@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe StoryActionObserver do
   before :each do
     @user = Users.create_user!
-    @project = Projects.create_project(:organisation => @user.organisations.first)
+    @project = Projects.create_project!(:organisation => @user.organisations.first)
     @story = Stories.create_story!(:project => @project)
     @iteration = Iterations.create_iteration!(
       :stories => [@story],

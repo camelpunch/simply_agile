@@ -2,7 +2,6 @@ class User < ActiveRecord::Base
   include TokenGeneration
 
   attr_accessor :password
-  attr_accessor :organisation_name
   attr_accessor :signup
 
   has_many :story_team_members
@@ -16,8 +15,6 @@ class User < ActiveRecord::Base
 
   validates_email_format_of :email_address
   validates_uniqueness_of :email_address
-  validates_presence_of :organisation_name, :on => :create,
-    :if => lambda { |user| user.signup? && user.organisations.empty? }
   validates_presence_of :password, :if => :password_required?
 
   default_scope :order => 'email_address'
@@ -34,10 +31,6 @@ class User < ActiveRecord::Base
       self.verify_by ||= Date.today + DAYS_UNTIL_UNVERIFIED
     else
       self.verified = true
-    end
-
-    if (organisation_name)
-      self.organisations.create!(:name => organisation_name)
     end
   end
 

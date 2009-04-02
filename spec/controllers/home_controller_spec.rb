@@ -38,7 +38,9 @@ describe HomeController do
 
         @user.story_actions.create!(:story => @story, :iteration => @iteration)
 
-        @other_organisation = @user.organisations.create!(:name => 'other')
+        @other_organisation = 
+          @user.organisations.create!(:name => 'other', 
+                                      :payment_plan_id => PaymentPlans.create_payment_plan!.id)
         @other_project = @other_organisation.projects.create!(:name => 'active')
         @other_story = Stories.create_story!(:project => @other_project)
         @other_iteration = Iterations.create_iteration!(

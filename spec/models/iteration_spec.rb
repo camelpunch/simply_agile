@@ -13,7 +13,7 @@ describe Iteration do
 
   it "should create a new instance given valid attributes" do
     iteration = Iteration.new
-    iteration.project_id = 1
+    iteration.project_id = Projects.create_project!.id
     iteration.update_attributes!(@valid_attributes)
   end
 
@@ -61,7 +61,7 @@ describe Iteration do
 
   describe "default name" do
     it "should use a default name if none is assigned" do
-      project = Project.create(:name => "woo")
+      project = Projects.create_project!(:name => "woo")
       iteration = project.iterations.build
       iteration.name.should == "Iteration #{project.iterations.count + 1}"
     end
@@ -78,7 +78,7 @@ describe Iteration do
     it "should prevent project_id from being mass-assigned" do
       iteration = Iteration.new(:name => 'asdf',
         :duration => 1,
-        :project_id => 132)
+        :project_id => Projects.create_project!.id)
       iteration.project_id.should be_blank
     end
   end
@@ -134,6 +134,35 @@ describe Iteration do
     it "should require some stories" do
       @iteration.errors.on(:stories).should_not be_nil
     end
+
+    describe "limiting" do
+      before :each do
+        Project.delete_all
+        Iteration.delete_all
+        @project = Projects.create_project!
+        @limit = @project.organisation.payment_plan.active_iteration_limit
+
+        @create = lambda {
+          Iteration.create!(@valid_attributes.
+                            merge(:start_date => Date.today, # active
+                                  :project => @project))
+        }
+      end
+
+      it "should require free active iteration slots in the organisation" do
+        @limit.times { |i| @create.call }
+        @create.should raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it "should allow unlimited planned iterations" do
+        @limit.times { |i| @create.call }
+        lambda { 
+          Iteration.create!(@valid_attributes.
+                            merge(:start_date => nil,
+                                  :project => @project))
+        }.should_not raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 
   describe "setting the duration after the start date" do
@@ -148,7 +177,7 @@ describe Iteration do
   describe "story points" do
     before :each do
       project = Projects.simply_agile
-      @iteration = Iterations.create_iteration(:project => project)
+      @iteration = Iterations.create_iteration!(:project => project)
 
       @stories = []
       @estimate = 0
@@ -250,9 +279,13 @@ describe Iteration do
       end
     end
 
-    describe "recently_finished"do
+    describe "recently_finished" do
       it "should return iterations finished less than 7 days ago" do
         Iteration.recently_finished.should == [@recently_finished]
+      end
+
+      it "should not return iterations finished greater than 7 days ago" do
+        Iteration.recently_finished.should_not include(@finished)
       end
     end
 
@@ -264,7 +297,7 @@ describe Iteration do
 
     describe "finished" do
       it "should only return finished iterations" do
-        Iteration.finished.should == [@recently_finished, @finished]
+        Iteration.finished.sort.should == [@recently_finished, @finished].sort
       end
     end
   end
@@ -319,6 +352,11 @@ describe Iteration do
 
     it "should be finished if finished" do
       @iteration.end_date = 2.days.ago
+      @iteration.should be_finished
+    end
+
+    it "should be finished if finished today" do
+      @iteration.end_date = Date.today
       @iteration.should be_finished
     end
 

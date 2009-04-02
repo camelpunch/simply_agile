@@ -114,6 +114,15 @@ Spec::Runner.configure do |config|
       do_call
     end
   end
+
+  describe "it sets @current_organisation", :shared => true do
+    it "should set the organisation" do
+      organisation = @user.organisations.first
+      session[:organisation_id] = organisation.id
+      do_call
+      assigns[:current_organisation].should == organisation
+    end
+  end
 end
 
 class ActiveRecord::Base

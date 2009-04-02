@@ -1,18 +1,21 @@
 <% content_for :title, "Organisations" %>
 <% content_for :h1, "Organisations" %>
+<% @non_organisation = true %>
+<% content_for :breadcrumbs do %>
+  <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
+  <li>Organisations</li>
+<% end %>
+<% content_for :actions do %>
+  <li><%= link_to 'New', new_organisation_path %></li>
+<% end %>
 
 <% if @organisations.empty? -%>
-  <h2>Oh dear. You have no organisations.</h2>
+  <h2>You have no organisations.</h2>
   <p>
-    At some point you will be able to sign up for a new plan from here.
+  <%= link_to 'New Organisation', new_organisation_path %>
   </p>
 <% else -%>
-  <div class="section_container first">
-    <div class="section">
-      <h2>Change Organisation</h2>
-      <ul>
-        <%= render @organisations %>
-      </ul>
-    </div>
-  </div>
+  <ol>
+    <%= render @organisations %>
+  </ol>
 <% end -%>

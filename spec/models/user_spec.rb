@@ -3,6 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe User do
   before(:each) do
     @user = User.new
+    @valid_attributes = {
+      :email_address => "user#{User.count}@jandaweb.com",
+    }
   end
 
   it "should create a new instance given valid attributes" do
@@ -79,7 +82,10 @@ describe User do
   describe "worked on" do
     before :each do
       @user = Users.create_user!
-      @project = Projects.create_project!
+
+      @organisation = Organisations.create_organisation! :user => @user
+
+      @project = Projects.create_project! :organisation => @organisation
 
       @worked_on_story = Stories.create_story!(:project => @project)
       @iteration = Iterations.create_iteration!(
@@ -113,7 +119,9 @@ describe User do
         :stories => [@unworked_on_story]
       )
 
-      @other_organisation = @user.organisations.create!(:name => 'other')
+      @other_organisation = @user.organisations.
+        create!(:name => 'other', 
+                :payment_plan_id => @organisation.payment_plan.id)
       @other_project = @other_organisation.projects.create!(:name => 'other')
       @other_story = Stories.create_story!(:project => @project)
       @other_iteration = Iterations.create_iteration!(
@@ -214,11 +222,11 @@ describe User do
       @users_projects = []
 
       @organisation1 = Organisations.create_organisation!
-      @organisation1.organisation_members.create!(:user => @user)
+      @organisation1.members.create!(:user => @user)
       @users_projects << @organisation1.projects.create!(:name => 'project1')
 
       @organisation2 = Organisations.create_organisation!
-      @organisation2.organisation_members.create!(:user => @user)
+      @organisation2.members.create!(:user => @user)
       @users_projects << @organisation2.projects.create!(:name => 'project2')
 
       @organisation3 = Organisations.create_organisation!
@@ -244,12 +252,6 @@ describe User do
       before(:each) do
         @user = User.new(Users.user_prototype)
         @user.signup = true
-      end
-
-      it "should create a new organisation for the user" do
-        @user.organisation_name = 'New Organisation'
-        @user.save
-        Organisation.find_by_name('New Organisation').should_not be_nil
       end
 
       it "should encrypt the password" do
@@ -291,7 +293,7 @@ describe User do
       User.delete_all
       @user = User.new(Users.user_prototype)
     end
-    
+
     describe "email address" do
       before :each do
         @user.email_address = nil
@@ -426,7 +428,7 @@ describe User do
       @user = Users.create_user!
       @organisation = Organisations.create_organisation!
       @organisation_member =
-        @organisation.organisation_members.create!(:user => @user)
+        @organisation.members.create!(:user => @user)
     end
 
     it "should be false if the user does not belong to the organisation" do
@@ -452,7 +454,7 @@ describe User do
       @user = Users.create_user!
       @organisation = @sponsor.organisations.first
       @organisation_member =
-        @organisation.organisation_members.create!(
+        @organisation.members.create!(
         :user => @user,
         :sponsor => @sponsor
       )

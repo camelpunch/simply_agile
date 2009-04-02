@@ -1,34 +1,39 @@
 class OrganisationMembersController < ApplicationController
-  before_filter :get_or_create_user, :only => [:create]
-  before_filter :get_user, :only => [:destroy]
+  skip_before_filter :select_organisation
+  before_filter :get_organisation
+  before_filter :new_organisation_member, :only => [:index, :create]
 
   def create
-    unless @user.new_record? || @user.organisations.include?(current_organisation)
-      current_organisation.organisation_members.create!(
-        :user => @user,
-        :sponsor => @current_user
-      )
-      redirect_to current_organisation
+    if @organisation_member.save
+      redirect_to [@organisation, :members]
     else
       @organisation = current_organisation
-      render :template => 'organisations/show'
+      render :template => 'organisation_members/index'
     end
   end
 
   def destroy
-    @user.organisation_members.
-      find_by_organisation_id(current_organisation.id).destroy
-    redirect_to organisation_url
+    @organisation.members.find(params[:id]).destroy
+    redirect_to [@organisation, :members]
   end
 
   protected
 
-  def get_or_create_user
-    @user = User.find(:first, :conditions => params[:user])
-    @user ||= User.create(params[:user])
+  def get_organisation
+    @organisation = 
+      current_user.organisations.active.find(params[:organisation_id])
   end
 
-  def get_user
-    @user = current_organisation.users.find(params[:id])
+  def new_organisation_member
+    email_address = 
+      if params[:organisation_member]
+        then params[:organisation_member].delete(:email_address)
+      else ''
+      end
+
+    @user = User.find_or_create_by_email_address email_address
+    @organisation_member = OrganisationMember.new(:organisation => @organisation,
+                                                  :user => @user,
+                                                  :sponsor => current_user)
   end
 end

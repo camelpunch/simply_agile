@@ -5,18 +5,53 @@ describe OrganisationMembersController do
     login
   end
 
+  describe "get_organisation" do
+    it "should not get suspended organisations" do
+      @organisation.update_attribute :suspended, true
+      controller.stub!(:params).and_return(:organisation_id => @organisation.id)
+      lambda {controller.send(:get_organisation)}.
+        should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "index" do
+    def do_call
+      get :index, :organisation_id => @organisation.id
+    end
+    
+    it_should_behave_like "it's successful"
+
+    it "should not require a current_organisation" do
+      controller.should_not_receive(:select_organisation)
+      do_call
+    end
+
+    it "should assign the organisation" do
+      do_call
+      assigns[:organisation].should == @organisation
+    end
+
+    it "should assign a new organisation member" do
+      do_call
+      assigns[:organisation_member].should be_kind_of(OrganisationMember)
+      assigns[:organisation_member].should be_new_record
+    end
+  end
+
   describe "create" do
     def do_call
-      post :create, :organisation_id => @organisation.id, :user => @user_params
+      post(:create, 
+           :organisation_id => @organisation.id, 
+           :organisation_member => @user_params)
     end
 
     before :each do
       @user_params = { "email_address" => 'user@jandaweb.com' }
     end
 
-    it "should redirect to the organisation page" do
+    it "should redirect to the organisation members page" do
       do_call
-      response.should redirect_to(organisation_url(@organisation))
+      response.should redirect_to(organisation_members_url(@organisation))
     end
 
     describe "with an existing user" do
@@ -81,32 +116,12 @@ describe OrganisationMembersController do
       end
     end
 
-    describe "with invalid user details" do
-      before :each do
-        @user_params = {'email_address' => ''}
-        @organisation_member_count = OrganisationMember.count
-        do_call
-      end
-
-      it "should not create a new organisaiton member" do
-        OrganisationMember.count.should == @organisation_member_count
-      end
-
-      it "should display the 'show' page" do
-        response.should render_template('organisations/show')
-      end
-
-      it "should assign the organisation" do
-        assigns[:organisation].should == @organisation
-      end
-    end
-
-    describe "when a user is already a member of the organisation" do
+    describe "when a member creation fails" do
       before :each do
         @user = Users.create_user!(
           :email_address => @user_params['email_address']
         )
-        @organisation.organisation_members.create!(:user => @user)
+        @organisation.members.create!(:user => @user)
 
         @organisation_member_count = OrganisationMember.count
         do_call
@@ -116,8 +131,12 @@ describe OrganisationMembersController do
         OrganisationMember.count.should == @organisation_member_count
       end
 
-      it "should display the 'show' page" do
-        response.should render_template('organisations/show')
+      it "should display the 'index' page" do
+        response.should render_template('organisation_members/index')
+      end
+
+      it "should assign the organisation member" do
+        assigns[:organisation_member].should be_an(OrganisationMember)
       end
     end
   end
@@ -125,17 +144,12 @@ describe OrganisationMembersController do
     describe "destroy" do
       def do_call
         delete :destroy, :organisation_id => @organisation.id,
-          :id => @new_user.id
+          :id => @member.id
       end
   
       before :each do
         @new_user = Users.create_user!
-        @organisation.organisation_members.create!(:user => @new_user)
-      end
-  
-      it "should assign the user" do
-        do_call
-        assigns[:user].should == @new_user
+        @member = @organisation.members.create!(:user => @new_user)
       end
   
       it "should remove the user from the organisation" do
@@ -144,9 +158,9 @@ describe OrganisationMembersController do
         @new_user.organisations.should_not include(@organisation)
       end
   
-      it "should redirect to the organisation page" do
+      it "should redirect to the organisation members page" do
         do_call
-        response.should redirect_to(organisation_url)
+        response.should redirect_to(organisation_members_url(@organisation))
       end
     end
 end

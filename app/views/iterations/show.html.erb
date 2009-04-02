@@ -8,6 +8,15 @@
   <li class="iteration"><%= h @iteration %></li>
 <% end %>
 
+<% form_for(@iteration, 
+            :url => iteration_active_iteration_path(@iteration),
+            :html => {:method => :post}) do |f| %>
+  <p class="submit">
+  <%= f.submit 'Start Iteration' %>
+  </p>
+  <%= f.error_messages %>
+<% end %>
+
 <div class="section_container">
 <div class="section">
 <h2>Stories</h2>
@@ -26,6 +35,3 @@
 </div>
 </div>
 
-<p>
-  <%= button_to "Start", iteration_active_iteration_path(@iteration) %>
-</p>

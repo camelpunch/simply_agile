@@ -1,0 +1,12 @@
+"en-GB":
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 2
+
+    currency:
+      format: 
+        format: "%u%n"
+        unit: "£"
+        precision: 0
