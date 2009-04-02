@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
       hash_password(password))
   end
 
+  def has_verification_prompt?
+    !verified? && created_at < 1.day.ago
+  end
+
   def projects
     organisations.find(:all, :include => :projects).collect(&:projects).flatten
   end

@@ -1,5 +1,8 @@
+<% if ((verification_prompt = @current_user.has_verification_prompt?) || 
+       (payment_method_prompt = @current_organisation && @current_organisation.has_payment_method_prompt?)) %>
 <div class="important_message">
   <div>
+    <% if verification_prompt %>
     <p>
     Please check your email for account verification details.
     <%= link_to "Enter verification token", new_user_verification_path(@current_user) %>
@@ -11,5 +14,14 @@
       <%= @current_user.verify_by.to_s(:default) %>, your account will be disabled.
       </p>
     <% end -%>
+    <% end %>
+
+    <% if payment_method_prompt %>
+    <p>
+    This organisation has no valid payment method.
+    <%= link_to 'Update payment details', [:new, @current_organisation, :payment_method] %>.
+    </p>
+    <% end %>
   </div>
 </div>
+<% end %>

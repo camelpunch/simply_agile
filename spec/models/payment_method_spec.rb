@@ -29,7 +29,7 @@ describe PaymentMethod do
     end
   end
 
-  describe "expired?" do
+  describe "has_expired?" do
     before :each do
       today = Date.today
       @before = PaymentMethods.create_payment_method!(

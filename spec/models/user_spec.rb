@@ -9,6 +9,29 @@ describe User do
     Users.create_user!
   end
 
+  describe "prompting for verification" do
+    before :each do
+      @prompt = Users.create_user! :created_at => 25.hours.ago
+      @no_prompt = Users.create_user!
+      @no_prompt_2 = Users.create_user! :created_at => 23.hours.ago
+
+      @prompt.update_attribute :verified, false
+      @no_prompt_2.update_attribute :verified, false
+    end
+
+    it "should prompt unverified users created at least a day ago" do
+      @prompt.should have_verification_prompt
+    end
+
+    it "should not prompt verified users" do
+      @no_prompt.should_not have_verification_prompt
+    end
+
+    it "should not prompt unverified users created less than a day ago" do
+      @no_prompt_2.should_not have_verification_prompt
+    end
+  end
+
   describe "find_by_email_address_and_password" do
     def do_call
       User.find_by_email_address_and_password(@email_address, @password)
