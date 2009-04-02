@@ -260,7 +260,7 @@ module ActiveMerchant #:nodoc:
         parameters.update(
           :Vendor => @options[:login],
           :TxType => TRANSACTIONS[action],
-          :VPSProtocol => "2.22"
+          :VPSProtocol => "2.23"
         )
         
         parameters.collect { |key, value| "#{key}=#{CGI.escape(value.to_s)}" }.join("&")

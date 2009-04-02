@@ -1,0 +1,18 @@
+--- !ruby/object:ActiveMerchant::Billing::Response 
+authorization: 2;;;
+avs_result: 
+  code: 
+  postal_match: 
+  street_match: 
+  message: 
+cvv_result: 
+  code: 
+  message: 
+fraud_review: 
+message: Success
+params: 
+  Status: OK
+  StatusDetail: The transaction was RELEASEed successfully.
+  VPSProtocol: "2.23"
+success: true
+test: false

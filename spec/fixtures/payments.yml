@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  organisation_id: 1
+  vpstxid: MyString
+  security_key: MyString
+  vendor_tx_code: MyString
+
+two:
+  organisation_id: 1
+  vpstxid: MyString
+  security_key: MyString
+  vendor_tx_code: MyString

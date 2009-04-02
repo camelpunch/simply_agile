@@ -12,6 +12,7 @@ class PaymentMethodsController < ApplicationController
 
   def new_payment_method
     @payment_method = @organisation.build_payment_method(params[:payment_method])
+    @payment_method.build_billing_address
   end
 
   def get_organisation

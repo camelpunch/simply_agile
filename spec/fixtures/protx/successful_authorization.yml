@@ -1,0 +1,25 @@
+--- !ruby/object:ActiveMerchant::Billing::Response 
+authorization: 2;{F48981C8-158B-4EFA-B8A8-635D3B7A86CE};5123;08S2ZURVM4
+avs_result: 
+  code: 
+  postal_match: Y
+  street_match: N
+  message: 
+cvv_result: 
+  code: Y
+  message: 
+fraud_review: 
+message: Success
+params: 
+  Status: OK
+  SecurityKey: 08S2ZURVM4
+  AVSCV2: SECURITY CODE MATCH ONLY
+  VPSTxId: "{F48981C8-158B-4EFA-B8A8-635D3B7A86CE}"
+  StatusDetail: VSP Direct transaction from VSP Simulator.
+  TxAuthNo: "5123"
+  VPSProtocol: "2.23"
+  AddressResult: NOTMATCHED
+  PostCodeResult: MATCHED
+  CV2Result: MATCHED
+success: true
+test: false

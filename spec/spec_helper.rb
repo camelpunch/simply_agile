@@ -5,6 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'spec'
 require 'spec/rails'
 require File.join(File.dirname(__FILE__), 'matchers', 'association_matchers')
+require File.join(File.dirname(__FILE__), 'billing_helper')
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these

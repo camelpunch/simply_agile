@@ -1,4 +1,9 @@
 <p>
+  <%= form.label :card_type%>
+  <%= form.collection_select :card_type, PaymentMethod::CARD_TYPES, :to_s, :humanize %>
+</p>
+
+<p>
   <%= form.label :cardholder_name %>
   <%= form.text_field :cardholder_name %>
 </p>
@@ -12,4 +17,9 @@
   <%= form.label :expiry_month, "Expiry date" %>
   <%= form.text_field :expiry_month, :size => 2 %>
   <%= form.text_field :expiry_year, :size => 2 %>
+</p>
+
+<p>
+  <%= form.label :cv2, "Security Code" %>
+  <%= form.text_field :cv2, :size => 3 %>
 </p>
