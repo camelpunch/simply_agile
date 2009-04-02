@@ -4,7 +4,7 @@ class PaymentMethodsController < ApplicationController
 
   def create
     if @payment_method.save
-      redirect_to [@current_organisation, @payment_method]
+      redirect_to [@current_organisation, :payment_method]
     end
   end
 

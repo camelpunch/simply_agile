@@ -264,7 +264,7 @@ describe Iteration do
 
     describe "finished" do
       it "should only return finished iterations" do
-        Iteration.finished.should == [@recently_finished, @finished]
+        Iteration.finished.sort.should == [@recently_finished, @finished].sort
       end
     end
   end

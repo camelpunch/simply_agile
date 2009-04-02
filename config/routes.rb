@@ -7,7 +7,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :organisations do |organisation|
     organisation.resources :members, :controller => 'organisation_members'
-    organisation.resources :payment_methods
+    organisation.resource :payment_method
   end
 
   map.resources :stories, :except => :index
