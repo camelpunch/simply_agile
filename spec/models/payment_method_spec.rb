@@ -29,6 +29,38 @@ describe PaymentMethod do
     end
   end
 
+  describe "expired?" do
+    before :each do
+      today = Date.today
+      @before = PaymentMethods.create_payment_method!(
+        :expiry_month => today.month - 1,
+        :expiry_year => today.year
+      )
+
+      @this_month = PaymentMethods.create_payment_method!(
+        :expiry_month => today.month,
+        :expiry_year => today.year
+      )
+
+      @future = PaymentMethods.create_payment_method!(
+        :expiry_month => today.month + 1,
+        :expiry_year => today.year
+      )
+    end
+
+    it "should be set if expiry month is before this month" do
+      @before.should have_expired
+    end
+
+    it "should not be set if expiry month is this month" do
+      @this_month.should_not have_expired
+    end
+
+    it "should not be set if expiry month is in the future" do
+      @future.should_not have_expired
+    end
+  end
+
   describe "creation" do
     before :each do
       @payment_method = PaymentMethods.create_payment_method!(
