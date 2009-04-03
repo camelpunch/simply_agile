@@ -64,7 +64,7 @@ div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
 /* end content */
 
 /* forms */
-form p label { display:block }
+form p label { display:block; width:10em; float:left; line-height:1.5em }
 form p.checkbox label { display:inline; padding-left:5px }
 /* end forms */
 
@@ -154,6 +154,10 @@ form#new_organisation fieldset ol li div.description { margin-top:1em }
 body #organisation_members.section_container { min-width:645px }
 body #organisation_members .section table { width:100% }
 /* end organisations/show */
+
+/* payment_methods/new */
+#payment_method_billing_address_attributes_country { width:19em }
+/* end payment_methods/new */
 
 /* sessions/new */
 #existing_users { float: left; width: 55%; }

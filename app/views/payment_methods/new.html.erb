@@ -2,18 +2,7 @@
 <% content_for :h1, "Pay for #{h @current_organisation.name}" %>
 
 <% form_for @payment_method, :url => [@organisation, :payment_method] do |form| -%>
-
-  <div id="payment_details" class="section_container first">
-    <div class="section">
-      <h2>Payment Details</h2>
-      <%= render form %>
-      <p class="submit">
-        <%= form.submit "Create" %>
-      </p>
-    </div>
-  </div>
-
-  <div id="billing_address" class="section_container">
+  <div id="billing_address" class="section_container first">
     <div class="section">
       <h2>Billing Address</h2>
       <% form.fields_for :billing_address do |billing_address_form|  %>
@@ -22,4 +11,15 @@
       <% end -%>
     </div>
   </div>
+
+  <div id="payment_details" class="section_container">
+    <div class="section">
+      <h2>Card Details</h2>
+      <%= render form %>
+    </div>
+  </div>
+
+  <p class="submit">
+  <%= form.submit "Save Payment Details" %>
+  </p>
 <% end -%>
