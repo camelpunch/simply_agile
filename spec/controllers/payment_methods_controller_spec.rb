@@ -28,6 +28,19 @@ describe PaymentMethodsController do
         assigns[:payment_method].organisation.should == @organisation
       end
     end
+
+    describe "billing address" do
+      it "should be assigned" do
+        do_call
+        assigns[:payment_method].billing_address.should_not be_blank
+      end
+
+      it "should have the country set to UK" do
+        do_call
+        assigns[:payment_method].billing_address.country.
+          should == "United Kingdom"
+      end
+    end
   end
 
   describe "post create" do
