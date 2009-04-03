@@ -2,6 +2,8 @@ class PaymentNotDueException < StandardError; end
 class NoPaymentMethod < StandardError; end
 
 class Organisation < ActiveRecord::Base
+  include RepeatBilling
+  
   PAYMENT_LOGIN_GRACE_PERIOD = 7 # days
 
   has_many :projects
@@ -27,6 +29,13 @@ class Organisation < ActiveRecord::Base
 
   named_scope :active, 
     :conditions => ['suspended IS NULL OR suspended = ?', false]
+
+  named_scope :payment_due,
+    :conditions => ['next_payment_date <= ?', Date.today]
+
+  def self.billable
+    payment_due.active.delete_if { |o| o.payment_method.nil? }
+  end
 
   def to_s
     name.to_s || "New Organisation"

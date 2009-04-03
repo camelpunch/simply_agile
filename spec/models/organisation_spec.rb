@@ -32,8 +32,8 @@ describe Organisation do
         @expired.stub!(:payment_method).and_return(expired_payment_method)
 
         failed_payment_method = mock_model(PaymentMethod, 
-                                           :has_expired? => false,
-                                           :has_failed? => true)
+          :has_expired? => false,
+          :has_failed? => true)
         @failed = Organisations.create_organisation!
         @failed.stub!(:payment_method).and_return(failed_payment_method)
       end
@@ -166,8 +166,12 @@ describe Organisation do
 
       @payment_method = PaymentMethod.create!(
         :organisation => @organisation,
-        :expiry_month => Date.today.month,
-        :expiry_year => Date.today.year + 1,
+        :number => '4242424242424242',
+        :card_type => 'visa',
+        :verification_value => '123',
+        :cardholder_name => 'Joe Bloggs',
+        :month => Date.today.month,
+        :year => Date.today.year + 1,
         :repeat_payment_token => @token
       )
     end
@@ -276,6 +280,69 @@ describe Organisation do
         UserMailer.should_receive(:deliver_payment_failure).with(@organisation)
         @organisation.take_payment
       end
+    end
+
+    describe "billable" do
+      before :each do
+        @payment_methods = []
+        3.times do
+          @payment_methods << PaymentMethod.create!(
+            :last_four_digits => '1234',
+            :user => @user,
+            :number => '4242424242424242',
+            :card_type => 'visa',
+            :verification_value => '123',
+            :cardholder_name => 'Joe Bloggs',
+            :month => Date.today.month,
+            :year => Date.today.year + 1,
+            :organisation => @organisation
+          )
+        end
+
+        @billable_organisation = Organisations.create_organisation!
+        @billable_organisation.update_attribute(:next_payment_date, Date.today)
+        @payment_methods[0].update_attributes(
+          :organisation => @billable_organisation
+        )
+
+        @not_due_organisation = Organisations.create_organisation!
+        @not_due_organisation.update_attribute(:next_payment_date, Date.tomorrow)
+        @payment_methods[1].update_attributes(
+          :organisation => @not_due_organisation
+        )
+
+        @organisation_without_payment = Organisations.create_organisation!
+        @organisation_without_payment.update_attribute(
+          :next_payment_date, Date.today
+        )
+
+        @suspended_organisation = Organisations.create_organisation!
+        @suspended_organisation.update_attribute(:next_payment_date, Date.today)
+        @suspended_organisation.update_attribute(:suspended, true)
+        @payment_methods[2].update_attributes(
+          :organisation => @suspended_organisation
+        )
+      end
+
+      it "should return organisations due for payment" do
+        Organisation.billable.should include(@billable_organisation)
+      end
+
+      it "should not return organisations not due for payment" do
+        Organisation.billable.should_not include(@not_due_organisation)
+      end
+
+      it "should not return organisations without payment methods" do
+        Organisation.billable.should_not include(@organisation_without_payment)
+      end
+
+      it "should not return suspended organisations" do
+        Organisation.billable.should_not include(@suspended)
+      end
+    end
+
+    it "should include RepeatBilling" do
+      Organisation.ancestors.should include(RepeatBilling)
     end
   end
 

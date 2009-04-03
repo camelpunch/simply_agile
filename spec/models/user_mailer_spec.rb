@@ -56,6 +56,12 @@ describe UserMailer do
       @payment_method = PaymentMethod.create!(
         :last_four_digits => '1234',
         :user => @user,
+        :number => '4242424242424242',
+        :card_type => 'visa',
+        :verification_value => '123',
+        :cardholder_name => 'Joe Bloggs',
+        :month => Date.today.month,
+        :year => Date.today.year + 1,
         :organisation => @organisation
       )
 
