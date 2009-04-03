@@ -44,6 +44,8 @@ class PaymentMethod < ActiveRecord::Base
   end
 
   def year=(value)
+    return value if value.blank?
+
     integer = value.to_i
     if integer < 100
       super 2000 + integer
@@ -81,7 +83,8 @@ class PaymentMethod < ActiveRecord::Base
   end
 
   def test_payment
-    authorisation = Authorisation.create(:payment_method => self, :amount => 100)
+    authorisation = Authorisation.create!(:payment_method => self, 
+                                          :amount => 100)
     return false if authorisation.payment.reference.blank?
     self.repeat_payment_token = authorisation.payment.reference
     authorisation.void

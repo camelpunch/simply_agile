@@ -17,6 +17,13 @@ describe PaymentMethod do
         @payment_method.year.should == 2009
       end
     end
+
+    describe "as ''" do
+      it "should be blank" do
+        @payment_method.year = ''
+        @payment_method.year.should be_blank
+      end
+    end
   end
 
   describe "setting the card number" do
@@ -118,6 +125,7 @@ describe PaymentMethod do
                                    :payment => mock_model(Payment,
                                                           :reference => ''))
         Authorisation.stub!(:create).and_return(authorisation)
+        Authorisation.stub!(:create!).and_return(authorisation)
         @payment_method.test_payment.should == false
       end
     end

@@ -51,6 +51,9 @@
 
 div.section { position:relative; padding:40px 36px 22px 36px; 
               margin:23px 0 0 11px }
+div.with_subsections div.section { padding:0 }
+form div.with_subsections div.section { padding-bottom:5px }
+form div.with_subsections div.section div.subsection { padding-left:15px }
 div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 div.section>h2 { left:-13px }
@@ -65,6 +68,7 @@ div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
 
 /* forms */
 form p { margin:5px 0 }
+form p.submit { margin:15px 0 0 0 }
 form p label { display:block; width:10em; float:left; line-height:1.5em }
 form p.checkbox { overflow:hidden }
 form p.checkbox input { float:left }
@@ -164,10 +168,6 @@ body #organisation_members .section table { width:100% }
 
 /* payment_methods/new */
 #payment_method_billing_address_attributes_country { width:18em }
-form#new_payment_method div.section { min-height:16em }
-form#new_payment_method #payment_details { width:35em }
-form#new_payment_method #billing_address { width:35em }
-form#new_payment_method p.submit { text-align:right }
 /* end payment_methods/new */
 
 /* sessions/new */

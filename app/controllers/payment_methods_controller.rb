@@ -34,6 +34,12 @@ class PaymentMethodsController < ApplicationController
     @payment_method = PaymentMethod.new(params[:payment_method])
     @payment_method.organisation = @organisation
     @payment_method.build_billing_address :country => "United Kingdom"
+
+    if (params[:payment_method] &&
+        params[:payment_method][:billing_address_attributes])
+      @payment_method.billing_address.attributes = 
+        params[:payment_method][:billing_address_attributes]
+    end
   end
 
   def get_organisation

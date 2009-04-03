@@ -2,24 +2,24 @@
 <% content_for :h1, "Pay for #{h @organisation.name}" %>
 
 <% form_for @payment_method, :url => [@organisation, :payment_method] do |form| -%>
-  <div id="payment_details" class="section_container first">
+  <%= form.error_messages %>
+  <div id="payment_details" class="section_container first with_subsections">
     <div class="section">
-      <h2>Card Details</h2>
-      <%= render form %>
+      <h2>Payment Details</h2>
+      <div id="card_details" class="subsection">
+        <h3>Card Details</h3>
+        <%= render form %>
+      </div>
+      <div id="billing_address" class="subsection">
+        <h3>Billing Address</h3>
+        <% form.fields_for :billing_address do |billing_address_form|  %>
+          <%= render :partial => 'billing_address_form',
+            :locals => { :form => billing_address_form } %>
+        <% end -%>
+        <p class="submit">
+        <%= form.submit "Save Payment Details" %>
+        </p>
+      </div>
     </div>
   </div>
-
-  <div id="billing_address" class="section_container">
-    <div class="section">
-      <h2>Billing Address</h2>
-      <% form.fields_for :billing_address do |billing_address_form|  %>
-        <%= render :partial => 'billing_address_form',
-          :locals => { :form => billing_address_form } %>
-      <% end -%>
-    </div>
-    <p class="submit">
-    <%= form.submit "Save Payment Details" %>
-    </p>
-  </div>
-
 <% end -%>

@@ -1,4 +1,3 @@
-<%= form.error_messages %>
 <p>
   <%= form.label :card_type%>
   <%= form.collection_select :card_type, PaymentMethod::CARD_TYPES, :to_s, :humanize %>

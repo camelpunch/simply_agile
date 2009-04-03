@@ -117,6 +117,7 @@ describe PaymentMethodsController do
         :year => 2.year.from_now.year.to_s[2..4],
         :verification_value => '123',
         :billing_address_attributes => {
+          :name => 'asdf',
           :address_line_1 => '1 Some Street',
           :town => 'Sometown',
           :postcode => 'AA1 1AA',
