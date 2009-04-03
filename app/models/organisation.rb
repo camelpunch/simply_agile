@@ -15,8 +15,7 @@ class Organisation < ActiveRecord::Base
   attr_accessible :name, :payment_plan_id, :users
 
   validates_presence_of :name
-  validates_presence_of :payment_plan_id,
-    :message => 'must be selected'
+  validates_presence_of :payment_plan_id
 
   validates_exclusion_of :suspended, :in => [true]
 

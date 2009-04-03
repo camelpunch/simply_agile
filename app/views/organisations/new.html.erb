@@ -18,7 +18,7 @@
     changed later.
     </p>
     <p>
-    <%= f.label :name, 'Organisation name' %>
+    <%= f.label :name %>
     <%= f.text_field :name, :class => 'auto_focus' %>
     </p>
   </div>
@@ -42,7 +42,7 @@
           <span class="name"><%= h plan.name %></span>
           <span class="numeric"><%= number_to_currency plan.price %> per month</span>
           </label>
-          <%= render plan %>
+          <%= render plan, :short => true %>
           <div class="description">
             <%= simple_format plan.description %>
           </div>

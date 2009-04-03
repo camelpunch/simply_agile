@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  FROM_ADDRESS = '"SimplyAgile" <support@besimplyagile.com>'
+  FROM_ADDRESS = '"Simply Agile" <support@besimplyagile.com>'
   def verification(user)
     subject    'Please verify your Simply Agile account'
     recipients user.email_address
