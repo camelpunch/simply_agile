@@ -1,7 +1,7 @@
 <% content_for :title, 'Payment' %>
 <% content_for :h1, "Pay for #{h @current_organisation.name}" %>
 
-<% form_for [@current_organisation, @payment_method] do |form| -%>
+<% form_for @payment_method, :url => [@organisation, :payment_method] do |form| -%>
 
   <div id="payment_details" class="section_container first">
     <div class="section">
