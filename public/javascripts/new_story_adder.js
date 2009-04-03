@@ -21,16 +21,16 @@ function NewStoryAdder() {
           $.ajax({
             url: this.url + '/estimate',
             success: function(html, status) {
-              // add the story to the available list
-              $('#stories_available>ol').prepend(html);
+              // add the story to the list
+              $($('ol li.story')[0]).before(html);
+
+              new Story($('ol>li.story:first-child'));
 
               // re-initialise the page
               StorySwapper.initStories();
               $('a.move').remove();
               StorySwapper.convertCheckBoxes();
               StorySwapper.updateEstimates();
-
-              new Story($('#stories_available>ol>li:first-child'));
             }
           });
         }
