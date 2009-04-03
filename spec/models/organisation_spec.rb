@@ -256,5 +256,38 @@ describe Organisation do
         Repeat.should_not_receive(:new)
       end
     end
+
+    describe "failure to take payment" do
+      before :each do
+        @repeat = mock_model(Repeat, :successful? => false)
+        Repeat.stub!(:create!).and_return(@repeat)
+        @user = Users.create_user!
+        @payment_method.user = @user
+        @payment_method.save!
+      end
+      
+      it "should not change the next payment date" do
+        payment_date = @organisation.next_payment_date
+        @organisation.take_payment
+        @organisation.next_payment_date.should == payment_date
+      end
+
+      it "should email the user" do
+        UserMailer.should_receive(:deliver_payment_failure).with(@organisation)
+        @organisation.take_payment
+      end
+    end
+  end
+
+  describe "suspension_date" do
+    before :each do
+      @organisation = Organisations.create_organisation!
+      @organisation.update_attribute(:next_payment_date, Date.today)
+    end
+
+    it "should return the next_payment_date + the grace period" do
+      @organisation.suspension_date.should ==
+        Date.today + OrganisationSuspender::GRACE_PERIOD
+    end
   end
 end

@@ -46,4 +46,32 @@ describe UserMailer do
       @mail.from.should == ['support@besimplyagile.com']
     end
   end
+
+  describe "payment failure" do
+    before :each do
+      stub_payment_gateway
+      @user = Users.create_user!
+      @organisation = Organisations.create_organisation!
+      @organisation.update_attribute(:next_payment_date, Date.today)
+      @payment_method = PaymentMethod.create!(
+        :last_four_digits => '1234',
+        :user => @user,
+        :organisation => @organisation
+      )
+
+      @mail = UserMailer.create_payment_failure(@organisation)
+    end
+
+    it "should set the subject" do
+      @mail.subject.should == "Payment failed for #{@organisation.name}"
+    end
+
+    it "should set the recipient" do
+      @mail.to.should == [@user.email_address]
+    end
+
+    it "should set the from" do
+      @mail.from.should == ['support@besimplyagile.com']
+    end
+  end
 end

@@ -1,0 +1,16 @@
+There was a problem taking payment for <%= @organisation.name %>
+in Simply Agile.
+
+We tried to take a payment of <%= @organisation.payment_plan.price %>GBP
+using the card **** **** **** <%= @payment_method.last_four_digits %>.
+
+We will continue to try to take the payment until <%= @organisation.suspension_date.to_s(:default) %>.
+If no payment has been taken by this date then the organisation will be
+suspended.
+
+If you wish to change the payment details for this organisation, please
+visit the account section at http://besimplyagile.com/ or contact
+support@besimplyagile.com.
+
+Regards.
+The Simply Agile Team

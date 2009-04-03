@@ -21,4 +21,16 @@ class UserMailer < ActionMailer::Base
     body       :organisation => organisation, :user => user, 
       :sponsor => sponsor, :token => token
   end
+
+  def payment_failure(organisation)
+    payment_method = organisation.payment_method
+    user = payment_method.user
+
+    subject    "Payment failed for #{organisation.name}"
+    recipients user.email_address
+    from       FROM_ADDRESS
+
+    body       :organisation => organisation, :user => user,
+      :payment_method => payment_method
+  end
 end

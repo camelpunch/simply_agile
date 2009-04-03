@@ -32,6 +32,10 @@ class Organisation < ActiveRecord::Base
     name.to_s || "New Organisation"
   end
 
+  def suspension_date
+    next_payment_date + OrganisationSuspender::GRACE_PERIOD
+  end
+
   def has_valid_payment_method?
     return true if next_payment_date.blank?
 
@@ -59,6 +63,8 @@ class Organisation < ActiveRecord::Base
 
     if repeat.successful?
       self.update_attribute(:next_payment_date, next_payment_date >> 1)
+    else
+      UserMailer.deliver_payment_failure(self)
     end
   end
 end
