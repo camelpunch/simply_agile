@@ -1,5 +1,12 @@
 <% content_for :title, "Pay for #{@organisation.name}" %>
 <% content_for :h1, "Pay for #{h @organisation.name}" %>
+<% @non_organisation = true %>
+<% content_for :breadcrumbs do %>
+  <li class="account first-child"><%= link_to 'Account', @current_user %></li>
+  <li><%= link_to 'Organisations', :organisations %></li>
+  <li class="organisation"><%= h(@organisation) %></li>
+  <li>Pay</li>
+<% end %>
 
 <% form_for @payment_method, :url => [@organisation, :payment_method] do |form| -%>
   <%= form.error_messages %>

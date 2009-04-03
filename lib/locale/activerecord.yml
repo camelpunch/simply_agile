@@ -7,8 +7,8 @@
       payment_method:
         verification_value: "Security code"
         number: "Card number"
-        year: "Card has"
-        month: "Expiry date"
+        month: "Expiry month"
+        year: "Expiry year"
         billing_address_address_line_1: "Billing address line 1"
         billing_address_address_line_2: "Billing address line 2"
         billing_address_town: "Town"
@@ -17,9 +17,10 @@
     errors:
       messages:
         taken: "has been taken"
-        blank: "cannot be blank"
+        blank: "is blank"
         greater_than_or_equal_to: "must be at least {{count}}"
         not_a_number: "must be a number"
+        expired: "has passed"
       models:
         organisation:
           attributes:

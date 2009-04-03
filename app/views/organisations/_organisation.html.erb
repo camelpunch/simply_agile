@@ -4,6 +4,11 @@
 <div class="section_container">
   <% unless organisation.suspended? %>
   <ul class="section_links">
+    <% unless organisation.payment_method %>
+      <li>
+      <%= link_to 'Pay', [:new, organisation, :payment_method] %>
+      </li>
+    <% end %>
     <li>
     <%= link_to 'Rename', [:edit, organisation] %>
     </li>

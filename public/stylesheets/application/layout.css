@@ -167,6 +167,10 @@ body #organisation_members .section table { width:100% }
 /* end organisations/show */
 
 /* payment_methods/new */
+form#new_payment_method { width:60em; position:relative }
+form#new_payment_method #errorExplanation { position:absolute; left:35em;
+                                            top:2em }
+form#new_payment_method .section { width:32em }
 #payment_method_billing_address_attributes_country { width:18em }
 /* end payment_methods/new */
 

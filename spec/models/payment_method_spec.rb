@@ -171,6 +171,7 @@ describe PaymentMethod do
     end
 
     it "should require expiry month to be in the future" do
+      $debug = 1
       @payment_method.year = Date.today.year
       @payment_method.month = Date.today.month - 1
       @payment_method.valid?

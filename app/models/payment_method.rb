@@ -16,6 +16,10 @@ class PaymentMethod < ActiveRecord::Base
     :year,
     :verification_value,
   ]
+  SHARED_VALIDATION_ATTRIBUTES = [
+    :number,
+    :verification_value,
+  ]
 
   validates_presence_of(:number,
                         :card_type, 
@@ -29,12 +33,17 @@ class PaymentMethod < ActiveRecord::Base
 
   def validate
     if !credit_card.valid?
-      SHARED_ATTRIBUTES.each do |attribute_name|
+      SHARED_VALIDATION_ATTRIBUTES.each do |attribute_name|
         value = send(attribute_name)
         if !value.blank? && message = credit_card.errors.on(attribute_name)
           errors.add(attribute_name, message)
         end
       end
+    end
+
+    if (!errors.invalid?(:month) &&
+        (credit_card.errors.on(:year) || credit_card.expired?))
+      errors.add(:month, :expired) 
     end
   end
 
