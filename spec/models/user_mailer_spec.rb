@@ -16,7 +16,7 @@ describe UserMailer do
     end
 
     it "should set the from" do
-      @mail.from.should == ['noreply@jandaweb.com']
+      @mail.from.should == ['support@besimplyagile.com']
     end
   end
 
@@ -43,7 +43,7 @@ describe UserMailer do
     end
 
     it "should set the from" do
-      @mail.from.should == ['noreply@jandaweb.com']
+      @mail.from.should == ['support@besimplyagile.com']
     end
   end
 end
