@@ -16,6 +16,8 @@
         billing_address_postcode: "Postcode"
     errors:
       messages:
+        invalid: "is invalid"
+        not_routable: "does not appear to exist"
         taken: "has been taken"
         blank: "is blank"
         greater_than_or_equal_to: "must be at least {{count}}"

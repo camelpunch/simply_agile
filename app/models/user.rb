@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
   has_many :organisations, :through => :organisation_members
   has_many :payment_methods
 
-  validates_email_format_of :email_address
+  validates_email_format_of :email_address, :check_mx => true,
+    :if => :new_record?
   validates_uniqueness_of :email_address
   validates_presence_of :password, :if => :password_required?
 

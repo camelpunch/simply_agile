@@ -52,17 +52,17 @@ module ActiveRecord
           begin
             domain, local = v.reverse.split('@', 2)
           rescue
-            record.errors.add(attr_name, options[:message])
+            record.errors.add(attr_name, :invalid)
             next
           end
 
           unless v =~ options[:with] and not v =~ /\.\./ and domain.length <= 255 and local.length <= 64
-            record.errors.add(attr_name, options[:message])
+            record.errors.add(attr_name, :invalid)
             next
           end
           
           if options[:check_mx]
-            record.errors.add(attr_name, "is not routable.") unless 
+            record.errors.add(attr_name, :not_routable) unless 
               ValidatesEmailFormatOf::validate_email_domain(v)
           end
         end
