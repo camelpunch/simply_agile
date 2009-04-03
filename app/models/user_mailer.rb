@@ -1,8 +1,9 @@
 class UserMailer < ActionMailer::Base
+  FROM_ADDRESS = '"SimplyAgile" <support@besimplyagile.com>'
   def verification(user)
     subject    'Please verify your Simply Agile account'
     recipients user.email_address
-    from       '"SimplyAgile" <noreply@jandaweb.com>'
+    from       FROM_ADDRESS
         
     body       :user => user
   end
@@ -15,7 +16,7 @@ class UserMailer < ActionMailer::Base
 
     subject    "You have been added to #{organisation.name}"
     recipients user.email_address
-    from       '"SimplyAgile" <noreply@jandaweb.com>'
+    from       FROM_ADDRESS
 
     body       :organisation => organisation, :user => user, 
       :sponsor => sponsor, :token => token

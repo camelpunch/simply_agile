@@ -59,7 +59,7 @@ div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
 
 .section_container { position:relative; overflow:hidden }
 .section_container a.section,
-.section_container ul.section_links { position:absolute; right:9px; top:6px }
+.section_container ul.section_links { position:absolute; right:9px; top:6px; z-index:20 }
 .section_container ul.section_links li { float:left; margin-left:1em }
 /* end content */
 
@@ -124,11 +124,14 @@ body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
 
-/* organisations/index */
+/* organisations/index and payment_methods/index */
+body#payment_methods_index #content ol>li,
 body#organisations_index #content ol>li { width:49%; float:left; 
+                                          height:23em; overflow:auto;
                                           margin-bottom:30px }
+body#payment_methods_index #content ol>li .section_container,
 body#organisations_index #content ol>li .section_container { margin-right:30px }
-/* end organisations/index */
+/* end organisations/index and payment_methods/index */
 
 /* organisations/new */
 form#new_organisation fieldset ol { 

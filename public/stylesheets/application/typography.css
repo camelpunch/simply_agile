@@ -39,6 +39,10 @@ body#iterations_show .javascript #stories .guidance,
 body#iterations_show .javascript #headings ol li { text-align:center }
 /* end iterations/show */
 
+/* organisations/index */
+body#organisations_index li.organisation h3 { margin-top:1em }
+/* end organisations/index */
+
 /* organisations/new */
 form#new_organisation fieldset ol li { text-align:center }
 form#new_organisation fieldset ol li#plan_0 label span.name { font-size:138.5% }

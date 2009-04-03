@@ -1,3 +1,7 @@
+<h3>Payment Plan: <%= h payment_plan.name %></h3>
+<p>
+<%= number_to_currency payment_plan.price %> per month
+</p>
 <ul class="limits">
   <li><%= pluralize payment_plan.active_iteration_limit, 'active iteration' %></li> 
   <li><%= pluralize payment_plan.user_limit, 'user' %></li> 

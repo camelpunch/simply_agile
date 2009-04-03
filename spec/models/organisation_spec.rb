@@ -81,10 +81,12 @@ describe Organisation do
       Organisation.delete_all
       @b = Organisations.create_organisation! :name => 'b'
       @a = Organisations.create_organisation! :name => 'a'
+      @suspended = Organisations.create_organisation! :name => 'aa'
+      @suspended.update_attribute :suspended, true
     end
 
-    it "should order by name" do
-      Organisation.all.should == [@a, @b]
+    it "should order by suspended DESC then name" do
+      Organisation.all.should == [@a, @b, @suspended]
     end
   end
 

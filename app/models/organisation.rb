@@ -23,13 +23,13 @@ class Organisation < ActiveRecord::Base
 
   validates_exclusion_of :suspended, :in => [true]
 
-  default_scope :order => 'name'
+  default_scope :order => 'suspended DESC, name'
 
   named_scope :active, 
     :conditions => ['suspended IS NULL OR suspended = ?', false]
 
   def to_s
-    name || "New Organisation"
+    name.to_s || "New Organisation"
   end
 
   def has_valid_payment_method?
