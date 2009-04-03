@@ -1,8 +1,5 @@
 body.iteration_planning #stories { clear:both; margin-top:30px; 
                                    overflow:hidden; /*ie6*/ height:200px }
-body.iteration_planning form p { clear:left; line-height:1.5em; margin:5px 0 }
-body.iteration_planning form p label { float:left; display:block }
-body.iteration_planning form p label { width:8em }
 body.iteration_planning form>#stories,
 body.iteration_planning div>#stories { min-height:200px; height:auto }
 body.iteration_planning .javascript #stories_iteration_container { float:left }
