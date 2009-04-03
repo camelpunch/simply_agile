@@ -110,6 +110,7 @@ describe PaymentMethodsController do
 
     before :each do
       @payment_method_params = {
+        :card_type => PaymentMethod::CARD_TYPES.first,
         :cardholder_name => 'Mr Cardholder',
         :card_number => '4444333322221111',
         :expiry_month => '01',
@@ -150,6 +151,17 @@ describe PaymentMethodsController do
       it "should redirect to page showing the payment for that organisation" do
         do_call
         response.should be_redirect
+      end
+    end
+
+    describe "with invalid data" do
+      before :each do
+        @payment_method_params = {}
+      end
+
+      it "should re-render payment_methods/new" do
+        do_call
+        response.should render_template('payment_methods/new')
       end
     end
   end

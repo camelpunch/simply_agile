@@ -1,3 +1,4 @@
+<%= form.error_messages %>
 <p>
   <%= form.label :card_type%>
   <%= form.collection_select :card_type, PaymentMethod::CARD_TYPES, :to_s, :humanize %>
@@ -20,6 +21,6 @@
 </p>
 
 <p>
-  <%= form.label :cv2, "Security Code" %>
+  <%= form.label :cv2 %>
   <%= form.text_field :cv2, :size => 3 %>
 </p>

@@ -11,10 +11,20 @@ class PaymentMethod < ActiveRecord::Base
 
   CARD_TYPES = ['mastercard', 'visa']
 
-  validates_presence_of(:repeat_payment_token)
+  validates_presence_of(:card_number,
+                        :card_type, 
+                        :cardholder_name, 
+                        :cv2, 
+                        :expiry_month,
+                        :expiry_year)
 
-  before_create :set_last_four_digits
-  before_validation :test_payment
+  validates_inclusion_of :card_type, :in => CARD_TYPES,
+    :unless => Proc.new {|payment_method| payment_method.card_type.blank? }
+
+  def before_create
+    set_last_four_digits
+    test_payment
+  end
 
   def has_expired?
     today = Date.today
@@ -40,6 +50,7 @@ class PaymentMethod < ActiveRecord::Base
 
   def test_payment
     authorisation = Authorisation.create(:payment_method => self, :amount => 100)
+    return false if authorisation.payment.reference.blank?
     self.repeat_payment_token = authorisation.payment.reference
     authorisation.void
   end

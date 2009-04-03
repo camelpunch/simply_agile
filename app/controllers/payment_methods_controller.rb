@@ -13,6 +13,8 @@ class PaymentMethodsController < ApplicationController
   def create
     if @payment_method.save
       redirect_to [@current_organisation, :payment_method]
+    else
+      render :template => 'payment_methods/new'
     end
   end
 

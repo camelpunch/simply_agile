@@ -88,8 +88,55 @@ describe PaymentMethod do
       @payment_method.test_payment
       Void.count.should == void_count + 1
     end
+
+    describe "when authorisation payment reference is blank" do
+      it "should return false" do
+        authorisation = mock_model(Authorisation,
+                                   :payment => mock_model(Payment,
+                                                          :reference => ''))
+        Authorisation.stub!(:create).and_return(authorisation)
+        @payment_method.test_payment.should == false
+      end
+    end
   end
 
+  describe "validations" do
+    before :each do
+      @payment_method = PaymentMethod.new
+      @payment_method.stub!(:test_payment)
+      @payment_method.valid?
+    end
+
+    it "should require a card type" do
+      @payment_method.should have(1).error_on(:card_type)
+    end
+
+    it "should require that card type is with CARD_TYPES" do
+      @payment_method.card_type = 'Delta'
+      @payment_method.valid?
+      @payment_method.should have(1).error_on(:card_type)
+    end
+
+    it "should require a cardholder name" do
+      @payment_method.should have(1).error_on(:cardholder_name)
+    end
+
+    it "should require a card number" do
+      @payment_method.should have(1).error_on(:card_number)
+    end
+
+    it "should require an expiry year" do
+      @payment_method.should have(1).error_on(:expiry_year)
+    end
+
+    it "should require an expiry month" do
+      @payment_method.should have(1).error_on(:expiry_month)
+    end
+
+    it "should require a security code" do
+      @payment_method.should have(1).error_on(:cv2)
+    end
+  end
 
   describe "card types" do
     it "should return visa and mastercard" do

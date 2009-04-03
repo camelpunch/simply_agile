@@ -1,5 +1,8 @@
 "en-GB":
   activerecord:
+    attributes:
+      payment_method:
+        cv2: "Security Code"
     errors:
       messages:
         taken: "has been taken"
