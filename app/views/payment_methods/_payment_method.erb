@@ -9,9 +9,7 @@
     <p>
     Expiry: 
     <%= 
-      payment_method.expiry_month.to_s.rjust(2, '0') 
-    %>/<%= 
-      payment_method.expiry_year.to_s.rjust(2, '0') 
+      Date.new(payment_method.year, payment_method.month).to_s(:month)
     %>
     </p>
 

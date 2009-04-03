@@ -1,4 +1,11 @@
 --- 
+vendor/plugins/i18n_label: 
+  squashed: true
+  url: git://github.com/iain/i18n_label.git
+  branch: master
+  type: git
+  revision: 9f820e24ec60c131524d9be707ba55610ae25f69
+  remote: braid/vendor/plugins/i18n-label
 vendor/plugins/jandacap: 
   squashed: true
   branch: master

@@ -3,6 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe "/payment_methods/new" do
   before(:each) do
     assigns[:current_organisation] = Organisation.new
+    assigns[:organisation] = mock_model Organisation, :name => ''
     payment_method = PaymentMethod.new
     payment_method.build_billing_address
     assigns[:payment_method] = payment_method

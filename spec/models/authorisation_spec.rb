@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Authorisation do
   before :each do
+    stub_payment_gateway
     @payment_method = PaymentMethods.create_payment_method!
     @credit_card = @payment_method.credit_card
     @amount = 100

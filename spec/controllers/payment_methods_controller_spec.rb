@@ -8,6 +8,13 @@ describe PaymentMethodsController do
     @payment_method = @user.payment_methods.first
   end
 
+  describe "it gets the organisation from the current user", :shared => true do
+    it "should bail" do
+      @organisation = Organisations.create_organisation!
+      lambda {do_call}.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe "index" do
     def do_call
       get :index
@@ -66,11 +73,8 @@ describe PaymentMethodsController do
       get :new, :organisation_id => @organisation
     end
 
-    before :each do
-      @organisation = Organisations.create_organisation!
-    end
-
     it_should_behave_like "it's successful"
+    it_should_behave_like "it gets the organisation from the current user"
 
     describe "payment method" do
       it "should be assigned" do
@@ -83,22 +87,37 @@ describe PaymentMethodsController do
         assigns[:payment_method].organisation.should == @organisation
       end
     end
+
+    describe "billing address" do
+      it "should be assigned" do
+        do_call
+        assigns[:payment_method].billing_address.should_not be_blank
+      end
+
+      it "should have the country set to UK" do
+        do_call
+        assigns[:payment_method].billing_address.country.
+          should == "United Kingdom"
+      end
+    end
   end
 
   describe "post create" do
     def do_call
-      post :create, :organisation_id => @organisation,
+      post :create, :organisation_id => @organisation.id,
         :payment_method => @payment_method_params
     end
 
     before :each do
       @payment_method_params = {
+        :card_type => PaymentMethod::CARD_TYPES.first,
         :cardholder_name => 'Mr Cardholder',
-        :card_number => '4444333322221111',
-        :expiry_month => '01',
-        :expiry_year => '99',
-        :cv2 => '123',
+        :number => '4242 4242 4242 4242',
+        :month => '01',
+        :year => 2.year.from_now.year.to_s[2..4],
+        :verification_value => '123',
         :billing_address_attributes => {
+          :name => 'asdf',
           :address_line_1 => '1 Some Street',
           :town => 'Sometown',
           :postcode => 'AA1 1AA',
@@ -108,8 +127,9 @@ describe PaymentMethodsController do
       }
     end
 
-    describe "with valid data" do
+    it_should_behave_like "it gets the organisation from the current user"
 
+    describe "with valid data" do
       it "should create a new payment_method for the organisation" do
         do_call
         @organisation.payment_method.should_not be_nil
@@ -118,10 +138,9 @@ describe PaymentMethodsController do
       it "should set the card details" do
         do_call
         @organisation.payment_method.last_four_digits.should_not be_nil
-        @organisation.payment_method.expiry_month.should ==
-          @payment_method_params[:expiry_month].to_i
-        @organisation.payment_method.expiry_year.should ==
-          @payment_method_params[:expiry_year].to_i
+        @organisation.payment_method.month.should ==
+          @payment_method_params[:month].to_i
+        @organisation.payment_method.year.should == 2.years.from_now.year
       end
 
       it "should set the billing address" do
@@ -129,9 +148,25 @@ describe PaymentMethodsController do
         @organisation.payment_method.billing_address.should_not be_nil
       end
 
+      it "should set the user to be the current user" do
+        do_call
+        @organisation.payment_method.user.should == @user
+      end
+
       it "should redirect to page showing the payment for that organisation" do
         do_call
-        response.should be_redirect
+        response.should redirect_to(payment_methods_url)
+      end
+    end
+
+    describe "with invalid data" do
+      before :each do
+        @payment_method_params = {}
+      end
+
+      it "should re-render payment_methods/new" do
+        do_call
+        response.should render_template('payment_methods/new')
       end
     end
   end

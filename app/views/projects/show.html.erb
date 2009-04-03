@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div id="active_and_planned_iterations" class="section_container">
+<div id="iterations" class="section_container with_subsections">
   <%= link_to("Plan an iteration", 
               new_project_iteration_path(@project),
               :class => 'section')
@@ -52,7 +52,7 @@
       <% end %>
     <% else %>
       <% unless @project.iterations.active.empty? %>
-        <div class="active">
+        <div class="active subsection">
           <h3>Active</h3>
           <ol>
             <%= render @project.iterations.active, :width => 150 %>
@@ -60,7 +60,7 @@
         </div>
       <% end %>
       <% unless @project.iterations.pending.empty? %>
-        <div class="planned">
+        <div class="planned subsection">
           <h3>Planned</h3>
           <ol>
             <%= render @project.iterations.pending, :width => 150 %>

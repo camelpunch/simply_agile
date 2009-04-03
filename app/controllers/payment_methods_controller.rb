@@ -12,7 +12,9 @@ class PaymentMethodsController < ApplicationController
 
   def create
     if @payment_method.save
-      redirect_to [@current_organisation, @payment_method]
+      redirect_to :payment_methods
+    else
+      render :template => 'payment_methods/new'
     end
   end
 
@@ -29,12 +31,20 @@ class PaymentMethodsController < ApplicationController
   end
 
   def new_payment_method
-    @payment_method = PaymentMethod.new(params[:payment_method])
-    @payment_method.organisation = @organisation
-    @payment_method.build_billing_address
+    @payment_method = @current_user.payment_methods.
+      build(params[:payment_method])
+    @payment_method.organisation = @current_organisation
+
+    @payment_method.build_billing_address :country => "United Kingdom"
+
+    if (params[:payment_method] &&
+        params[:payment_method][:billing_address_attributes])
+      @payment_method.billing_address.attributes = 
+        params[:payment_method][:billing_address_attributes]
+    end
   end
 
   def get_organisation
-    @organisation = Organisation.find(params[:organisation_id])
+    @organisation = @current_user.organisations.find(params[:organisation_id])
   end
 end

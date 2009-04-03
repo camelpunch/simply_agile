@@ -1,11 +1,26 @@
 "en-GB":
   activerecord:
+    attributes:
+      billing_address:
+        address_line_1: "Line 1"
+        address_line_2: "Line 2"
+      payment_method:
+        verification_value: "Security code"
+        number: "Card number"
+        month: "Expiry month"
+        year: "Expiry year"
+        billing_address_address_line_1: "Billing address line 1"
+        billing_address_address_line_2: "Billing address line 2"
+        billing_address_town: "Town"
+        billing_address_telephone_number: "Telephone number"
+        billing_address_postcode: "Postcode"
     errors:
       messages:
         taken: "has been taken"
-        blank: "cannot be blank"
+        blank: "is blank"
         greater_than_or_equal_to: "must be at least {{count}}"
         not_a_number: "must be a number"
+        expired: "has passed"
       models:
         organisation:
           attributes:

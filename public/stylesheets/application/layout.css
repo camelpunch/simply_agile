@@ -51,6 +51,9 @@
 
 div.section { position:relative; padding:40px 36px 22px 36px; 
               margin:23px 0 0 11px }
+div.with_subsections div.section { padding:0 }
+form div.with_subsections div.section { padding-bottom:5px }
+form div.with_subsections div.section div.subsection { padding-left:15px }
 div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 div.section>h2 { left:-13px }
@@ -64,8 +67,13 @@ div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
 /* end content */
 
 /* forms */
-form p label { display:block }
-form p.checkbox label { display:inline; padding-left:5px }
+form p { margin:5px 0 }
+form p.submit { margin:15px 0 }
+form p label { display:block; width:10em; float:left; line-height:1.5em }
+form p.checkbox { overflow:hidden }
+form p.checkbox input { float:left }
+form p.checkbox label { display:inline; padding-left:5px; width:20em; 
+                        line-height:1.2em }
 /* end forms */
 
 /* home/show */
@@ -157,6 +165,14 @@ form#new_organisation fieldset ol li div.description { margin-top:1em }
 body #organisation_members.section_container { min-width:645px }
 body #organisation_members .section table { width:100% }
 /* end organisations/show */
+
+/* payment_methods/new */
+form#new_payment_method { width:60em; position:relative }
+form#new_payment_method #errorExplanation { position:absolute; left:35em;
+                                            top:2em }
+form#new_payment_method .section { width:32em }
+#payment_method_billing_address_attributes_country { width:18em }
+/* end payment_methods/new */
 
 /* sessions/new */
 #existing_users { float: left; width: 55%; }
