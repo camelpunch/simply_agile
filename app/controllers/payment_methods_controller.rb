@@ -35,6 +35,6 @@ class PaymentMethodsController < ApplicationController
   end
 
   def get_organisation
-    @organisation = Organisation.find(params[:organisation_id])
+    @organisation = @current_user.organisations.find(params[:organisation_id])
   end
 end

@@ -8,6 +8,13 @@ describe PaymentMethodsController do
     @payment_method = @user.payment_methods.first
   end
 
+  describe "it gets the organisation from the current user", :shared => true do
+    it "should bail" do
+      @organisation = Organisations.create_organisation!
+      lambda {do_call}.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe "index" do
     def do_call
       get :index
@@ -66,11 +73,8 @@ describe PaymentMethodsController do
       get :new, :organisation_id => @organisation
     end
 
-    before :each do
-      @organisation = Organisations.create_organisation!
-    end
-
     it_should_behave_like "it's successful"
+    it_should_behave_like "it gets the organisation from the current user"
 
     describe "payment method" do
       it "should be assigned" do
@@ -100,7 +104,7 @@ describe PaymentMethodsController do
 
   describe "post create" do
     def do_call
-      post :create, :organisation_id => @organisation,
+      post :create, :organisation_id => @organisation.id,
         :payment_method => @payment_method_params
     end
 
@@ -121,8 +125,9 @@ describe PaymentMethodsController do
       }
     end
 
-    describe "with valid data" do
+    it_should_behave_like "it gets the organisation from the current user"
 
+    describe "with valid data" do
       it "should create a new payment_method for the organisation" do
         do_call
         @organisation.payment_method.should_not be_nil
