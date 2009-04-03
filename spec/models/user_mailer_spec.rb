@@ -27,7 +27,7 @@ describe UserMailer do
 
       @user = Users.create_user!
 
-      @organisation_member = @organisation.organisation_members.create!(
+      @organisation_member = @organisation.members.create!(
         :user => @user,
         :sponsor => @sponsor
       )

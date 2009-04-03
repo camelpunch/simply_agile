@@ -17,6 +17,25 @@ describe UsersController do
     end
   end
 
+  describe "show" do
+    def do_call
+      get :show, :id => @user.id
+    end
+
+    before :each do
+      login
+    end
+
+    it_should_behave_like "it's successful"
+
+    it "should disallow getting of other user pages" do
+      get :show, :id => Users.create_user!.id      
+      response.should redirect_to(user_url(@user))
+    end
+
+    it_should_behave_like "it sets @current_organisation"
+  end
+
   describe "new" do
     def do_call
       get :new
@@ -42,8 +61,7 @@ describe UsersController do
 
       @user_params = {
         "email_address" => 'user@jandaweb.com',
-        "password" => 'password',
-        "organisation_name" => 'organisation'
+        "password" => 'password'
       }
     end
 

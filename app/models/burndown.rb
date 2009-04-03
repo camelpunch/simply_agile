@@ -7,6 +7,7 @@ class Burndown
   def initialize(iteration, options = {})
     self.iteration = iteration
     self.width = options[:width] || DEFAULT_WIDTH
+    self.width = 600 if width.to_i > 600 
   end
 
   def to_png

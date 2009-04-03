@@ -4,12 +4,14 @@ describe StoryTeamMembersController do
 
   before :each do
     login
-    @project = Projects.create_project :organisation => @organisation
-    @iteration = Iterations.create_iteration :project => @project
-    @story = Stories.create_story(:project => @project,
-                                  :iteration => @iteration)
-    @user.organisations << @story.project.organisation
-    @user.save!
+    @project = Projects.create_project! :organisation => @organisation
+    @iteration = Iterations.create_iteration! :project => @project
+    @story = Stories.create_story!(:project => @project,
+                                   :iteration => @iteration)
+    unless @user.organisations.include?(@story.project.organisation)
+      @user.organisations << @story.project.organisation
+      @user.save!
+    end
   end
 
   describe "create" do
@@ -88,8 +90,8 @@ describe StoryTeamMembersController do
 
     describe "someone else" do
       before :each do
-        @story_team_member.user = 
-          Users.create_user :organisations => [@organisation]
+        user = mock_model User, :organisations => [@story.project.organisation]
+        @story_team_member.user = user
         @story_team_member.save!
       end
 

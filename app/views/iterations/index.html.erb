@@ -1,5 +1,8 @@
 <% content_for :title, "Active Iterations" %>
 <% content_for :h1, "#{h @current_organisation.name} Iterations" %>
+<% content_for :breadcrumbs do %>
+  <li>Active Iterations</li>
+<% end %>
 <% content_for :actions do %>
   <li><%= link_to "Finished", finished_iterations_path %></li>
 <% end %>
@@ -11,7 +14,9 @@
   <p>
     There are currently no active iterations for <%= h @current_organisation %>.
   </p>
+  <% unless @current_organisation.projects.empty? %>
   <%= render :partial => 'iterations/new' %>
+  <% end %>
 <% else -%>
   <div id="iterations" class="section_container">
     <div class="section">

@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_filter :login_required
   skip_before_filter :select_organisation
+  skip_before_filter :prevent_suspended_organisation_access
 
   def create
     email_address = params[:user][:email_address]
@@ -17,8 +18,15 @@ class SessionsController < ApplicationController
   end
 
   def update
-    session[:organisation_id] = params[:organisation_id]
-    do_redirect
+    organisation = Organisation.find(params[:organisation_id])
+
+    if organisation.suspended?
+      flash[:error] = "Organisation is suspended"
+      redirect_to organisations_url
+    else
+      session[:organisation_id] = organisation.id
+      do_redirect
+    end
   end
 
   def destroy

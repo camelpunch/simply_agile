@@ -32,18 +32,23 @@
             <li id="nav_home"><%= link_to_unless_current 'Home', home_path, :accesskey => 'h' %></li>
             <li id="nav_projects"><%= link_to_unless_current 'Projects', projects_path, :accesskey => 'p' %></li>
             <li id="nav_iterations"><%= link_to_unless_current 'Iterations', iterations_path, :accesskey => 'i' %></li>
-            <li id="nav_sharing">
-              <%= link_to_unless_current 'Sharing',
-                @current_organisation ? @current_organisation : organisations_path,
-                :accesskey => 's' %>
-            </li>
+            <% if @current_organisation %>
+              <li id="nav_sharing">
+              <%= link_to_unless_current 'Sharing', [@current_organisation, :members], :accesskey => 's' %>
+              </li>
+            <% end %>
+            <li id="nav_account"><%= link_to_unless_current 'Account', @current_user, :accesskey => 'a' %></li>
           </ol>
         </div>
         <div id="breadcrumbs">
           <% breadcrumbs = yield(:breadcrumbs) %>
-          <% if @current_organisation %>
+          <% if @non_organisation %>
             <ol>
-              <li class="organisation">
+              <%= yield :breadcrumbs %>
+            </ol>
+          <% elsif @current_organisation %>
+            <ol>
+              <li class="organisation first-child">
                 <%= link_to_unless_current h(@current_organisation), home_path %>
               </li>
               <%= yield :breadcrumbs %>
@@ -66,9 +71,7 @@
         <%= render_flash %>
         <%= yield %>
       </div>
-      <% if ! @current_user.verified? && @current_user.created_at < 1.day.ago -%>
-        <%= render :partial => 'shared/verify' %>
-      <% end -%>
+      <%= render :partial => 'shared/important_messages' %>
       <%= render :partial => 'shared/footer' %>
     </div>
     <%= javascript_include_tag('jquery-1.3.2.min',

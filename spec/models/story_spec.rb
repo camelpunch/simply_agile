@@ -11,11 +11,11 @@ describe Story do
   end
 
   it "should create a new instance given valid attributes" do
-    Story.create!(@valid_attributes)
+    Story.create!(@valid_attributes).destroy
   end
 
   it "should create a new instance given valid attributes" do
-    Story.create!(@valid_attributes)
+    Story.create!(@valid_attributes).destroy
   end
 
   describe "associations" do
@@ -56,14 +56,14 @@ describe Story do
   describe "assigned_or_available_for" do
     before :each do
       Story.delete_all
-      @iteration = Iteration.new
+      @iteration = Iterations.create_iteration!
       @available = Stories.create_story!(:name => 'available', 
                                          :iteration_id => nil)
       @non_pending = Stories.create_story!(:name => 'non pending', 
                                            :iteration_id => nil,
                                            :status => 'in_progress')
       @unavailable = Stories.create_story!(:name => 'unavailable', 
-        :iteration_id => 234)
+        :iteration_id => Iterations.create_iteration!.id)
       @stories = Story.assigned_or_available_for(@iteration)
     end
 
@@ -156,12 +156,13 @@ describe Story do
     end
 
     it "should require a unique name within the scope of a project" do
-      @story.project_id = 1
+      project = Projects.create_project!
+      @story.project_id = project.id
       @story.name = 'bob'
       @story.content = 'bob'
       @story.save!
       new_story = Story.new :name => 'bob'
-      new_story.project_id = 1
+      new_story.project_id = project.id
       new_story.valid?
       new_story.errors.on(:name).should_not be_nil
     end
@@ -184,8 +185,10 @@ describe Story do
 
     describe "iteration assignment" do
       it "should not be allowed if the story is already in an iteration" do
-        existing = Story.create! @valid_attributes.merge(:iteration_id => 234)
-        existing.iteration_id = 543
+        iteration_1 = Iterations.create_iteration! :stories => [Stories.create_story!]
+        iteration_2 = Iterations.create_iteration! :stories => [Stories.create_story!]
+        existing = Story.create! @valid_attributes.merge(:iteration_id => iteration_1.id)
+        existing.iteration_id = iteration_2.id
         existing.valid?
         existing.errors.on(:iteration_id).should_not be_nil
       end

@@ -1,5 +1,8 @@
 <% content_for :title, "Projects" %>
 <% content_for :h1, h("#{@current_organisation} Projects") %>
+<% content_for :breadcrumbs do %>
+  <li>Projects</li>
+<% end %>
 
 <% if @current_organisation.projects.empty? %>
 <div class="guidance">

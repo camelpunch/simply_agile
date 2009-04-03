@@ -34,19 +34,22 @@
   </div>
 </div>
 
-<div id="iterations" class="section_container">
+<div id="active_and_planned_iterations" class="section_container">
   <%= link_to("Plan an iteration", 
               new_project_iteration_path(@project),
               :class => 'section')
   %>
   <div class="section">
     <h2>Iterations</h2>
-    <% if @project.iterations.empty? %>
-      <div class="guidance">
-        <p>
-        This project has no iterations.
-        </p>
-      </div>
+    <% if (@project.iterations.active + @project.iterations.pending).empty? %>
+      <p>
+      This project has no active or planned iterations.
+      </p>
+      <% unless @project.iterations.finished.empty? %>
+      <p>
+      <%= link_to 'Finished Iterations', finished_iterations_url %>
+      </p>
+      <% end %>
     <% else %>
       <% unless @project.iterations.active.empty? %>
         <div class="active">

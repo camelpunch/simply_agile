@@ -5,7 +5,7 @@
                         right:30px; top:2px }
 #footer { clear:both; padding:0 0 30px 0 }
 
-.important_message { position:fixed; top:0; left:0; z-index:11; width:100% }
+.important_message { position:absolute; top:0; left:0; z-index:11; width:100% }
 .important_message div { margin:0 auto; width:52em; padding:4px 0 }
 .important_message p { margin:0 }
 
@@ -13,7 +13,7 @@
 /* end basic layout */
 
 /* navigation */
-#navigation { height:67px; position:relative; width:24.05em }
+#navigation { height:67px; position:relative; width:30.05em }
 #header>#navigation { margin:0 auto }
 #navigation ol { position:absolute; left:0; bottom:0; height:2.5em }
 #navigation li { float:left; height:2.5em; line-height:2.5em; width:6em }
@@ -38,7 +38,7 @@
 /* breadcrumbs */
 #breadcrumbs { height:3em; padding-left:30px }
 #breadcrumbs li { float:left; margin-left:9px; padding-left:25px }
-#breadcrumbs li.organisation { margin-left:0; padding-left:0 }
+#breadcrumbs li.first-child { margin-left:0; padding-left:0 }
 /* end breadcrumbs */
 
 /* content */
@@ -57,8 +57,10 @@ div.section>h2 { left:-13px }
 div.section .errorExplanation h2 { position: relative; padding: 0; margin: 0;
     top:0; left: 0 }
 
-div.section_container { position:relative; overflow:hidden }
-div.section_container a.section { position:absolute; right:9px; top:6px }
+.section_container { position:relative; overflow:hidden }
+.section_container a.section,
+.section_container ul.section_links { position:absolute; right:9px; top:6px }
+.section_container ul.section_links li { float:left; margin-left:1em }
 /* end content */
 
 /* forms */
@@ -73,6 +75,7 @@ form p.checkbox label { display:inline; padding-left:5px }
                            margin-bottom:30px }
 body#home_show #iterations { min-width:345px }
 body#home_show #iterations div.active { padding-top:45px }
+body#home_show #recently_finished_iterations .finished ol,
 body#home_show #iterations ol { overflow:hidden }
 body#home_show #recent_work .section { padding:0 }
 body#home_show #recent_work .section>ol>li { padding:45px 30px 15px 30px }
@@ -89,7 +92,8 @@ body#projects_show #iterations { min-width:250px }
 /* end projects/show */
 
 /* iterations/index */
-body#iterations_index .active { padding:45px 30px 30px 30px }
+body#iterations_index .active,
+body#iterations_finished .finished { padding:45px 30px 30px 30px }
 /* end iterations/index */
 
 /* stories/show */
@@ -100,6 +104,7 @@ body#stories_show #users form.button-to { float:right }
 body#stories_show h2 { margin:1em 0 0 0 }
 body#stories_show #acceptance_criteria table { width:40%; table-layout:fixed }
 body#stories_show #acceptance_criteria table td { padding:0 5px }
+body#stories_show #acceptance_criteria table td.edit { padding-left:20px }
 body#stories_show #acceptance_criteria table td.edit,
 body#stories_show #acceptance_criteria table td.delete { width:4em }
 
@@ -118,6 +123,32 @@ body#stories_backlog .javascript #content p.submit,
 body#stories_backlog .javascript #content label,
 body#stories_backlog .javascript #content input { display:none }
 /* end stories/backlog */
+
+/* organisations/index */
+body#organisations_index #content ol>li { width:49%; float:left; 
+                                          margin-bottom:30px }
+body#organisations_index #content ol>li .section_container { margin-right:30px }
+/* end organisations/index */
+
+/* organisations/new */
+form#new_organisation fieldset ol { 
+  width:60em; border-style:solid; overflow:hidden; border-width:1px 
+}
+form#new_organisation fieldset ol li { 
+  width:20em; display:block; float:left
+}
+form#new_organisation fieldset ol li label { 
+  padding:15px 0 5px 0;
+  height:6.5em;
+  display:block; margin:0 auto 
+}
+form#new_organisation fieldset ol li label span { 
+  display:block; clear:left
+}
+form#new_organisation fieldset ol li ul.limits { overflow:hidden }
+form#new_organisation fieldset ol li ul.limits, 
+form#new_organisation fieldset ol li div.description { margin-top:1em }
+/* end organisations/new */
 
 /* organisations/show */
 body #organisation_members.section_container { min-width:645px }

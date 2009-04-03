@@ -1,0 +1,23 @@
+"en-GB":
+  activerecord:
+    errors:
+      messages:
+        taken: "has been taken"
+        blank: "cannot be blank"
+        greater_than_or_equal_to: "must be at least {{count}}"
+        not_a_number: "must be a number"
+      models:
+        organisation:
+          attributes:
+            suspended:
+              exclusion: "organisation"
+        organisation_member:
+          attributes:
+            user_id:
+              taken: "is already a member of this organisation"
+              blank: "email address is invalid"
+      template:
+        header:
+          one: "Error" 
+          other: "{{count}} errors"
+        body: ""

@@ -21,6 +21,11 @@ describe Burndown do
       burndown = Burndown.new(@iteration, {})
       burndown.width.should == 600
     end
+
+    it "should allow a maximum width of 600" do
+      burndown = Burndown.new(@iteration, :width => '1000000')
+      burndown.width.should == 600
+    end
   end
 
   describe "baseline data" do

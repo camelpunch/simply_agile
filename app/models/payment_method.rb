@@ -16,6 +16,11 @@ class PaymentMethod < ActiveRecord::Base
   before_create :set_last_four_digits
   before_validation :test_payment
 
+  def has_expired?
+    today = Date.today
+    Date.new(expiry_year, expiry_month) < Date.new(today.year, today.month)
+  end
+
   def credit_card
     @credit_card ||= create_credit_card
   end

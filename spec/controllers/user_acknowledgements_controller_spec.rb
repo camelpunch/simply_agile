@@ -6,7 +6,7 @@ describe UserAcknowledgementsController do
     @user = Users.create_user!
     @organisation = @sponsor.organisations.first
     @organisation_member =
-      @organisation.organisation_members.create!(
+      @organisation.members.create!(
       :user => @user,
       :sponsor => @sponsor
     )

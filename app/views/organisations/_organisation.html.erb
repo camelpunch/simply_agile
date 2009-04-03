@@ -1,11 +1,36 @@
-<li>
-  <% form_tag(session_path, :method => :put) do %>
-    <%= hidden_field_tag :organisation_id, organisation.id, :id => nil %>
-    <%= submit_tag h(organisation.name) %>
+<li class="organisation<%= 
+    if organisation.suspended? then ' suspended' else '' end
+  %>">
+<div class="section_container">
+  <% unless organisation.suspended? %>
+  <ul class="section_links">
+    <li>
+    <%= link_to 'Rename', [:edit, organisation] %>
+    </li>
+    <li>
+    <%= link_to 'Members', [organisation, :members] %>
+    </li>
+  </ul>
   <% end %>
-  <p>
+  <div class="section">
+    <h2><%= h organisation %>
+      <%= if organisation.suspended? then '(suspended)' else '' end %></h2>
+    <% if !organisation.suspended? && @current_user.organisations.many? %>
+      <% form_tag(session_path, :method => :put) do %>
+        <%= hidden_field_tag :organisation_id, organisation.id, :id => nil %>
+        <%= submit_tag "Switch to this organisation" %>
+      <% end %>
+    <% end %>
+    <p>
+    Payment Plan: <%= h organisation.payment_plan.name %>,
+    <%= number_to_currency organisation.payment_plan.price %> per month
+    <%= render organisation.payment_plan %>
+    </p>
+    <p>
     <%= pluralize organisation.projects.count, "project" %>,
     <%= pluralize organisation.stories.count, "story" %>,
     <%= pluralize organisation.iterations.active.count, "active iteration" %>
-  </p>
+    </p>
+  </div>
+</div>
 </li>

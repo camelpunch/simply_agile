@@ -1,0 +1,35 @@
+<% if ((verification_prompt = @current_user.has_verification_prompt?) || 
+       (payment_method_prompt = @current_organisation && @current_organisation.has_payment_method_prompt?)) %>
+<div class="important_message">
+  <div>
+    <% if verification_prompt %>
+    <p>
+    Please check your email for account verification details.
+    <%= link_to "Enter verification token", new_user_verification_path(@current_user) %>
+    manually if preferred.
+    </p>
+    <% if @current_user.verify_by - Date.today < 4 -%>
+      <p>
+      If you do not verify your email address by
+      <%= @current_user.verify_by.to_s(:default) %>, your account will be disabled.
+      </p>
+    <% end -%>
+    <% end %>
+
+    <% if payment_method_prompt %>
+    <p>
+    This organisation has no valid payment method.
+    <%= link_to 'Update payment details', [:new, @current_organisation, :payment_method] %>.
+    </p>
+      <% if @current_organisation.next_payment_date.past? %>
+        <p class="suspension">
+        Organisation will be suspended on 
+          <%= @current_organisation.next_payment_date +
+            OrganisationSuspender::GRACE_PERIOD %>
+        unless a payment method is added
+        </p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<% end %>

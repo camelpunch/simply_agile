@@ -6,7 +6,7 @@ describe OrganisationMemberObserver do
     @organisation = Organisations.create_organisation!
     @user = Users.create_user!
     @organisation_member =
-      @organisation.organisation_members.build(:user => @user, :sponsor => @sponsor)
+      @organisation.members.build(:user => @user, :sponsor => @sponsor)
   end
 
   it "should send an authorisation email" do
