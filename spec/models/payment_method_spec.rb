@@ -6,6 +6,32 @@ describe PaymentMethod do
     stub_payment_gateway
   end
 
+  describe "setting the year" do
+    before :each do
+      @payment_method = PaymentMethod.new
+    end
+
+    describe "as 09" do
+      it "should be 2009" do
+        @payment_method.year = '09'
+        @payment_method.year.should == 2009
+      end
+    end
+  end
+
+  describe "setting the card number" do
+    before :each do
+      @payment_method = PaymentMethod.new
+    end
+
+    describe "as 4242 4242 4242 4242" do
+      it "should be 4242424242424242" do
+        @payment_method.number = '4242 4242 4242 4242'
+        @payment_method.number.should == '4242424242424242'
+      end
+    end
+  end
+
   describe "associations" do
     it "should belong to a billing address" do
       PaymentMethod.should belong_to(:billing_address)
@@ -23,20 +49,17 @@ describe PaymentMethod do
   describe "has_expired?" do
     before :each do
       today = Date.today
-      @before = PaymentMethods.create_payment_method!(
-        :expiry_month => today.month - 1,
-        :expiry_year => today.year
-      )
+      @before = PaymentMethods.create_payment_method!
+      @before.update_attribute(:month, today.month - 1)
+      @before.update_attribute(:year, today.year)
 
-      @this_month = PaymentMethods.create_payment_method!(
-        :expiry_month => today.month,
-        :expiry_year => today.year
-      )
+      @this_month = PaymentMethods.create_payment_method!
+      @this_month.update_attribute(:month, today.month)
+      @this_month.update_attribute(:year, today.year)
 
-      @future = PaymentMethods.create_payment_method!(
-        :expiry_month => today.month + 1,
-        :expiry_year => today.year
-      )
+      @future = PaymentMethods.create_payment_method!
+      @future.update_attribute(:month, today.month + 1)
+      @future.update_attribute(:year, today.year)
     end
 
     it "should be set if expiry month is before this month" do
@@ -55,7 +78,7 @@ describe PaymentMethod do
   describe "creation" do
     before :each do
       @payment_method = PaymentMethods.create_payment_method!(
-        :card_number => 1111222233334444
+        :number => 1111222233334444
       )
       @payment_method.save
     end
@@ -122,25 +145,32 @@ describe PaymentMethod do
     end
 
     it "should require a card number" do
-      @payment_method.should have(1).error_on(:card_number)
+      @payment_method.should have(1).error_on(:number)
     end
 
     it "should require that card number is well formed" do
-      @payment_method.card_number = 'aaaaaaa'
+      @payment_method.number = 'aaaaaaa'
       @payment_method.valid?
-      @payment_method.should have(1).error_on(:card_number)
+      @payment_method.should have(1).error_on(:number)
     end
 
     it "should require an expiry year" do
-      @payment_method.should have(1).error_on(:expiry_year)
+      @payment_method.should have(1).error_on(:year)
     end
 
     it "should require an expiry month" do
-      @payment_method.should have(1).error_on(:expiry_month)
+      @payment_method.should have(1).error_on(:month)
+    end
+
+    it "should require expiry month to be in the future" do
+      @payment_method.year = Date.today.year
+      @payment_method.month = Date.today.month - 1
+      @payment_method.valid?
+      @payment_method.should have(1).error_on(:month)
     end
 
     it "should require a security code" do
-      @payment_method.should have(1).error_on(:cv2)
+      @payment_method.should have(1).error_on(:verification_value)
     end
   end
 
@@ -170,19 +200,19 @@ describe PaymentMethod do
     end
 
     it "should set the number" do
-      @credit_card.number.should == @payment_method.card_number
+      @credit_card.number.should == @payment_method.number
     end
 
     it "should set the month" do
-      @credit_card.month.should == @payment_method.expiry_month
+      @credit_card.month.should == @payment_method.month
     end
 
     it "should set the year" do
-      @credit_card.year.should == @payment_method.expiry_year
+      @credit_card.year.should == @payment_method.year
     end
 
-    it "should set the cv2" do
-      @credit_card.verification_value.should == @payment_method.cv2
+    it "should set the verification_value" do
+      @credit_card.verification_value.should == @payment_method.verification_value
     end
 
     it "should set the first name" do

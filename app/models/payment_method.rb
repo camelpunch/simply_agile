@@ -1,8 +1,8 @@
 class PaymentMethod < ActiveRecord::Base
   attr_accessor :cardholder_name
-  attr_accessor :card_number
-  attr_accessor :cv2
+  attr_accessor :verification_value
   attr_accessor :card_type
+  attr_reader :number
 
   belongs_to :billing_address
   accepts_nested_attributes_for :billing_address
@@ -10,22 +10,31 @@ class PaymentMethod < ActiveRecord::Base
   belongs_to :organisation
 
   CARD_TYPES = ['mastercard', 'visa']
+  SHARED_ATTRIBUTES = [
+    :number,
+    :month,
+    :year,
+    :verification_value,
+  ]
 
-  validates_presence_of(:card_number,
+  validates_presence_of(:number,
                         :card_type, 
                         :cardholder_name, 
-                        :cv2, 
-                        :expiry_month,
-                        :expiry_year)
+                        :verification_value, 
+                        :month,
+                        :year)
 
   validates_inclusion_of :card_type, :in => CARD_TYPES,
     :unless => Proc.new {|payment_method| payment_method.card_type.blank? }
 
   def validate
-    if (!card_number.blank? && 
-        !credit_card.valid? && 
-        credit_card.errors.on(:number))
-      errors.add(:card_number, "is not valid")
+    if !credit_card.valid?
+      SHARED_ATTRIBUTES.each do |attribute_name|
+        value = send(attribute_name)
+        if !value.blank? && message = credit_card.errors.on(attribute_name)
+          errors.add(attribute_name, message)
+        end
+      end
     end
   end
 
@@ -34,9 +43,22 @@ class PaymentMethod < ActiveRecord::Base
     test_payment
   end
 
+  def year=(value)
+    integer = value.to_i
+    if integer < 100
+      super 2000 + integer
+    else
+      super integer
+    end
+  end
+
+  def number=(value)
+    @number = value.to_s.gsub(' ', '')
+  end
+
   def has_expired?
     today = Date.today
-    Date.new(expiry_year, expiry_month) < Date.new(today.year, today.month)
+    Date.new(year, month) < Date.new(today.year, today.month)
   end
 
   def credit_card
@@ -44,16 +66,18 @@ class PaymentMethod < ActiveRecord::Base
   end
 
   def create_credit_card
-    (first_name, last_name) = cardholder_name.split(/\s/, 2) if cardholder_name
-    ActiveMerchant::Billing::CreditCard.new(
-      :number => card_number,
-      :month => expiry_month,
-      :year => expiry_year,
-      :verification_value => cv2,
-      :first_name => first_name,
-      :last_name => last_name,
-      :type => card_type
-    )
+    card = ActiveMerchant::Billing::CreditCard.new
+
+    SHARED_ATTRIBUTES.each do |attribute_name|
+      card.send("#{attribute_name}=", send(attribute_name))
+    end
+
+    card.type = card_type
+
+    (card.first_name, card.last_name) = 
+      cardholder_name.split(/\s/, 2) if cardholder_name
+
+    card
   end
 
   def test_payment

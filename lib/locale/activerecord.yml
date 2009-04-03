@@ -2,7 +2,10 @@
   activerecord:
     attributes:
       payment_method:
-        cv2: "Security Code"
+        verification_value: "Security code"
+        number: "Card number"
+        year: "Card has"
+        month: "Expiry date"
     errors:
       messages:
         taken: "has been taken"

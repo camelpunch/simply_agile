@@ -112,10 +112,10 @@ describe PaymentMethodsController do
       @payment_method_params = {
         :card_type => PaymentMethod::CARD_TYPES.first,
         :cardholder_name => 'Mr Cardholder',
-        :card_number => '4444333322221111',
-        :expiry_month => '01',
-        :expiry_year => '99',
-        :cv2 => '123',
+        :number => '4242 4242 4242 4242',
+        :month => '01',
+        :year => 2.year.from_now.year.to_s[2..4],
+        :verification_value => '123',
         :billing_address_attributes => {
           :address_line_1 => '1 Some Street',
           :town => 'Sometown',
@@ -137,10 +137,9 @@ describe PaymentMethodsController do
       it "should set the card details" do
         do_call
         @organisation.payment_method.last_four_digits.should_not be_nil
-        @organisation.payment_method.expiry_month.should ==
-          @payment_method_params[:expiry_month].to_i
-        @organisation.payment_method.expiry_year.should ==
-          @payment_method_params[:expiry_year].to_i
+        @organisation.payment_method.month.should ==
+          @payment_method_params[:month].to_i
+        @organisation.payment_method.year.should == 2.years.from_now.year
       end
 
       it "should set the billing address" do

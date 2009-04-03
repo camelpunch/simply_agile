@@ -10,17 +10,17 @@
 </p>
 
 <p>
-  <%= form.label :card_number %>
-  <%= form.text_field :card_number %>
+  <%= form.label :number %>
+  <%= form.text_field :number %>
 </p>
 
 <p>
-  <%= form.label :expiry_month, "Expiry date" %>
-  <%= form.text_field :expiry_month, :size => 2 %>
-  <%= form.text_field :expiry_year, :size => 2 %>
+  <%= form.label :month %>
+  <%= form.text_field :month, :size => 2 %>
+  <%= form.text_field :year, :size => 2 %>
 </p>
 
 <p>
-  <%= form.label :cv2 %>
-  <%= form.text_field :cv2, :size => 3 %>
+  <%= form.label :verification_value %>
+  <%= form.text_field :verification_value, :size => 3 %>
 </p>
