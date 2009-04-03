@@ -12,7 +12,7 @@ class PaymentMethodsController < ApplicationController
 
   def create
     if @payment_method.save
-      redirect_to [@current_organisation, :payment_method]
+      redirect_to :payment_methods
     else
       render :template => 'payment_methods/new'
     end
@@ -31,8 +31,10 @@ class PaymentMethodsController < ApplicationController
   end
 
   def new_payment_method
-    @payment_method = PaymentMethod.new(params[:payment_method])
-    @payment_method.organisation = @organisation
+    @payment_method = @current_user.payment_methods.
+      build(params[:payment_method])
+    @payment_method.organisation = @current_organisation
+
     @payment_method.build_billing_address :country => "United Kingdom"
 
     if (params[:payment_method] &&

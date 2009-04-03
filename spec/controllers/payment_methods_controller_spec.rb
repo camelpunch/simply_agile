@@ -148,9 +148,14 @@ describe PaymentMethodsController do
         @organisation.payment_method.billing_address.should_not be_nil
       end
 
+      it "should set the user to be the current user" do
+        do_call
+        @organisation.payment_method.user.should == @user
+      end
+
       it "should redirect to page showing the payment for that organisation" do
         do_call
-        response.should be_redirect
+        response.should redirect_to(payment_methods_url)
       end
     end
 
