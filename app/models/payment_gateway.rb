@@ -8,6 +8,10 @@ module PaymentGateway
     @vendor ||= config['vendor']
   end
 
+  def successful?
+    self.respond_to?(:status) and self.status == 'OK'
+  end
+
   protected
 
   def config

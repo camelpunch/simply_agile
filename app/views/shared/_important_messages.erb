@@ -1,5 +1,5 @@
 <% if ((verification_prompt = @current_user.has_verification_prompt?) || 
-       (payment_method_prompt = @current_organisation && @current_organisation.has_payment_method_prompt?)) %>
+       (payment_method_prompt = @current_organisation && ! @current_organisation.has_valid_payment_method?)) %>
 <div class="important_message">
   <div>
     <% if verification_prompt %>

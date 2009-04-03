@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 class PaymentClass
   include PaymentGateway
+  attr_accessor :status
 end
 
 describe PaymentGateway do
@@ -25,6 +26,18 @@ describe PaymentGateway do
 
     it "should return the gateway object" do
       @payment_class.gateway.should == @gateway
+    end
+  end
+
+  describe "successful" do
+    it "should be true if status is OK" do
+      @payment_class.status = 'OK'
+      @payment_class.should be_successful
+    end
+
+    it "should be false otherwise" do
+      @payment_class.status = 'DECLINED'
+      @payment_class.should_not be_successful
     end
   end
 end

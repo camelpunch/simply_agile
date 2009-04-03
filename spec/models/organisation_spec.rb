@@ -40,23 +40,23 @@ describe Organisation do
     end
 
     it "should not prompt if there is no next_payment_date but is after period" do
-      @no_next_payment_date.should_not have_payment_method_prompt
+      @no_next_payment_date.should have_valid_payment_method
     end
 
     it "should not prompt if there is no payment method before PAYMENT_LOGIN_GRACE_PERIOD days" do
-      @no_payment_before_limit.should_not have_payment_method_prompt
+      @no_payment_before_limit.should have_valid_payment_method
     end
 
     it "should prompt if there is no payment method after PAYMENT_LOGIN_GRACE_PERIOD days" do
-      @no_payment_after_limit.should have_payment_method_prompt
+      @no_payment_after_limit.should_not have_valid_payment_method
     end
 
     it "should prompt if a payment method has expired" do
-      @expired.should have_payment_method_prompt
+      @expired.should_not have_valid_payment_method
     end
 
     it "should prompt if a payment method has failed" do
-      @failed.should have_payment_method_prompt
+      @failed.should_not have_valid_payment_method
     end
   end
 
@@ -152,6 +152,107 @@ describe Organisation do
       @organisation.suspended = true
       @organisation.valid?
       @organisation.should have(1).error_on(:suspended)
+    end
+  end
+
+  describe "payment" do
+    before :each do
+      stub_payment_gateway
+      @organisation = Organisations.create_organisation!
+      @organisation.update_attribute(:next_payment_date, Date.today)
+      @payment_plan = @organisation.payment_plan
+
+      @payment_method = PaymentMethod.create!(
+        :organisation => @organisation,
+        :expiry_month => Date.today.month,
+        :expiry_year => Date.today.year + 1,
+        :repeat_payment_token => @token
+      )
+    end
+
+    it "should create a new repeat payment" do
+      repeat = Repeat.new
+      Repeat.should_receive(:new).and_return(repeat)
+      @organisation.take_payment
+    end
+
+    it "should pass the repeat payment token to the Repeat payment" do
+      repeat = Repeat.new
+      Repeat.should_receive(:new).with do |params|
+        params[:authorization].should == @payment_method.repeat_payment_token
+      end.and_return(repeat)
+      @organisation.take_payment
+    end
+
+    it "should pass in the amount from the plan" do
+      repeat = Repeat.new
+      Repeat.should_receive(:new).with do |params|
+        params[:amount].should == @payment_plan.price.to_i * 100
+      end.and_return(repeat)
+      @organisation.take_payment
+    end
+
+    it "should pass in a description" do
+      repeat = Repeat.new
+      Repeat.should_receive(:new).with do |params|
+        params[:description].should == @organisation.name
+      end.and_return(repeat)
+      @organisation.take_payment
+    end
+
+    it "should set the next payment date to next month" do
+      payment_date = @organisation.next_payment_date
+      @organisation.take_payment
+      @organisation.reload
+      @organisation.next_payment_date.should == payment_date >> 1
+    end
+
+    describe "with next payment date in the future" do
+      before :each do
+        @organisation.next_payment_date = Date.tomorrow
+      end
+
+      it "should raise an exception" do
+        lambda {
+          @organisation.take_payment
+        }.should raise_error(PaymentNotDueException)
+      end
+
+      it "should not try to take any money" do
+        Repeat.should_not_receive(:new)
+      end
+    end
+
+    describe "with no payment date" do
+      before :each do
+        @organisation.next_payment_date = Date.tomorrow
+      end
+
+      it "should raise an exception" do
+        lambda {
+          @organisation.take_payment
+        }.should raise_error(PaymentNotDueException)
+      end
+
+      it "should not try to take any money" do
+        Repeat.should_not_receive(:new)
+      end
+    end
+
+    describe "without a valid payment method" do
+      before :each do
+        @organisation.stub!(:has_valid_payment_method?).and_return(false)
+      end
+
+      it "should raise an exception" do
+        lambda {
+          @organisation.take_payment
+        }.should raise_error(NoPaymentMethod)
+      end
+
+      it "should not try to take any money" do
+        Repeat.should_not_receive(:new)
+      end
     end
   end
 end

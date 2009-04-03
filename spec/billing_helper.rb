@@ -23,6 +23,7 @@ def stub_payment_gateway
     stub_authorize
     stub_capture
     stub_void
+    stub_purchase
 end
 
 def stub_authorize
@@ -41,6 +42,12 @@ def stub_void
     @successful_abort_response =
       YAML.load_file(fixtures_path_for(:successful_capture))
     @gateway.stub!(:void).and_return(@successful_abort_response)
+end
+
+def stub_purchase
+    @successful_payment_response =
+      YAML.load_file(fixtures_path_for(:successful_repeat))
+    @gateway.stub!(:purchase).and_return(@successful_payment_response)
 end
 
 def fixtures_path_for(file)

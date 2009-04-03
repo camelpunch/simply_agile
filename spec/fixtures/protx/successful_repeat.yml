@@ -1,0 +1,21 @@
+!ruby/object:ActiveMerchant::Billing::Response 
+  authorization: 21e2e8af543ad74f9c3eb5a77a177aeb;{4A1072F1-84B3-4EFA-B369-CB268C7429A3};6267;BXQYXUU394;repeat
+  avs_result: 
+    code: 
+    postal_match: 
+    street_match: 
+    message: 
+  cvv_result: 
+    code: 
+    message: 
+  fraud_review: 
+  message: Success
+  params: 
+    Status: OK
+    SecurityKey: BXQYXUU394
+    VPSTxId: "{4A1072F1-84B3-4EFA-B369-CB268C7429A3}"
+    StatusDetail: The transaction was REPEATed successfully.
+    TxAuthNo: "6267"
+    VPSProtocol: "2.23"
+  success: true
+  test: false

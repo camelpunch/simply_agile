@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  payment_id: 1
+  status: MyString
+  status_detail: MyString
+
+two:
+  payment_id: 1
+  status: MyString
+  status_detail: MyString
