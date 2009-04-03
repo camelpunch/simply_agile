@@ -109,6 +109,13 @@ describe PaymentMethod do
       @credit_card.should be_kind_of(ActiveMerchant::Billing::CreditCard)
     end
 
+    it "should memoize" do
+      @payment_method.instance_variable_set('@credit_card', nil)
+      @payment_method.stub!(:create_credit_card).and_return('first', 'second')
+      @payment_method.credit_card
+      @payment_method.credit_card.should == 'first'
+    end
+
     it "should set the number" do
       @credit_card.number.should == @payment_method.card_number
     end

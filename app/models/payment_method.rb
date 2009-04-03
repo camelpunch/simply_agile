@@ -25,7 +25,7 @@ class PaymentMethod < ActiveRecord::Base
     @credit_card ||= create_credit_card
   end
 
-  def credit_card
+  def create_credit_card
     (first_name, last_name) = cardholder_name.split(/\s/, 2) if cardholder_name
     ActiveMerchant::Billing::CreditCard.new(
       :number => card_number,
