@@ -125,6 +125,12 @@ describe PaymentMethod do
       @payment_method.should have(1).error_on(:card_number)
     end
 
+    it "should require that card number is well formed" do
+      @payment_method.card_number = 'aaaaaaa'
+      @payment_method.valid?
+      @payment_method.should have(1).error_on(:card_number)
+    end
+
     it "should require an expiry year" do
       @payment_method.should have(1).error_on(:expiry_year)
     end

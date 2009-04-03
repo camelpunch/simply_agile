@@ -3,6 +3,9 @@ body,legend { color:#333 }
 
 .important_message div { color:#000; background:#ff5; opacity:0.9 }
 
+.field_with_errors { border:1px solid #ff7f2a }
+label.field_with_errors { border:none }
+
 /* navigation */
 #navigation a { background:#fff; color:#333; outline:none }
 

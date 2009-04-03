@@ -21,6 +21,14 @@ class PaymentMethod < ActiveRecord::Base
   validates_inclusion_of :card_type, :in => CARD_TYPES,
     :unless => Proc.new {|payment_method| payment_method.card_type.blank? }
 
+  def validate
+    if (!card_number.blank? && 
+        !credit_card.valid? && 
+        credit_card.errors.on(:number))
+      errors.add(:card_number, "is not valid")
+    end
+  end
+
   def before_create
     set_last_four_digits
     test_payment
