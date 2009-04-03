@@ -9,6 +9,7 @@ describe StoryActionObserver do
       :stories => [@story],
       :project => @project
     )
+    @story.update_attribute(:iteration_id, @iteration.id)
   end
 
   describe "it creates a story action", :shared => true do
@@ -71,6 +72,12 @@ describe StoryActionObserver do
     end
 
     it_should_behave_like "it creates a story action"
+
+    it "should not barf if story isn't in an iteration" do
+      $debug = 1
+      @story.update_attribute(:iteration_id, nil)
+      do_action
+    end
   end
   
   describe "changing acceptance criteria details" do
