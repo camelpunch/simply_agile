@@ -5,13 +5,14 @@ class UserMailer < ActionMailer::Base
     organisation = invoice.payment.organisation
     user = organisation.payment_method.user
 
-    subject   "Invoice #{invoice.id}"
+    subject   "Invoice #{invoice}"
     recipients user.email_address
     from       FROM_ADDRESS
 
     body(:invoice => invoice, 
          :user => user, 
          :organisation => organisation,
+         :payment_plan => organisation.payment_plan,
          :billing_address => organisation.payment_method.billing_address)
   end
 

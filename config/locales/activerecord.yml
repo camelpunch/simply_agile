@@ -1,4 +1,4 @@
-"en-GB":
+en:
   activerecord:
     attributes:
       billing_address:
@@ -37,6 +37,10 @@
             user_id:
               taken: "is already a member of this organisation"
               blank: "email address is invalid"
+        payment_method:
+          attributes:
+            base:
+              credit_card_rejected: "details were rejected by the bank. Please check them and try again."
       template:
         header:
           one: "Error" 

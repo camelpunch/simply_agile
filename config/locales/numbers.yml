@@ -1,0 +1,20 @@
+en:
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 2
+
+    currency:
+      format: 
+        format: "%u%n"
+        unit: "£"
+        precision: 0
+  date:
+    abbr_day_names: [Sun, Mon, Tues, Wed, Thurs, Fri, Sat]
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    formats:
+      default: "%A %d %B %Y"
+      month: "%B %Y"

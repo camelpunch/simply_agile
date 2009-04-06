@@ -7,15 +7,23 @@ describe Repeat do
     end
   end
 
+  describe "organisation" do
+    it "should have the accessor" do
+      Repeat.new.organisation = 'asdf'
+    end
+  end
+
   describe "creation" do
     def do_protx_action
       @authorization = '2;{F48981C8-158B-4EFA-B8A8-635D3B7A86CE};5123;08S2ZURVM4'
       @amount = 100
       @description = "Payment description"
+      @organisation = Organisations.create_organisation!
       @repeat = Repeat.create!(
         :authorization => @authorization,
         :amount => @amount,
-        :description => @description
+        :description => @description,
+        :organisation => @organisation
       )
     end
 
@@ -27,9 +35,14 @@ describe Repeat do
       Payment.count.should == payment_count + 1
     end
 
-    it "should associated with the payment" do
+    it "should be associated with the payment" do
       do_protx_action
       @repeat.payment.should be_kind_of(Payment)
+    end
+
+    it "should associate the organisation with the payment" do
+      do_protx_action
+      @repeat.payment.organisation.should == @organisation
     end
 
     describe "purchase called on the gateway" do

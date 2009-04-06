@@ -25,4 +25,20 @@ describe Invoice do
       Invoice.should belong_to(:payment)
     end
   end
+
+  describe "to_s" do
+    describe "new record" do
+      it "should return 'New Invoice'" do
+        invoice = Invoice.new
+        invoice.to_s.should == 'New Invoice'
+      end
+    end
+
+    describe "existing" do
+      it "should add sa- to the id" do
+        invoice = Invoice.create!
+        invoice.to_s.should == "sa-#{invoice.id}"
+      end
+    end
+  end
 end

@@ -2,6 +2,9 @@
 <div class="section_container">
   <div class="section">
     <h2><%= h payment_method.organisation %></h2>
+    <p>
+    Next payment: <%= l payment_method.organisation.next_payment_date %>
+    </p>
     <%= render payment_method.organisation.payment_plan %>
     <p>
     Card number: <%= payment_method.last_four_digits.to_s.rjust(4, '0').rjust(16, '*') %>
@@ -9,7 +12,7 @@
     <p>
     Expiry: 
     <%= 
-      Date.new(payment_method.year, payment_method.month).to_s(:month)
+      l Date.new(payment_method.year, payment_method.month), :format => :month
     %>
     </p>
 
