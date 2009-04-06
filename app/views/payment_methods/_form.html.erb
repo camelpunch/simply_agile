@@ -1,11 +1,11 @@
 <p>
-  <%= form.label :card_type%>
-  <%= form.collection_select :card_type, PaymentMethod::CARD_TYPES, :to_s, :humanize %>
+  <%= form.label :cardholder_name %>
+  <%= form.text_field :cardholder_name %>
 </p>
 
 <p>
-  <%= form.label :cardholder_name %>
-  <%= form.text_field :cardholder_name %>
+  <%= form.label :card_type%>
+  <%= form.collection_select :card_type, PaymentMethod::CARD_TYPES, :to_s, :humanize %>
 </p>
 
 <p>
