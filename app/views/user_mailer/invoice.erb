@@ -1,11 +1,6 @@
 Invoice reference: <%= @invoice %>
 Invoice date: <%= l @invoice.created_at.to_date %>
-
-Description of services:
-Simply Agile <%= @invoice.payment_plan_name %> subscription for <%=
-@invoice.organisation_name %> for the month of <%= 
-l @invoice.date, :format => :month %>
-
+Card number: <%= card_number @invoice.last_four_digits %>
 
 Seller:
 
@@ -14,7 +9,7 @@ Jandaweb Ltd
 Bristol
 BS1 6JS
 
-VAT registration number: 940 0842 46
+VAT registration number: 940084246
 
 
 Customer:
@@ -30,8 +25,9 @@ Customer:
 
 Item:
 
-1 month Simply Agile <%= @invoice.payment_plan_name %> subscription at <%= 
+Simply Agile '<%= @invoice.payment_plan_name %>' subscription at <%= 
 number_to_currency @invoice.payment_plan_price %> per month
+for the month of <%= l @invoice.date, :format => :month %>
 
 VAT rate: <%= Invoice::VAT_RATE %>%
 

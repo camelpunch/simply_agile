@@ -9,6 +9,7 @@ class RepeatObserver < ActiveRecord::Observer
 
     Invoice.create!(:user => payment_method.user,
                     :payment => repeat.payment,
+                    :last_four_digits => payment_method.last_four_digits,
                     :date => organisation.next_payment_date,
                     :organisation_name => organisation.name,
                     :payment_plan_name => payment_plan.name,

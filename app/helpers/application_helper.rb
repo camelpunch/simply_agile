@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def card_number(last_four_digits)
+    last_four_digits.to_s.rjust(4, '0').rjust(16, '*')
+  end
+
   def session_url_with_protocol(options = {})
     if RAILS_ENV == 'production'
       session_url(options.merge(:protocol => 'https'))

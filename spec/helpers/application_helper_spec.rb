@@ -1,6 +1,16 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
+  describe "card_number" do
+    it "should turn 4242 to ************4242" do
+      helper.card_number(4242).should == "************4242"
+    end
+
+    it "should turn 242 to ************0242" do
+      helper.card_number(242).should == "************0242"
+    end
+  end
+
   describe "story_format" do
     before :each do
       @content = "As a developer

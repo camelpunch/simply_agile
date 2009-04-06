@@ -13,6 +13,7 @@ describe RepeatObserver do
                                   :country => 'country')
     @payment_method = mock_model(PaymentMethod,
                                  :billing_address => @billing_address,
+                                 :last_four_digits => 234,
                                  :user => @user)
     @payment_plan = mock_model PaymentPlan, :name => 'plan', :price => 39.28
     @organisation = mock_model(Organisation,
@@ -28,50 +29,59 @@ describe RepeatObserver do
   end
 
   describe "after_create" do
+    def do_call
+      @observer.after_create(@repeat)
+    end
+
     describe "when successful" do
       before :each do
         @repeat.stub!(:successful?).and_return(true)
       end
 
       it "should create an invoice" do
-        lambda {@observer.after_create(@repeat)}.
-          should change(Invoice, :count).by(1)
+        lambda {do_call}.should change(Invoice, :count).by(1)
+      end
+
+      it "should set the last four digits" do
+        Invoice.should_receive(:create!).
+          with hash_including(:last_four_digits => @payment_method.last_four_digits)
+        do_call
       end
 
       it "should set the payment" do
         Invoice.should_receive(:create!).
           with hash_including(:payment => @payment)
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should set the user" do
         Invoice.should_receive(:create!).
           with hash_including(:user => @user)
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should set the organisation name" do
         Invoice.should_receive(:create!).
           with hash_including(:organisation_name => @organisation.name)
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should set the payment plan name" do
         Invoice.should_receive(:create!).
           with hash_including(:payment_plan_name => @payment_plan.name)
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should set the payment plan price" do
         Invoice.should_receive(:create!).
           with hash_including(:payment_plan_price => @payment_plan.price)
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should set the date from the organisation next payment date" do
         Invoice.should_receive(:create!).
           with hash_including(:date => @organisation.next_payment_date)
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should copy the address details from the organisation" do
@@ -88,13 +98,13 @@ describe RepeatObserver do
         Invoice.should_receive(:create!).
           with hash_including(expected_address_details)
 
-        @observer.after_create(@repeat)
+        do_call
       end
 
       it "should copy the amount from the payment plan price" do
         Invoice.should_receive(:create!).
           with hash_including(:amount => 39.28)
-        @observer.after_create(@repeat)
+        do_call
       end
     end
 
@@ -104,12 +114,11 @@ describe RepeatObserver do
       end
 
       it "should not create an invoice" do
-        lambda {@observer.after_create(@repeat)}.
-          should_not change(Invoice, :count)
+        lambda {do_call}.should_not change(Invoice, :count)
       end
 
       it "should return true" do
-        @observer.after_create(@repeat).should be_true
+        do_call.should be_true
       end
     end
   end

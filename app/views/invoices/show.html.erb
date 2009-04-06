@@ -8,17 +8,15 @@
 <% end %>
 
 
-<p id="date">
-Invoice date: <%= l @invoice.created_at.to_date %>
-</p>
 
-<div id="description">
-<h2>Description of services</h2>
-<p>
-Simply Agile <%= h @invoice.payment_plan_name %> subscription for <%=
-h @invoice.organisation_name %> for the month of <%= 
-l @invoice.date, :format => :month %>
-</p>
+<div id="date">
+<h2>Invoice date</h2>
+<p><%= l @invoice.created_at.to_date %></p>
+</div>
+
+<div id="payment_method">
+  <h2>Card number</h2>
+  <p><%= card_number @invoice.last_four_digits %></p>
 </div>
 
 <div id="seller">
@@ -31,7 +29,7 @@ BS1 6JS
 </p>
 
 <h3>VAT registration number</h3>
-<p>940 0842 46</p>
+<p>940084246</p>
 </div>
 
 <div id="customer">
@@ -55,8 +53,10 @@ BS1 6JS
   <h2>Item</h2>
 
   <p>
-  1 month Simply Agile <%= h @invoice.payment_plan_name %> subscription at <%= 
+  Simply Agile '<%= h @invoice.payment_plan_name %>' subscription at <%= 
     number_to_currency @invoice.payment_plan_price %> per month
+for the month of <%= 
+l @invoice.date, :format => :month %>
   </p>
 
   <h3>VAT rate</h3>

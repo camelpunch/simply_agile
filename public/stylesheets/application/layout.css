@@ -186,8 +186,11 @@ body#invoices_index table td{ padding:0 2em 0 0 }
 body#invoices_show #description,
 body#invoices_show #seller,
 body#invoices_show #customer,
-body#invoices_show #date { margin-bottom:1em; overflow:hidden }
-body#invoices_show #seller { float:left; width:24em }
+body#invoices_show #date,
+body#invoices_show #payment_method { margin-bottom:1em; overflow:hidden }
+body#invoices_show #seller,
+body#invoices_show #date { float:left; width:24em }
 body#invoices_show #item { clear:left }
 body#invoices_show #content h3 { float:left; width:13em }
+body#invoices_show #content h2+h3 { margin:1em 0 }
 /* end invoices/show */

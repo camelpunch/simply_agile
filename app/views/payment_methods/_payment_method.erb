@@ -7,7 +7,7 @@
     </p>
     <%= render payment_method.organisation.payment_plan %>
     <p>
-    Card number: <%= payment_method.last_four_digits.to_s.rjust(4, '0').rjust(16, '*') %>
+    Card number: <%= card_number payment_method.last_four_digits %>
     </p>
     <p>
     Expiry: 

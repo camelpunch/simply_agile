@@ -1,4 +1,6 @@
 class UserMailer < ActionMailer::Base
+  helper :application
+
   FROM_ADDRESS = '"Simply Agile" <support@besimplyagile.com>'
 
   def invoice(invoice)
