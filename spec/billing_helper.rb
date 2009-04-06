@@ -32,6 +32,12 @@ def stub_authorize
     @gateway.stub!(:authorize).and_return(@successful_authorization_response)
 end
 
+def stub_authorize_rejected
+    @rejected_authorization_response =
+      YAML.load_file(fixtures_path_for(:rejected_authorization))
+    @gateway.stub!(:authorize).and_return(@rejected_authorization_response)
+end
+
 def stub_capture
     @successful_capture_response =
       YAML.load_file(fixtures_path_for(:successful_capture))

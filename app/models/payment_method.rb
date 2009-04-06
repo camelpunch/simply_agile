@@ -94,7 +94,7 @@ class PaymentMethod < ActiveRecord::Base
   def test_payment
     authorisation = Authorisation.create!(:payment_method => self, 
                                           :amount => 100)
-    return false if authorisation.payment.reference.blank?
+    return false unless authorisation.successful?
     self.repeat_payment_token = authorisation.payment.reference
     authorisation.void
   end

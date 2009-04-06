@@ -119,13 +119,9 @@ describe PaymentMethod do
       Void.count.should == void_count + 1
     end
 
-    describe "when authorisation payment reference is blank" do
-      it "should return false" do
-        authorisation = mock_model(Authorisation,
-                                   :payment => mock_model(Payment,
-                                                          :reference => ''))
-        Authorisation.stub!(:create).and_return(authorisation)
-        Authorisation.stub!(:create!).and_return(authorisation)
+    describe "payment failure" do
+      it "should return false if the authorisation was not successful" do
+        stub_authorize_rejected
         @payment_method.test_payment.should == false
       end
     end
