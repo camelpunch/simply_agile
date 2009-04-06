@@ -4,6 +4,8 @@
       billing_address:
         address_line_1: "Line 1"
         address_line_2: "Line 2"
+      organisation:
+        name: "Organisation name"
       payment_method:
         verification_value: "Security code"
         number: "Card number"
@@ -16,6 +18,8 @@
         billing_address_postcode: "Postcode"
     errors:
       messages:
+        invalid: "is invalid"
+        not_routable: "does not appear to exist"
         taken: "has been taken"
         blank: "is blank"
         greater_than_or_equal_to: "must be at least {{count}}"
@@ -24,6 +28,8 @@
       models:
         organisation:
           attributes:
+            payment_plan_id:
+              blank: "must be selected"
             suspended:
               exclusion: "organisation"
         organisation_member:

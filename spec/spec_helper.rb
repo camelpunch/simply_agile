@@ -49,6 +49,12 @@ Spec::Runner.configure do |config|
   config.include ValidateXhtml
   config.include AssociationMatchers
 
+  module ValidatesEmailFormatOf
+    def self.validate_email_domain(*args)
+      true
+    end
+  end
+
   def login
     @user = Users.create_user!
     session[:user_id] = @user.id

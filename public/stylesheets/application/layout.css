@@ -54,6 +54,7 @@ div.section { position:relative; padding:40px 36px 22px 36px;
 div.with_subsections div.section { padding:0 }
 form div.with_subsections div.section { padding-bottom:5px }
 form div.with_subsections div.section div.subsection { padding-left:15px }
+.section .subsection { position:relative; overflow:hidden }
 div.section h2 { position:absolute; z-index:10; top:-25px; padding:12px 23px; 
               /*ie6*/ left:-50px }
 div.section>h2 { left:-13px }
@@ -135,6 +136,7 @@ body#stories_backlog .javascript #content input { display:none }
 /* organisations/index and payment_methods/index */
 body#payment_methods_index #content ol>li,
 body#organisations_index #content ol>li { width:49%; float:left; 
+                                          min-width:38em;
                                           height:23em; overflow:auto;
                                           margin-bottom:30px }
 body#payment_methods_index #content ol>li .section_container,

@@ -1,7 +1,5 @@
 /* iteration lists */
 #iterations div.section .guidance { padding:30px 0 0 15px }
-.section .subsection { position:relative; overflow:hidden;
-                       padding-bottom:15px }
 #content .iteration { padding:0 15px; float:left; margin-bottom:15px }
 #content .iteration a { display:block; margin:0 auto }
 /* end iteration lists */
