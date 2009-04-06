@@ -29,12 +29,14 @@ describe Organisation do
 
         expired_payment_method = mock_model(PaymentMethod, :has_expired? => true)
         @expired = Organisations.create_organisation!
+        @expired.created_at = (period + 1).days.ago
         @expired.stub!(:payment_method).and_return(expired_payment_method)
 
         failed_payment_method = mock_model(PaymentMethod, 
           :has_expired? => false,
           :has_failed? => true)
         @failed = Organisations.create_organisation!
+        @failed.created_at = (period + 1).days.ago
         @failed.stub!(:payment_method).and_return(failed_payment_method)
       end
     end
@@ -48,6 +50,11 @@ describe Organisation do
     end
 
     it "should prompt if there is no payment method after PAYMENT_LOGIN_GRACE_PERIOD days" do
+      @no_payment_after_limit.should_not have_valid_payment_method
+    end
+
+    it "should prompt if there is no payment_method" do
+      @no_payment_after_limit.stub!(:payment_method).and_return(nil)
       @no_payment_after_limit.should_not have_valid_payment_method
     end
 

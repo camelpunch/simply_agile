@@ -45,12 +45,12 @@ class Organisation < ActiveRecord::Base
   end
 
   def has_valid_payment_method?
-    return true if next_payment_date.blank?
+    return true if next_payment_date.blank? ||
+      created_at > PAYMENT_LOGIN_GRACE_PERIOD.days.ago
 
-    if payment_method && (payment_method.has_expired? ||
-                          payment_method.has_failed?)
+    if payment_method.nil?
       false
-    elsif created_at < PAYMENT_LOGIN_GRACE_PERIOD.days.ago
+    elsif payment_method.has_expired? || payment_method.has_failed?
       false
     else
       true
