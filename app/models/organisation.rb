@@ -65,7 +65,7 @@ class Organisation < ActiveRecord::Base
 
     repeat = Repeat.create!(
       :authorization => payment_method.repeat_payment_token,
-      :amount => payment_plan.price * 100,
+      :amount => payment_plan.total * 100,
       :description => name,
       :organisation => self
     )
@@ -73,6 +73,7 @@ class Organisation < ActiveRecord::Base
     if repeat.successful?
       self.update_attribute(:next_payment_date, next_payment_date >> 1)
     else
+      payment_method.update_attribute(:has_failed, true)
       UserMailer.deliver_payment_failure(self)
     end
   end

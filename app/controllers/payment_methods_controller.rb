@@ -3,6 +3,8 @@ class PaymentMethodsController < ApplicationController
   before_filter :new_payment_method, :only => [:new, :create]
   before_filter :get_payment_method, :only => [:destroy]
 
+  skip_before_filter :select_organisation, :except => [:new, :create]
+
   def index
     @payment_methods = @current_user.payment_methods
     if @current_user.payment_methods.empty?

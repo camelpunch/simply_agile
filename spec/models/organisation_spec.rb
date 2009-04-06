@@ -200,7 +200,7 @@ describe Organisation do
     it "should pass in the amount from the plan" do
       repeat = Repeat.new
       Repeat.should_receive(:new).with do |params|
-        params[:amount].should == @payment_plan.price.to_i * 100
+        params[:amount].should == @payment_plan.total * 100
       end.and_return(repeat)
       @organisation.take_payment
     end
@@ -294,6 +294,12 @@ describe Organisation do
       it "should email the user" do
         UserMailer.should_receive(:deliver_payment_failure).with(@organisation)
         @organisation.take_payment
+      end
+
+      it "should mark the payment method as failed" do
+        @organisation.take_payment
+        @payment_method.reload
+        @payment_method.should have_failed
       end
     end
 
