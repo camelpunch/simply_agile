@@ -213,6 +213,14 @@ describe Organisation do
       @organisation.take_payment
     end
 
+    it "should pass in itself as organisation" do
+      repeat = Repeat.new
+      Repeat.should_receive(:new).
+        with(hash_including(:organisation => @organisation)).
+        and_return(repeat)
+      @organisation.take_payment
+    end
+
     it "should set the next payment date to next month" do
       payment_date = @organisation.next_payment_date
       @organisation.take_payment

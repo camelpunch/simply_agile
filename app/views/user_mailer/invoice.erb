@@ -1,0 +1,49 @@
+Invoice reference: <%= @invoice %>
+Invoice date: <%= @invoice.created_at.to_date %>
+
+Description of services:
+Simply Agile <%= @payment_plan.name %> subscription for <%=
+@organisation.name %> for the month of <%= 
+l @organisation.next_payment_date, :format => :month %>
+
+
+Seller:
+
+Jandaweb Ltd
+21 St Thomas Street
+Bristol
+BS1 6JS
+
+VAT registration number: 940 0842 46
+
+
+Customer:
+
+<%= @billing_address.name %>
+<%= @billing_address.address_line_1 %>
+<%= @billing_address.address_line_2 %>
+<%= @billing_address.town %>
+<%= @billing_address.county %>
+<%= @billing_address.postcode %>
+<%= @billing_address.country %>
+
+
+Item:
+
+1 month Simply Agile <%= @payment_plan.name %> subscription at <%= 
+number_to_currency @payment_plan.price %> per month
+
+VAT rate: <%= Invoice::VAT_RATE %>%
+
+VAT amount: <%= number_to_currency @invoice.vat_amount, :precision => 2 %>
+
+Total excluding VAT: <%= number_to_currency @invoice.amount, :precision => 2 %>
+Total VAT charged: <%= number_to_currency @invoice.vat_amount, :precision => 2 %>
+
+Total including VAT: <%= number_to_currency(@invoice.amount + 
+                                            @invoice.vat_amount, :precision => 2) %>
+
+
+With our compliments,
+
+Simply Agile

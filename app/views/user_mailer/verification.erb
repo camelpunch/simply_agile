@@ -8,7 +8,7 @@ visit the following url:
 
 or enter the code <%=  @user.verification_token %> when prompted by the website.
 
-If you do not verify this email address by <%= @user.verify_by.to_s(:default) %> then your
+If you do not verify this email address by <%= l @user.verify_by %> then your
 account will be suspended.
 
 We hope that you find Simply Agile as useful as we do. If you have any

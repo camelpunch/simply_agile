@@ -19,10 +19,10 @@
                 :width => 350) %>
   <p id="time_remaining">
   <% if @iteration.finished? %>
-  This iteration finished on <%= @iteration.end_date %>.
+  This iteration finished on <%= l @iteration.end_date %>.
   <% else %>
   This iteration ends in <%= pluralize @iteration.days_remaining, 'day' %> 
-  on <%= @iteration.end_date %>.
+  on <%= l @iteration.end_date %>.
   <% end %>
   </p>
 </div>

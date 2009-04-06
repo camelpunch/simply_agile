@@ -95,7 +95,7 @@ class PaymentMethod < ActiveRecord::Base
     authorisation = Authorisation.create!(:payment_method => self, 
                                           :amount => 100)
     if ! authorisation.successful?
-      errors.add_to_base("The Credit Card details were rejected by the bank. Please check them and try again.")
+      errors.add_to_base(:credit_card_rejected)
       return false
     end
     self.repeat_payment_token = authorisation.payment.reference

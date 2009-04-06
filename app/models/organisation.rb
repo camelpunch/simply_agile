@@ -66,7 +66,8 @@ class Organisation < ActiveRecord::Base
     repeat = Repeat.create!(
       :authorization => payment_method.repeat_payment_token,
       :amount => payment_plan.price * 100,
-      :description => name
+      :description => name,
+      :organisation => self
     )
 
     if repeat.successful?

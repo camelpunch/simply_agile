@@ -1,12 +1,11 @@
 class Repeat < ActiveRecord::Base
   include PaymentGateway
 
-  attr_accessor :authorization
-  attr_accessor :response
+  attr_accessor :authorization, :response, :organisation
   belongs_to :payment
 
   def before_create
-    payment = create_payment
+    payment = create_payment :organisation => organisation
     self.response = gateway.purchase(
       amount,
       authorization,

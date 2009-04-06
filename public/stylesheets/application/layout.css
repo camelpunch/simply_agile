@@ -138,7 +138,7 @@ body#stories_backlog .javascript #content input { display:none }
 body#payment_methods_index #content ol>li,
 body#organisations_index #content ol>li { width:49%; float:left; 
                                           min-width:38em;
-                                          height:23em; overflow:auto;
+                                          height:26em; overflow:auto;
                                           margin-bottom:30px }
 body#payment_methods_index #content ol>li .section_container,
 body#organisations_index #content ol>li .section_container { margin-right:30px }

@@ -11,7 +11,7 @@
     <% if @current_user.verify_by - Date.today < 4 -%>
       <p>
       If you do not verify your email address by
-      <%= @current_user.verify_by.to_s(:default) %>, your account will be disabled.
+      <%= l @current_user.verify_by %>, your account will be disabled.
       </p>
     <% end -%>
     <% end %>

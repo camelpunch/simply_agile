@@ -1,6 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Capture do
+  describe "associations" do
+    it "should belong to a payment" do
+      Capture.should belong_to(:payment)
+    end
+  end
+
   describe "creation" do
     def do_protx_action
       @amount = 100

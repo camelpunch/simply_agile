@@ -4,7 +4,7 @@ in Simply Agile.
 We tried to take a payment of <%= @organisation.payment_plan.price %>GBP
 using the card **** **** **** <%= @payment_method.last_four_digits %>.
 
-We will continue to try to take the payment until <%= @organisation.suspension_date.to_s(:default) %>.
+We will continue to try to take the payment until <%= l @organisation.suspension_date %>.
 If no payment has been taken by this date then the organisation will be
 suspended.
 
