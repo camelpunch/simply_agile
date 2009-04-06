@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def session_url_with_protocol(options = {})
+    if RAILS_ENV == 'production'
+      session_url(options.merge(:protocol => 'https'))
+    else
+      session_url options
+    end
+  end
+
   def google_analytics_tag(id)
     if controller.google_analytics?
       

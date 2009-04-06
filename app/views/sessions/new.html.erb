@@ -2,7 +2,7 @@
 
 <div id="existing_users">
   <h2>Existing users</h2>
-  <% form_for User.new, :url => session_path do |f| %>
+  <% form_for User.new, :url => session_url_with_protocol do |f| %>
     <p>
       <%= f.label :email_address %>
       <%= f.text_field :email_address, :class => 'auto_focus' %>
