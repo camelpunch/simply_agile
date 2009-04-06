@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  price: 9.99
+  vat_rate: 9.99
+  vat_amount: 9.99
+  customer_name: MyString
+  customer_address_line_1: MyString
+  customer_address_line_2: MyString
+  customer_county: MyString
+  customer_town: MyString
+  customer_postcode: MyString
+  customer_country: MyString
+
+two:
+  price: 9.99
+  vat_rate: 9.99
+  vat_amount: 9.99
+  customer_name: MyString
+  customer_address_line_1: MyString
+  customer_address_line_2: MyString
+  customer_county: MyString
+  customer_town: MyString
+  customer_postcode: MyString
+  customer_country: MyString

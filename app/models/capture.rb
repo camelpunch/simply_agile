@@ -4,6 +4,8 @@ class Capture < ActiveRecord::Base
   attr_accessor :authorization
   attr_accessor :response
 
+  belongs_to :payment
+
   def before_create
     self.response = gateway.capture(amount, authorization)
     

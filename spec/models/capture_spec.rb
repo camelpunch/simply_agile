@@ -13,6 +13,12 @@ describe Capture do
 
     it_should_behave_like "it uses protx"
 
+    describe "associations" do
+      it "should belong to a payment" do
+        Capture.should belong_to(:payment)
+      end
+    end
+
     describe "capture on the gateway" do
       it "should be called" do
         @gateway.should_receive(:capture)

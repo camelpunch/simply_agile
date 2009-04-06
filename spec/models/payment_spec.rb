@@ -26,6 +26,10 @@ describe Payment do
     it "should have_one void" do
       Payment.should have_one(:void)
     end
+    
+    it "should belong to an organisation" do
+      Payment.should belong_to(:organisation)
+    end
   end
 
   describe "vendor_tx_code" do
