@@ -1,0 +1,24 @@
+--- !ruby/object:ActiveMerchant::Billing::Response 
+authorization: rejected-1;{4464A5D7-DFED-4842-8040-FF5ECEA6E122};;Q4PV5U3LNB;authorization
+avs_result: 
+  code: 
+  postal_match: N
+  street_match: X
+  message: 
+cvv_result: 
+  code: N
+  message: No Match
+fraud_review: 
+message: VSP Direct transaction from VSP Simulator.
+params: 
+  Status: REJECTED
+  SecurityKey: Q4PV5U3LNB
+  AVSCV2: NO DATA MATCHES
+  VPSTxId: "{4464A5D7-DFED-4842-8040-FF5ECEA6E122}"
+  StatusDetail: VSP Direct transaction from VSP Simulator.
+  VPSProtocol: "2.23"
+  AddressResult: NOTCHECKED
+  PostCodeResult: NOTMATCHED
+  CV2Result: NOTMATCHED
+success: false
+test: false
