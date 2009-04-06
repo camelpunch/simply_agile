@@ -1,6 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Repeat do
+  describe "associations" do
+    it "should belong to a payment" do
+      Repeat.should belong_to(:payment)
+    end
+  end
+
   describe "creation" do
     def do_protx_action
       @authorization = '2;{F48981C8-158B-4EFA-B8A8-635D3B7A86CE};5123;08S2ZURVM4'

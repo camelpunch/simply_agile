@@ -1,6 +1,29 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UserMailer do
+  describe "invoice" do
+    before :each do
+      @invoice = Invoices.create_invoice!
+      @invoice.payment.organisation.payment_method = PaymentMethods.
+        create_payment_method!(:user => Users.create_user!,
+                               :billing_address => BillingAddresses.create_billing_address!)
+      @mail = UserMailer.create_invoice(@invoice)
+    end
+
+    it "should set the subject" do
+      @mail.subject.should_not be_blank
+    end
+
+    it "should set the recipient" do
+      @mail.to.should == 
+        [@invoice.payment.organisation.payment_method.user.email_address]
+    end
+
+    it "should set the from" do
+      @mail.from.should == ['support@besimplyagile.com']
+    end
+  end
+
   describe "verification" do
     before :each do
       @user = Users.create_user!(:signup => true)

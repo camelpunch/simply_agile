@@ -1,0 +1,25 @@
+Invoice number: sa-<%= @invoice.id %>
+Invoice date: <%= @invoice.created_at.to_date %>
+
+Description:
+Simply Agile subscription for 
+
+Seller:
+
+Jandaweb Ltd
+21 St Thomas Street
+Bristol
+BS1 6JS
+
+VAT registration number: 940 0842 46
+
+
+Customer:
+
+<%= @billing_address.name %>
+<%= @billing_address.address_line_1 %>
+<%= @billing_address.address_line_2 %>
+<%= @billing_address.town %>
+<%= @billing_address.county %>
+<%= @billing_address.postcode %>
+<%= @billing_address.country %>

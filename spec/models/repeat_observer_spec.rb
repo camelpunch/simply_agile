@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe CaptureObserver do
+describe RepeatObserver do
   before :each do
     @billing_address = mock_model(BillingAddress,
                                   :name => 'Billing Name',
@@ -15,27 +15,27 @@ describe CaptureObserver do
     @organisation = mock_model(Organisation,
                                :payment_method => @payment_method)
     @payment = mock_model Payment, :organisation => @organisation
-    @capture = mock_model(Capture, 
-                          :payment => @payment,
-                          :amount => 3001) # pence
-    @observer = CaptureObserver.instance
+    @repeat = mock_model(Repeat, 
+                         :payment => @payment,
+                         :amount => 3001) # pence
+    @observer = RepeatObserver.instance
   end
 
   describe "after_create" do
     describe "when successful" do
       before :each do
-        @capture.stub!(:successful?).and_return(true)
+        @repeat.stub!(:successful?).and_return(true)
       end
 
       it "should create an invoice" do
-        lambda {@observer.after_create(@capture)}.
+        lambda {@observer.after_create(@repeat)}.
           should change(Invoice, :count).by(1)
       end
 
       it "should set the payment" do
         Invoice.should_receive(:create!).
           with hash_including(:payment => @payment)
-        @observer.after_create(@capture)
+        @observer.after_create(@repeat)
       end
 
       it "should copy the address details from the organisation" do
@@ -52,28 +52,28 @@ describe CaptureObserver do
         Invoice.should_receive(:create!).
           with hash_including(expected_address_details)
 
-        @observer.after_create(@capture)
+        @observer.after_create(@repeat)
       end
 
-      it "should copy the amount from the capture" do
+      it "should copy the amount from the repeat" do
         Invoice.should_receive(:create!).
           with hash_including(:amount => 30.01)
-        @observer.after_create(@capture)
+        @observer.after_create(@repeat)
       end
     end
 
     describe "when unsuccessful" do
       before :each do
-        @capture.stub!(:successful?).and_return(false)
+        @repeat.stub!(:successful?).and_return(false)
       end
 
       it "should not create an invoice" do
-        lambda {@observer.after_create(@capture)}.
+        lambda {@observer.after_create(@repeat)}.
           should_not change(Invoice, :count)
       end
 
       it "should return true" do
-        @observer.after_create(@capture).should be_true
+        @observer.after_create(@repeat).should be_true
       end
     end
   end
