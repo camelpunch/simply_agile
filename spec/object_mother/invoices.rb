@@ -2,6 +2,8 @@ class Invoices < ObjectMother
   truncate_invoice
   def self.invoice_prototype
     {
+      :amount => 23.23,
+      :vat_amount => 0.35,
       :date => Date.today,
       :customer_name => 'Andrew',
       :customer_address_line_1 => 'Some Place',

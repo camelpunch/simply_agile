@@ -1,2 +1,76 @@
-<h1>Invoices#show</h1>
-<p>Find me in app/views/invoices/show.html.erb</p>
+<% content_for :h1, "Invoice #{h(@invoice)}" %>
+<% content_for :title, "Invoice #{@invoice} | Invoices | Account" %>
+<% @non_organisation = true %>
+<% content_for :breadcrumbs do %>
+  <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
+  <li><%= link_to 'Invoices', :invoices %></li>
+  <li><%= h @invoice %></li>
+<% end %>
+
+
+<p id="date">
+Invoice date: <%= l @invoice.created_at.to_date %>
+</p>
+
+<div id="description">
+<h2>Description of services</h2>
+<p>
+Simply Agile <%= h @invoice.payment_plan_name %> subscription for <%=
+h @invoice.organisation_name %> for the month of <%= 
+l @invoice.date, :format => :month %>
+</p>
+</div>
+
+<div id="seller">
+<h2>Seller</h2>
+<p>
+Jandaweb Ltd<br />
+21 St Thomas Street<br />
+Bristol<br />
+BS1 6JS
+</p>
+
+<h3>VAT registration number</h3>
+<p>940 0842 46</p>
+</div>
+
+<div id="customer">
+<h2>Customer</h2>
+<p>
+<%= h @invoice.customer_name %><br />
+<%= h @invoice.customer_address_line_1 %><br />
+<% if @invoice.customer_address_line_2? %>
+<%= h @invoice.customer_address_line_2 %><br />
+<% end %>
+<%= h @invoice.customer_town %><br />
+<% if @invoice.customer_county? %>
+<%= h @invoice.customer_county %><br />
+<% end %>
+<%= h @invoice.customer_postcode %><br />
+<%= h @invoice.customer_country %>
+</p>
+</div>
+
+<div id="item">
+  <h2>Item</h2>
+
+  <p>
+  1 month Simply Agile <%= h @invoice.payment_plan_name %> subscription at <%= 
+    number_to_currency @invoice.payment_plan_price %> per month
+  </p>
+
+  <h3>VAT rate</h3>
+  <p><%= Invoice::VAT_RATE %>%</p>
+
+  <h3>VAT amount</h3>
+  <p><%= number_to_currency @invoice.vat_amount, :precision => 2 %></p>
+
+  <h3>Total excluding VAT</h3>
+  <p><%= number_to_currency @invoice.amount, :precision => 2 %></p>
+
+  <h3>Total VAT charged</h3>
+  <p><%= number_to_currency @invoice.vat_amount, :precision => 2 %></p>
+
+  <h3>Total including VAT</h3>
+  <p><%= number_to_currency(@invoice.amount + @invoice.vat_amount, :precision => 2) %></p>
+</div>

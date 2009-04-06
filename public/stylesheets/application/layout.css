@@ -178,5 +178,16 @@ form#new_payment_method .section { width:32em }
 /* end payment_methods/new */
 
 /* invoices/index */
-body#invoices_index table { width:50% }
+body#invoices_index table th,
+body#invoices_index table td{ padding:0 2em 0 0 }
 /* end invoices/index */
+
+/* invoices/show */
+body#invoices_show #description,
+body#invoices_show #seller,
+body#invoices_show #customer,
+body#invoices_show #date { margin-bottom:1em; overflow:hidden }
+body#invoices_show #seller { float:left; width:24em }
+body#invoices_show #item { clear:left }
+body#invoices_show #content h3 { float:left; width:13em }
+/* end invoices/show */

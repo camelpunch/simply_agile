@@ -91,9 +91,9 @@ describe RepeatObserver do
         @observer.after_create(@repeat)
       end
 
-      it "should copy the amount from the repeat" do
+      it "should copy the amount from the payment plan price" do
         Invoice.should_receive(:create!).
-          with hash_including(:amount => 30.01)
+          with hash_including(:amount => 39.28)
         @observer.after_create(@repeat)
       end
     end

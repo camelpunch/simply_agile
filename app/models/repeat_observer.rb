@@ -13,7 +13,7 @@ class RepeatObserver < ActiveRecord::Observer
                     :organisation_name => organisation.name,
                     :payment_plan_name => payment_plan.name,
                     :payment_plan_price => payment_plan.price,
-                    :amount => repeat.amount / 100.0,
+                    :amount => payment_plan.price,
                     :customer_name => billing_address.name,
                     :customer_address_line_1 => billing_address.address_line_1,
                     :customer_address_line_2 => billing_address.address_line_2,

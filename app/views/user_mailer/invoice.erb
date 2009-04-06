@@ -1,5 +1,5 @@
 Invoice reference: <%= @invoice %>
-Invoice date: <%= @invoice.created_at.to_date %>
+Invoice date: <%= l @invoice.created_at.to_date %>
 
 Description of services:
 Simply Agile <%= @invoice.payment_plan_name %> subscription for <%=

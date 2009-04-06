@@ -55,3 +55,7 @@ form#new_organisation fieldset ol li#plan_1 label span.name { font-size:161.6% }
 form#new_organisation fieldset ol li#plan_2 label span.name { font-size:182% }
 form#new_organisation fieldset ol li label span.numeric { font-size:123.1% }
 /* end organisations/new */
+
+/* invoices/show */
+body#invoices_show #content h3 { font-weight:bold }
+/* end invoices/show */

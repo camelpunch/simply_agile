@@ -1,8 +1,9 @@
 <tr>
-  <td><%= invoice %></td>
+  <td><%= h invoice %></td>
   <td><%= h invoice.organisation_name %></td>
   <td><%= h invoice.payment_plan_name %></td>
   <td><%= l invoice.date, :format => :month %></td>
   <td class="numeric"><%= number_to_currency invoice.amount, :precision => 2 %></td>
   <td class="numeric"><%= number_to_currency invoice.vat_amount, :precision => 2 %></td>
+  <td><%= link_to "Full #{h(invoice)} invoice", invoice %></td>
 </tr>
