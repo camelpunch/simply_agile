@@ -8,7 +8,6 @@ a:hover { text-decoration:none }
 
 .numeric { text-align:right }
 
-form input.numeric { text-align:right }
 legend { font-weight:bold; padding-top:2em }
 
 #container { text-align:center } /* largely for ie6 centring but reused */
@@ -49,6 +48,7 @@ body#organisations_index li.organisation h3 { margin-top:1em }
 /* end organisations/index */
 
 /* organisations/new */
+form#new_organisation .numeric,
 form#new_organisation fieldset ol li { text-align:center }
 form#new_organisation fieldset ol li#plan_0 label span.name { font-size:138.5% }
 form#new_organisation fieldset ol li#plan_1 label span.name { font-size:161.6% }
