@@ -46,12 +46,12 @@ class Organisation < ActiveRecord::Base
   end
 
   def has_valid_payment_method?
-    return true if next_payment_date.blank?
+    return true if next_payment_date.blank? ||
+      created_at > PAYMENT_LOGIN_GRACE_PERIOD.days.ago
 
-    if payment_method && (payment_method.has_expired? ||
-                          payment_method.has_failed?)
+    if payment_method.nil?
       false
-    elsif created_at < PAYMENT_LOGIN_GRACE_PERIOD.days.ago
+    elsif payment_method.has_expired? || payment_method.has_failed?
       false
     else
       true
@@ -66,7 +66,7 @@ class Organisation < ActiveRecord::Base
 
     repeat = Repeat.create!(
       :authorization => payment_method.repeat_payment_token,
-      :amount => payment_plan.price * 100,
+      :amount => payment_plan.total * 100,
       :description => name,
       :organisation => self
     )
@@ -74,6 +74,7 @@ class Organisation < ActiveRecord::Base
     if repeat.successful?
       self.update_attribute(:next_payment_date, next_payment_date >> 1)
     else
+      payment_method.update_attribute(:has_failed, true)
       UserMailer.deliver_payment_failure(self)
     end
   end

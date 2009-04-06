@@ -3,7 +3,8 @@ en:
     attributes:
       billing_address:
         address_line_1: "Line 1"
-        address_line_2: "Line 2"
+        address_line_2: "Line 2 (optional)"
+        county: "County (optional)"
       organisation:
         name: "Organisation name"
       payment_method:

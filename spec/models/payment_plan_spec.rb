@@ -24,4 +24,15 @@ describe PaymentPlan do
       PaymentPlan.all.should == [@one_pound, @two_pounds]
     end
   end
+
+  describe "total" do
+    before :each do
+      @payment_plan = PaymentPlans.create_payment_plan!
+    end
+
+    it "should return the price + the VAT amount" do
+      @payment_plan.total.to_s.should == (@payment_plan.price +
+        (@payment_plan.price / 100 * Invoice::VAT_RATE)).to_s
+    end
+  end
 end
