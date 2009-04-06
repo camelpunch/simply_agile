@@ -3,7 +3,10 @@ h1 a { text-decoration:none }
 h2,caption { font-weight:bold; font-size:138.5% }
 p { margin:1em 0 1em 0 }
 table p { margin:0 }
+table th { font-weight:bold }
 a:hover { text-decoration:none }
+
+.numeric { text-align:right }
 
 form input.numeric { text-align:right }
 legend { font-weight:bold; padding-top:2em }

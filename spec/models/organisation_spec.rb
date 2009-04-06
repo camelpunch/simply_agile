@@ -127,6 +127,10 @@ describe Organisation do
       Organisation.should have_many(:users)
     end
 
+    it "should have many payments" do
+      Organisation.should have_many(:payments)
+    end
+
     it "should have one payment method" do
       Organisation.should have_one(:payment_method)
     end

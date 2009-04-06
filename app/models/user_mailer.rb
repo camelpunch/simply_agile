@@ -2,18 +2,11 @@ class UserMailer < ActionMailer::Base
   FROM_ADDRESS = '"Simply Agile" <support@besimplyagile.com>'
 
   def invoice(invoice)
-    organisation = invoice.payment.organisation
-    user = organisation.payment_method.user
-
     subject   "Invoice #{invoice}"
-    recipients user.email_address
+    recipients invoice.user.email_address
     from       FROM_ADDRESS
 
-    body(:invoice => invoice, 
-         :user => user, 
-         :organisation => organisation,
-         :payment_plan => organisation.payment_plan,
-         :billing_address => organisation.payment_method.billing_address)
+    body       :invoice => invoice
   end
 
   def verification(user)

@@ -24,6 +24,10 @@ describe Invoice do
     it "should belong to a payment" do
       Invoice.should belong_to(:payment)
     end
+
+    it "should belong to a user" do
+      Invoice.should belong_to(:user)
+    end
   end
 
   describe "to_s" do

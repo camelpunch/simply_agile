@@ -8,10 +8,6 @@ describe User do
     }
   end
 
-  it "should create a new instance given valid attributes" do
-    Users.create_user!
-  end
-
   describe "prompting for verification" do
     before :each do
       @prompt = Users.create_user! :created_at => 25.hours.ago
@@ -62,6 +58,10 @@ describe User do
   end
 
   describe "associations" do
+    it "should have many invoices" do
+      User.should have_many(:invoices)
+    end
+
     it "should have many payment_methods" do
       User.should have_many(:payment_methods)
     end

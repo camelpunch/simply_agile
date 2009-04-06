@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :organisation_members
   has_many :organisations, :through => :organisation_members
   has_many :payment_methods
+  has_many :invoices
 
   validates_email_format_of :email_address, :check_mx => true,
     :if => :new_record?

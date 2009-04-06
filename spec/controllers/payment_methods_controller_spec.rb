@@ -109,6 +109,7 @@ describe PaymentMethodsController do
     end
 
     before :each do
+      @organisation = Organisations.create_organisation!(:users => [@user])
       @payment_method_params = {
         :card_type => PaymentMethod::CARD_TYPES.first,
         :cardholder_name => 'Mr Cardholder',

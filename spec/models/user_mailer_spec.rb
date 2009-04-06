@@ -3,11 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe UserMailer do
   describe "invoice" do
     before :each do
-      @invoice = Invoices.create_invoice! :amount => 5, :vat_amount => 4
-      @invoice.payment.organisation.next_payment_date = Date.today
-      @invoice.payment.organisation.payment_method = PaymentMethods.
-        create_payment_method!(:user => Users.create_user!,
-                               :billing_address => BillingAddresses.create_billing_address!)
+      @user = Users.create_user!
+      @invoice = Invoices.create_invoice! :amount => 5, :vat_amount => 4,
+        :user => @user
+      @invoice.date = Date.today
       @mail = UserMailer.create_invoice(@invoice)
     end
 
@@ -16,8 +15,7 @@ describe UserMailer do
     end
 
     it "should set the recipient" do
-      @mail.to.should == 
-        [@invoice.payment.organisation.payment_method.user.email_address]
+      @mail.to.should == [@user.email_address]
     end
 
     it "should set the from" do

@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :iterations, :collection => { :finished => :get }
   map.resources :payment_methods
+  map.resources :invoices
   map.resources :story_team_members
 
   map.resources :organisations do |organisation|

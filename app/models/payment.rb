@@ -2,6 +2,7 @@ class Payment < ActiveRecord::Base
   has_one :authorisation
   has_one :capture
   has_one :void
+  has_one :invoice
   belongs_to :organisation
 
   def before_create

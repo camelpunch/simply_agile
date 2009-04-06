@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe RepeatObserver do
   before :each do
+    @user = mock_model User
     @billing_address = mock_model(BillingAddress,
                                   :name => 'Billing Name',
                                   :address_line_1 => 'asdf',
@@ -11,8 +12,13 @@ describe RepeatObserver do
                                   :postcode => 'se22 8gb',
                                   :country => 'country')
     @payment_method = mock_model(PaymentMethod,
-                                 :billing_address => @billing_address)
+                                 :billing_address => @billing_address,
+                                 :user => @user)
+    @payment_plan = mock_model PaymentPlan, :name => 'plan', :price => 39.28
     @organisation = mock_model(Organisation,
+                               :name => 'asdf',
+                               :next_payment_date => 2.days.ago.to_date,
+                               :payment_plan => @payment_plan,
                                :payment_method => @payment_method)
     @payment = mock_model Payment, :organisation => @organisation
     @repeat = mock_model(Repeat, 
@@ -35,6 +41,36 @@ describe RepeatObserver do
       it "should set the payment" do
         Invoice.should_receive(:create!).
           with hash_including(:payment => @payment)
+        @observer.after_create(@repeat)
+      end
+
+      it "should set the user" do
+        Invoice.should_receive(:create!).
+          with hash_including(:user => @user)
+        @observer.after_create(@repeat)
+      end
+
+      it "should set the organisation name" do
+        Invoice.should_receive(:create!).
+          with hash_including(:organisation_name => @organisation.name)
+        @observer.after_create(@repeat)
+      end
+
+      it "should set the payment plan name" do
+        Invoice.should_receive(:create!).
+          with hash_including(:payment_plan_name => @payment_plan.name)
+        @observer.after_create(@repeat)
+      end
+
+      it "should set the payment plan price" do
+        Invoice.should_receive(:create!).
+          with hash_including(:payment_plan_price => @payment_plan.price)
+        @observer.after_create(@repeat)
+      end
+
+      it "should set the date from the organisation next payment date" do
+        Invoice.should_receive(:create!).
+          with hash_including(:date => @organisation.next_payment_date)
         @observer.after_create(@repeat)
       end
 
