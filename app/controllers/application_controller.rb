@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   attr_accessor :google_analytics_disabled
 
+  include ExceptionNotifiable
+
   helper :all # include all helpers, all the time
 
   layout :decide_layout
