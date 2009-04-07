@@ -9,7 +9,7 @@ body.non_session #content { text-align:left }
 #sign_up_login { float:right; margin-right:40px }
 ul#images,
 #new_existing { width:40%; float:right }
-ul#images { margin-top:6em }
+ul#images { margin-top:8em }
 ul#images li p { margin:1em 0 6em 0 }
 .flash,
 #existing_users,

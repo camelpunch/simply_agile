@@ -8,7 +8,7 @@
                             'landing/typography', 
                             'landing/colours', 
                             :cache => 'landing') %>
-    <title><%= yield :title %> | Simply Agile</title>
+    <title><%= yield :title %></title>
   </head>
 
   <body class="non_session <%= body_classes.join(' ') %>" id="<%=
@@ -26,7 +26,7 @@
         <%= link_to image_tag('try_it_free.png', 
           :alt => 'TRY IT FREE!'), new_user_path %>
           <p>
-          <%= link_to "Existing users login", new_session_path %>
+          <%= link_to "Existing user login", new_session_path %>
           </p>
         </div>
         <%= yield :images %>
