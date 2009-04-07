@@ -1,76 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe IterationsController do
-  def mock_story
-    mock_model(Story, 
-      :estimate= => nil,
-      :save! => true,
-      :iteration= => nil,
-      :attributes= => nil,
-      :update_attributes! => nil)
-  end
-
   before :each do
     login
     setup_project
     setup_iteration
-  end
-
-  describe "instance variable setup" do
-    before :each do
-      controller.instance_variable_set('@project', @project)
-    end
-
-    describe "get_iteration" do
-      before :each do
-        controller.stub!(:params).and_return(
-          :project_id => @project.id,
-          :id => @iteration.id
-        )
-      end
-
-      def iteration
-        controller.instance_variable_get("@iteration")
-      end
-
-      it "should get the iteration from the project" do
-        controller.send(:get_iteration)
-        iteration.project.should == @project
-      end
-
-      it "should set the instance variable" do
-        controller.send(:get_iteration)
-        @iteration.should == @iteration
-      end
-    end
-
-    describe "get_stories" do
-      it "should get the assigned or available stories for the iteration" do
-        controller.instance_variable_set("@iteration", @iteration)
-        controller.send(:get_stories)
-        controller.instance_variable_get("@stories").should == [@story]
-      end
-    end
-
-    describe "new_iteration" do
-      before :each do
-        controller.stub!(:params).and_return({})
-      end
-
-      def iteration
-        controller.instance_variable_get("@iteration")
-      end
-
-      it "should set the project" do
-        controller.send(:new_iteration)
-        iteration.project.should == @project
-      end
-
-      it "should set the instance variable" do
-        controller.send(:new_iteration)
-        iteration.should be_kind_of(Iteration)
-      end
-    end
   end
 
   describe "it operates on a new iteration", :shared => true do
@@ -89,14 +23,17 @@ describe IterationsController do
       @active_iterations = []
       Project.delete_all
       Iteration.delete_all
+      Story.delete_all
       2.times do
         project = Projects.create_project!(:organisation => @organisation)
-        story = Stories.create_story!(:project => @project)
+        story = Stories.create_story!(:project => project)
         iteration = Iterations.create_iteration!(
           :project => project,
           :stories => [story]
         )
+
         iteration.start
+
         @active_iterations << iteration
       end
 

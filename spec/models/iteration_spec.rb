@@ -187,7 +187,6 @@ describe Iteration do
       @estimate += 8
       @stories << Stories.create_story!(:iteration => @iteration, :estimate => 2)
       @estimate += 2
-      @stories << Stories.create_story!(:iteration => @iteration)
     end
 
     it "should respond to intial_estimate" do

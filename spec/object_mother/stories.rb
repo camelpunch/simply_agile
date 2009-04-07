@@ -9,6 +9,7 @@ class Stories < ObjectMother
       :name => "Story #{count + 1}",
       :project => Projects.simply_agile,
       :content => 'asdf',
+      :estimate => 1,
     }
   end
 

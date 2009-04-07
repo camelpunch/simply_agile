@@ -4,7 +4,9 @@ describe SitemapsController do
 
   describe "show" do
     it "should be successful" do
-      get :show
+      session[:user_id] = nil
+      session[:organisation_id] = nil
+      get :show, :format => :xml
       response.should be_success
     end
   end
