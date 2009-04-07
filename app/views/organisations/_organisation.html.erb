@@ -23,7 +23,7 @@
     <% if !organisation.suspended? && @current_user.organisations.many? %>
       <% form_tag(session_path, :method => :put) do %>
         <%= hidden_field_tag :organisation_id, organisation.id, :id => nil %>
-        <%= submit_tag "Switch to this organisation" %>
+        <%= submit_tag "Switch to #{h(organisation)}" %>
       <% end %>
     <% end %>
     <%= render organisation.payment_plan %>

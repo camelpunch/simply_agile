@@ -17,6 +17,14 @@ describe UsersController do
     end
   end
 
+  describe "index" do
+    it "should redirect to the home url" do
+      login
+      get :index
+      response.should redirect_to(home_url)
+    end
+  end
+
   describe "show" do
     def do_call
       get :show, :id => @user.id

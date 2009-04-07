@@ -6,6 +6,10 @@ class UsersController < ApplicationController
   before_filter :current_organisation, :only => [:show]
   before_filter :new_user, :only => [:new, :create]
 
+  def index
+    redirect_to :home
+  end
+
   def show
     if params[:id].to_i != current_user.id
       redirect_to current_user 

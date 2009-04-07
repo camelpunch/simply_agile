@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
     return true if current_organisation
 
     if current_user.organisations.many?
-      flash[:notice] = "Please select an organisation by selecting 'Switch to this organisation'"
+      flash[:notice] = "Please switch to an organisation to begin."
       session[:redirect_to] = request.request_uri
       redirect_to organisations_url
     elsif current_user.organisations.empty?
