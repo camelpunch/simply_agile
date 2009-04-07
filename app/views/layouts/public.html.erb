@@ -22,9 +22,13 @@
           <h1><%= yield :h1 %></h1>
           <%= yield %>
         </div>
+        <div id="sign_up_login">
         <%= link_to image_tag('try_it_free.png', 
-          :alt => 'TRY IT FREE!'), new_user_path,
-          :id => 'try_it_free' %>
+          :alt => 'TRY IT FREE!'), new_user_path %>
+          <p>
+          <%= link_to "Existing users login", new_session_path %>
+          </p>
+        </div>
         <%= yield :images %>
       </div>
       <%= render :partial => 'shared/footer' %>

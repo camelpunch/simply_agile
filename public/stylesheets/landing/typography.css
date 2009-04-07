@@ -9,3 +9,5 @@ p, dl, li { font-size:123.1% }
 p.description { font-size:108%; margin-bottom:1em }
 strong { font-weight:bold }
 ul#images li p { font-size:85%; text-align:center; font-weight:bold }
+
+#sign_up_login p { text-align:center; margin-top:.2em }

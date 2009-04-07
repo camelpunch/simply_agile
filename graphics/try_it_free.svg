@@ -20,7 +20,6 @@
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4678">
       <stop
          style="stop-color:#87cdde;stop-opacity:1;"
@@ -114,6 +113,45 @@
        x2="1235.7144"
        y2="504.07648"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3246"
+       id="linearGradient4788"
+       gradientUnits="userSpaceOnUse"
+       x1="833.56433"
+       y1="447.58685"
+       x2="834.30023"
+       y2="513.75751" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3246"
+       id="linearGradient4790"
+       gradientUnits="userSpaceOnUse"
+       x1="833.56433"
+       y1="447.58685"
+       x2="834.30023"
+       y2="513.75751" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3246"
+       id="linearGradient4802"
+       gradientUnits="userSpaceOnUse"
+       x1="833.56433"
+       y1="447.58685"
+       x2="834.30023"
+       y2="513.75751" />
+    <filter
+       inkscape:collect="always"
+       id="filter4916"
+       x="-0.068741247"
+       width="1.1374825"
+       y="-0.57452332"
+       height="2.1490466">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.7767833"
+         id="feGaussianBlur4918" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -126,8 +164,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2"
-     inkscape:cx="992.88165"
-     inkscape:cy="573.46868"
+     inkscape:cx="1071.6342"
+     inkscape:cy="496.3628"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -150,14 +188,6 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <image
-       y="127.29075"
-       x="52.85714"
-       id="image2412"
-       height="773"
-       width="1280"
-       sodipodi:absref="/home/andrew/Desktop/Untitled.png"
-       xlink:href="/home/andrew/Desktop/Untitled.png" />
     <rect
        style="opacity:1;fill:url(#linearGradient4684);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect2436"
@@ -165,12 +195,18 @@
        height="56"
        x="861.14282"
        y="482.07648"
-       ry="10" />
+       ry="10"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2438"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:0.38862562;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3452);font-family:Arial Black;-inkscape-font-specification:Arial Black"
-       transform="matrix(2.4482156,0,0,2.4482156,-1043.7014,-717.73878)"><flowRegion
+       transform="matrix(2.4482156,0,0,2.4482156,-1043.7014,-717.73878)"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          id="flowRegion2440"
          style="stroke:url(#linearGradient3252)"><rect
            id="rect2442"
@@ -184,7 +220,10 @@
        transform="matrix(2.4482156,0,0,2.4482156,-1042.4514,-718.73878)"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40846076999999997;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.22222222;font-family:Arial Black;-inkscape-font-specification:Arial Black;opacity:1"
        id="flowRoot3342"
-       xml:space="preserve"><flowRegion
+       xml:space="preserve"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
          style="stroke:url(#linearGradient3350)"
          id="flowRegion3344"><rect
            style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40846076999999997;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.22222222;font-family:Arial Black;-inkscape-font-specification:Arial Black"
@@ -196,7 +235,10 @@
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40846076999999997;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.22222222"
          id="flowPara3348">TRY IT FREE!</flowPara></flowRoot>    <g
        id="g4702"
-       transform="translate(-4,0)">
+       transform="translate(-4,0)"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <path
          id="path4278"
          d="M 1140.4785,492.94238 L 1140.4785,501.21568 L 1115.6283,501.21568 L 1115.6283,524.21058 L 1140.4785,524.21058 L 1140.4785,531.78198 L 1156.4251,522.10768 L 1172.3717,512.43208 L 1156.4251,502.61688 L 1140.4785,492.94238 z"
@@ -206,5 +248,76 @@
          d="M 1144.4785,490.94238 L 1144.4785,499.21568 L 1119.6283,499.21568 L 1119.6283,522.21058 L 1144.4785,522.21058 L 1144.4785,529.78198 L 1160.4251,520.10768 L 1176.3717,510.43208 L 1160.4251,500.61688 L 1144.4785,490.94238 z"
          id="path5859" />
     </g>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       ry="0"
+       y="582.01208"
+       x="1199.1428"
+       height="56.128448"
+       width="238.20538"
+       id="rect4762"
+       style="opacity:1;fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       rx="10" />
+    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       transform="matrix(1.5794684,0,0,1.5794684,38.8439,-172.04962)"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:0.38862562;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter3452);font-family:Arial Black;-inkscape-font-specification:Arial Black"
+       id="flowRoot4764"
+       xml:space="preserve"><flowRegion
+         style="stroke:url(#linearGradient4788)"
+         id="flowRegion4766"><rect
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Arial Black;-inkscape-font-specification:Arial Black"
+           y="494.50504"
+           x="788.57141"
+           height="38.57143"
+           width="370.71429"
+           id="rect4768" /></flowRegion><flowPara
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="flowPara4770">LOGIN</flowPara></flowRoot>    <flowRoot
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       xml:space="preserve"
+       id="flowRoot4772"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.22222224;font-family:Arial Black;-inkscape-font-specification:Arial Black"
+       transform="matrix(1.5794684,0,0,1.5794684,38.85817,-172.69476)"><flowRegion
+         id="flowRegion4774"
+         style="stroke:url(#linearGradient4790)"><rect
+           id="rect4776"
+           width="370.71429"
+           height="38.57143"
+           x="788.57141"
+           y="494.50504"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.22222224;font-family:Arial Black;-inkscape-font-specification:Arial Black" /></flowRegion><flowPara
+         id="flowPara4778"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40846077;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.22222224">LOGIN</flowPara></flowRoot>    <flowRoot
+       transform="matrix(1.6108906,0,0,1.6108906,-58.92793,-211.75562)"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40049329;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.49735449;font-family:Arial Black;-inkscape-font-specification:Arial Black"
+       id="flowRoot4794"
+       xml:space="preserve"
+       inkscape:export-filename="/home/andrew/dev/simply-agile/public/images/try_it_free.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><flowRegion
+         style="stroke:url(#linearGradient4802);stroke-width:0.40049329"
+         id="flowRegion4796"><rect
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40049329;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.49735449;font-family:Arial Black;-inkscape-font-specification:Arial Black"
+           y="494.50504"
+           x="788.57141"
+           height="38.57143"
+           width="370.71429"
+           id="rect4798" /></flowRegion><flowPara
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.40049329;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.49735449"
+         id="flowPara4800">Existing user</flowPara></flowRoot>    <path
+       id="path4924"
+       d="M 1389.9785,591.94238 L 1389.9785,600.21568 L 1365.1283,600.21568 L 1365.1283,623.21058 L 1389.9785,623.21058 L 1389.9785,630.78198 L 1405.9251,621.10768 L 1421.8717,611.43208 L 1405.9251,601.61688 L 1389.9785,591.94238 z"
+       style="opacity:0.37914692;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.07580304;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#filter4556);enable-background:accumulate" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:3.07580304;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="M 1393.9785,589.94238 L 1393.9785,598.21568 L 1369.1283,598.21568 L 1369.1283,621.21058 L 1393.9785,621.21058 L 1393.9785,628.78198 L 1409.9251,619.10768 L 1425.8717,609.43208 L 1409.9251,599.61688 L 1393.9785,589.94238 z"
+       id="path4926" />
   </g>
 </svg>

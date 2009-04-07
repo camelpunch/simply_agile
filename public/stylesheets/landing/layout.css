@@ -6,7 +6,7 @@
 #new_existing,
 body.non_session #content { text-align:left }
 #main { width:38em; float:left }
-a#try_it_free { display:block; float:right; margin-right:40px }
+#sign_up_login { float:right; margin-right:40px }
 ul#images,
 #new_existing { width:40%; float:right }
 ul#images { margin-top:6em }
