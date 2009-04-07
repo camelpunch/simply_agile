@@ -48,6 +48,13 @@ vendor/plugins/country_select:
   type: git
   revision: d3b5d8656df3defc1653aafe1a9bb5f0164c1741
   remote: braid/vendor/plugins/country-select
+vendor/plugins/exception_notification: 
+  squashed: true
+  url: git://github.com/rails/exception_notification.git
+  branch: master
+  type: git
+  revision: e8b603e523c14f145da7b3a1729f5cc06eba2dd1
+  remote: braid/vendor/plugins/exception-notification
 vendor/plugins/assert_valid_xhtml: 
   squashed: true
   branch: master
