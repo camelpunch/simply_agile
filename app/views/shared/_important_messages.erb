@@ -16,7 +16,7 @@
     <% end -%>
     <% end %>
 
-    <% if payment_method_prompt %>
+    <% if payment_method_prompt && false %>
     <p>
     This organisation has no valid payment method.
     <%= link_to 'Update payment details', [:new, @current_organisation, :payment_method] %>.

@@ -4,7 +4,7 @@
 <div class="section_container">
   <% unless organisation.suspended? %>
   <ul class="section_links">
-    <% unless organisation.payment_method %>
+    <% unless organisation.payment_method || true %>
       <li>
       <%= link_to 'Pay', [:new, organisation, :payment_method] %>
       </li>

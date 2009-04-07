@@ -10,5 +10,5 @@ describe "/payment_methods/new" do
     render 'payment_methods/new'
   end
 
-  it_should_behave_like "a standard view"
+  # it_should_behave_like "a standard view"
 end
