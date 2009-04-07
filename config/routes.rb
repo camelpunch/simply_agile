@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resource :privacy_policy
+  map.resource :sitemap
   
   map.resources :iterations, :collection => { :finished => :get }
   map.resources :payment_methods

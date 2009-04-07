@@ -30,7 +30,12 @@
         <%= link_to image_tag('try_it_free.png', 
           :alt => 'TRY IT FREE!'), new_user_path %>
           <p>
+          <% if @current_user %>
+            Already logged in:
+            <%= link_to "go to my home page", home_path %>
+          <% else %>
           <%= link_to "Existing user login", new_session_path %>
+          <% end %>
           </p>
         </div>
         <%= yield :images %>
