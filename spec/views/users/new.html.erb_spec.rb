@@ -8,8 +8,4 @@ describe "/users/new" do
   end
 
   it_should_behave_like "a standard view"
-
-  it "should have a form for creating an account" do
-    response.should have_tag('form[action=?][method=?]', users_path, 'post')
-  end
 end

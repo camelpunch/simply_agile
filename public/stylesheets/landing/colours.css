@@ -12,3 +12,5 @@ form.new_user .container,
 .flash p { background:#fff }
 
 li { list-style-type:square }
+ul#images li { list-style-type:none }
+ul#images li p { color:#444 }

@@ -1,12 +1,16 @@
 #container { text-align:center; margin:20px 0 0 0; padding-top:148px }
 #header { height:60px }
-#content { width:950px; margin:15px auto }
+#content { width:950px; margin:27px auto }
 #footer { clear:both; padding:30px 0 }
-#beta_warning,
+#main,
 #new_existing,
 body.non_session #content { text-align:left }
-#beta_warning { width:56%; float:left }
+#main { width:38em; float:left }
+#sign_up_login { float:right; margin-right:40px }
+ul#images,
 #new_existing { width:40%; float:right }
+ul#images { margin-top:6em }
+ul#images li p { margin:1em 0 6em 0 }
 .flash,
 #existing_users,
 #new_users,
@@ -18,10 +22,14 @@ form.new_user .container,
 .flash p { padding:10px 14px }
 label { display:block; margin-top:.5em }
 
+p.submit { margin-top:1em }
+
+
 #privacy_policies_show dt { float:left; clear:left; width:10em }
 #privacy_policies_show dd { display:block; margin-left:10em }
 
 li { margin-left:15px }
+ul#images li { margin:0 }
 
 body.user_verifications .flash { margin-top:15px; width:50% }
 

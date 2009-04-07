@@ -1,5 +1,15 @@
-<% content_for :title, "Welcome to Simply Agile beta" %>
+<% content_for :title, "Login" %>
+<% content_for :h1, "Login" %>
+<p>
+If you have used Simply Agile before, enter your email address and password to continue.
+If not, <%= link_to 'sign up', new_user_path %>.
+</p>
+<p>
+We'd love to hear any feedback you have about the system. Please send it to
+<%= mail_to 'feedback@besimplyagile.com', 'feedback@besimplyagile.com', :encode => "hex" %>.
+</p>
 
+<% content_for :side do %>
 <div id="existing_users">
   <h2>Existing users</h2>
   <% form_for User.new, :url => session_url_with_protocol do |f| %>
@@ -24,3 +34,4 @@
     agile team's potential.
   </p>
 </div>
+<% end %>

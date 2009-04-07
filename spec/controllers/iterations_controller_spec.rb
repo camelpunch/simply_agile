@@ -163,7 +163,7 @@ describe IterationsController do
     
     it "should assign all of the finished iterations for the organisation" do
       do_call
-      assigns[:iterations].should == @finished_iterations
+      assigns[:iterations].sort.should == @finished_iterations.sort
   end
 end
 
