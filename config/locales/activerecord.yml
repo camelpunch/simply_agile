@@ -29,6 +29,10 @@ en:
         not_a_number: "must be a number"
         expired: "has passed"
       models:
+        iteration:
+          attributes:
+            stories:
+              not_estimated: "must have some story points (estimations). You should re-plan this iteration and add story points."
         organisation:
           attributes:
             payment_plan_id:

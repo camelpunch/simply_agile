@@ -12,8 +12,8 @@ class Stories < ObjectMother
     }
   end
 
-  define_story(:iteration_planning, :name => 'Iteration Planning')
-  define_story(:acceptance_criteria, :name => 'Acceptance Criteria')
+  define_story(:iteration_planning, :name => 'Iteration Planning', :estimate => 1)
+  define_story(:acceptance_criteria, :name => 'Acceptance Criteria', :estimate => 2)
   define_story(:iteration_planning_included, 
                :name => 'Iteration Planning Included',
                :estimate => 4,

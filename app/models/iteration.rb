@@ -24,6 +24,10 @@ class Iteration < ActiveRecord::Base
         project.organisation.payment_plan.active_iteration_limit)
       errors.add(:organisation, "active iteration limit reached")
     end
+
+    if (start_date? && !initial_estimate.nil? && initial_estimate <= 0)
+      errors.add(:stories, :not_estimated)
+    end
   end
 
   def save_with_planned_stories_attributes!(attributes)

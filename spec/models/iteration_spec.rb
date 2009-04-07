@@ -332,6 +332,13 @@ describe Iteration do
       @iteration = Iterations.first_iteration
     end
 
+    it "should return false if there are no estimates" do
+      story1 = Stories.create_story! :estimate => 0
+      story2 = Stories.create_story! :estimate => ''
+      @iteration.stories = [story1, story2]
+      @iteration.start.should be_false
+    end
+
     it "should set the start_date to today" do
       @iteration.start
       @iteration.reload
