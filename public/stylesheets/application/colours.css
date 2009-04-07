@@ -50,10 +50,6 @@ div.section h2 { background:#fff }
 .javascript #request h2#request_header { background:#ff7f2a }
 /* end javascript request */
 
-/* beta */
-#beta_warning { background: #eee; border: 1px solid #ff7f2a; }
-/* end beta */
-
 #headings .complete { background:#3dfd4f }
 #acceptance_criteria #completed, .aside { color: #aaa }
 

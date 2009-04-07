@@ -5,6 +5,7 @@ h2 { font-size:197%; margin:0 0 .5em 0 }
 #privacy_policies_show h2 { margin:1em 0 .5em 0 }
 #privacy_policies_show p { margin:1em 0 }
 p, dl, li { font-size:123.1% }
-#beta_warning p { font-size:123.1%; margin:1em 0; line-height:1.5em }
+#main p { font-size:138.5%; margin:1.5em 0; line-height:1.5em; text-align:justify }
 p.description { font-size:108%; margin-bottom:1em }
 strong { font-weight:bold }
+ul#images li p { font-size:85%; text-align:center; font-weight:bold }

@@ -9,9 +9,9 @@ describe PublicController do
 
     it_should_behave_like "it's successful"
 
-    it "should render the sessions/new template" do
+    it "should render the show template" do
       do_call
-      response.should render_template('sessions/new')
+      response.should render_template('public/show')
     end
   end
 

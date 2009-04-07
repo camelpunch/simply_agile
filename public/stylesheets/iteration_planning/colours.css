@@ -2,3 +2,4 @@ body.iteration_planning .include a{ background-repeat:no-repeat }
 body.iteration_planning #stories_available .include a { background-image:url(/images/arrow_large_left_highlighted.png) }
 body.iteration_planning #stories_iteration .include a { background-image:url(/images/arrow_large_right_highlighted.png) }
 body.iteration_planning .display .content { background:#fff }
+body.iteration_planning #content .story .estimate { border:none }

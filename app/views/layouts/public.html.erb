@@ -11,7 +11,7 @@
     <title><%= yield :title %> | Simply Agile</title>
   </head>
 
-  <body class="<%= body_classes.join(' ') %>" id="<%=
+  <body class="non_session <%= body_classes.join(' ') %>" id="<%=
         "#{controller.controller_name}_#{controller.action_name}" %>">
     <div id="container">
       <div id="header">
@@ -21,30 +21,14 @@
         <div id="main">
           <h1><%= yield :h1 %></h1>
           <%= yield %>
-          <p id="home_link">
-          <%= link_to 'Back to home page', root_path %>
-          </p>
         </div>
-
-        <div id="new_existing">
-          <%= render_flash %>
-          <%= yield :side %>
-        </div>
+        <%= link_to image_tag('try_it_free.png', 
+          :alt => 'TRY IT FREE!'), new_user_path,
+          :id => 'try_it_free' %>
+        <%= yield :images %>
       </div>
       <%= render :partial => 'shared/footer' %>
     </div>
-    <%= javascript_include_tag('jquery-1.3.2.min', 
-                               'jquery-ui-1.7.custom.min',
-                               'jquery.form', 
-                               'flash',
-                               'request',
-                               'new_story_adder',
-                               'acceptance_criteria', 
-                               'iteration_planning',
-                               'iteration_active',
-                               'backlog_prioritisation',
-                               'application', 
-                               :cache => true) %>
     <%= google_analytics_tag 'UA-4141244-3' %>
   </body>
 

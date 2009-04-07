@@ -1,6 +1,25 @@
 <% content_for :title, "Create an account" %>
+<% content_for :h1, "Create an account" %>
 
-<% form_for @user do |form| %>
+<p>
+Let us know your email address and set a password so you can start planning
+projects immediately.  
+</p>
+
+<p class="description">
+  The email address is used to log in to the system. We will only use this
+  address to send important account information.
+  <strong>We will never send unsolicated emails to your email address
+  or pass it on to third parties.</strong>
+</p>
+<p>
+  We take your privacy seriously. See our 
+  <%= link_to "privacy policy", privacy_policy_path %>
+  for&#160;more&#160;details.
+</p>
+
+<% content_for :side do %>
+<% form_for @user, :url => users_url_with_protocol do |form| %>
   <h2>Create an account</h2>
   <div class="container">
     <div>
@@ -8,15 +27,6 @@
       <p>
         <%= form.label :email_address %>
         <%= form.text_field :email_address, :class => 'auto_focus' %>
-      </p>
-      <p class="description">
-        The email address is used to log in to the system. We will only use this
-        address to send important account information.
-        <strong>We will never send unsolicated emails to your email address
-        or pass it on to third parties.</strong>
-        We take your privacy seriously. See our 
-        <%= link_to "privacy policy", privacy_policy_path %>
-        for more details.
       </p>
     </div>
     <p>
@@ -27,4 +37,5 @@
       <%= form.submit 'Create account' %>
     </p>
   </div>
+<% end %>
 <% end %>
