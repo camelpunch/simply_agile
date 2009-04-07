@@ -162,6 +162,7 @@ form#new_organisation fieldset ol li label span {
 form#new_organisation fieldset ol li ul.limits { overflow:hidden }
 form#new_organisation fieldset ol li ul.limits, 
 form#new_organisation fieldset ol li div.description { margin-top:1em }
+#free_trial { width: 60em; }
 /* end organisations/new */
 
 /* organisations/show */

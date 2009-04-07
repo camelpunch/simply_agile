@@ -8,49 +8,47 @@
 
 <% form_for @organisation do |f| %>
   <%= f.error_messages %>
-  <div>
-    <p>
-    Stories, projects and iterations are automatically shared with other members
-    of your organisation. 
-    </p>
-    <p>
-    You must give your organisation a name. It can be
-    changed later.
-    </p>
-    <p>
-    <%= f.label :name %>
-    <%= f.text_field :name, :class => 'auto_focus' %>
-    </p>
-  </div>
+
   <fieldset>
-    <legend>Choose Payment Plan</legend>
-    <p>
-    Select a payment plan based on the needs of this organisation.
-    </p>
-    <p>
-    You don't have to pay for anything just yet: a payment method can be added
-    at any time before the end of the organisation's first month.
-    </p>
-    <p>
-    For now though, let us know what you think you might use. It can be changed later.
-    </p>
+    <legend>Step 1: Choose an Organisation Name</legend>
+    <div>
+      <p>
+        Organisations are used to group projects, stories and iterations and to
+        control who has access to them.
+      </p>
+
+      <p>
+        To get started, enter a name for your organisation. You can use whatever
+        name you like.
+      </p>
+      <p>
+        <%= f.label :name %>
+        <%= f.text_field :name, :class => 'auto_focus' %>
+      </p>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Step 2: Choose a Payment Plan</legend>
     <ol>
       <% @payment_plans.each_with_index do |plan, idx| %>
         <li id="plan_<%= idx %>">
           <label for="organisation_payment_plan_id_<%= plan.id %>">
-          <%= f.radio_button :payment_plan_id, plan.id %>
-          <span class="name"><%= h plan.name %></span>
-          <span class="numeric"><%= number_to_currency plan.price %> per month</span>
+            <%= f.radio_button :payment_plan_id, plan.id %>
+            <span class="name"><%= h plan.name %></span>
+            <span class="numeric"><%= number_to_currency plan.price %> per month</span>
           </label>
           <%= render plan, :short => true %>
           <div class="description">
             <%= simple_format plan.description %>
           </div>
         </li>
-        <% end %>
-      </ol>
-    </fieldset>
-    <p class="submit">
-    <%= f.submit 'Create' %>
+      <% end %>
+    </ol>
+    <p id="free_trial">
+      All plans have a 30 day free trial.
     </p>
+  </fieldset>
+  <p class="submit">
+    <%= f.submit 'Create' %>
+        </p>
   <% end %>
