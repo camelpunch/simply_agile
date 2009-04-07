@@ -17,7 +17,6 @@ class StoriesController < ApplicationController
     if @story.save
       respond_to do |format|
         format.html do
-          flash[:notice] = "Story successfully created"
           redirect_to [@project, @story]
         end
 

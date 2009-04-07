@@ -57,7 +57,15 @@
 </div>
 
 <% if @story.iteration_id.blank? || @story.iteration.pending? %>
-  <p id="backlog_link">
-  <%= link_to h("#{@project} Backlog"), backlog_project_stories_path(@project) %>
-  </p>
+  <div id="next_steps">
+    <h2>Next Steps</h2>
+    <ul>
+      <li>
+      <%= link_to 'Add new story', contextual_new_story_path %>
+      </li>
+      <li>
+      <%= link_to h("#{@project} Backlog"), backlog_project_stories_path(@project) %>
+      </li>
+    </ul>
+  </div>
 <% end %>

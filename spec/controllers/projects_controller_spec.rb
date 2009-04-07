@@ -77,11 +77,6 @@ describe ProjectsController do
         project = assigns[:project]
         response.should redirect_to(project_url(project))
       end
-
-      it "should provide a flash notice" do
-        do_call
-        flash[:notice].should_not be_blank
-      end
     end
 
     describe "failure" do
@@ -159,11 +154,6 @@ describe ProjectsController do
         it "should redirect to project page" do
           do_call
           response.should redirect_to(project_url(@project))
-        end
-
-        it "should provide a flash notice" do
-          do_call
-          flash[:notice].should_not be_blank
         end
       end
 

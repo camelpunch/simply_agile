@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   def create
     if @user.update_attributes(params[:user].merge(:signup => true))
       session[:user_id] = @user.id
+      flash[:notice] = "Welcome to Simply Agile. To get started, create an organisation."
       redirect_to home_url
     else
       render :action => 'new'

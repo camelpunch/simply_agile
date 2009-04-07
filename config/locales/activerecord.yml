@@ -17,6 +17,8 @@ en:
         billing_address_town: "Town"
         billing_address_telephone_number: "Telephone number"
         billing_address_postcode: "Postcode"
+      story:
+        content: "Story content"
     errors:
       messages:
         invalid: "is invalid"

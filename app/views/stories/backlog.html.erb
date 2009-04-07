@@ -14,6 +14,14 @@
 </p>
 <% end %>
 
-<p>
-  <%= link_to "Plan an iteration", new_project_iteration_path(@project) %>
-</p>
+<div id="next_steps">
+  <h2>Next Steps</h2>
+  <ul>
+    <li>
+    <%= link_to "Add a new story", contextual_new_story_path %>
+    </li>
+    <li>
+    <%= link_to "Plan an iteration", new_project_iteration_path(@project) %>
+    </li>
+  </ul>
+</div>

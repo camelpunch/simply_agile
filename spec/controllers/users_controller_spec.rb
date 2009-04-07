@@ -80,6 +80,11 @@ describe UsersController do
       do_call
     end
 
+    it "should provide a flash notice" do
+      do_call
+      flash[:notice].should_not be_blank
+    end
+
     describe "valid user details" do
       before(:each) do
         @user.stub!(:save).and_return(true)

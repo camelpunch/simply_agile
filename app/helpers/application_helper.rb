@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def next_steps(&block)
+    content = '<div id="next_steps"><h2>Next Steps</h2>'
+    content += yield if block_given?
+    content += '</div>'
+  end
+
   def card_number(last_four_digits)
     last_four_digits.to_s.rjust(4, '0').rjust(16, '*')
   end

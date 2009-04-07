@@ -42,6 +42,7 @@
   <div class="section">
     <h2>Iterations</h2>
     <% if (@project.iterations.active + @project.iterations.pending).empty? %>
+      <div class="guidance">
       <p>
       This project has no active or planned iterations.
       </p>
@@ -50,6 +51,7 @@
       <%= link_to 'Finished Iterations', finished_iterations_url %>
       </p>
       <% end %>
+      </div>
     <% else %>
       <% unless @project.iterations.active.empty? %>
         <div class="active subsection">

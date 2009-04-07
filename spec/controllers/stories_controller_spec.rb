@@ -275,11 +275,6 @@ describe StoriesController do
           do_call
           response.should redirect_to(project_story_url(@project, assigns[:story]))
         end
-
-        it "should provide a flash notice" do
-          do_call
-          flash[:notice].should_not be_blank
-        end
       end
 
       describe "js" do

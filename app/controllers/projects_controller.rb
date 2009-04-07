@@ -4,7 +4,6 @@ class ProjectsController < ApplicationController
 
   def create
     if @project.update_attributes(params[:project])
-      flash[:notice] = "Project created."
       redirect_to @project
     else
       render :template => 'projects/new'
@@ -21,7 +20,6 @@ class ProjectsController < ApplicationController
     if @project.update_attributes(params[:project])
       respond_to do |format|
         format.html do
-          flash[:notice] = "Project updated."
           redirect_to @project
         end
 

@@ -9,8 +9,6 @@ class IterationsController < ApplicationController
 
   def create
     @iteration.save_with_planned_stories_attributes! params[:stories]
-
-    flash[:notice] = "Iteration successfully created"
     redirect_to [@project, @iteration]
 
   rescue ActiveRecord::RecordInvalid => e
@@ -27,8 +25,6 @@ class IterationsController < ApplicationController
   def update
     @iteration.attributes = params[:iteration]
     @iteration.save_with_planned_stories_attributes! params[:stories]
-
-    flash[:notice] = "Iteration successfully updated"
     redirect_to [@project, @iteration]
 
   rescue ActiveRecord::RecordInvalid => e
