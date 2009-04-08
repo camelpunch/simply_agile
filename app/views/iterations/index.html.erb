@@ -4,8 +4,8 @@
   <li>Active Iterations</li>
 <% end %>
 <% content_for :actions do %>
-  <li><%= link_to "Planned", planned_iterations_path %></li>
   <li><%= link_to "Finished", finished_iterations_path %></li>
+  <li><%= link_to "Planned", planned_iterations_path %></li>
 <% end %>
 
 <% if @iterations.empty? -%>
