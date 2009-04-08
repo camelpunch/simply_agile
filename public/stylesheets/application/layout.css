@@ -120,10 +120,11 @@ body#stories_show #acceptance_criteria table td.edit { padding-left:20px }
 body#stories_show #acceptance_criteria table td.edit,
 body#stories_show #acceptance_criteria table td.delete { width:4em }
 
+body#stories_show #acceptance_criteria p.checkbox { max-width:none }
 body#stories_show #acceptance_criteria p.checkbox input { 
   display:block; float:left }
 body#stories_show #acceptance_criteria p.checkbox label { 
-  display:block; float:left; width:100%; margin-right:-20px }
+  display:block; float:left; width:100%; margin-right:-30px }
 
 body#stories_show .javascript #acceptance_criteria table td.name { display:none }
 body#stories_show .javascript #acceptance_criteria table .submit_complete { display:none }
