@@ -12,11 +12,11 @@ class Iteration < ActiveRecord::Base
     :only_integer => true
 
   named_scope :active, 
-    :conditions => ['start_date IS NOT NULL AND (end_date IS NULL OR end_date > ?)', Date.today]
+    :conditions => 'start_date IS NOT NULL AND (end_date IS NULL OR end_date > CURRENT_DATE)'
   named_scope :pending, :conditions => 'start_date IS NULL'
   named_scope :recently_finished, 
-    :conditions => ['end_date <= ? AND end_date >= ?', Date.today, 7.days.ago]
-  named_scope :finished, :conditions => ['end_date <= ?', Date.today]
+    :conditions => 'end_date <= CURRENT_DATE AND end_date >= CURRENT_DATE - 7'
+  named_scope :finished, :conditions => 'end_date <= CURRENT_DATE'
 
   def validate
     errors.add(:stories, "must be assigned") if stories.empty?

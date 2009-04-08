@@ -356,12 +356,12 @@ describe User do
 
   describe "valid" do
     it "should not return users with verify_by in the past" do
-      unverified_user = Users.create_user!(:verify_by => 1.day.ago)
+      unverified_user = Users.create_user!(:verify_by => Date.today - 1)
       User.valid.should_not include(unverified_user)
     end
 
     it "should return users with verify_by in the future" do
-      user_with_time_left = Users.create_user!(:verify_by => 1.day.from_now)
+      user_with_time_left = Users.create_user!(:verify_by => Date.today + 1)
       User.valid.should include(user_with_time_left)
     end
 

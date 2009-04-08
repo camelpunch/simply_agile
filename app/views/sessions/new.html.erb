@@ -12,7 +12,7 @@ We'd love to hear any feedback you have about the system. Please send it to
 <% content_for :side do %>
 <div id="existing_users">
   <h2>Existing users</h2>
-  <% form_for User.new, :url => session_url_with_protocol do |f| %>
+  <% form_for User.new, :url => session_path do |f| %>
     <p>
       <%= f.label :email_address %>
       <%= f.text_field :email_address, :class => 'auto_focus' %>

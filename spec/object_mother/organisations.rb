@@ -5,7 +5,7 @@ class Organisations < ObjectMother
   def self.organisation_prototype
     {
       :name => (Organisation.count + 1),
-      :payment_plan_id => PaymentPlans.create_payment_plan!(:project_limit => 1000).id,
+      :payment_plan_id => PaymentPlans.create_payment_plan!.id,
     }
   end
 

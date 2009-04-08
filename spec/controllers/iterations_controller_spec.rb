@@ -77,7 +77,7 @@ describe IterationsController do
         @planned_iterations << iteration
       end
 
-      # Create some active and pending iterations too
+      # Create some active and finished iterations too
       2.times do
         story = Stories.create_story!(:project => @project)
         Iterations.create_iteration!(
@@ -88,10 +88,13 @@ describe IterationsController do
 
       2.times do
         story = Stories.create_story!(:project => @project)
-        Iterations.create_iteration!(
+        iteration = Iterations.create_iteration!(
           :project => @project,
           :stories => [story]
         )
+        iteration.start
+        iteration.end_date = 2.days.ago
+        iteration.save!
       end
     end
 

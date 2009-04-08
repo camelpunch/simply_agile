@@ -170,7 +170,7 @@ describe Iteration do
       iteration = Iteration.new
       iteration.start_date = Date.today
       iteration.duration = 7
-      iteration.end_date.should == 7.days.from_now.to_date
+      iteration.end_date.should == Date.today + 7
     end
   end
 
@@ -347,7 +347,7 @@ describe Iteration do
     it "should set the end_date to today + duration" do
       @iteration.start
       @iteration.reload
-      @iteration.end_date.should == 7.days.from_now.to_date
+      @iteration.end_date.should == Date.today + 7
     end
 
     it "should set the initial estimate" do
@@ -386,7 +386,7 @@ describe Iteration do
     
     describe "already started" do
       before :each do
-        @start_date = 2.days.ago.to_date
+        @start_date = Date.today - 2
         @iteration.update_attributes(:start_date => @start_date)
       end
       

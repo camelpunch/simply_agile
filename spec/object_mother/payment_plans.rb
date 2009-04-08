@@ -6,7 +6,7 @@ class PaymentPlans < ObjectMother
       :name => 'protototo',
       :price => 25,
       :project_limit => 2,
-      :active_iteration_limit => 2,
+      :active_iteration_limit => 5,
       :user_limit => 5
     }
   end

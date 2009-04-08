@@ -7,13 +7,13 @@ xml.urlset "xmlns" => "http://www.google.com/schemas/sitemap/0.84" do
   end
 
   xml.url do
-    xml.loc new_user_url
+    xml.loc new_user_url(:protocol => 'https')
     xml.changefreq 'monthly'
     xml.priority 0.5
   end
 
   xml.url do
-    xml.loc new_session_url
+    xml.loc new_session_url(:protocol => 'https')
     xml.changefreq 'monthly'
     xml.priority 0.4
   end

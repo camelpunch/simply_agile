@@ -178,8 +178,6 @@ describe ApplicationController do
         controller.send(:login_required)
         flash[:notice].should be_blank
       end
-
-      it "should provide a flash notice when we finish beta"
     end
   end
 

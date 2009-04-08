@@ -31,7 +31,7 @@ class Organisation < ActiveRecord::Base
     :conditions => ['suspended IS NULL OR suspended = ?', false]
 
   named_scope :payment_due,
-    :conditions => ['next_payment_date <= ?', Date.today]
+    :conditions => 'next_payment_date <= CURRENT_DATE'
 
   def self.billable
     payment_due.active.delete_if { |o| o.payment_method.nil? }

@@ -9,20 +9,24 @@ module ApplicationHelper
     last_four_digits.to_s.rjust(4, '0').rjust(16, '*')
   end
 
-  def session_url_with_protocol(options = {})
-    if RAILS_ENV == 'production'
-      session_url(options.merge(:protocol => 'https'))
-    else
-      session_url options
-    end
+  def new_user_path
+    url_with_protocol(:new_user) || super
   end
-  
-  def users_url_with_protocol(options = {})
-    if RAILS_ENV == 'production'
-      users_url(options.merge(:protocol => 'https'))
-    else
-      users_url options
-    end
+
+  def new_session_path
+    url_with_protocol(:new_session) || super
+  end
+
+  def users_path
+    url_with_protocol(:users) || super
+  end
+
+  def session_path
+    url_with_protocol(:session) || super
+  end
+
+  def url_with_protocol(sym)
+    send("#{sym}_url", :protocol => 'https') if RAILS_ENV == 'production'
   end
 
   def google_analytics_tag(id)
