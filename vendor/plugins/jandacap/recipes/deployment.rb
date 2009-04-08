@@ -39,6 +39,7 @@ end
 namespace :passenger do
   desc "Restart Application"
   task :restart do
+    run "rm -f #{current_path}/public/javascripts/all.js"
     run "touch #{current_path}/tmp/restart.txt"
   end
 end
