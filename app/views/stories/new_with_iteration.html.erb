@@ -8,7 +8,7 @@
 <% form_for @story do |form| %>
   <%= form.error_messages %>
   <%= render :partial => 'stories/project_select' %>
-  <p class="checkbox">
+  <p class="checkbox" id="add_to_iteration">
   <%= form.check_box :iteration_id, {}, @iteration.id, nil %>
   <%= form.label :iteration_id, "Add to the '#{h(@iteration)}' iteration" %>
   </p>

@@ -33,6 +33,7 @@
 .javascript #request .edit_acceptance_criterion,
 .javascript #request .edit a,
 .javascript #request .delete form,
+.javascript #request #add_to_iteration,
 .javascript #request #next_steps { display:none }
 /* end javascript request */
 
