@@ -1,6 +1,7 @@
 <div id="footer">
   <p>
-  Copyright © <%= Date.today.year %> <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/' %>
+  Copyright © <%= Date.today.year %> 
+  <%= link_to 'Jandaweb Ltd', 'http://www.jandaweb.com/', :rel => 'nofollow' %>
   </p>
   <% if @current_user %>
     <%= button_to 'Log Out', session_path, :method => :delete %>
