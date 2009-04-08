@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   default_scope :order => 'email_address'
 
   named_scope :valid, 
-    :conditions => ['verify_by IS NULL or verify_by > ?', Date.today]
+    :conditions => 'verify_by IS NULL or verify_by > CURRENT_DATE'
 
   DAYS_UNTIL_UNVERIFIED = 7
 

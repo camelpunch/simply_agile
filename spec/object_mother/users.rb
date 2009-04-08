@@ -1,4 +1,6 @@
+require 'vendor/plugins/validates_email_format_of/lib/validates_email_format_of'
 class Users < ObjectMother
+  truncate_user
   def self.user_prototype
     user_count = User.count
     organisation_count = Organisation.count
