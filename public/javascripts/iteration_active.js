@@ -9,75 +9,79 @@ function DraggableStories() {
   // add some guidance
   $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
 
-  this.labelColumns();
-  this.create();
-  
+  DraggableStories.labelColumns();
+  DraggableStories.create();
+
   // handle resize event
-  $(window).resize(this.create);
+  $(window).resize(function() { 
+    DraggableStories.create();
+    DraggableStories.recently_resized = true;
+    setTimeout('DraggableStories.recently_resized = false', 100);
+  });
 }
-DraggableStories.prototype = {
-  create: function() {
-    // size div
-    full_width = $(window).width();
-    if (full_width < 831) {
-      $('#burndown').hide();
-      full_width += 370;
-    } else {
-      $('#burndown').show();
-    }
-    $('#stories').width(full_width - 430);
+DraggableStories.create = function() {
+  if (DraggableStories.recently_resized) return false;
 
-    // remove all existing JSy elements
-    $('#draggables_container').remove();
-
-    // make a container for all draggables
-    $('ol.stories').before('<div id="draggables_container"></div>');
-
-    var container = $('#draggables_container');
-
-    // make draggable container for each form
-    $('ol.stories form').each( function() {
-      container.append('<div id="draggables_for_'+this.id+'" class="draggables"></div>');
-    });
-
-    // make droppables for each radio button
-    this.droppables = $.map($('input[name="story[status]"]'), function(input, i) { 
-      return new DroppableStatus(input);
-    });
-
-    this.draggables = $.map($('input[name="story[status]"]:checked'), function(input, i) {
-      return new DraggableStory(input); 
-    });
-    
-    // set height of each row to the height of the draggable content
-    $('.draggables').each( function() {
-      var height = $(this).find('.story .content').height() + 9;
-
-      $(this).height(height);
-      $(this).find('.ui-droppable').height(height);
-    });
-
-    // set positions on each draggable
-    $(this.draggables).each( function() {
-      this.setPosition();
-    });
-  },
-
-  // make headings based on first set of labels
-  labelColumns: function() {
-    var html = '<div id="headings"><ol>';
-
-    $($('form.edit_story')[0]).find('label').each( function() {
-      var content = $(this).html();
-      var label_for = $(this).attr('for');
-      var class_name = $('#'+label_for).val();
-
-      html += '<li class="'+class_name+'">'+content+'</li>';
-    });
-    html += '</ol></div>';
-
-    $('ol.stories').before(html);
+  // size div
+  full_width = $(window).width();
+  if (full_width < 831) {
+    $('#burndown').hide();
+    full_width += 370;
+  } else {
+    $('#burndown').show();
   }
+  $('#stories').width(full_width - 430);
+
+  // remove all existing JSy elements
+  $('#draggables_container').remove();
+
+  // make a container for all draggables
+  $('ol.stories').before('<div id="draggables_container"></div>');
+
+  var container = $('#draggables_container');
+
+  // make draggable container for each form
+  $('ol.stories form').each( function() {
+    container.append('<div id="draggables_for_'+this.id+'" class="draggables"></div>');
+  });
+
+  // make droppables for each radio button
+  DraggableStories.droppables = $.map($('input[name="story[status]"]'), function(input, i) { 
+    return new DroppableStatus(input);
+  });
+
+  DraggableStories.draggables = $.map($('input[name="story[status]"]:checked'), function(input, i) {
+    return new DraggableStory(input); 
+  });
+  
+  // set height of each row to the height of the draggable content
+  $('.draggables').each( function() {
+    var height = $(this).find('.story .content').height() + 9;
+
+    $(this).height(height);
+    $(this).find('.ui-droppable').height(height);
+  });
+
+  // set positions on each draggable
+  $(DraggableStories.draggables).each( function() {
+    this.setPosition();
+  });
+}
+
+// make headings based on first set of labels
+DraggableStories.labelColumns = function() {
+  var html = '<div id="headings"><ol>';
+
+  $($('form.edit_story')[0]).find('label').each( function() {
+    var content = $(this).html();
+    var label_for = $(this).attr('for');
+    var class_name = $('#'+label_for).val();
+
+    html += '<li class="'+class_name+'">'+content+'</li>';
+  });
+  html += '</ol></div>';
+
+  $('ol.stories').before(html);
 }
 
 function DraggableStory(input) {
