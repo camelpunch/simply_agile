@@ -363,7 +363,6 @@ describe User do
     it "should return users with verify_by in the future" do
       user_with_time_left = Users.create_user!(:verify_by => 1.day.from_now)
       User.valid.should include(user_with_time_left)
-
     end
 
     it "should return users with verify_by set to nil" do

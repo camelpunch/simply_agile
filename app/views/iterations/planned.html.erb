@@ -1,19 +1,19 @@
-<% content_for :title, "Finished Iterations" %>
-<% content_for :h1, "#{h @current_organisation.name} Finished Iterations" %>
+<% content_for :title, "Planned Iterations" %>
+<% content_for :h1, "#{h @current_organisation.name} Planned Iterations" %>
 <% content_for :breadcrumbs do %>
-  <li>Finished Iterations</li>
+  <li>Planned Iterations</li>
 <% end %>
 <% content_for :actions do %>
   <li><%= link_to "Active", iterations_path %></li>
-  <li><%= link_to "Planned", planned_iterations_path %></li>
+  <li><%= link_to "Finished", finished_iterations_path %></li>
 <% end %>
 
 <% if @iterations.empty? -%>
   <p>
-    This page only shows finished iterations.
+    This page only shows planned iterations.
   </p>
   <p>
-    There are currently no finished iterations for <%= h @current_organisation %>.
+    There are currently no planned iterations for <%= h @current_organisation %>.
   </p>
   <% unless @current_organisation.projects.empty? %>
   <%= render :partial => 'iterations/new' %>
@@ -21,8 +21,8 @@
 <% else -%>
   <div id="iterations" class="section_container">
     <div class="section">
-      <h2>Finished</h2>
-      <div class="finished">
+      <h2>Planned</h2>
+      <div class="planned">
         <% width = @iterations.size == 1 ? 600 : 300 -%>
         <% height = @iterations.size == 1 ? 450 : 225 -%>
         <ul>

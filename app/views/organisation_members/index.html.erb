@@ -1,58 +1,50 @@
-<% content_for :title, "Sharing" %>
-<% content_for :h1, h(@organisation.name) %>
+<% content_for :title, "#{h(@organisation.name)} sharing" %>
+<% content_for :h1, "#{h(@organisation.name)} sharing" %>
 <% @non_organisation = true %>
 <% content_for :breadcrumbs do %>
   <li class="account first-child"><%= link_to 'Account', @current_user %></li>
   <li><%= link_to 'Organisations', :organisations %></li>
   <li class="organisation"><%= h(@organisation) %></li>
-  <li>Members</li>
+  <li>Sharing</li>
 <% end %>
 
 <% content_for :actions do %>
   <li><%= link_to 'Organisations', organisations_path %></li>
 <% end %>
 
-<div id="organisation_members" class="section_container first">
-  <div class="section">
-    <h2><%= h(@organisation.name) %> Members</h2>
+<table>
+  <% @organisation.members.each do |member| -%>
+    <tr>
+      <td>
+        <%= member.user.email_address %>
+      </td>
+      <td class="aside">
+        <% if member.user == @current_user -%>
+          (you)
+        <% elsif ! member.user.acknowledged_for?(@organisation) -%>
+          Account is not yet acknowledged
+        <% end -%>
+      </td>
+      <td>
+        <% if member.user != @current_user -%>
+          <%= button_to "Remove from organisation",
+            organisation_member_path(@organisation, member),
+            :method => :delete %>
+        <% end -%>
+      </td>
+    </tr>
+  <% end -%>
+</table>
 
-    <table>
-      <% @organisation.members.each do |member| -%>
-        <tr>
-          <td>
-            <%= member.user.email_address %>
-          </td>
-          <td class="aside">
-            <% if member.user == @current_user -%>
-              (you)
-            <% elsif ! member.user.acknowledged_for?(@organisation) -%>
-              Account is not yet acknowledged
-            <% end -%>
-          </td>
-          <td>
-            <% if member.user != @current_user -%>
-              <%= button_to "Remove from organisation",
-                organisation_member_path(@organisation, member),
-                :method => :delete %>
-            <% end -%>
-          </td>
-        </tr>
-      <% end -%>
-    </table>
-
-    <% form_for(@organisation_member, 
-                :url => organisation_members_path(@organisation)) do |form| -%>
-      <fieldset>
-        <legend>Add somebody to this organisation</legend>
-        <%= form.error_messages %>
-        <p>
-        <%= form.label :email_address %>
-        <%= form.text_field :email_address %>
-        </p>
-        <p class="submit">
-        <%= form.submit "Add user" %>
-        </p>
-      </fieldset>
-    <% end -%>
-  </div>
-</div>
+<% form_for(@organisation_member, 
+            :url => organisation_members_path(@organisation)) do |form| -%>
+  <h2>Add somebody to this organisation</h2>
+  <%= form.error_messages %>
+  <p>
+  <%= form.label :email_address %>
+  <%= form.text_field :email_address %>
+  </p>
+  <p class="submit">
+  <%= form.submit "Add user" %>
+  </p>
+<% end -%>

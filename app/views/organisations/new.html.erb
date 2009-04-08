@@ -6,47 +6,41 @@
   <li class="organisation"><%= link_to_unless_current 'New Organisation', new_organisation_path %></li>
 <% end %>
 
+<p>
+Organisations are used to group projects, stories and iterations and to
+control who has access&#160;to&#160;them.
+</p>
+  
 <% form_for @organisation do |f| %>
   <%= f.error_messages %>
 
-  <fieldset>
-    <legend>Step 1: Choose an Organisation Name</legend>
-    <div>
-      <p>
-        Organisations are used to group projects, stories and iterations and to
-        control who has access to them.
-      </p>
+  <h2>Step 1: Choose an Organisation Name</h2>
+  <p>
+  Enter a name for your organisation. You can use whatever name&#160;you&#160;like.
+  </p>
+  <p>
+  <%= f.label :name %>
+  <%= f.text_field :name, :class => 'auto_focus' %>
+  </p>
 
-      <p>
-        Enter a name for your organisation. You can use whatever name you like.
-      </p>
-      <p>
-        <%= f.label :name %>
-        <%= f.text_field :name, :class => 'auto_focus' %>
-      </p>
-    </div>
-  </fieldset>
-  <fieldset>
-    <legend>Step 2: Choose a Payment Plan</legend>
-    <ol>
-      <% @payment_plans.each_with_index do |plan, idx| %>
-        <li id="plan_<%= idx %>">
-          <label for="organisation_payment_plan_id_<%= plan.id %>">
-            <%= f.radio_button :payment_plan_id, plan.id %>
-            <span class="name"><%= h plan.name %></span>
-            <span class="numeric"><%= number_to_currency plan.price %> per month</span>
-          </label>
-          <%= render plan, :short => true %>
-          <div class="description">
-            <%= simple_format plan.description %>
-          </div>
-        </li>
-      <% end %>
-    </ol>
-    <p id="free_trial">
-      All plans have a 30 day free trial.
-    </p>
-  </fieldset>
+
+  <h2>Step 2: Choose a Payment Plan</h2>
+  <ol>
+    <% @payment_plans.each_with_index do |plan, idx| %>
+      <li id="plan_<%= idx %>">
+        <label for="organisation_payment_plan_id_<%= plan.id %>">
+          <%= f.radio_button :payment_plan_id, plan.id %>
+          <span class="name"><%= h plan.name %></span>
+          <span class="numeric"><%= number_to_currency plan.price %> per month</span>
+        </label>
+        <%= render plan, :short => true %>
+      </li>
+    <% end %>
+  </ol>
+  <p id="free_trial">
+    All plans have a 30 day free trial.
+  </p>
+
   <p class="submit">
     <%= f.submit 'Create' %>
         </p>

@@ -1,7 +1,7 @@
 h1 { font-size:250%; margin-bottom:1em }
 h1 a { text-decoration:none }
 h2,caption { font-weight:bold; font-size:138.5% }
-p { margin:1em 0 1em 0 }
+p { margin:1em 0 1em 0; max-width:30em }
 table p { margin:0 }
 table th { font-weight:bold }
 a:hover { text-decoration:none }
@@ -48,12 +48,13 @@ body#organisations_index li.organisation h3 { margin-top:1em }
 /* end organisations/index */
 
 /* organisations/new */
+form#new_organisation h2 { margin-top:2em }
 form#new_organisation .numeric,
-form#new_organisation fieldset ol li { text-align:center }
-form#new_organisation fieldset ol li#plan_0 label span.name { font-size:138.5% }
-form#new_organisation fieldset ol li#plan_1 label span.name { font-size:161.6% }
-form#new_organisation fieldset ol li#plan_2 label span.name { font-size:182% }
-form#new_organisation fieldset ol li label span.numeric { font-size:123.1% }
+form#new_organisation ol li { text-align:center }
+form#new_organisation ol li#plan_0 label span.name { font-size:138.5% }
+form#new_organisation ol li#plan_1 label span.name { font-size:161.6% }
+form#new_organisation ol li#plan_2 label span.name { font-size:182% }
+form#new_organisation ol li label span.numeric { font-size:123.1% }
 #free_trial { font-size: 123.1%; text-align: center; }
 /* end organisations/new */
 

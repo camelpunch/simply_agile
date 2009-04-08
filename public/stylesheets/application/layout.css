@@ -4,6 +4,7 @@
 #contextual_new_story { position:absolute; width:118px; height:99px;
                         right:30px; top:2px }
 #footer { clear:both; padding:0 0 30px 0 }
+#footer p { max-width:none }
 
 .important_message { position:absolute; top:0; left:0; z-index:11; width:100% }
 .important_message div { margin:0 auto; width:52em; padding:4px 0 }
@@ -46,7 +47,7 @@
            padding:20px 0 100px 30px;
            overflow:hidden }
 #actions { position:absolute; right:0; top:20px; width:124px; z-index:20 }
-#actions li { width:104px; display:block; margin:0 auto }
+#actions li { width:104px; display:block; margin:0 auto 1em auto }
 #actions a { width:104px; height:29px }
 
 div.section { position:relative; padding:40px 36px 22px 36px; 
@@ -102,6 +103,7 @@ body#projects_show #iterations { min-width:250px }
 
 /* iterations/index */
 body#iterations_index .active,
+body#iterations_planned .planned,
 body#iterations_finished .finished { padding:45px 30px 30px 30px;
                                      overflow:hidden }
 /* end iterations/index */
@@ -112,7 +114,7 @@ body#stories_show #users ul { overflow:hidden }
 body#stories_show #users a { float:left; clear:left }
 body#stories_show #users form.button-to { float:right }
 body#stories_show h2 { margin:1em 0 0 0 }
-body#stories_show #acceptance_criteria table { width:40%; table-layout:fixed }
+body#stories_show #acceptance_criteria table { width:40%; margin-top:1em; table-layout:fixed }
 body#stories_show #acceptance_criteria table td { padding:0 5px }
 body#stories_show #acceptance_criteria table td.edit { padding-left:20px }
 body#stories_show #acceptance_criteria table td.edit,
@@ -145,29 +147,30 @@ body#organisations_index #content ol>li .section_container { margin-right:30px }
 /* end organisations/index and payment_methods/index */
 
 /* organisations/new */
-form#new_organisation fieldset ol { 
-  width:60em; border-style:solid; overflow:hidden; border-width:1px 
+form#new_organisation { width:55em  }
+form#new_organisation p#free_trial { max-width:none }
+form#new_organisation ol { 
+  border-style:solid; overflow:hidden; border-width:1px 
 }
-form#new_organisation fieldset ol li { 
-  width:20em; display:block; float:left
+form#new_organisation ol li { 
+  width:33.3%; display:block; float:left
 }
-form#new_organisation fieldset ol li label { 
+form#new_organisation ol li label { 
   padding:15px 0 5px 0;
   height:6.5em;
   display:block; margin:0 auto 
 }
-form#new_organisation fieldset ol li label span { 
+form#new_organisation ol li label span { 
   display:block; clear:left
 }
-form#new_organisation fieldset ol li ul.limits { overflow:hidden }
-form#new_organisation fieldset ol li ul.limits, 
-form#new_organisation fieldset ol li div.description { margin-top:1em }
-#free_trial { width: 60em; }
+form#new_organisation ol li ul.limits { overflow:hidden; 
+                                                 margin-bottom:1em }
+form#new_organisation ol li ul.limits, 
+form#new_organisation ol li div.description { margin-top:1em }
 /* end organisations/new */
 
 /* organisations/show */
-body #organisation_members.section_container { min-width:645px }
-body #organisation_members .section table { width:100% }
+body.organisation_members table { table-layout:fixed; width:50em; margin-bottom:2em }
 /* end organisations/show */
 
 /* payment_methods/new */
