@@ -115,18 +115,12 @@ body#stories_show #users ul { overflow:hidden }
 body#stories_show #users a { float:left; clear:left }
 body#stories_show #users form.button-to { float:right }
 body#stories_show h2 { margin:1em 0 0 0 }
-body#stories_show #acceptance_criteria table { width:40%; margin-top:1em; table-layout:fixed }
+body#stories_show #acceptance_criteria table { width:40%; margin-top:1em }
 body#stories_show #acceptance_criteria table td { padding:0 5px }
 body#stories_show #acceptance_criteria table td.edit,
 body#stories_show #acceptance_criteria table td.delete { width:4em }
+body#stories_show #acceptance_criteria table td.complete { width:1em }
 
-body#stories_show #acceptance_criteria p.checkbox { max-width:none }
-body#stories_show #acceptance_criteria p.checkbox input { 
-  display:block; float:left }
-body#stories_show #acceptance_criteria p.checkbox label { 
-  display:block; float:left; width:100%; margin-right:-30px }
-
-body#stories_show .javascript #acceptance_criteria table td.name { display:none }
 body#stories_show .javascript #acceptance_criteria table .submit_complete { display:none }
 body#stories_show #acceptance_criteria form { display:inline }
 /* end stories/show */
