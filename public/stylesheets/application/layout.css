@@ -116,6 +116,7 @@ body#stories_show #users a { float:left; clear:left }
 body#stories_show #users form.button-to { float:right }
 body#stories_show h2 { margin:1em 0 0 0 }
 body#stories_show #acceptance_criteria table { width:40%; margin-top:1em }
+body#stories_show #acceptance_criteria table tr { vertical-align:top }
 body#stories_show #acceptance_criteria table td { padding:0 5px }
 body#stories_show #acceptance_criteria table td.edit,
 body#stories_show #acceptance_criteria table td.delete { width:4em }
