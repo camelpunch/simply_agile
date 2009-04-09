@@ -39,10 +39,6 @@ end
 namespace :passenger do
   desc "Restart Application"
   task :restart do
-    # crazy, I know - I'm trying different techniques to get this sorted
-    run "touch #{current_path}/tmp/restart.txt"
-    run "sleep 1"
-    run "rm -f #{current_path}/public/javascripts/all.js"
     run "touch #{current_path}/tmp/restart.txt"
   end
 end

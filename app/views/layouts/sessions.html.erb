@@ -33,18 +33,7 @@
       </div>
       <%= render :partial => 'shared/footer' %>
     </div>
-    <%= javascript_include_tag('jquery-1.3.2.min', 
-                               'jquery-ui-1.7.custom.min',
-                               'jquery.form', 
-                               'flash',
-                               'request',
-                               'new_story_adder',
-                               'acceptance_criteria', 
-                               'iteration_planning',
-                               'iteration_active',
-                               'backlog_prioritisation',
-                               'application', 
-                               :cache => true) %>
+    <%= javascript_includes %>
     <%= google_analytics_tag 'UA-4141244-3' %>
   </body>
 
