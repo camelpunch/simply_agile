@@ -26,23 +26,35 @@ module ApplicationHelper
   end
 
   def new_user_path
-    url_with_protocol(:new_user) || super
+    url_with_https(:new_user) || super
   end
 
   def new_session_path
-    url_with_protocol(:new_session) || super
+    url_with_https(:new_session) || super
   end
 
   def users_path
-    url_with_protocol(:users) || super
+    url_with_https(:users) || super
   end
 
   def session_path
-    url_with_protocol(:session) || super
+    url_with_https(:session) || super
   end
 
-  def url_with_protocol(sym)
+  def privacy_policy_path
+    url_with_http(:privacy_policy) || super
+  end
+
+  def root_path
+    url_with_http(:root) || super
+  end
+
+  def url_with_https(sym)
     send("#{sym}_url", :protocol => 'https') if RAILS_ENV == 'production'
+  end
+
+  def url_with_http(sym)
+    send("#{sym}_url", :protocol => 'http') if RAILS_ENV == 'production'
   end
 
   def google_analytics_tag(id)
