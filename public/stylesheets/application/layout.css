@@ -8,7 +8,7 @@
 
 .important_message { position:absolute; top:0; left:0; z-index:11; width:100% }
 .important_message div { margin:0 auto; width:52em; padding:4px 0 }
-.important_message p { margin:0 }
+.important_message p { margin:0; max-width:none }
 
 #errorExplanation { margin-bottom:15px }
 /* end basic layout */
@@ -117,7 +117,6 @@ body#stories_show #users form.button-to { float:right }
 body#stories_show h2 { margin:1em 0 0 0 }
 body#stories_show #acceptance_criteria table { width:40%; margin-top:1em; table-layout:fixed }
 body#stories_show #acceptance_criteria table td { padding:0 5px }
-body#stories_show #acceptance_criteria table td.edit { padding-left:20px }
 body#stories_show #acceptance_criteria table td.edit,
 body#stories_show #acceptance_criteria table td.delete { width:4em }
 
