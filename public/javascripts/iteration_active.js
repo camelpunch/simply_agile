@@ -17,10 +17,6 @@ function DraggableStories() {
   // add some guidance
   $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
 
-  // add a refresh link
-  $('ol.stories').before('<a id="refresh" href="#refresh">Refresh</a>');
-  DraggableStories.bindRefresh();
-
   DraggableStories.labelColumns();
   DraggableStories.create();
 
@@ -80,28 +76,38 @@ DraggableStories.create = function() {
   $(DraggableStories.draggables).each( function() {
     this.setPosition();
   });
+
+  DraggableStories.scheduleRefresh();
 }
 
-DraggableStories.bindRefresh = function() {
-  $('#refresh').click( function() {
-    var url, stories, droppable, draggable_story;
+DraggableStories.scheduleRefresh = function() {
+  if (DraggableStories.refreshedOnce) {
+    setTimeout('DraggableStories.refresh()', 7000);
+  } else {
+    setTimeout('DraggableStories.refresh()', 0);
+    DraggableStories.refreshedOnce = true;
+  }
+}
 
-    url = window.location.href.split('#')[0] + '/stories.json';
+DraggableStories.refresh = function() {
+  var url, stories, droppable, draggable_story;
 
-    $.getJSON(url,
-      function(stories) {
-        $(stories).each( function(i) {
-          draggable_story = DraggableStories.draggables[i];
-          draggable_story.story = this.story;
-          draggable_story.setStatus();
-          draggable_story.setPosition();
-          Burndown.refresh();
-        });
-      }
-    );
+  url = window.location.href.split('#')[0] + '/stories.json';
 
-    return false;
-  });
+  $.getJSON(url,
+    function(stories) {
+      $(stories).each( function(i) {
+        draggable_story = DraggableStories.draggables[i];
+        draggable_story.story = this.story;
+        draggable_story.setStatus();
+        draggable_story.setPosition();
+        Burndown.refresh();
+      });
+    }
+  );
+
+  DraggableStories.scheduleRefresh();
+  return false;
 }
 
 // make headings based on first set of labels
