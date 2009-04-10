@@ -27,6 +27,9 @@ function DraggableStories() {
     setTimeout('DraggableStories.recently_resized = false', 100);
   });
 }
+
+DraggableStories.statuses = [];
+
 DraggableStories.create = function() {
   var full_width, container, height;
 
@@ -82,7 +85,7 @@ DraggableStories.create = function() {
 
 DraggableStories.scheduleRefresh = function() {
   if (DraggableStories.refreshedOnce) {
-    setTimeout('DraggableStories.refresh()', 7000);
+    setTimeout('DraggableStories.refresh()', 5000);
   } else {
     setTimeout('DraggableStories.refresh()', 0);
     DraggableStories.refreshedOnce = true;
@@ -90,19 +93,25 @@ DraggableStories.scheduleRefresh = function() {
 }
 
 DraggableStories.refresh = function() {
-  var url, stories, droppable, draggable_story;
+  var url, stories, statuses, droppable, draggable_story;
 
   url = window.location.href.split('#')[0] + '/stories.json';
 
   $.getJSON(url,
     function(stories) {
-      $(stories).each( function(i) {
-        draggable_story = DraggableStories.draggables[i];
-        draggable_story.story = this.story;
-        draggable_story.setStatus();
-        draggable_story.setPosition();
-        Burndown.refresh();
+      statuses = $.map(stories, function(obj) {
+        return obj.story.status;
       });
+      if (!DraggableStories.statuses.compare(statuses)) {
+        DraggableStories.statuses = statuses;
+        $(stories).each( function(i) {
+          draggable_story = DraggableStories.draggables[i];
+          draggable_story.story = this.story;
+          draggable_story.setStatus();
+          draggable_story.setPosition();
+          Burndown.refresh();
+        });
+      }
     }
   );
 
@@ -218,10 +227,6 @@ function DroppableStatus(input) {
         // send the request
         instance.form.ajaxSubmit({
           success: function() {
-            if (DroppableStatus.previous_statuses[story_id] == 'complete' || instance.status == 'complete') {
-              Burndown.refresh();
-            }
-
             DroppableStatus.previous_statuses[story_id] = instance.status;
           }
         });
