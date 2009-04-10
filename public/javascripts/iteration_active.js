@@ -2,12 +2,24 @@ function objectsFromInput(input) {
   this.form = $(input).parents('form');
   this.container = $('#draggables_for_'+this.form.attr('id'));
   this.li = $(input).parents('li');
-  this.status = $(input).val();
-  this.droppable = $('#droppable_' + input.id);
+}
+var Burndown = {
+  refresh: function() {
+    var location_parts, iteration_id;
+    location_parts = location.href.split('/');
+    iteration_id = location_parts[location_parts.length - 1];
+    $('#burndown img').attr('src',
+                            '/iterations/' + iteration_id +
+                            '/burndown?width=350&' + new Date().getTime());
+  }
 }
 function DraggableStories() {
   // add some guidance
   $('ol.stories').before('<div class="guidance"><p>Drag stories to set their statuses</p></div>');
+
+  // add a refresh link
+  $('ol.stories').before('<a id="refresh" href="#refresh">Refresh</a>');
+  DraggableStories.bindRefresh();
 
   DraggableStories.labelColumns();
   DraggableStories.create();
@@ -20,6 +32,8 @@ function DraggableStories() {
   });
 }
 DraggableStories.create = function() {
+  var full_width, container, height;
+
   if (DraggableStories.recently_resized) return false;
 
   // size div
@@ -38,7 +52,7 @@ DraggableStories.create = function() {
   // make a container for all draggables
   $('ol.stories').before('<div id="draggables_container"></div>');
 
-  var container = $('#draggables_container');
+  container = $('#draggables_container');
 
   // make draggable container for each form
   $('ol.stories form').each( function() {
@@ -56,7 +70,7 @@ DraggableStories.create = function() {
   
   // set height of each row to the height of the draggable content
   $('.draggables').each( function() {
-    var height = $(this).find('.story .content').height() + 9;
+    height = $(this).find('.story .content').height() + 9;
 
     $(this).height(height);
     $(this).find('.ui-droppable').height(height);
@@ -65,6 +79,28 @@ DraggableStories.create = function() {
   // set positions on each draggable
   $(DraggableStories.draggables).each( function() {
     this.setPosition();
+  });
+}
+
+DraggableStories.bindRefresh = function() {
+  $('#refresh').click( function() {
+    var url, stories, droppable, draggable_story;
+
+    url = window.location.href.split('#')[0] + '/stories.json';
+
+    $.getJSON(url,
+      function(stories) {
+        $(stories).each( function(i) {
+          draggable_story = DraggableStories.draggables[i];
+          draggable_story.story = this.story;
+          draggable_story.setStatus();
+          draggable_story.setPosition();
+          Burndown.refresh();
+        });
+      }
+    );
+
+    return false;
   });
 }
 
@@ -85,19 +121,27 @@ DraggableStories.labelColumns = function() {
 }
 
 function DraggableStory(input) {
-  var objects = new objectsFromInput(input);
+  var id, id_parts, classes, droppable, droppable_position, objects, content, acceptance_criteria, container;
+
   this.input = input;
-  this.droppable = objects.droppable;
+  id_parts = this.input.id.split('_');
 
-  var content = objects.li.find('.content');
-  var acceptance_criteria = objects.li.find('.acceptance_criteria');
-  var container = objects.container;
-  this.status = objects.status;
+  this.story = { 
+    'id': id_parts[id_parts.length - 1],
+    'status': $(input).val()
+  }
 
-  var droppable_position = this.droppable.position();
-  this.droppable.addClass('ui-state-highlight');
+  objects = new objectsFromInput(input);
 
-  var classes = 'story';
+  content = objects.li.find('.content');
+  acceptance_criteria = objects.li.find('.acceptance_criteria');
+  container = objects.container;
+
+  droppable = this.droppable();
+  droppable_position = droppable.position();
+  droppable.addClass('ui-state-highlight');
+
+  classes = 'story';
   if (objects.li.hasClass('with_team')) {
     classes += ' with_team';
   }
@@ -123,16 +167,24 @@ function DraggableStory(input) {
       cursor: 'pointer'
     })
     .css('position', 'absolute')
-    .width(this.droppable.width());
+    .width(droppable.width());
 
-  Story.setStatus(this.element, this.status);
+  this.setStatus();
 }
 DraggableStory.prototype = {
+  droppable: function() {
+    return $('#droppable_story_status_' + this.story.status + '_' + this.story.id);
+  },
+
   setPosition: function() {
-    var droppable_position = this.droppable.position();
+    var droppable_position = this.droppable().position();
     this.element
       .css('top', droppable_position.top)
       .css('left', droppable_position.left);
+  },
+
+  setStatus: function() {
+    Story.setStatus(this.element, this.story.status);
   }
 }
 
@@ -143,7 +195,7 @@ function DroppableStatus(input) {
   this.form = objects.form;
   this.container = objects.container;
   this.li = objects.li;
-  this.status = objects.status;
+  this.status = $(input).val();
 
   this.container.append('<div class="'+this.status+'" id="droppable_' + input.id + '"></div>');
 
@@ -161,11 +213,7 @@ function DroppableStatus(input) {
         instance.form.ajaxSubmit({
           success: function() {
             if (DroppableStatus.previous_statuses[story_id] == 'complete' || instance.status == 'complete') {
-              var location_parts = location.href.split('/');
-              var iteration_id = location_parts[location_parts.length - 1];
-              $('#burndown img').attr('src',
-                                      '/iterations/' + iteration_id +
-                                      '/burndown?width=350&' + new Date().getTime());
+              Burndown.refresh();
             }
 
             DroppableStatus.previous_statuses[story_id] = instance.status;

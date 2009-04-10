@@ -54,6 +54,16 @@ class StoriesController < ApplicationController
     render :partial => 'stories/story', :object => @story 
   end
 
+  def index
+    respond_to do |format|
+      format.html
+      format.json do
+        get_iteration
+        render :json => @iteration.stories.to_json(:only => [:status, :id])
+      end
+    end
+  end
+
   def new
     @story.content = "As a 
 I want 

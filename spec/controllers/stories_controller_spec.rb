@@ -175,6 +175,28 @@ describe StoriesController do
 
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it's successful"
+
+    describe "json" do
+      before :each do
+        @iteration = Iterations.create_iteration! :project => @project
+      end
+
+      def do_call
+        get :index, :project_id => @project.id, :iteration_id => @iteration.id,
+          :format => 'json'
+      end
+
+      it "should be successful" do
+        do_call
+        response.should be_success
+      end
+
+      it "should get the iteration" do
+        controller.should_receive(:get_iteration)
+        controller.instance_variable_set('@iteration', @iteration)
+        do_call
+      end
+    end
   end
 
   describe "new" do
