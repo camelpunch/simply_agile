@@ -192,10 +192,17 @@ describe User do
       end
     end
 
-    describe "finished_stories_worked_on" do
+    describe "recently_finished_iterations_worked_on" do
       before :each do
         @iteration.update_attributes(:end_date => 2.days.ago)
         @inactive_iteration.update_attributes(:end_date => 10.days.ago)
+      end
+
+      it "should return a unique set of iterations" do
+        @user.story_actions.first.clone.save!
+        iterations = @user.recently_finished_iterations_worked_on(@organisation)
+        unique_iterations = iterations.uniq
+        iterations.should == unique_iterations
       end
 
       it "should return iterations finished less than 7 days ago" do
