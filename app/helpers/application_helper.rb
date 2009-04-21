@@ -1,4 +1,16 @@
 module ApplicationHelper
+
+  def landing_stylesheet_link_tag
+    stylesheet_link_tag('reset-fonts', 
+                        'landing/layout', 
+                        'landing/typography', 
+                        'landing/colours', 
+                        'story/layout',
+                        'story/typography',
+                        'story/colours',
+                        :cache => 'landing')
+  end
+
   def javascript_includes
     javascript_include_tag('jquery-1.3.2.min',
                            'jquery-ui-1.7.custom.min',

@@ -10,7 +10,7 @@ class AgileTerminologyController < ApplicationController
   def organisation
   end
 
-  def story
+  def user_story
   end
 
   def iteration
