@@ -1,0 +1,2 @@
+module AgileTerminologyHelper
+end
