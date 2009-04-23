@@ -18,3 +18,6 @@ ul#images li p { color:#444 }
 ul#images img { border:1px solid #ccc }
 
 #main p { color:#444 }
+
+#user_story_description { }
+#why_not_tasks { background:#e5e5e5 url(/images/arrow_from_grey.png) no-repeat }

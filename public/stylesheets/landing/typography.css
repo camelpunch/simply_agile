@@ -6,6 +6,7 @@ h2 { font-size:197% }
 .errorExplanation h2 { font-size:123.1%; font-weight:bold }
 
 #content p.back { float:right; margin:0; clear:none; margin-left:3em }
+#content p.bottom { clear:both }
 #content p.back a { display:block; text-align:right }
 
 li { margin:0 0 0 3em }
@@ -25,3 +26,8 @@ ul#images li p { font-size:85%; text-align:center; font-weight:bold }
 #sign_up_login p { text-align:center; margin-top:.2em }
 
 p a { white-space:nowrap }
+
+#why_not_tasks { font-size:75% }
+#why_not_tasks h2 { margin-top:0 }
+
+#have_a_go label { width:10em; float:left; margin-top:0 }
