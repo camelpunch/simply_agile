@@ -5,7 +5,9 @@
 #main,
 #new_existing,
 body.non_session #content { text-align:left }
-#main { width:38em; float:left }
+#main { float:left; width:100% }
+#public_show #main,
+.users #main{ width:38em }
 #sign_up_login { float:right; margin-right:40px }
 ul#images,
 #new_existing { width:40%; float:right }
@@ -24,11 +26,9 @@ label { display:block; margin-top:.5em }
 
 p.submit { margin-top:1em }
 
-
 #privacy_policies_show dt { float:left; clear:left; width:10em }
 #privacy_policies_show dd { display:block; margin-left:10em }
 
-li { margin-left:15px }
 ul#images li { margin:0 }
 
 body.user_verifications .flash { margin-top:15px; width:50% }

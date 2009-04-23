@@ -14,8 +14,18 @@
         <p>Simply Agile - A Simple Tool for Effective Agile Teams</p>
       </div>
       <div id="content">
-        <h1><%= yield :h1 %></h1>
-        <%= yield %>
+        <div id="main">
+          <h1><%= yield :h1 %></h1>
+          <p class="back">
+          <%= link_to "Back to home page", root_path %>
+          <%= yield :back %>
+          </p>
+          <%= yield %>
+          <p class="back">
+          <%= link_to "Back to home page", root_path %>
+          <%= yield :back %>
+          </p>
+        </div>
       </div>
       <%= render :partial => 'shared/footer' %>
     </div>

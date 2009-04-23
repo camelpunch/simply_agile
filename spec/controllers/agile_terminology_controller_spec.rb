@@ -16,9 +16,9 @@ describe AgileTerminologyController do
     end
   end
 
-  describe "user_story" do
+  describe "user_stories" do
     it "should be successful" do
-      get :user_story
+      get :user_stories
       response.should be_success
     end
   end

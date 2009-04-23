@@ -1,0 +1,60 @@
+<% content_for :title, "User Stories | Agile Terminology" %>
+<% content_for :h1, "User Stories" %>
+<p>
+<strong>
+A user story is a simple story that describes a business requirement for a
+product.
+</strong>
+</p>
+
+<p>For example:</p>
+<%= render StaticStory.new(:name => 'Forgotten password',
+                           :content => "As a forgetful user
+                                        I want to be able to reset my password
+                                        So that I can access my account") %>
+
+<h2>The structure of a user story</h2>
+
+<p>
+A good user story has three parts:
+</p>
+<ol>
+  <li>A description of the user of the product</li>
+  <li>A description of what the user requires</li>
+  <li>A description of the benefit to the user</li>
+</ol>
+
+<h2>Work backwards and focus on the benefit</h2>
+<p>
+It can make life easier to write the last section, the benefit, first.
+This keeps the activity that your business performs focussed on people that have
+a vested interest in&#160;your&#160;product.
+</p>
+
+<p>
+This doesn't necessarily mean the customer. You can write user stories for
+stakeholders and business&#160;types,&#160;too!
+</p>
+
+<p>
+When you write a new user story in Simply Agile, you are automatically given a
+basic structure, with your cursor set at the end of the user story, to encourage
+you to think of the&#160;benefit&#160;first.
+</p>
+
+<h2>Describe what the person requires</h2>
+<p>
+The second line, "I want to be able to reset my password" is a succinct
+description of what the user ought to be able to do. Keep it simple here,
+there's no need to specify&#160;implementation&#160;details.
+</p>
+
+<h2>Describe the role of the person</h2>
+<p>
+To make your story personal, and more motivational, describe who the person is.
+You might even use their name if it's a known member of&#160;your&#160;organisation.
+</p>
+<p>
+This way, when someone begins to implement the feature described by the user
+story, they have a good grasp of the&#160;target&#160;audience.
+</p>
