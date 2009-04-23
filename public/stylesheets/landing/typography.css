@@ -1,6 +1,7 @@
 h1 { font-size:267%; float:left; margin-bottom:.5em }
 h2 { font-size:197% }
 #main h2 { margin:2em 0 .5em 0; clear:left }
+#main .flash h2 { margin-top:0 }
 #footer { font-size:77% }
 .errorExplanation h2 { font-size:123.1%; font-weight:bold }
 
@@ -10,6 +11,7 @@ h2 { font-size:197% }
 li { margin:0 0 0 3em }
 
 #main p { clear:left; margin:1em 0 }
+#main .flash p { margin:0 }
 
 #content p,
 li { font-size:138.5% }

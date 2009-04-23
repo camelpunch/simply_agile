@@ -32,6 +32,6 @@ p.submit { margin-top:1em }
 
 ul#images li { margin:0 }
 
-body.user_verifications .flash { margin-top:15px; width:50% }
+.flash { clear:both; margin-top:15px; width:50% }
 
 .important_message { display:none }
