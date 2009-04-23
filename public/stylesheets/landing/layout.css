@@ -7,6 +7,7 @@
 body.non_session #content { text-align:left }
 #main { float:left; width:100% }
 #public_show #main,
+.sessions #main,
 .users #main{ width:38em }
 #sign_up_login { float:right; margin-right:40px }
 ul#images,
