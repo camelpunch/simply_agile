@@ -16,3 +16,5 @@ ol li { list-style-type:decimal }
 ul#images li { list-style-type:none }
 ul#images li p { color:#444 }
 ul#images img { border:1px solid #ccc }
+
+#main p { color:#444 }
