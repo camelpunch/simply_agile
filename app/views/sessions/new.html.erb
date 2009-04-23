@@ -15,11 +15,11 @@ We'd love to hear any feedback you have about the system. Please send it to
   <% form_for User.new, :url => session_path do |f| %>
     <p>
       <%= f.label :email_address %>
-      <%= f.text_field :email_address, :class => 'auto_focus' %>
+      <%= f.text_field :email_address, :class => 'auto_focus', :size => 28 %>
     </p>
     <p>
       <%= f.label :password %>
-      <%= f.password_field :password %>
+      <%= f.password_field :password, :size => 28 %>
     </p>
     <p class="submit">
       <%= f.submit 'Login' %>
