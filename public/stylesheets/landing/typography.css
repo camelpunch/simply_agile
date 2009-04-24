@@ -10,6 +10,7 @@ h2 { font-size:197% }
 #content p.back a { display:block; text-align:right }
 
 li { margin:0 0 0 3em }
+.errorExplanation li { margin-left:1em }
 
 #main p { clear:left; margin:1em 0 }
 #main .flash p { margin:0 }
