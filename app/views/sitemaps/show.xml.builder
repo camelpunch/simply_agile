@@ -7,20 +7,26 @@ xml.urlset "xmlns" => "http://www.google.com/schemas/sitemap/0.84" do
   end
 
   xml.url do
-    xml.loc new_user_url(:protocol => 'https')
+    xml.loc agile_terminology_url(:user_stories)
     xml.changefreq 'monthly'
     xml.priority 0.5
   end
 
   xml.url do
-    xml.loc new_session_url(:protocol => 'https')
+    xml.loc new_user_url(:protocol => 'https')
     xml.changefreq 'monthly'
     xml.priority 0.4
   end
 
   xml.url do
-    xml.loc privacy_policy_url
+    xml.loc new_session_url(:protocol => 'https')
     xml.changefreq 'monthly'
     xml.priority 0.3
+  end
+
+  xml.url do
+    xml.loc privacy_policy_url
+    xml.changefreq 'monthly'
+    xml.priority 0.2
   end
 end
