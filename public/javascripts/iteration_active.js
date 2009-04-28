@@ -84,16 +84,22 @@ DraggableStories.create = function() {
 }
 
 DraggableStories.scheduleRefresh = function() {
+  clearTimeout(DraggableStories.timeout);
   if (DraggableStories.refreshedOnce) {
-    setTimeout('DraggableStories.refresh()', 5000);
+    DraggableStories.timeout = setTimeout('DraggableStories.refresh()', 5000);
   } else {
-    setTimeout('DraggableStories.refresh()', 0);
+    DraggableStories.timeout = setTimeout('DraggableStories.refresh()', 0);
     DraggableStories.refreshedOnce = true;
   }
 }
 
 DraggableStories.refresh = function() {
   var url, stories, statuses, droppable, draggable_story;
+
+  if (DraggableStories.refresh_lock) {
+    DraggableStories.scheduleRefresh();
+    return false;
+  }
 
   url = window.location.href.split('#')[0] + '/stories.json';
 
@@ -221,6 +227,9 @@ function DroppableStatus(input) {
         var id_parts = instance.input.id.split('_');
         var story_id = id_parts[id_parts.length - 1];
 
+        // set the refresh lock to avoid out-of-sync updates
+        DraggableStories.refresh_lock = true;
+
         // check the radio button
         $('li#story_'+story_id+' ol input').val([instance.status]);
 
@@ -228,6 +237,9 @@ function DroppableStatus(input) {
         instance.form.ajaxSubmit({
           success: function() {
             DroppableStatus.previous_statuses[story_id] = instance.status;
+
+            // clear refresh lock
+            DraggableStories.refresh_lock = false;
           }
         });
         
