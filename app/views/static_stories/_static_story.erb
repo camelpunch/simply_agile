@@ -1,0 +1,22 @@
+<div class="<%= story_classes(static_story) %>">
+  <div class="content">
+    <div class="header">
+      <h3><%= h(static_story) %></h3>
+      <% if static_story.estimate? %>
+        <p class="estimate" title="Story Points"><span>Story Points: </span><%= static_story.estimate %></p>
+      <% end %>
+    </div>
+    <%= story_format static_story.content %>
+  </div>
+
+  <% if (!static_story.acceptance_criteria.empty?) %>
+    <div class="acceptance_criteria">
+      <h4>Acceptance Criteria</h4>
+      <ul>
+        <% static_story.acceptance_criteria.each do |criterion| %>
+          <li><%= h criterion %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

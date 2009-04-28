@@ -1,11 +1,25 @@
-h1 { font-size:267% }
-h2 { font-size:197%; margin:0 0 .5em 0 }
+h1 { font-size:267%; float:left; margin-bottom:.5em }
+h2 { font-size:197% }
+#main h2 { margin:2em 0 .5em 0; clear:left }
+#main .flash h2 { margin-top:0 }
 #footer { font-size:77% }
 .errorExplanation h2 { font-size:123.1%; font-weight:bold }
-#privacy_policies_show h2 { margin:1em 0 .5em 0 }
-#privacy_policies_show p { margin:1em 0 }
-p, dl, li { font-size:123.1% }
-#main p { font-size:138.5%; margin:1.5em 0; line-height:1.5em; text-align:justify }
+
+#content p.back { float:right; margin:0; clear:none; margin-left:3em }
+#content p.bottom { clear:both }
+#content p.back a { display:block; text-align:right }
+
+li { margin:0 0 0 3em }
+.errorExplanation li { margin-left:1em }
+
+#main p { clear:left; margin:1em 0 }
+#main .flash p { margin:0 }
+
+#content p,
+li { font-size:138.5% }
+#main p,
+li { line-height:1.5em; max-width:28em }
+
 p.description { font-size:108%; margin-bottom:1em }
 strong { font-weight:bold }
 ul#images li p { font-size:85%; text-align:center; font-weight:bold }
@@ -13,3 +27,8 @@ ul#images li p { font-size:85%; text-align:center; font-weight:bold }
 #sign_up_login p { text-align:center; margin-top:.2em }
 
 p a { white-space:nowrap }
+
+#why_not_tasks { font-size:75% }
+#why_not_tasks h2 { margin-top:0 }
+
+#have_a_go label { width:10em; float:left; margin-top:0 }

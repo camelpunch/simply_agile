@@ -43,5 +43,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resource :home, :controller => 'home'
+
+  map.agile_terminology '/agile_terminology/:action', :controller => 'agile_terminology'
+
   map.root :controller => 'public', :action => 'show'
 end

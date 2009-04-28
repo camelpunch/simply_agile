@@ -11,7 +11,13 @@
 form.new_user .container,
 .flash p { background:#fff }
 
-li { list-style-type:square }
+ul li { list-style-type:square }
+ol li { list-style-type:decimal }
 ul#images li { list-style-type:none }
 ul#images li p { color:#444 }
 ul#images img { border:1px solid #ccc }
+
+#main p { color:#444 }
+
+#user_story_description { }
+#why_not_tasks { background:#e5e5e5 url(/images/arrow_from_grey.png) no-repeat }

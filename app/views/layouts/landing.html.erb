@@ -3,11 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <%= stylesheet_link_tag('reset-fonts', 
-                            'landing/layout', 
-                            'landing/typography', 
-                            'landing/colours', 
-                            :cache => 'landing') %>
+    <%= landing_stylesheet_link_tag %>
     <title><%= yield :title %> | Simply Agile</title>
   </head>
 
@@ -18,8 +14,20 @@
         <p>Simply Agile - A Simple Tool for Effective Agile Teams</p>
       </div>
       <div id="content">
-        <h1><%= yield :h1 %></h1>
-        <%= yield %>
+        <div id="main">
+          <h1><%= yield :h1 %></h1>
+          <p class="back">
+          <%= link_to "Back to home page", root_path %>
+          <%= yield :back %>
+          </p>
+          <div id="main_inner">
+          <%= yield %>
+          </div>
+          <p class="back bottom">
+          <%= link_to "Back to home page", root_path %>
+          <%= yield :back %>
+          </p>
+        </div>
       </div>
       <%= render :partial => 'shared/footer' %>
     </div>

@@ -1,0 +1,91 @@
+<% content_for :title, "User Stories | Agile Terminology" %>
+<% content_for :h1, "User Stories" %>
+
+<div id="user_story_description">
+<p>
+<strong>
+A user story is a simple story that describes a business requirement for a
+product.
+</strong>
+</p>
+
+<p>For example:</p>
+<%= render StaticStory.new(:name => 'Forgotten password',
+                           :content => "As a forgetful user
+                                        I want to be able to reset my password
+                                        So that I can access my account") %>
+
+<h2>The structure of a user story</h2>
+
+<p>
+A good user story has three parts:
+</p>
+<ol>
+  <li>A description of the user of the product</li>
+  <li>A description of what the user requires</li>
+  <li>A description of the benefit to the user</li>
+</ol>
+
+<p>
+When you write a new user story in Simply Agile, you are automatically given a
+basic structure:
+</p>
+
+<div id="have_a_go">
+<label for="story_content">Story content</label>
+<textarea rows="3" cols="30" id="story_content">As a 
+I want 
+So that </textarea>
+</div>
+
+<p>
+Try editing the above. As you can see, you don't have to stick to&#160;the&#160;formula.
+</p>
+
+<h2>Work backwards and focus on the benefit</h2>
+<p>
+It can make life easier to write the last section, the benefit, first.
+If you can't think of a benefit at this point, it's worth considering whether
+you need the new feature&#160;at&#160;all.
+</p>
+
+<h2>Describe what the person requires</h2>
+<p>
+The second line, &#8220;I want to be able to reset my password&#8221; is a succinct
+description of what the user ought to be able to do. Keep it simple here,
+there's no need to specify&#160;implementation&#160;details.
+</p>
+<p>
+Bear in mind that the story can describe a benefit for a group of people.
+Nothing's stopping you from saying &#8220;We&#160;want&#8221;!
+</p>
+
+<h2>Describe the role of the person</h2>
+<p>
+To make your story personal, and more motivational, describe who the person is.
+You might even use their name if it's a known member of&#160;your&#160;organisation.
+</p>
+<p>
+This way, when someone begins to implement the feature described by the user
+story, they have a good grasp of the&#160;target&#160;audience.
+</p>
+
+<h2>Try it</h2>
+<p>
+Start putting this technique into practice with 
+<%= link_to "your free one month trial", new_user_path %> of Simply Agile.
+</p>
+</div>
+
+<div id="why_not_tasks">
+  <h2>Why not &#8220;tasks&#8221;?</h2>
+  <p>
+  Many project management tools use words like &#8220;task&#8221;.
+  In some cases this is all you want&#160;to&#160;track.
+  </p>
+  <p>
+  For driving business requirements, though, we prefer user stories. They
+  force you to focus on the people involved and on what they are trying to
+  achieve.
+  </p>
+</div>

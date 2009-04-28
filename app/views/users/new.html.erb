@@ -1,5 +1,5 @@
-<% content_for :title, "Create an account" %>
-<% content_for :h1, "Create an account" %>
+<% content_for :title, "Sign up" %>
+<% content_for :h1, "Sign up: free first month!" %>
 
 <p>
 Let us know your email address and set a password so you can start planning
@@ -26,12 +26,12 @@ projects immediately.
       <%= form.error_messages %>
       <p>
         <%= form.label :email_address %>
-        <%= form.text_field :email_address, :class => 'auto_focus' %>
+        <%= form.text_field :email_address, :class => 'auto_focus', :size => 28 %>
       </p>
     </div>
     <p>
       <%= form.label :password %>
-      <%= form.password_field :password %>
+      <%= form.password_field :password, :size => 28 %>
     </p>
     <p class="submit">
       <%= form.submit 'Create account' %>

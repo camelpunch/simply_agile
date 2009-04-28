@@ -1,0 +1,2 @@
+class StaticStory < Story
+end

@@ -1,4 +1,6 @@
+.story ol li { font-size:100%; margin:0 }
 .story h3, .story h4{ font-weight:bold }
 .story h3{ padding:4px }
 .story h4{ padding:6px 0 0 4px }
-.story .estimate { text-align:center; font-weight:bold }
+#content .story p.estimate { margin:0; text-align:center; 
+                             line-height:1.2em; font-weight:bold; font-size:100% }

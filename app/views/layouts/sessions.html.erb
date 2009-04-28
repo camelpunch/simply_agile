@@ -3,11 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
-    <%= stylesheet_link_tag('reset-fonts', 
-                            'landing/layout', 
-                            'landing/typography', 
-                            'landing/colours', 
-                            :cache => 'landing') %>
+    <%= landing_stylesheet_link_tag %>
     <title><%= yield :title %> | Simply Agile</title>
   </head>
 
