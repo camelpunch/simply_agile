@@ -33,6 +33,7 @@ p.submit { margin-top:1em }
 ul#images li { margin:0 }
 
 .flash { clear:both; margin-top:15px; width:50% }
+body.sessions .flash { width:auto }
 
 .important_message { display:none }
 
