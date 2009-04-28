@@ -37,4 +37,4 @@ ul#images li { margin:0 }
 .important_message { display:none }
 
 #user_story_description { float:left; clear:left }
-#why_not_tasks { float:right; width:40%; overflow:hidden; padding:10px 5px 0 30px }
+#why_not_tasks { clear:right; float:right; width:40%; overflow:hidden; padding:10px 5px 0 30px }
