@@ -100,6 +100,13 @@ So that my eyes don't hurt"
       helper.contextual_new_story_path.should == [:new, @project, :story]
     end
 
+    it "should not use a project if it is a new record" do
+      @project.stub!(:new_record?).and_return(true)
+      helper.instance_variable_set('@project', @project)
+      helper.should_receive(:new_story_path)
+      helper.contextual_new_story_path
+    end
+
     it "should notice no project" do
       helper.instance_variable_set('@project', nil)
       helper.instance_variable_set('@iteration', nil)
