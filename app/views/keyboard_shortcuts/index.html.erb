@@ -1,0 +1,82 @@
+<% content_for :title, "Keyboard Shortcuts | Simply Agile" %>
+<% content_for :h1, "Keyboard Shortcuts" %>
+<% @non_organisation = true %>
+<% content_for :breadcrumbs do %>
+<li class="first-child">Keyboard Shortcuts</li>
+<% end %>
+
+<div class="section_container">
+  <div class="section">
+<h2>Browser escape key combinations</h2>
+<p>
+Use the shortcuts in the table combined with your browser's escape combination.
+</p>
+
+<h3>Firefox (Windows / Linux)</h3>
+<p>
+To get to Projects in Firefox on Windows or Linux, use Shift+Alt+P.
+</p>
+
+<h3>Firefox (Mac)</h3>
+<p>
+To get to Iterations in Firefox on Mac, use Ctrl+P.
+</p>
+
+<h3>Internet Explorer (Windows)</h3>
+<p>
+To get to Account in Internet Explorer for Windows, use Alt+I, then press Enter.
+</p>
+</div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Function</th>
+      <th>Context</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>H</td>
+      <td><%= link_to 'Home', home_path %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>P</td>
+      <td><%= link_to 'Projects', projects_path %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>I</td>
+      <td><%= link_to 'Iterations', iterations_path %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>S</td>
+      <td><%= link_to 'Sharing', organisation_members_path(@current_organisation) %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td><%= link_to 'Account', user_path(@current_user) %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>N</td>
+      <td><%= link_to 'New Story', contextual_new_story_path %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>K</td>
+      <td><%= link_to 'Keyboard Shortcuts', keyboard_shortcuts_path %></td>
+      <td>Anywhere</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>Close</td>
+      <td>Popup</td>
+    </tr>
+  </tbody>
+</table>

@@ -72,6 +72,11 @@
         <%= yield %>
       </div>
       <%= render :partial => 'shared/important_messages' %>
+      <% content_for :footer do %>
+        <p>
+        <%= link_to 'Keyboard Shortcuts', keyboard_shortcuts_path, :accesskey => 'k' %>
+        </p>
+      <% end %>
       <%= render :partial => 'shared/footer' %>
     </div>
     <% unless request.user_agent.include?('iPhone') %>

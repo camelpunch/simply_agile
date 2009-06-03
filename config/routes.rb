@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :sitemap
   
   map.resources :iterations, :collection => { :finished => :get, :planned => :get }
+  map.resources :keyboard_shortcuts
   map.resources :payment_methods
   map.resources :invoices
   map.resources :story_team_members
