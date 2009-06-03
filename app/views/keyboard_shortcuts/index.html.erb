@@ -55,12 +55,24 @@ To get to Account in Internet Explorer for Windows, use Alt+A, then press Enter.
     </tr>
     <tr>
       <td>S</td>
-      <td><%= link_to 'Sharing', organisation_members_path(@current_organisation) %></td>
+      <td>
+        <% if @current_organisation %>
+          <%= link_to 'Sharing', organisation_members_path(@current_organisation) %>
+        <% else %>
+          Sharing
+        <% end %>
+      </td>
       <td>Anywhere</td>
     </tr>
     <tr>
       <td>A</td>
-      <td><%= link_to 'Account', user_path(@current_user) %></td>
+      <td>
+        <% if @current_user %>
+          <%= link_to 'Account', user_path(@current_user) %>
+        <% else %>
+          Account
+        <% end %>
+      </td>
       <td>Anywhere</td>
     </tr>
     <tr>
