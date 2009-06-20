@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.valid.find_by_id(session[:user_id])
+    @current_user ||= User.find_by_id(session[:user_id])
   end
 
   def current_organisation
@@ -60,7 +60,13 @@ class ApplicationController < ActionController::Base
   end
 
   def login_required
-    if current_user
+    if (current_user && 
+        !current_user.verified? &&
+        current_user.verify_by <= Date.today)
+      flash[:notice] = 'Your account has not been verified. 
+      Please check your email for the subject "Please verify your Simply Agile account"'
+      redirect_to new_session_url
+    elsif current_user
       true
     else
       session[:redirect_to] = request.request_uri

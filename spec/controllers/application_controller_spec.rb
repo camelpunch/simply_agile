@@ -4,28 +4,23 @@ require 'ostruct'
 describe ApplicationController do
   
   before :each do
-    @user = mock_model User
+    @user = mock_model User, :verified? => true
     @request_uri = '/some/place'
   end
 
   describe "current_user" do
     before :each do
       @incorrect_id = 314123
-      @valid_users = mock('Collection')
-      @valid_users.stub!(:find_by_id).with(@user.id).and_return(@user)
-      @valid_users.stub!(:find_by_id).with(nil).and_return(nil)
-      @valid_users.stub!(:find_by_id).with(@incorrect_id).and_return(nil)
-      User.stub!(:valid).and_return(@valid_users)
+      User.stub!(:find_by_id).with(@user.id).and_return(@user)
     end
 
     it "should assign the user" do
-      @valid_users.stub!(:find_by_id).and_return(@user)
+      session[:user_id] = @user.id
       controller.send(:current_user)
       controller.instance_variable_get('@current_user').should == @user
     end
 
     it "should memoize" do
-      @valid_users.stub!(:find_by_id).and_return(@user)
       controller.send(:current_user)
       User.should_not_receive(:find_by_id)
       controller.send(:current_user)
@@ -33,6 +28,7 @@ describe ApplicationController do
 
     describe "with logged in user" do
       before :each do
+        @user.stub!(:verified?).and_return(true)
         session[:user_id] = @user.id
       end
 
@@ -147,6 +143,30 @@ describe ApplicationController do
   end
 
   describe "login_required" do
+    describe "with unverified user" do
+      before :each do
+        @user.stub!(:verified?).and_return(false)
+        controller.stub!(:current_user).and_return(@user)
+        controller.stub!(:redirect_to)
+      end
+
+      describe "when verify_by has passed" do
+        before :each do
+          @user.stub!(:verify_by).and_return(Date.today)
+        end
+
+        it "should redirect" do
+          controller.should_receive(:redirect_to).with(new_session_url) 
+          controller.send(:login_required)
+        end
+
+        it "should set a flash notice" do
+          controller.send(:login_required)
+          flash[:notice].should_not be_nil
+        end
+      end
+    end
+
     describe "with logged in user" do
       before :each do
         controller.stub!(:current_user).and_return(@user)
