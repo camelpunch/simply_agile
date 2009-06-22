@@ -7,7 +7,7 @@ begin
     t.fork = true
     t.cucumber_opts = ['--drb', '--format', (ENV['CUCUMBER_FORMAT'] || 'pretty')]
   end
-  task :features => 'db:test:prepare'
+  task :features# => 'db:test:prepare'
 rescue LoadError
   desc 'Cucumber rake task not available'
   task :features do
