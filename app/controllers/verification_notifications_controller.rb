@@ -11,7 +11,7 @@ class VerificationNotificationsController < ApplicationController
 
     UserMailer.deliver_verification(unverified_user)
 
-    flash[:notice] = "Verification Email Sent"
+    flash[:notice] = "Verification email sent"
     redirect_to new_user_verification_path(unverified_user)
 
   rescue ActiveRecord::RecordNotFound

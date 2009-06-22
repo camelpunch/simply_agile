@@ -13,7 +13,7 @@ Feature: Verification Re-notification
     And I am on the re-send verification email page
     When I fill in "Email address" with "bob@nicenose.biz"
     And I press "Send"
-    Then I should see "Verification Email Sent"
+    Then I should see "Verification email sent"
     And I should receive a new verification email at "bob@nicenose.biz"
 
   Scenario: Submit email address for verified user
