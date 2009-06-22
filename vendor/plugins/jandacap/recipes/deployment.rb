@@ -7,6 +7,8 @@ set :scm, :git
 set :admin_runner, "rails"
 set :runner, "rails"
 
+set :ssh_options, { :forward_agent => true }
+
 namespace :deploy do
   desc <<-DESC
     Prompt the user for confirmation if we are deploying to production. This

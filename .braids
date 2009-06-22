@@ -1,64 +1,64 @@
 --- 
-vendor/plugins/i18n_label: 
-  squashed: true
-  url: git://github.com/iain/i18n_label.git
-  branch: master
-  type: git
-  revision: 9f820e24ec60c131524d9be707ba55610ae25f69
-  remote: braid/vendor/plugins/i18n-label
 vendor/plugins/jandacap: 
   squashed: true
   branch: master
   url: git@git.jandaweb.com:jandacap.git
   type: git
-  revision: 166d295f668c2e2eb2088229a0205c29fc194588
+  revision: 997a19763c35e783c893372c258b68fcea17b7d9
   remote: braid/vendor/plugins/jandacap
+vendor/plugins/i18n_label: 
+  squashed: true
+  branch: master
+  url: git://github.com/iain/i18n_label.git
+  type: git
+  revision: 9f820e24ec60c131524d9be707ba55610ae25f69
+  remote: braid/vendor/plugins/i18n-label
 vendor/plugins/active_merchant: 
   squashed: true
-  url: git://github.com/jcinnamond/active_merchant.git
   branch: master
+  url: git://github.com/jcinnamond/active_merchant.git
   type: git
   revision: 813bcc9ee590278857dc653276a36fb5eda0844b
   remote: braid/vendor/plugins/active-merchant
-vendor/plugins/validates_email_format_of: 
-  squashed: true
-  branch: master
-  url: http://github.com/alexdunae/validates_email_format_of.git
-  type: git
-  revision: 57baad6e4a87eea20505e8b18628390559afbf3d
-  remote: braid/vendor/plugins/validates-email-format-of
 vendor/plugins/objectmother: 
   squashed: true
-  branch: master
   url: git://github.com/jcinnamond/objectmother.git
+  branch: master
   type: git
   revision: 87b380ae7138328f6afa57d60fd22e89d0704a85
   remote: braid/vendor/plugins/objectmother
+vendor/plugins/validates_email_format_of: 
+  squashed: true
+  url: http://github.com/alexdunae/validates_email_format_of.git
+  branch: master
+  type: git
+  revision: 57baad6e4a87eea20505e8b18628390559afbf3d
+  remote: braid/vendor/plugins/validates-email-format-of
 vendor/plugins/no-peeping-toms: 
   squashed: true
-  branch: master
   url: http://github.com/pat-maddox/no-peeping-toms.git
+  branch: master
   type: git
   revision: 7b7939c02ef42980afb69400fc898c59efceab18
   remote: braid/vendor/plugins/no-peeping-toms
 vendor/plugins/country_select: 
   squashed: true
-  branch: master
   url: git://github.com/rails/country_select.git
+  branch: master
   type: git
   revision: d3b5d8656df3defc1653aafe1a9bb5f0164c1741
   remote: braid/vendor/plugins/country-select
 vendor/plugins/exception_notification: 
   squashed: true
-  url: git://github.com/rails/exception_notification.git
   branch: master
+  url: git://github.com/rails/exception_notification.git
   type: git
   revision: e8b603e523c14f145da7b3a1729f5cc06eba2dd1
   remote: braid/vendor/plugins/exception-notification
 vendor/plugins/assert_valid_xhtml: 
   squashed: true
-  branch: master
   url: git@git.jandaweb.com:assert_valid_xhtml.git
+  branch: master
   type: git
   revision: 7c4e0cbfd5bfecd0ce8e077498b8322cef8d46bc
   remote: braid/vendor/plugins/assert-valid-xhtml
