@@ -15,7 +15,7 @@ class VerificationNotificationsController < ApplicationController
 
     if user.verified?
       flash[:notice] = "You are already verified. 
-                        Please log in with your username and password."
+                        Please log in with your email address and password."
       redirect_to new_session_url
     else
       UserMailer.deliver_verification(user)
