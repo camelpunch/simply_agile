@@ -23,3 +23,10 @@ Feature: Verification Re-notification
     And I press "Send"
     Then I should see "You are already verified"
     And "bob@verified.net" should not receive an email
+
+  Scenario: Submit blank email address
+    Given I am on the re-send verification email page
+    When I fill in "Email address" with ""
+    And I press "Send"
+    Then I should see "Please enter your email address"
+    And no emails should have been sent

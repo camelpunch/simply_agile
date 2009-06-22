@@ -5,19 +5,24 @@ class VerificationNotificationsController < ApplicationController
   layout 'landing'
 
   def create
-    unverified_user = 
-      User.find_by_email_address_and_verified!(params[:user][:email_address],
-                                               false)
+    if params[:user][:email_address].blank?
+      flash.now[:notice] = "Please enter your email address"
+      render :new
+      return
+    end
 
-    UserMailer.deliver_verification(unverified_user)
+    user = User.find_by_email_address!(params[:user][:email_address])
 
-    flash[:notice] = "Verification email sent"
-    redirect_to new_user_verification_path(unverified_user)
+    if user.verified?
+      flash[:notice] = "You are already verified. 
+                        Please log in with your username and password."
+      redirect_to new_session_url
+    else
+      UserMailer.deliver_verification(user)
 
-  rescue ActiveRecord::RecordNotFound
-    flash[:notice] = "You are already verified. 
-                      Please log in with your username and password."
-    redirect_to new_session_url
+      flash[:notice] = "Verification email sent"
+      redirect_to new_user_verification_path(user)
+    end
   end
 
 end

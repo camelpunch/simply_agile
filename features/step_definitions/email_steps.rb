@@ -60,6 +60,10 @@ Then %r{^I should see "([^"]*?)" in the email$} do |text|
   current_email.body.should =~ Regexp.new(text)
 end
 
+Then /^no emails should have been sent$/ do
+  ActionMailer::Base.deliveries.should be_empty
+end
+
 When %r{^"([^"]*?)" opens? the email with subject "([^"]*?)"$} do |address, subject|
   open_email(address, :with_subject => subject)
 end
