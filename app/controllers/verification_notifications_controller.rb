@@ -23,6 +23,10 @@ class VerificationNotificationsController < ApplicationController
       flash[:notice] = "Verification email sent"
       redirect_to new_user_verification_path(user)
     end
+
+  rescue ActiveRecord::RecordNotFound
+    flash[:notice] = "Email address not found"
+    redirect_to new_session_url
   end
 
 end

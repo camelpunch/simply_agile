@@ -30,3 +30,10 @@ Feature: Verification Re-notification
     And I press "Send"
     Then I should see "Please enter your email address"
     And no emails should have been sent
+
+  Scenario: Submit email address not on system
+    Given I am on the re-send verification email page
+    When I fill in "Email address" with "some@unknown.address"
+    And I press "Send"
+    Then I should see "Email address not found"
+    And no emails should have been sent
