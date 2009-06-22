@@ -6,7 +6,7 @@ class VerificationNotificationsController < ApplicationController
 
   def create
     if params[:user][:email_address].blank?
-      flash.now[:notice] = "Please enter your email address"
+      flash.now[:error] = "You must enter your email address"
       render :new
       return
     end
@@ -25,7 +25,7 @@ class VerificationNotificationsController < ApplicationController
     end
 
   rescue ActiveRecord::RecordNotFound
-    flash[:notice] = "Email address not found"
+    flash[:error] = "Email address not found"
     redirect_to new_session_url
   end
 

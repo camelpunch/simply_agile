@@ -28,7 +28,7 @@ Feature: Verification Re-notification
     Given I am on the re-send verification email page
     When I fill in "Email address" with ""
     And I press "Send"
-    Then I should see "Please enter your email address"
+    Then I should see "You must enter your email address"
     And no emails should have been sent
 
   Scenario: Submit email address not on system
