@@ -15,3 +15,11 @@ Feature: Verification Re-notification
     And I press "Send"
     Then I should see "Verification Email Sent"
     And I should receive a new verification email at "bob@nicenose.biz"
+
+  Scenario: Submit email address for verified user
+    Given I am a verified user with email address "bob@verified.net"
+    And I am on the re-send verification email page
+    When I fill in "Email address" with "bob@verified.net"
+    And I press "Send"
+    Then I should see "You are already verified"
+    And "bob@verified.net" should not receive an email
