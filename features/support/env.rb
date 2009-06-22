@@ -20,6 +20,8 @@ Spork.prefork do
 
   require 'spec/rails'
   require 'cucumber/rails/rspec'
+
+  require 'email_spec/cucumber'
 end
  
 Spork.each_run do
