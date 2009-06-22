@@ -1,0 +1,5 @@
+.DS_Store
+*.sw?
+*.log
+*.sqlite3
+pkg

@@ -34,6 +34,13 @@ vendor/plugins/validates_email_format_of:
   type: git
   revision: 57baad6e4a87eea20505e8b18628390559afbf3d
   remote: braid/vendor/plugins/validates-email-format-of
+vendor/plugins/email-spec: 
+  squashed: true
+  url: git://github.com/bmabey/email-spec.git
+  branch: master
+  type: git
+  revision: 4e14cc22826e548d3ec01101a7c335033474f7a7
+  remote: braid/vendor/plugins/email-spec
 vendor/plugins/no-peeping-toms: 
   squashed: true
   url: http://github.com/pat-maddox/no-peeping-toms.git
