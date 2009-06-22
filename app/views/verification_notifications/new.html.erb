@@ -1,0 +1,16 @@
+<% content_for :title, "Re-send Verification Email" %>
+<% content_for :h1, "Re-send Verification Email" %>
+
+<% form_for User.new, :url => verification_notification_path,
+  :html => {:id => 'reverification'} do |f| %>
+  <p>
+  Please enter your email address to receive a new verification email.
+  </p>
+  <p>
+  <%= f.label :email_address %>
+  <%= f.text_field :email_address %>
+  </p>
+  <p>
+  <%= f.submit 'Send' %>
+  </p>
+<% end %>

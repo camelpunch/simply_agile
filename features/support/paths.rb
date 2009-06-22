@@ -10,6 +10,12 @@ module NavigationHelpers
     
     when /the homepage/
       '/'
+
+    when /the log in page/
+      new_session_path
+
+    when /the re-send verification email page/
+      new_verification_notification_path
     
     # Add more mappings here.
     # Here is a more fancy example:

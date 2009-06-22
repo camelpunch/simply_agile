@@ -43,6 +43,7 @@ ActionController::Routing::Routes.draw do |map|
     iteration.resource :active_iteration
   end
 
+  map.resource :verification_notification
   map.resource :home, :controller => 'home'
 
   map.agile_terminology '/agile_terminology/:action', :controller => 'agile_terminology'
