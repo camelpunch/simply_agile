@@ -14,4 +14,4 @@ Feature: Verification Re-notification
     When I fill in "Email address" with "bob@nicenose.biz"
     And I press "Send"
     Then I should see "Verification Email Sent"
-    And I should have received a new verification email
+    And I should receive a new verification email at "bob@nicenose.biz"
