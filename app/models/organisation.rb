@@ -64,14 +64,19 @@ class Organisation < ActiveRecord::Base
     end
     raise NoPaymentMethod unless has_valid_payment_method?
 
-    repeat = Repeat.create!(
-      :authorization => payment_method.repeat_payment_token,
+    payment = payment_method.initial_payment.capture_or_repeat(
       :amount => payment_plan.total * 100,
-      :description => name,
-      :organisation => self
+      :description => name
     )
 
-    if repeat.successful?
+#    repeat = Repeat.create!(
+#      :authorization => payment_method.initial_payment.reference,
+#      :amount => payment_plan.total * 100,
+#      :description => name,
+#      :organisation => self
+#    )
+
+    if payment.successful?
       self.update_attribute(:next_payment_date, next_payment_date >> 1)
     else
       payment_method.update_attribute(:has_failed, true)

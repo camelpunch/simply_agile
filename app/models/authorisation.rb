@@ -10,7 +10,8 @@ class Authorisation < ActiveRecord::Base
     self.response = gateway.authorize(
       amount,
       payment_method.credit_card,
-      :order_id => payment.vendor_tx_code
+      :order_id => payment.vendor_tx_code,
+      :authenticate => true
     )
 
     self.status = response.params['Status']

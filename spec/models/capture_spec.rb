@@ -26,15 +26,22 @@ describe Capture do
       end
 
       it "should pass in the amount" do
-        @gateway.should_receive(:capture) do |amount, authorization|
+        @gateway.should_receive(:capture) do |amount, authorization, options|
           amount.should == @amount
         end
         do_protx_action
       end
 
       it "should pass in the authorization" do
-        @gateway.should_receive(:capture) do |amount, authorization|
+        @gateway.should_receive(:capture) do |amount, authorization, options|
           authorization.should == @authorization
+        end
+        do_protx_action
+      end
+
+      it "should set authenticate to true" do
+        @gateway.should_receive(:capture) do |amount, authorization, options|
+          options[:authenticate].should be_true
         end
         do_protx_action
       end

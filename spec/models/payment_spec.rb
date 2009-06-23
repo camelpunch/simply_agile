@@ -65,4 +65,101 @@ describe Payment do
         "#{@payment.vendor_tx_code};#{@vpstxid};#{@tx_auth_no};#{@security_key}"
     end
   end
+
+  describe "capture_or_repeat" do
+    before :each do
+      @vpstxid = "{F48981C8-158B-4EFA-B8A8-635D3B7A86CE}"
+      @tx_auth_no = "5123"
+      @security_key = "08S2ZURVM4"
+      @organisation = Organisations.create_organisation!
+      @payment = Payment.create!(
+        :vpstxid => @vpstxid,
+        :tx_auth_no => @tx_auth_no,
+        :security_key => @security_key,
+        :organisation => @organisation
+      )
+
+      stub_payment_gateway
+    end
+
+    describe "with no previous capture" do
+      it "should capture the previous authentication" do
+        lambda {
+          @payment.capture_or_repeat({})
+        }.should change(Capture, :count).by(1)
+      end
+
+      it "should not create a new repeat payment" do
+        lambda {
+          @payment.capture_or_repeat({})
+        }.should_not change(Repeat, :count)
+      end
+
+      it "should associate the capture with the payment" do
+        @payment.capture_or_repeat({})
+        capture = Capture.last
+        capture.payment.should == @payment
+      end
+
+      it "should pass through the amount" do
+        amount = 100
+        @payment.capture_or_repeat(:amount => amount)
+        capture = Capture.last
+        capture.amount.should == amount
+      end
+
+      it "should strip out description" do
+        lambda {
+          @payment.capture_or_repeat(:description => 'some description')
+        }.should_not raise_error(ActiveRecord::UnknownAttributeError)
+      end
+    end
+
+    describe "with a previous capture" do
+      before :each do
+        Capture.create!(:payment => @payment)
+      end
+
+      it "should create a new repeat payment" do
+        lambda {
+          @payment.capture_or_repeat({})
+        }.should change(Repeat, :count).by(1)
+      end
+
+      it "should not capture the previous authentication" do
+        lambda {
+          @payment.capture_or_repeat({})
+        }.should_not change(Capture, :count)
+      end
+
+      it "should pass through the amount" do
+        amount = 100
+        @payment.capture_or_repeat(:amount => amount)
+        repeat = Repeat.last
+        repeat.amount.should == amount
+      end
+
+      it "should pass through the amount description" do
+        description = "some awesome product"
+        @payment.capture_or_repeat(:description => description)
+        repeat = Repeat.last
+        repeat.description.should == description
+      end
+
+      it "should pass in the payment's organisation" do
+        @payment.capture_or_repeat({})
+        repeat = Repeat.last
+        repeat.payment.organisation.should == @organisation
+      end
+
+      it "should pass in the payment's reference" do
+        @payment.reference.should_not be_nil
+        repeat = Repeat.new
+        Repeat.should_receive(:new).with do |params|
+          params[:authorization].should == @payment.reference
+        end.and_return(repeat)
+        @payment.capture_or_repeat({})
+      end
+    end
+  end
 end

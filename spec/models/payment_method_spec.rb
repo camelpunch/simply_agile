@@ -51,6 +51,10 @@ describe PaymentMethod do
     it "should have one organisation" do
       PaymentMethod.should belong_to(:organisation)
     end
+
+    it "should belong to an inital payment" do
+      PaymentMethod.should belong_to(:initial_payment)
+    end
   end
 
   describe "has_expired?" do
@@ -95,28 +99,21 @@ describe PaymentMethod do
     end
   end
 
-  describe "test_payment" do
+  describe "authorise_initial_payment" do
     before :each do
       @payment_method = PaymentMethod.new
     end
 
-    it "should create a new authorization" do
-      authorisation_count = Authorisation.count
-      @payment_method.test_payment
-      Authorisation.count.should == authorisation_count + 1
+    it "should create a new authorisation" do
+      lambda {
+        @payment_method.authorise_initial_payment
+      }.should change(Authorisation, :count).by(1)
     end
 
-    it "should store the repeat_payment_token" do
-      @payment_method.test_payment
-      last_payment = Payment.find(:last, :order => 'id')
-      @payment_method.repeat_payment_token.should ==
-        last_payment.reference
-    end
-
-    it "should create a new void" do
-      void_count = Void.count
-      @payment_method.test_payment
-      Void.count.should == void_count + 1
+    it "should store the ID of the initial payment" do
+      @payment_method.authorise_initial_payment
+      last_authorisation = Authorisation.last
+      @payment_method.initial_payment.should == last_authorisation.payment
     end
 
     describe "authorization failure" do
@@ -125,11 +122,11 @@ describe PaymentMethod do
       end
 
       it "should return false" do
-        @payment_method.test_payment.should == false
+        @payment_method.authorise_initial_payment.should == false
       end
 
       it "should set an error on the base" do
-        @payment_method.test_payment
+        @payment_method.authorise_initial_payment
         @payment_method.errors.should be_invalid(:base)
       end
     end

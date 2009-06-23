@@ -7,7 +7,7 @@ class Capture < ActiveRecord::Base
   belongs_to :payment
 
   def before_create
-    self.response = gateway.capture(amount, authorization)
+    self.response = gateway.capture(amount, authorization, :authenticate => true)
     
     self.status = response.params['Status']
     self.status_detail = response.params['StatusDetail']
