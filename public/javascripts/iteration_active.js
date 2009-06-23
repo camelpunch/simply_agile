@@ -115,8 +115,8 @@ DraggableStories.refresh = function() {
           draggable_story.story = this.story;
           draggable_story.setStatus();
           draggable_story.setPosition();
-          Burndown.refresh();
         });
+        Burndown.refresh();
       }
     }
   );

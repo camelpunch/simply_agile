@@ -103,7 +103,7 @@ JAVASCRIPT
   def contextual_new_story_path
     if @iteration && !@iteration.new_record? && @iteration.pending?
       [:new, @project, @iteration, :story]
-    elsif @project
+    elsif @project && !@project.new_record?
       [:new, @project, :story]
     else
       new_story_path

@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :sitemap
   
   map.resources :iterations, :collection => { :finished => :get, :planned => :get }
+  map.resources :keyboard_shortcuts
   map.resources :payment_methods
   map.resources :invoices
   map.resources :story_team_members
@@ -42,6 +43,7 @@ ActionController::Routing::Routes.draw do |map|
     iteration.resource :active_iteration
   end
 
+  map.resource :verification_notification
   map.resource :home, :controller => 'home'
 
   map.agile_terminology '/agile_terminology/:action', :controller => 'agile_terminology'

@@ -29,4 +29,10 @@ xml.urlset "xmlns" => "http://www.google.com/schemas/sitemap/0.84" do
     xml.changefreq 'monthly'
     xml.priority 0.2
   end
+
+  xml.url do
+    xml.loc new_verification_notification_url
+    xml.changefreq 'monthly'
+    xml.priority 0.1
+  end
 end
