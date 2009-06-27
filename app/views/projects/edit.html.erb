@@ -1,9 +1,6 @@
 <% content_for :title, 'Edit Project' %>
 <% content_for :h1, 'Edit Project' %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@project), @project %></li>
-  <li>Edit</li>
-<% end %>
+<% breadcrumbs link_to(h(@project), @project), 'Edit' %>
 <% form_for @project do |form| %>
   <%= render form %>
   <p class="submit">

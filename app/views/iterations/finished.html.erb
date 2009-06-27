@@ -1,8 +1,6 @@
 <% content_for :title, "Finished Iterations" %>
 <% content_for :h1, "#{h @current_organisation.name} Finished Iterations" %>
-<% content_for :breadcrumbs do %>
-  <li>Finished Iterations</li>
-<% end %>
+<% breadcrumbs 'Finished Iterations' %>
 <% content_for :actions do %>
   <li><%= link_to "Active", iterations_path %></li>
   <li><%= link_to "Planned", planned_iterations_path %></li>

@@ -1,10 +1,10 @@
 <% content_for :title, 'Invoices' %>
 <% content_for :h1, "Invoices" %>
-<% @non_organisation = true %>
-<% content_for :breadcrumbs do %>
-  <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
-  <li>Invoices</li>
-<% end %>
+<% breadcrumbs(
+  link_to_unless_current('Account', @current_user), 
+  'Invoices',
+  :organisation_page => false
+) %>
 
 <% if @invoices.empty? %>
   <p>

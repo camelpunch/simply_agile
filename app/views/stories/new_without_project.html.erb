@@ -1,8 +1,6 @@
 <% content_for :title, "New Story" %>
 <% content_for :h1, "New Story" %>
-<% content_for :breadcrumbs do %>
-  <li class="story">New Story</li>
-<% end %>
+<% breadcrumbs 'New Story' %>
 <% form_for @story do |form| %>
   <%= form.error_messages %>
   <%= render :partial => 'stories/project_select' %>

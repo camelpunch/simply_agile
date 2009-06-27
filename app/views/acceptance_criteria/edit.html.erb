@@ -1,11 +1,11 @@
 <% content_for :title, @acceptance_criterion %>
 <% content_for :h1, h(@acceptance_criterion) %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@project), @project %></li>
-  <li class="story"><%= link_to h(@story), [@project, @story] %></li>
-  <li class="acceptance_criterion"><%= h @acceptance_criterion %></li>
-  <li>Edit</li>
-<% end %>
+<% breadcrumbs(
+  link_to(h(@project), @project),
+  link_to(h(@story), [@project, @story]),
+  h(@acceptance_criterion),
+  'Edit'
+) %>
 
 <% form_for [@project, @story, @acceptance_criterion] do |f| %>
   <p>

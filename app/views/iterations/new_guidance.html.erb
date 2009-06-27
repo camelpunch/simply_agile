@@ -1,9 +1,6 @@
 <% content_for :title, "New iteration for #{@project}" %>
 <% content_for :h1, "No available stories for #{h(@project)}" %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@project), @project %></li>
-  <li class="iteration">New Iteration</li>
-<% end %>
+<% breadcrumbs link_to(h(@project), @project), 'New Iteration' %>
 <% body_classes << 'guidance' %>
 
 <p>

@@ -1,5 +1,33 @@
 module ApplicationHelper
 
+  def breadcrumbs(*args)
+    organisation_page = 
+      if args.last.is_a?(Hash)
+        then args.pop[:organisation_page]
+      else true
+      end
+
+    crumbs = args
+
+    crumbs_markup = ''
+
+    if @current_organisation && organisation_page
+      crumbs.unshift(
+        link_to_unless_current(h(@current_organisation), home_path)
+      )
+    end
+
+    crumbs.each_with_index do |crumb, idx| 
+      classes = [cycle('odd', 'even')]
+      classes << 'first-child' if idx == 0
+      classes << 'last-child' if idx == crumbs.size - 1
+
+      crumbs_markup += content_tag :li, crumb, :class => classes.join(' ')
+    end
+
+    content_for :breadcrumbs, content_tag(:ol, crumbs_markup)
+  end
+
   def landing_stylesheet_link_tag
     stylesheet_link_tag('reset-fonts', 
                         'landing/layout', 

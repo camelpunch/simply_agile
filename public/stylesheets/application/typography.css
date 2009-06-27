@@ -61,5 +61,3 @@ form#new_organisation ol li label span.numeric { font-size:123.1% }
 /* invoices/show */
 body#invoices_show #content h3 { font-weight:bold }
 /* end invoices/show */
-
-body.keyboard_shortcuts table { font-size:123.1% }

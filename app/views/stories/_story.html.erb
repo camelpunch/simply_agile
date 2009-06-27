@@ -14,7 +14,7 @@
         <h3><%= h(story) %></h3>
         <%= render :partial => 'stories/estimating_story', :object => story %>
       <% else %>
-        <h3><%= link_to h(story), [story.project, story.iteration, story] %></h3>
+        <h3><%= link_to h(story), [story.project, story] %></h3>
         <% if story.estimate? %>
           <p class="estimate" title="Story Points"><span>Story Points: </span><%= story.estimate %></p>
         <% end %>
@@ -36,7 +36,7 @@
   <% end %>
 
   <% if body_classes.include?('iteration_active') %>
-    <% form_for [story.project, story.iteration, story] do |form| %>
+    <% form_for [story.project, story] do |form| %>
       <%= render :partial => 'stories/status_form', :object => form %>
     <% end %>
   <% end %>

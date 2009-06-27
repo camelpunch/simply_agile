@@ -13,6 +13,20 @@ describe StoriesController do
     )
   end
 
+  describe "getting with a nested iteration" do
+    before :each do
+      get :show, :id => @story.id, :iteration_id => @iteration.id, :project_id => @project.id
+    end
+
+    it "should respond with a 301" do
+      response.code.should == '301'
+    end
+
+    it "should redirect to project-nested url" do
+      response.should redirect_to(project_story_url(@project, @story))
+    end
+  end
+
   describe "instance variable setup" do
     before :each do
       controller.instance_variable_set('@project', @project)
@@ -90,22 +104,6 @@ describe StoriesController do
         controller.instance_variable_get("@story").should == @story
       end
     end
-
-    describe "get_story_from_iteration" do
-      before :each do
-        controller.stub!(:params).and_return(
-          :project_id => @project.id,
-          :iteration_id => @iteration.id,
-          :id => @story.id
-        )
-        controller.instance_variable_set('@project', @project)
-      end
-
-      it "should set the instance variable" do
-        controller.send(:get_story_from_iteration)
-        controller.instance_variable_get("@story").should == @story
-      end
-    end
   end
 
   describe "it operates on a new story", :shared => true do
@@ -119,13 +117,6 @@ describe StoriesController do
     it "should call get_story" do
       do_call
       assigns[:story].should == @story
-    end
-  end
-
-  describe "it operates on an existing story from an iteration", :shared => true do
-    it "should call get_story_from_iteration" do
-      controller.should_receive(:get_story_from_iteration)
-      do_call
     end
   end
 
@@ -381,27 +372,6 @@ describe StoriesController do
     it_should_behave_like "it belongs to a project"
     it_should_behave_like "it operates on an existing story"
     it_should_behave_like "it sets the current user"
-
-    describe "when iteration set on story" do
-      before :each do
-        @story.stub!(:iteration_id?).and_return(true)
-      end
-
-      it "should redirect to the iteration route" do
-        do_call
-        response.should redirect_to(edit_project_iteration_story_url(@project, @iteration, @story))
-      end
-    end
-
-    describe "with iteration id params" do
-      def do_call
-        get :edit, :id => @story.id,
-          :project_id => @project.id,
-          :iteration_id => @iteration.id
-      end
-
-      it_should_behave_like "it operates on an existing story from an iteration"
-    end
   end
 
   describe "update" do
@@ -463,7 +433,7 @@ describe StoriesController do
           @story_attributes = { 'status' => 'testing' }
         end
 
-        it_should_behave_like "it operates on an existing story from an iteration"
+        it_should_behave_like "it operates on an existing story"
         it_should_behave_like "it sets the current user"
 
         describe "success" do
@@ -495,16 +465,14 @@ describe StoriesController do
           @story_attributes = { 'name' => 'some story name' }
         end
 
-        it_should_behave_like "it operates on an existing story from an iteration"
+        it_should_behave_like "it operates on an existing story"
 
         describe "success" do
           describe "html" do
-            it "should redirect to project iteration story page" do
+            it "should redirect to project story page" do
               @story_attributes['name'] = 'some name'
               do_call
-              response.should redirect_to(project_iteration_story_url(@project,
-                                                                      @iteration,
-                                                                      @story))
+              response.should redirect_to(project_story_url(@project, @story))
             end
           end
         end

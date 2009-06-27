@@ -42,19 +42,7 @@
           </ol>
         </div>
         <div id="breadcrumbs">
-          <% breadcrumbs = yield(:breadcrumbs) %>
-          <% if @non_organisation %>
-            <ol>
-              <%= yield :breadcrumbs %>
-            </ol>
-          <% elsif @current_organisation %>
-            <ol>
-              <li class="organisation first-child">
-                <%= link_to_unless_current h(@current_organisation), home_path %>
-              </li>
-              <%= yield :breadcrumbs %>
-            </ol>
-          <% end %>
+          <%= yield :breadcrumbs %>
         </div>
         <%= link_to('New Story',
           contextual_new_story_path,

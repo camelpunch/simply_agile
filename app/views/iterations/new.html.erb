@@ -1,9 +1,6 @@
 <% content_for :title, "Planning iteration for #{@project}" %>
 <% content_for :h1, "Planning iteration for #{h(@project)}" %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@project), @project %></li>
-  <li class="iteration">Plan Iteration</li>
-<% end %>
+<% breadcrumbs link_to(h(@project), @project), 'Plan Iteration' %>
 <% body_classes << 'iteration_planning' %>
 
 <% form_for [@project, @iteration] do |form| %>

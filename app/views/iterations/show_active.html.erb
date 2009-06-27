@@ -1,9 +1,6 @@
 <% content_for :title, "#{@iteration}" %>
 <% content_for :h1, h(@iteration) %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@iteration.project), @iteration.project %></li>
-  <li class="iteration"><%= h @iteration %></li>
-<% end %>
+<% breadcrumbs link_to(h(@iteration.project), @iteration.project), h(@iteration) %>
 <% body_classes << 'iteration_active' %>
 
 <div id="stories">

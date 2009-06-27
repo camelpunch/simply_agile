@@ -1,10 +1,11 @@
 <% content_for :title, "Organisations" %>
 <% content_for :h1, "Organisations" %>
-<% @non_organisation = true %>
-<% content_for :breadcrumbs do %>
-  <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
-  <li>Organisations</li>
-<% end %>
+<% breadcrumbs(
+  link_to_unless_current('Account', @current_user),
+  'Organisations',
+  :organisation_page => false
+)
+%>
 <% content_for :actions do %>
   <li><%= link_to 'New', new_organisation_path %></li>
 <% end %>
