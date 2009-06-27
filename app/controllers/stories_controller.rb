@@ -14,8 +14,14 @@ class StoriesController < ApplicationController
   end
 
   def show
-    if params[:iteration_id]
-      redirect_to [@project, @story], :status => 301
+    respond_to do |format|
+      format.html do
+        if params[:iteration_id]
+          redirect_to [@project, @story], :status => 301
+        end
+      end
+
+      format.feature
     end
   end
 

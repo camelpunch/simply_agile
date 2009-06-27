@@ -2,6 +2,7 @@
 <% content_for :h1, "Story ##{@story.id}" %>
 <% content_for :actions do %>
 <li><%= link_to 'Edit', [:edit, @project, @story] %></li>
+<li><%= link_to 'Feature', project_story_path(@project, @story, :format => 'feature') %></li>
 <% end %>
 <% breadcrumbs(*(story_breadcrumbs(@story) + [h(@story)])) %>
 
