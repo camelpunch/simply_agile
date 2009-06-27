@@ -13,6 +13,13 @@ class StoriesController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.html
+      format.feature
+    end
+  end
+
   def create
     if @story.save
       respond_to do |format|

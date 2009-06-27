@@ -344,13 +344,22 @@ describe StoriesController do
   end
 
   describe "show" do
-    def do_call
-      get :show, :id => @story.id, :project_id => @project.id
+    def do_call(options = {:format => 'html'})
+      get :show, {:id => @story.id, :project_id => @project.id}.merge(options)
     end
 
-    it_should_behave_like "it belongs to a project"
-    it_should_behave_like "it operates on an existing story"
-    it_should_behave_like "it's successful"
+    describe "html" do
+      it_should_behave_like "it belongs to a project"
+      it_should_behave_like "it operates on an existing story"
+      it_should_behave_like "it's successful"
+    end
+
+    describe "feature" do
+      it "should render the feature template" do
+        do_call :format => 'feature'
+        response.should render_template('stories/show.feature.erb')
+      end
+    end
   end
 
   describe "estimate" do
