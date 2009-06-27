@@ -1,6 +1,60 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ApplicationHelper do
+  describe "breadcrumbs" do
+    def breadcrumbs
+      helper.instance_variable_get('@content_for_breadcrumbs')
+    end
+
+    before :each do
+      helper.instance_variable_set('@content_for_breadcrumbs', '')
+      @home_link = '<a href="/home"'
+    end
+
+    it "should wrap output in an ol" do
+      helper.breadcrumbs('First', 'Second')
+      breadcrumbs.should have_tag('ol')
+    end
+
+    it "should provide some breadcrumbs when organisation_page is false" do
+      helper.breadcrumbs('Hello', :organisation_page => false)
+      breadcrumbs.should include('>Hello</li>')
+    end
+
+    it "should not provide home link if @current_organisation isn't set" do
+      helper.breadcrumbs('Hello')
+      breadcrumbs.should_not include(@home_link)
+    end
+
+    describe "when @current_organisation is set" do
+      before :each do
+        helper.instance_variable_set('@current_organisation', 'org name')
+      end
+
+      it "should provide home link" do
+        helper.breadcrumbs('Hello')
+        breadcrumbs.should include(@home_link)
+      end
+
+      it "should not provide home link if organisation_page is false" do
+        helper.breadcrumbs('Hello', :organisation_page => false)
+        breadcrumbs.should_not include(@home_link)
+      end
+    end
+
+    it "should set odd and even" do
+      helper.breadcrumbs('First', 'Second')
+
+      breadcrumbs.should have_tag('li.odd', 'First')
+      breadcrumbs.should have_tag('li.even', 'Second')
+    end
+
+    it "should set last-child" do
+      helper.breadcrumbs('First', 'Second')
+      breadcrumbs.should have_tag('li.even.last-child', 'Second')
+    end
+  end
+
   describe "card_number" do
     it "should turn 4242 to ************4242" do
       helper.card_number(4242).should == "************4242"
