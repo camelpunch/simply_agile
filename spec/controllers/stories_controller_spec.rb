@@ -13,6 +13,20 @@ describe StoriesController do
     )
   end
 
+  describe "getting with a nested iteration" do
+    before :each do
+      get :show, :id => @story.id, :iteration_id => @iteration.id, :project_id => @project.id
+    end
+
+    it "should respond with a 301" do
+      response.code.should == '301'
+    end
+
+    it "should redirect to project-nested url" do
+      response.should redirect_to(project_story_url(@project, @story))
+    end
+  end
+
   describe "instance variable setup" do
     before :each do
       controller.instance_variable_set('@project', @project)
