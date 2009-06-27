@@ -57,9 +57,7 @@ describe AcceptanceCriteriaController do
     describe "success" do
       it "should redirect to the story page" do
         do_call
-        response.should redirect_to(project_iteration_story_url(@project, 
-                                                                @story.iteration, 
-                                                                @story))
+        response.should redirect_to(project_story_url(@project, @story))
       end
 
       describe "js" do
@@ -177,9 +175,7 @@ describe AcceptanceCriteriaController do
     describe "html" do
       it "should redirect to the story page" do
         do_call
-        response.should redirect_to(project_iteration_story_url(@project, 
-                                                                @story.iteration, 
-                                                                @story))
+        response.should redirect_to(project_story_url(@project, @story))
       end
     end
 

@@ -7,7 +7,6 @@ class StoryTeamMembersController < ApplicationController
     if @story_team_member.save
       redirect_to [
         @story_team_member.story.project, 
-        @story_team_member.story.iteration, 
         @story_team_member.story
       ]
     else
@@ -20,7 +19,6 @@ class StoryTeamMembersController < ApplicationController
     @story_team_member.destroy
     redirect_to [
       @story_team_member.story.project, 
-      @story_team_member.story.iteration, 
       @story_team_member.story
     ]
   end

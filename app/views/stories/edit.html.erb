@@ -1,9 +1,9 @@
 <% content_for :title, "Editing #{@story}" %>
 <% content_for :h1, h("Editing #{@story}") %>
 <% breadcrumbs(*story_breadcrumbs(@story) +
-[ link_to(h(@story), [@project, @story.iteration, @story]), 'Edit' ]
+[ link_to(h(@story), [@project, @story]), 'Edit' ]
               ) %>
-<% form_for [@project, @story.iteration, @story] do |form| %>
+<% form_for [@project, @story] do |form| %>
   <%= form.error_messages %>
   <%= render form %>
   <p class="submit">

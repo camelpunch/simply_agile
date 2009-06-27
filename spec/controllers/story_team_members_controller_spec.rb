@@ -30,11 +30,9 @@ describe StoryTeamMembersController do
         @user.stories.should include(@story)
       end
 
-      it "should redirect to the iteration story page" do
+      it "should redirect to the project story page" do
         do_call
-        response.should redirect_to(project_iteration_story_url(@project, 
-                                                                @iteration, 
-                                                                @story))
+        response.should redirect_to(project_story_url(@project, @story))
       end
     end
 
@@ -80,11 +78,9 @@ describe StoryTeamMembersController do
         StoryTeamMember.should_not be_exist(@story_team_member.id)
       end
 
-      it "should redirect to the story page" do
+      it "should redirect to the project story page" do
         do_call
-        response.should redirect_to(project_iteration_story_url(@project, 
-                                                                @iteration,
-                                                                @story))
+        response.should redirect_to(project_story_url(@project, @story))
       end
     end
 

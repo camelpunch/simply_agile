@@ -9,7 +9,7 @@ class AcceptanceCriteriaController < ApplicationController
     respond_to do |format|
       format.html do
         if @acceptance_criterion.update_attributes(params[:acceptance_criterion])
-          redirect_to [@project, @story.iteration, @story]
+          redirect_to [@project, @story]
         else
           render(:template => 'stories/show')
         end
@@ -63,7 +63,7 @@ class AcceptanceCriteriaController < ApplicationController
     @story.acceptance_criteria.find(params[:id]).destroy
     respond_to do |format|
       format.html do
-        redirect_to [@project, @story.iteration, @story]
+        redirect_to [@project, @story]
       end
 
       format.js do
