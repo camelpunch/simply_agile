@@ -194,12 +194,3 @@ body#invoices_show #item { clear:left }
 body#invoices_show #content h3 { float:left; width:13em }
 body#invoices_show #content h2+h3 { margin:1em 0 }
 /* end invoices/show */
-
-/* keyboard shortcuts */
-body.keyboard_shortcuts div.section_container { 
-  width:33%; float:left; margin-right:45px 
-}
-body.keyboard_shortcuts table { 
-  width:33%; margin-top:15px 
-}
-/* end keyboard shortcuts */

@@ -1,9 +1,6 @@
 <% content_for :title, "#{@project} Stories" %>
 <% content_for :h1, h("#{@project} Stories") %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@project), @project %></li>
-  <li class="story">Stories</li>
-<% end %>
+<% breadcrumbs link_to(h(@project), @project), 'Stories' %>
 
 <% unless @project.stories.empty? %>
   <ol>

@@ -49,6 +49,11 @@ describe ApplicationHelper do
       breadcrumbs.should have_tag('li.even', 'Second')
     end
 
+    it "should set first-child" do
+      helper.breadcrumbs('First', 'Second')
+      breadcrumbs.should have_tag('li.odd.first-child', 'First')
+    end
+
     it "should set last-child" do
       helper.breadcrumbs('First', 'Second')
       breadcrumbs.should have_tag('li.even.last-child', 'Second')

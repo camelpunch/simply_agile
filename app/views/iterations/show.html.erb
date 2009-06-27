@@ -3,10 +3,7 @@
 <% content_for :actions do %>
 <li><%= link_to 'Re-plan', edit_project_iteration_path(@project, @iteration) %></li>
 <% end %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= link_to h(@project), @project %></li>
-  <li class="iteration"><%= h @iteration %></li>
-<% end %>
+<% breadcrumbs link_to(h(@project), @project), h(@iteration) %>
 
 <% form_for(@iteration, 
             :url => iteration_active_iteration_path(@iteration),

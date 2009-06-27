@@ -3,10 +3,7 @@
 <% content_for :actions do %>
 <li><%= link_to 'Edit', [:edit, @project, @story.iteration, @story] %></li>
 <% end %>
-<% content_for :breadcrumbs do %>
-  <%= story_breadcrumbs @story %>
-  <li class="story"><%= h @story %></li>
-<% end %>
+<% breadcrumbs(*(story_breadcrumbs(@story) + [h(@story)])) %>
 
 <div class="<%= story_classes @story %>">
   <div class="content">

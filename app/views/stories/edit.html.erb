@@ -1,10 +1,8 @@
 <% content_for :title, "Editing #{@story}" %>
 <% content_for :h1, h("Editing #{@story}") %>
-<% content_for :breadcrumbs do %>
-  <%= story_breadcrumbs @story %>
-  <li class="story"><%= link_to h(@story), [@project, @story.iteration, @story] %></li>
-  <li>Edit</li>
-<% end %>
+<% breadcrumbs(*story_breadcrumbs(@story) +
+[ link_to(h(@story), [@project, @story.iteration, @story]), 'Edit' ]
+              ) %>
 <% form_for [@project, @story.iteration, @story] do |form| %>
   <%= form.error_messages %>
   <%= render form %>

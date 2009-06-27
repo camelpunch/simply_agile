@@ -19,6 +19,7 @@ module ApplicationHelper
 
     crumbs.each_with_index do |crumb, idx| 
       classes = [cycle('odd', 'even')]
+      classes << 'first-child' if idx == 0
       classes << 'last-child' if idx == crumbs.size - 1
 
       crumbs_markup += content_tag :li, crumb, :class => classes.join(' ')

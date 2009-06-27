@@ -5,16 +5,12 @@ module StoriesHelper
   end
 
   def story_breadcrumbs(story)
-    output = <<-XML
-    <li class="project">#{link_to(h(@project), @project)}</li>
-    XML
+    crumbs = [ link_to(h(@project), @project) ]
 
     if @story.iteration_id?
-      output << <<-XML2
-    <li class="iteration">#{link_to(@story.iteration, [@project, @story.iteration])}</li>
-XML2
+      crumbs << link_to(@story.iteration, [@project, @story.iteration])
     end
 
-    output
+    crumbs
   end
 end

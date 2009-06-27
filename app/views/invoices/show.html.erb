@@ -1,13 +1,11 @@
 <% content_for :h1, "Invoice #{h(@invoice)}" %>
 <% content_for :title, "Invoice #{@invoice} | Invoices | Account" %>
-<% @non_organisation = true %>
-<% content_for :breadcrumbs do %>
-  <li class="account first-child"><%= link_to_unless_current 'Account', @current_user %></li>
-  <li><%= link_to 'Invoices', :invoices %></li>
-  <li><%= h @invoice %></li>
-<% end %>
-
-
+<% breadcrumbs(
+  link_to_unless_current('Account', @current_user),
+  link_to('Invoices', :invoices),
+  h(@invoice),
+  :organisation_page => false
+) %>
 
 <div id="date">
 <h2>Invoice date</h2>

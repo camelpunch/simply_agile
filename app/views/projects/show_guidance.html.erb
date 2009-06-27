@@ -3,9 +3,7 @@
 <% content_for :actions do %>
 <li><%= link_to "Edit", edit_project_path(@project) %></li>
 <% end %>
-<% content_for :breadcrumbs do %>
-  <li class="project"><%= h @project %></li>
-<% end %>
+<% breadcrumbs h(@project) %>
 <% body_classes << 'guidance' %>
 
 <%= simple_format h(@project.description) %>
