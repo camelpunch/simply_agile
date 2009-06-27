@@ -21,9 +21,9 @@ describe ApplicationController do
     end
 
     it "should memoize" do
+      session[:user_id] = @user.id
       controller.send(:current_user)
-      User.should_not_receive(:find_by_id)
-      controller.send(:current_user)
+      controller.instance_variable_get('@current_user').should == @user
     end
 
     describe "with logged in user" do
