@@ -62,6 +62,13 @@ describe Authorisation do
         do_protx_action
       end
 
+      it "should set authorization type to authenticate" do
+        @gateway.should_receive(:authorize) do |amount, card, args|
+          args[:authenticate].should be_true
+        end
+        do_protx_action
+      end
+
       it "should store the status" do
         do_protx_action
         @authorisation.status.should == "OK"

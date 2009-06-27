@@ -8,6 +8,7 @@ class PaymentMethod < ActiveRecord::Base
   accepts_nested_attributes_for :billing_address
   belongs_to :user
   belongs_to :organisation
+  belongs_to :initial_payment, :class_name => 'Payment'
 
   CARD_TYPES = ['mastercard', 'visa']
   SHARED_ATTRIBUTES = [
@@ -49,7 +50,7 @@ class PaymentMethod < ActiveRecord::Base
 
   def before_create
     set_last_four_digits
-    test_payment
+    authorise_initial_payment
   end
 
   def year=(value)
@@ -91,15 +92,14 @@ class PaymentMethod < ActiveRecord::Base
     card
   end
 
-  def test_payment
+  def authorise_initial_payment
     authorisation = Authorisation.create!(:payment_method => self, 
                                           :amount => 100)
     if ! authorisation.successful?
       errors.add_to_base(:credit_card_rejected)
       return false
     end
-    self.repeat_payment_token = authorisation.payment.reference
-    authorisation.void
+    self.initial_payment = authorisation.payment
   end
 
   protected

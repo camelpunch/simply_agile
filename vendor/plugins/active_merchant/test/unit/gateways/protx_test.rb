@@ -24,6 +24,8 @@ class ProtxTest < Test::Unit::TestCase
       :phone => '0161 123 4567'
     }
     @amount = 100
+
+    @identification = 'B8AE1CF6-9DEF-C876-1BB4-9B382E6CE520'
   end
 
   def test_successful_purchase
@@ -33,6 +35,42 @@ class ProtxTest < Test::Unit::TestCase
     assert_instance_of Response, response
     assert_equal "1;B8AE1CF6-9DEF-C876-1BB4-9B382E6CE520;4193753;OHMETD7DFK;purchase", response.authorization
     assert_success response
+  end
+
+  def test_authorize
+    @gateway.expects(:commit).with do |method, post|
+        method == :authorization
+    end
+    @gateway.authorize(@amount, @credit_card, @options)
+  end
+
+  def test_authorize_with_authenticate
+    @gateway.expects(:commit).with do |method, post|
+        method == :authenticate
+    end
+    @gateway.authorize(
+      @amount,
+      @credit_card,
+      @options.merge({:authenticate => true})
+    )
+  end
+
+  def test_capture
+    @gateway.expects(:commit).with do |method, post|
+        method == :capture
+    end
+    @gateway.capture(@amount, @identification, @options)
+  end
+
+  def test_capture_with_authorize
+    @gateway.expects(:commit).with do |method, post|
+        method == :authorise
+    end
+    @gateway.capture(
+      @amount,
+      @identification,
+      @options.merge({:authenticate => true})
+    )
   end
 
   def test_unsuccessful_purchase

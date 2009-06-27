@@ -15,6 +15,7 @@ module ActiveMerchant #:nodoc:
         :repeat => 'REPEAT',
         :credit => 'REFUND',
         :authorization => 'DEFERRED',
+        :authenticate => 'AUTHENTICATE',
         :capture => 'RELEASE',
         :void => 'VOID',
         :abort => 'ABORT'
@@ -79,7 +80,7 @@ module ActiveMerchant #:nodoc:
       
       def authorize(money, credit_card, options = {})
         requires!(options, :order_id)
-        
+
         post = {}
         
         add_amount(post, money, options)
@@ -88,7 +89,11 @@ module ActiveMerchant #:nodoc:
         add_address(post, options)
         add_customer_data(post, options)
 
-        commit(:authorization, post)
+        if options[:authenticate]
+          commit(:authenticate, post)
+        else
+          commit(:authorization, post)
+        end
       end
       
       # You can only capture a transaction once, even if you didn't capture the full amount the first time.
@@ -97,8 +102,12 @@ module ActiveMerchant #:nodoc:
         
         add_reference(post, identification)
         add_release_amount(post, money, options)
-        
-        commit(:capture, post)
+
+        if options[:authenticate]
+          commit(:authorise, post)
+        else
+          commit(:capture, post)
+        end
       end
       
       def void(identification, options = {})

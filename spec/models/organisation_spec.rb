@@ -182,47 +182,54 @@ describe Organisation do
         :verification_value => '123',
         :cardholder_name => 'Joe Bloggs',
         :month => Date.today.month,
-        :year => Date.today.year + 1,
-        :repeat_payment_token => @token
+        :year => Date.today.year + 1
       )
+
+      @initial_payment = @payment_method.initial_payment
     end
 
-    it "should create a new repeat payment" do
-      repeat = Repeat.new
-      Repeat.should_receive(:new).and_return(repeat)
-      @organisation.take_payment
+    describe "when no capture exists for the initial payment" do
+      it "should capture the initial payment" do
+        capture = Capture.new
+        Capture.should_receive(:new).and_return(capture)
+        @organisation.take_payment
+      end
+
+      it "should pass in the amount from the plan" do
+        capture = Capture.new
+        Capture.should_receive(:new).with do |params|
+          params[:amount].should == @payment_plan.total * 100
+        end.and_return(capture)
+        @organisation.take_payment
+      end
     end
 
-    it "should pass the repeat payment token to the Repeat payment" do
-      repeat = Repeat.new
-      Repeat.should_receive(:new).with do |params|
-        params[:authorization].should == @payment_method.repeat_payment_token
-      end.and_return(repeat)
-      @organisation.take_payment
-    end
+    describe "when a capture exists for the initial payment" do
+      before :each do
+        Capture.create!(:payment => @initial_payment)
+      end
 
-    it "should pass in the amount from the plan" do
-      repeat = Repeat.new
-      Repeat.should_receive(:new).with do |params|
-        params[:amount].should == @payment_plan.total * 100
-      end.and_return(repeat)
-      @organisation.take_payment
-    end
+      it "should create a new repeat payment" do
+        repeat = Repeat.new
+        Repeat.should_receive(:new).and_return(repeat)
+        @organisation.take_payment
+      end
 
-    it "should pass in a description" do
-      repeat = Repeat.new
-      Repeat.should_receive(:new).with do |params|
-        params[:description].should == @organisation.name
-      end.and_return(repeat)
-      @organisation.take_payment
-    end
+      it "should pass in the amount from the plan" do
+        repeat = Repeat.new
+        Repeat.should_receive(:new).with do |params|
+          params[:amount].should == @payment_plan.total * 100
+        end.and_return(repeat)
+        @organisation.take_payment
+      end
 
-    it "should pass in itself as organisation" do
-      repeat = Repeat.new
-      Repeat.should_receive(:new).
-        with(hash_including(:organisation => @organisation)).
-        and_return(repeat)
-      @organisation.take_payment
+      it "should pass in a description" do
+        repeat = Repeat.new
+        Repeat.should_receive(:new).with do |params|
+          params[:description].should == @organisation.name
+        end.and_return(repeat)
+        @organisation.take_payment
+      end
     end
 
     it "should set the next payment date to next month" do
@@ -282,8 +289,8 @@ describe Organisation do
 
     describe "failure to take payment" do
       before :each do
-        @repeat = mock_model(Repeat, :successful? => false)
-        Repeat.stub!(:create!).and_return(@repeat)
+        @capture = mock_model(Capture, :successful? => false)
+        Capture.stub!(:create!).and_return(@capture)
         @user = Users.create_user!
         @payment_method.user = @user
         @payment_method.save!

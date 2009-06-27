@@ -12,4 +12,17 @@ class Payment < ActiveRecord::Base
   def reference
     [vendor_tx_code, vpstxid, tx_auth_no, security_key].join(';')
   end
+
+  def capture_or_repeat(params)
+    if capture.nil?
+      Capture.create!(
+        params.delete_if{ |k,v| k == :description }.merge(:payment => self)
+      )
+    else
+      Repeat.create(params.merge(
+          :organisation => organisation,
+          :authorization => reference
+        ))
+    end
+  end
 end

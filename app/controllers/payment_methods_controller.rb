@@ -35,14 +35,14 @@ class PaymentMethodsController < ApplicationController
   def new_payment_method
     @payment_method = @current_user.payment_methods.
       build(params[:payment_method])
-    @payment_method.organisation = 
+    @payment_method.organisation =
       @current_user.organisations.find(params[:organisation_id])
 
     @payment_method.build_billing_address :country => "United Kingdom"
 
     if (params[:payment_method] &&
         params[:payment_method][:billing_address_attributes])
-      @payment_method.billing_address.attributes = 
+      @payment_method.billing_address.attributes =
         params[:payment_method][:billing_address_attributes]
     end
   end
