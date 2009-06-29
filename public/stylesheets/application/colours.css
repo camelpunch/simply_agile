@@ -8,9 +8,6 @@ body,legend { color:#333 }
 label.field_with_errors { border:none }
 
 /* navigation */
-#navigation a { background:#fff; color:#333; outline:none }
-
-/* livery colours */
 #navigation li,
 body.active_iterations li#nav_iterations a,
 body.iterations li#nav_iterations a,
@@ -20,9 +17,28 @@ body.invoices li#nav_account a,
 body.payment_methods li#nav_account a,
 body.organisations li#nav_account a,
 body.organisation_members li#nav_sharing a,
-#breadcrumbs{ background:#ff7f2a; color:#fff }
-/* end livery colours */
+#breadcrumbs{ 
+  background:#ff7f2a; 
+  color:#fff;
+  -moz-border-radius-topleft:6px;
+  -moz-border-radius-topright:6px;
+  -webkit-border-top-left-radius:6px;
+  -webkit-border-top-right-radius:6px;
+  border-top-left-radius:6px;
+  border-top-right-radius:6px;
+}
 
+#navigation a { 
+  background:#fff; 
+  color:#333; 
+  outline:none;
+  -moz-border-radius-topright:0;
+  -moz-border-radius-topleft:0;
+  -webkit-border-top-right-radius:0;
+  -webkit-border-top-left-radius:0;
+  border-top-right-radius:0;
+  border-top-left-radius:0;
+}
 /* end navigation */
 
 #contextual_new_story { background:url(/images/new_story.png) no-repeat;
