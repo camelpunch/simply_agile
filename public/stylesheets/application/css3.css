@@ -1,4 +1,5 @@
-#navigation li { 
+#navigation li,
+#navigation li a { 
   -moz-border-radius-topleft:6px;
   -moz-border-radius-topright:6px;
   -webkit-border-top-left-radius:6px;
