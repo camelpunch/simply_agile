@@ -16,8 +16,7 @@ body.stories li#nav_projects a,
 body.invoices li#nav_account a,
 body.payment_methods li#nav_account a,
 body.organisations li#nav_account a,
-body.organisation_members li#nav_sharing a,
-#breadcrumbs{ 
+body.organisation_members li#nav_sharing a { 
   background:#ff7f2a; 
   color:#fff;
   -moz-border-radius-topleft:6px;
@@ -26,6 +25,10 @@ body.organisation_members li#nav_sharing a,
   -webkit-border-top-right-radius:6px;
   border-top-left-radius:6px;
   border-top-right-radius:6px;
+}
+#breadcrumbs{ 
+  background:#ff7f2a; 
+  color:#fff;
 }
 
 #navigation a { 
